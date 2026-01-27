@@ -1,0 +1,214 @@
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Send, Linkedin, Twitter, Instagram, Dribbble, Mail, MapPin } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useToast } from "@/hooks/use-toast";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Please enter a valid email").max(255, "Email must be less than 255 characters"),
+  message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters"),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
+
+const socialLinks = [
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+  { icon: Dribbble, href: "#", label: "Dribbble" },
+];
+
+const navLinks = [
+  { label: "Services", href: "#services" },
+  { label: "Process", href: "#process" },
+  { label: "Portfolio", href: "#portfolio" },
+  { label: "Testimonials", href: "#testimonials" },
+];
+
+export function Footer() {
+  const { ref, isVisible } = useScrollAnimation(0.1);
+  const { toast } = useToast();
+  
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+  });
+
+  const onSubmit = async (data: ContactFormData) => {
+    // Simulate form submission
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+    toast({
+      title: "Message sent!",
+      description: "Thank you for reaching out. I'll get back to you within 24 hours.",
+    });
+    
+    reset();
+  };
+
+  const scrollToSection = (href: string) => {
+    const id = href.replace("#", "");
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <footer id="contact" className="pt-24 pb-8 relative">
+      <div className="absolute inset-0 bg-glow opacity-20" />
+      
+      <div ref={ref} className="container px-4 md:px-6 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          {/* Main Footer Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+            {/* Left Side - Contact Info & Social */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={isVisible ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                Let's Create Something
+                <br />
+                <span className="text-gradient">Extraordinary</span>
+              </h2>
+              
+              <p className="text-muted-foreground mb-8 max-w-md">
+                Ready to transform your Shopify store? Get in touch and let's discuss 
+                how we can work together to achieve your goals.
+              </p>
+
+              {/* Contact Info */}
+              <div className="space-y-4 mb-8">
+                <a href="mailto:hello@shopifyexpert.com" className="flex items-center gap-3 text-foreground/80 hover:text-primary transition-colors">
+                  <Mail className="w-5 h-5 text-primary" />
+                  hello@shopifyexpert.com
+                </a>
+                <div className="flex items-center gap-3 text-foreground/80">
+                  <MapPin className="w-5 h-5 text-primary" />
+                  Available Worldwide (Remote)
+                </div>
+              </div>
+
+              {/* Social Links */}
+              <div className="flex items-center gap-4">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    aria-label={social.label}
+                    className="w-11 h-11 rounded-xl glass flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-300"
+                  >
+                    <social.icon className="w-5 h-5 text-foreground/80" />
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Right Side - Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={isVisible ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <form onSubmit={handleSubmit(onSubmit)} className="glass rounded-2xl p-8 space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-foreground/80">Name</Label>
+                  <Input
+                    id="name"
+                    placeholder="Your name"
+                    {...register("name")}
+                    className="bg-background/50 border-border/50 focus:border-primary/50"
+                  />
+                  {errors.name && (
+                    <p className="text-sm text-destructive">{errors.name.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-foreground/80">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="your@email.com"
+                    {...register("email")}
+                    className="bg-background/50 border-border/50 focus:border-primary/50"
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-destructive">{errors.email.message}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-foreground/80">Message</Label>
+                  <Textarea
+                    id="message"
+                    placeholder="Tell me about your project..."
+                    rows={4}
+                    {...register("message")}
+                    className="bg-background/50 border-border/50 focus:border-primary/50 resize-none"
+                  />
+                  {errors.message && (
+                    <p className="text-sm text-destructive">{errors.message.message}</p>
+                  )}
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full gradient-gold text-primary-foreground font-semibold py-6 hover:scale-[1.02] transition-transform duration-300"
+                >
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      Send Message
+                      <Send className="ml-2 h-4 w-4" />
+                    </>
+                  )}
+                </Button>
+              </form>
+            </motion.div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t border-border/50 pt-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              {/* Logo / Brand */}
+              <div className="text-xl font-bold text-gradient">
+                ShopifyExpert
+              </div>
+
+              {/* Navigation */}
+              <nav className="flex items-center gap-6">
+                {navLinks.map((link) => (
+                  <button
+                    key={link.label}
+                    onClick={() => scrollToSection(link.href)}
+                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </nav>
+
+              {/* Copyright */}
+              <p className="text-sm text-muted-foreground">
+                © 2024 All rights reserved.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
