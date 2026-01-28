@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Send, Linkedin, Twitter, Instagram, Dribbble, Mail, MapPin } from "lucide-react";
+import { Send, Linkedin, Twitter, Instagram, Dribbble, Mail, MapPin, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -181,11 +182,18 @@ export function Footer() {
                 {navLinks.map(link => <button key={link.label} onClick={() => scrollToSection(link.href)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {link.label}
                   </button>)}
+                <Link 
+                  to="/admin" 
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+                >
+                  <Shield className="w-3 h-3" />
+                  Admin
+                </Link>
               </nav>
 
               {/* Copyright */}
               <p className="text-sm text-muted-foreground">
-                © 2024 All rights reserved.
+                © {new Date().getFullYear()} All rights reserved.
               </p>
             </div>
           </div>
