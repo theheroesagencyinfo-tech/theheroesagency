@@ -43,6 +43,22 @@ const projects = [
     image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=400&fit=crop",
     url: "https://goondiwindicotton.com.au",
   },
+  {
+    title: "Nevuu",
+    category: "Tech Accessories",
+    description: "Premium tech accessories and lifestyle products with sleek product photography and streamlined checkout.",
+    results: "Modern Tech Brand",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=400&fit=crop",
+    url: "https://www.nevuu.com",
+  },
+  {
+    title: "HHG Products",
+    category: "Home & Garden",
+    description: "Quality home and garden products with user-friendly navigation and comprehensive product catalogs.",
+    results: "Home Essentials Leader",
+    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop",
+    url: "https://hhgproducts.com",
+  },
 ];
 
 function ProjectCard({ 
