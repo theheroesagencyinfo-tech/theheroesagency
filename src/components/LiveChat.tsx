@@ -20,13 +20,18 @@ interface Conversation {
   status: string;
 }
 
-const getVisitorId = () => {
-  let visitorId = localStorage.getItem("chat_visitor_id");
-  if (!visitorId) {
-    visitorId = `visitor_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem("chat_visitor_id", visitorId);
+// Ensures the visitor has an authenticated (anonymous) Supabase session
+// so RLS policies can identify them via auth.uid() instead of a spoofable header.
+const ensureVisitorSession = async (): Promise<string | null> => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session?.user) return session.user.id;
+
+  const { data, error } = await supabase.auth.signInAnonymously();
+  if (error || !data.user) {
+    if (import.meta.env.DEV) console.error("Anonymous sign-in failed:", error);
+    return null;
   }
-  return visitorId;
+  return data.user.id;
 };
 
 export function LiveChat() {
@@ -39,8 +44,8 @@ export function LiveChat() {
   const [visitorEmail, setVisitorEmail] = useState("");
   const [showNameForm, setShowNameForm] = useState(true);
   const [unreadCount, setUnreadCount] = useState(0);
+  const [visitorUserId, setVisitorUserId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const visitorId = getVisitorId();
 
   useEffect(() => {
     if (isOpen && conversation) {
@@ -54,12 +59,16 @@ export function LiveChat() {
   }, [messages]);
 
   useEffect(() => {
-    // Check for existing conversation
-    const checkExistingConversation = async () => {
+    // Establish anonymous auth session, then look for an existing conversation.
+    const init = async () => {
+      const uid = await ensureVisitorSession();
+      if (!uid) return;
+      setVisitorUserId(uid);
+
       const { data } = await supabase
         .from("chat_conversations")
         .select("*")
-        .eq("visitor_id", visitorId)
+        .eq("visitor_user_id", uid)
         .eq("status", "active")
         .maybeSingle();
 
@@ -68,8 +77,8 @@ export function LiveChat() {
         setShowNameForm(false);
       }
     };
-    checkExistingConversation();
-  }, [visitorId]);
+    init();
+  }, []);
 
   const fetchMessages = async () => {
     if (!conversation) return;
@@ -116,11 +125,15 @@ export function LiveChat() {
 
   const startConversation = async () => {
     if (!visitorName.trim()) return;
+    const uid = visitorUserId ?? (await ensureVisitorSession());
+    if (!uid) return;
+    if (!visitorUserId) setVisitorUserId(uid);
 
     const { data, error } = await supabase
       .from("chat_conversations")
       .insert({
-        visitor_id: visitorId,
+        visitor_id: uid,
+        visitor_user_id: uid,
         visitor_name: visitorName,
         visitor_email: visitorEmail || null,
       })
