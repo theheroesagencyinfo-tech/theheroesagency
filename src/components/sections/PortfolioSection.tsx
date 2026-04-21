@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useMouseGlow } from "@/hooks/useMouseGlow";
 
 const projects = [
   {
@@ -61,49 +62,52 @@ const projects = [
   },
 ];
 
-function ProjectCard({ 
-  title, 
-  category, 
-  description, 
-  results, 
+function ProjectCard({
+  title,
+  category,
+  description,
+  results,
   image,
   url,
   isVisible,
-  index 
-}: { 
-  title: string; 
-  category: string; 
-  description: string; 
+  index,
+}: {
+  title: string;
+  category: string;
+  description: string;
   results: string;
   image: string;
   url: string;
   isVisible: boolean;
   index: number;
 }) {
+  const cardRef = useMouseGlow<HTMLAnchorElement>();
   return (
     <motion.a
+      ref={cardRef}
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      initial={{ opacity: 0, y: 40 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.15, duration: 0.6 }}
-      className="group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 cursor-pointer block"
+      initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
+      animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ delay: index * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8 }}
+      className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 cursor-pointer block"
     >
       {/* Image */}
       <div className="relative h-56 overflow-hidden">
-        <img 
-          src={image} 
+        <img
+          src={image}
           alt={title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-        
+
         {/* Results badge */}
         <div className="absolute bottom-4 left-4 px-4 py-2 rounded-full gradient-gold">
           <span className="text-sm font-bold text-primary-foreground">{results}</span>
         </div>
-        
+
         {/* Arrow icon */}
         <div className="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
           <ExternalLink className="w-5 h-5 text-primary" />
@@ -129,16 +133,17 @@ function ProjectCard({
 
 export function PortfolioSection() {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const sectionRef = useMouseGlow<HTMLElement>();
 
   return (
-    <section id="portfolio" className="py-24 relative">
-      <div className="container px-4 md:px-6">
+    <section id="portfolio" ref={sectionRef} className="py-24 relative cursor-glow">
+      <div className="container px-4 md:px-6 relative z-10">
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+          animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">
@@ -148,7 +153,7 @@ export function PortfolioSection() {
             Featured <span className="text-gradient">Projects</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A selection of high-performing Shopify stores that showcase 
+            A selection of high-performing Shopify stores that showcase
             the power of strategic design and optimization.
           </p>
         </motion.div>
@@ -156,9 +161,9 @@ export function PortfolioSection() {
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {projects.map((project, index) => (
-            <ProjectCard 
-              key={project.title} 
-              {...project} 
+            <ProjectCard
+              key={project.title}
+              {...project}
               isVisible={isVisible}
               index={index}
             />
