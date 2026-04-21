@@ -52,7 +52,7 @@ export function useAuth() {
       if (error) throw error;
       setIsAdmin(!!data);
     } catch (error) {
-      console.error("Error checking admin status:", error);
+      import.meta.env.DEV && console.error("Error checking admin status:", error);
       setIsAdmin(false);
     }
   };

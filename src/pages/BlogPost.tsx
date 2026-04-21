@@ -48,7 +48,7 @@ export default function BlogPostPage() {
       }
       setPost(data as BlogPost);
     } catch (error) {
-      console.error("Error fetching blog post:", error);
+      import.meta.env.DEV && console.error("Error fetching blog post:", error);
       navigate("/blog");
     } finally {
       setIsLoading(false);

@@ -38,7 +38,7 @@ export function BlogSection() {
       if (error) throw error;
       setPosts(data || []);
     } catch (error) {
-      console.error("Error fetching blog posts:", error);
+      import.meta.env.DEV && console.error("Error fetching blog posts:", error);
     } finally {
       setIsLoading(false);
     }
