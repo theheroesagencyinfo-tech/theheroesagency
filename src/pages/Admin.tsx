@@ -187,7 +187,7 @@ export default function Admin() {
       if (error) throw error;
       setReviews(data || []);
     } catch (error) {
-      console.error("Error fetching reviews:", error);
+      import.meta.env.DEV && console.error("Error fetching reviews:", error);
       toast({ title: "Error", description: "Failed to load reviews", variant: "destructive" });
     } finally {
       setIsLoadingReviews(false);
@@ -399,7 +399,7 @@ export default function Admin() {
         .eq("conversation_id", conversationId)
         .eq("sender_type", "visitor");
     } catch (error) {
-      console.error("Error fetching messages:", error);
+      import.meta.env.DEV && console.error("Error fetching messages:", error);
     }
   };
 

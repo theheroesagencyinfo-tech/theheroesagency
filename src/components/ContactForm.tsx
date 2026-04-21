@@ -95,7 +95,7 @@ export function ContactForm() {
         description: "We'll get back to you within 24 hours.",
       });
     } catch (error) {
-      console.error("Error submitting form:", error);
+      import.meta.env.DEV && console.error("Error submitting form:", error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",

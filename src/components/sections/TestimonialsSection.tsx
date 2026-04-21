@@ -71,9 +71,8 @@ export function TestimonialsSection() {
   const fetchApprovedReviews = async () => {
     try {
       const { data, error } = await supabase
-        .from("reviews")
+        .from("approved_reviews")
         .select("id, name, company, star_rating, message, is_featured, created_at")
-        .eq("status", "approved")
         .order("is_featured", { ascending: false })
         .order("created_at", { ascending: false });
 
@@ -82,7 +81,7 @@ export function TestimonialsSection() {
       // Use fetched reviews if available, otherwise use fallbacks
       setReviews(data && data.length > 0 ? data : fallbackTestimonials);
     } catch (error) {
-      console.error("Error fetching reviews:", error);
+      import.meta.env.DEV && console.error("Error fetching reviews:", error);
       setReviews(fallbackTestimonials);
     } finally {
       setIsLoading(false);

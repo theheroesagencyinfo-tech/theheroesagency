@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, User } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -47,7 +48,7 @@ export default function BlogPostPage() {
       }
       setPost(data as BlogPost);
     } catch (error) {
-      console.error("Error fetching blog post:", error);
+      import.meta.env.DEV && console.error("Error fetching blog post:", error);
       navigate("/blog");
     } finally {
       setIsLoading(false);
@@ -63,6 +64,12 @@ export default function BlogPostPage() {
   }
 
   if (!post) return null;
+
+  const sanitizedContent = DOMPurify.sanitize(post.content, {
+    USE_PROFILES: { html: true },
+    FORBID_TAGS: ["script", "style", "iframe", "object", "embed", "form"],
+    FORBID_ATTR: ["onerror", "onload", "onclick", "onmouseover", "onfocus", "onblur", "onchange", "onsubmit"],
+  });
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -118,7 +125,7 @@ export default function BlogPostPage() {
 
             <div 
               className="prose prose-lg prose-invert max-w-none"
-              dangerouslySetInnerHTML={{ __html: post.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             />
           </motion.div>
         </article>
