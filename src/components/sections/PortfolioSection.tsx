@@ -3,13 +3,21 @@ import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 
+import retrospecImg from "@/assets/portfolio/retrospec-com.jpg";
+import darntoughImg from "@/assets/portfolio/darntough-com.jpg";
+import trndaImg from "@/assets/portfolio/trnda-com.jpg";
+import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.jpg";
+import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.jpg";
+import nevuuImg from "@/assets/portfolio/www-nevuu-com.jpg";
+import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
+
 const projects = [
   {
     title: "Retrospec",
     category: "Bikes & Outdoor",
     description: "E-bikes, paddle boards, and outdoor gear with intuitive product quizzes and seamless shopping experience.",
     results: "Adventure Lifestyle Brand",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop",
+    image: retrospecImg,
     url: "https://retrospec.com",
   },
   {
@@ -17,7 +25,7 @@ const projects = [
     category: "Premium Socks",
     description: "Vermont-made merino wool socks with lifetime guarantee. Advanced filtering and subscription options.",
     results: "Lifetime Warranty Leader",
-    image: "https://images.unsplash.com/photo-1586350977771-b3b0abd50c82?w=600&h=400&fit=crop",
+    image: darntoughImg,
     url: "https://darntough.com",
   },
   {
@@ -25,7 +33,7 @@ const projects = [
     category: "Luxury Watches",
     description: "Egyptian-inspired timepiece collections with elegant product showcases and global shipping integration.",
     results: "Premium Watch Brand",
-    image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&h=400&fit=crop",
+    image: trndaImg,
     url: "https://trnda.com",
   },
   {
@@ -33,7 +41,7 @@ const projects = [
     category: "Athletic Apparel",
     description: "Official IWF streaming partner's store featuring champion-endorsed gear with 3-for-2 bundle system.",
     results: "70K+ Orders Shipped",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop",
+    image: weightliftingImg,
     url: "https://ukstore.weightliftinghouse.com",
   },
   {
@@ -41,7 +49,7 @@ const projects = [
     category: "Australian Fashion",
     description: "Farm-to-fashion Australian cotton brand with seasonal collections and immersive brand storytelling.",
     results: "Heritage Cotton Brand",
-    image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=400&fit=crop",
+    image: goondiwindiImg,
     url: "https://goondiwindicotton.com.au",
   },
   {
@@ -49,7 +57,7 @@ const projects = [
     category: "Tech Accessories",
     description: "Premium tech accessories and lifestyle products with sleek product photography and streamlined checkout.",
     results: "Modern Tech Brand",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=400&fit=crop",
+    image: nevuuImg,
     url: "https://www.nevuu.com",
   },
   {
@@ -57,7 +65,7 @@ const projects = [
     category: "Home & Garden",
     description: "Quality home and garden products with user-friendly navigation and comprehensive product catalogs.",
     results: "Home Essentials Leader",
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&h=400&fit=crop",
+    image: hhgImg,
     url: "https://hhgproducts.com",
   },
 ];
@@ -95,11 +103,12 @@ function ProjectCard({
       className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 cursor-pointer block"
     >
       {/* Image */}
-      <div className="relative h-56 overflow-hidden">
+      <div className="relative h-56 overflow-hidden bg-muted">
         <img
           src={image}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          alt={`${title} website screenshot`}
+          loading="lazy"
+          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
 
