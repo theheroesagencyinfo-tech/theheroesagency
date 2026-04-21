@@ -24,27 +24,30 @@ const services = [
   },
 ];
 
-function ServiceCard({ 
-  icon: Icon, 
-  title, 
-  description, 
-  features, 
+function ServiceCard({
+  icon: Icon,
+  title,
+  description,
+  features,
   isVisible,
-  index 
-}: { 
-  icon: typeof Palette; 
-  title: string; 
-  description: string; 
+  index,
+}: {
+  icon: typeof Palette;
+  title: string;
+  description: string;
   features: string[];
   isVisible: boolean;
   index: number;
 }) {
+  const cardRef = useMouseGlow<HTMLDivElement>();
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.15, duration: 0.6 }}
-      className="glass rounded-2xl p-8 group hover:border-primary/30 transition-all duration-500 gold-glow-sm"
+      ref={cardRef}
+      initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
+      animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ delay: index * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8 }}
+      className="card-spotlight glass rounded-2xl p-8 group hover:border-primary/30 transition-all duration-500 gold-glow-sm hover-lift"
     >
       {/* Icon */}
       <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 mb-6 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
@@ -76,16 +79,17 @@ function ServiceCard({
 
 export function ServicesSection() {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const sectionRef = useMouseGlow<HTMLElement>();
 
   return (
-    <section id="services" className="py-24 relative">
-      <div className="container px-4 md:px-6">
+    <section id="services" ref={sectionRef} className="py-24 relative cursor-glow">
+      <div className="container px-4 md:px-6 relative z-10">
         {/* Section Header */}
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+          animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">
@@ -95,7 +99,7 @@ export function ServicesSection() {
             Premium <span className="text-gradient">Shopify Solutions</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive eCommerce services designed to transform your Shopify store 
+            Comprehensive eCommerce services designed to transform your Shopify store
             into a high-converting revenue machine.
           </p>
         </motion.div>
@@ -103,9 +107,9 @@ export function ServicesSection() {
         {/* Service Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {services.map((service, index) => (
-            <ServiceCard 
-              key={service.title} 
-              {...service} 
+            <ServiceCard
+              key={service.title}
+              {...service}
               isVisible={isVisible}
               index={index}
             />
