@@ -71,9 +71,8 @@ export function TestimonialsSection() {
   const fetchApprovedReviews = async () => {
     try {
       const { data, error } = await supabase
-        .from("reviews")
+        .from("approved_reviews")
         .select("id, name, company, star_rating, message, is_featured, created_at")
-        .eq("status", "approved")
         .order("is_featured", { ascending: false })
         .order("created_at", { ascending: false });
 
