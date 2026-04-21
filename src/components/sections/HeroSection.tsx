@@ -35,10 +35,25 @@ export function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Banner image as full background */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={heroBanner}
+          alt="Elite IT agency team building high-converting Shopify stores"
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+        />
+        {/* Dark overlays for legibility */}
+        <div className="absolute inset-0 bg-background/70" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
+      </div>
+
       {/* Background glow effects */}
-      <div className="absolute inset-0 bg-glow-top" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] animate-pulse-glow" />
-      
+      <div className="absolute inset-0 bg-glow-top z-[1]" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] animate-pulse-glow z-[1]" />
+
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -58,7 +73,7 @@ export function HeroSection() {
           </motion.div>
 
           {/* Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1] drop-shadow-2xl">
             I Build{" "}
             <span className="text-gradient">High-Converting</span>
             <br />
@@ -67,8 +82,8 @@ export function HeroSection() {
 
           {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Elite eCommerce consultant specializing in premium Shopify design, 
-            conversion optimization, and growth strategies that drive 
+            Elite eCommerce consultant specializing in premium Shopify design,
+            conversion optimization, and growth strategies that drive
             <span className="text-foreground font-medium"> real results</span>.
           </p>
 
@@ -97,23 +112,6 @@ export function HeroSection() {
               View My Work
             </Button>
           </motion.div>
-        </motion.div>
-
-        {/* Banner image */}
-        <motion.div
-          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ delay: 0.5, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className="relative max-w-5xl mx-auto mb-20 rounded-2xl overflow-hidden glass border border-primary/20 gold-glow-sm"
-        >
-          <img
-            src={heroBanner}
-            alt="Elite IT agency team building high-converting Shopify stores"
-            width={1920}
-            height={1080}
-            className="w-full h-auto object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent pointer-events-none" />
         </motion.div>
 
         {/* Stats */}
