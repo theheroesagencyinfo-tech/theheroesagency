@@ -3,6 +3,7 @@ import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import heroBanner from "@/assets/hero-banner.jpg";
 
 const stats = [
   { value: 150, suffix: "+", label: "Stores Built" },
@@ -96,6 +97,23 @@ export function HeroSection() {
               View My Work
             </Button>
           </motion.div>
+        </motion.div>
+
+        {/* Banner image */}
+        <motion.div
+          initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.5, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="relative max-w-5xl mx-auto mb-20 rounded-2xl overflow-hidden glass border border-primary/20 gold-glow-sm"
+        >
+          <img
+            src={heroBanner}
+            alt="Elite IT agency team building high-converting Shopify stores"
+            width={1920}
+            height={1080}
+            className="w-full h-auto object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent pointer-events-none" />
         </motion.div>
 
         {/* Stats */}
