@@ -3,6 +3,7 @@ import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import heroBanner from "@/assets/hero-banner.jpg";
 
 const stats = [
   { value: 150, suffix: "+", label: "Stores Built" },
