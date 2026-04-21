@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Store, Clock, DollarSign } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import { useMouseGlow } from "@/hooks/useMouseGlow";
 
 const metrics = [
   {
@@ -45,13 +46,16 @@ function MetricCard({
   index: number;
 }) {
   const count = useCountUp(value, 2000, isVisible);
+  const cardRef = useMouseGlow<HTMLDivElement>();
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={isVisible ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay: index * 0.15, duration: 0.6 }}
-      className="glass glass-hover rounded-2xl p-8 text-center gold-glow-sm group"
+      ref={cardRef}
+      initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+      animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ delay: index * 0.15, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8 }}
+      className="card-spotlight glass glass-hover rounded-2xl p-8 text-center gold-glow-sm group"
     >
       <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl gradient-gold mb-6 group-hover:scale-110 transition-transform duration-300">
         <Icon className="w-7 h-7 text-primary-foreground" />

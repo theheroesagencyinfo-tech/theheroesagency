@@ -1,19 +1,21 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { ContactForm } from "@/components/ContactForm";
 
 export function ContactSection() {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const sectionRef = useMouseGlow<HTMLElement>();
 
   return (
-    <section id="contact" className="py-24 relative">
-      <div className="container px-4 md:px-6">
+    <section id="contact" ref={sectionRef} className="py-24 relative cursor-glow">
+      <div className="container px-4 md:px-6 relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+          animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
           <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">
