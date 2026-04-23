@@ -503,11 +503,18 @@ export default function Admin() {
 
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="reviews" className="space-y-8">
-          <TabsList className="glass">
+          <TabsList className="glass flex-wrap h-auto">
             <TabsTrigger value="reviews" className="data-[state=active]:gradient-gold">
               <Star className="w-4 h-4 mr-2" />
               Reviews
               <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-white/10">{reviews.length}</span>
+            </TabsTrigger>
+            <TabsTrigger value="audits" className="data-[state=active]:gradient-gold">
+              <ClipboardList className="w-4 h-4 mr-2" />
+              System Audits
+              <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-white/10">
+                {contacts.filter((c: any) => c.lead_type === "system_audit").length}
+              </span>
             </TabsTrigger>
             <TabsTrigger value="blog" className="data-[state=active]:gradient-gold">
               <FileText className="w-4 h-4 mr-2" />
@@ -527,6 +534,12 @@ export default function Admin() {
               </span>
             </TabsTrigger>
           </TabsList>
+
+          {/* System Audits Tab */}
+          <TabsContent value="audits" className="space-y-6">
+            <SystemAuditAdmin />
+          </TabsContent>
+
 
           {/* Reviews Tab */}
           <TabsContent value="reviews" className="space-y-6">
