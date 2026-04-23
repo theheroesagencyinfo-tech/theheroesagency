@@ -127,48 +127,84 @@ export type Database = {
       contact_submissions: {
         Row: {
           admin_notes: string | null
+          assigned_reviewer_id: string | null
           budget_range: string | null
           company: string | null
           created_at: string
           custom_budget: string | null
           email: string
+          goals: string | null
           id: string
+          landing_page: string | null
+          lead_type: string
           message: string
           name: string
           phone: string | null
+          referrer: string | null
           service: string
           status: string
+          store_type: string | null
           updated_at: string
+          utm_campaign: string | null
+          utm_content: string | null
+          utm_medium: string | null
+          utm_source: string | null
+          utm_term: string | null
+          website_url: string | null
         }
         Insert: {
           admin_notes?: string | null
+          assigned_reviewer_id?: string | null
           budget_range?: string | null
           company?: string | null
           created_at?: string
           custom_budget?: string | null
           email: string
+          goals?: string | null
           id?: string
+          landing_page?: string | null
+          lead_type?: string
           message: string
           name: string
           phone?: string | null
+          referrer?: string | null
           service: string
           status?: string
+          store_type?: string | null
           updated_at?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+          website_url?: string | null
         }
         Update: {
           admin_notes?: string | null
+          assigned_reviewer_id?: string | null
           budget_range?: string | null
           company?: string | null
           created_at?: string
           custom_budget?: string | null
           email?: string
+          goals?: string | null
           id?: string
+          landing_page?: string | null
+          lead_type?: string
           message?: string
           name?: string
           phone?: string | null
+          referrer?: string | null
           service?: string
           status?: string
+          store_type?: string | null
           updated_at?: string
+          utm_campaign?: string | null
+          utm_content?: string | null
+          utm_medium?: string | null
+          utm_source?: string | null
+          utm_term?: string | null
+          website_url?: string | null
         }
         Relationships: []
       }

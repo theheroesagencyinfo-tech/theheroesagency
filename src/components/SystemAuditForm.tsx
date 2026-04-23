@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { z } from "zod";
-import { Loader2, ClipboardCheck, ArrowRight } from "lucide-react";
+import {
+  Loader2,
+  ClipboardCheck,
+  ArrowRight,
+  CalendarCheck,
+  Mail,
+  Sparkles,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,9 +56,48 @@ const revenueRanges = [
   "$250k+ / month",
 ];
 
+const BOOKING_URL = "https://calendly.com";
+
+type UtmData = {
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+  utm_term: string | null;
+  utm_content: string | null;
+  referrer: string | null;
+  landing_page: string | null;
+};
+
+function readUtm(): UtmData {
+  if (typeof window === "undefined") {
+    return {
+      utm_source: null,
+      utm_medium: null,
+      utm_campaign: null,
+      utm_term: null,
+      utm_content: null,
+      referrer: null,
+      landing_page: null,
+    };
+  }
+  const params = new URLSearchParams(window.location.search);
+  const get = (k: string) => params.get(k) || null;
+  return {
+    utm_source: get("utm_source"),
+    utm_medium: get("utm_medium"),
+    utm_campaign: get("utm_campaign"),
+    utm_term: get("utm_term"),
+    utm_content: get("utm_content"),
+    referrer: document.referrer || null,
+    landing_page: window.location.href,
+  };
+}
+
 export function SystemAuditForm() {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submittedName, setSubmittedName] = useState("");
+  const [renderedAt] = useState(() => Date.now());
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -58,8 +105,20 @@ export function SystemAuditForm() {
     storeType: "",
     monthlyRevenue: "",
     goals: "",
+    // honeypot — must remain empty
+    company_website: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const utm = useMemo(readUtm, []);
+
+  // Persist UTM in session so reviewers see it even if user navigates within site
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = sessionStorage.getItem("audit_utm");
+    if (!stored && (utm.utm_source || utm.referrer)) {
+      sessionStorage.setItem("audit_utm", JSON.stringify(utm));
+    }
+  }, [utm]);
 
   const update = (k: keyof typeof form, v: string) => {
     setForm((f) => ({ ...f, [k]: v }));
@@ -68,6 +127,19 @@ export function SystemAuditForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Honeypot: bots fill hidden fields. Silently succeed without saving.
+    if (form.company_website.trim() !== "") {
+      setSubmitted(true);
+      return;
+    }
+
+    // Time-trap: real users take >1.5s to fill the form
+    if (Date.now() - renderedAt < 1500) {
+      setSubmitted(true);
+      return;
+    }
+
     const parsed = auditSchema.safeParse(form);
     if (!parsed.success) {
       const fieldErrors: Record<string, string> = {};
@@ -90,12 +162,32 @@ export function SystemAuditForm() {
       .filter(Boolean)
       .join("\n");
 
+    const storedUtm = (() => {
+      try {
+        const s = sessionStorage.getItem("audit_utm");
+        return s ? (JSON.parse(s) as UtmData) : utm;
+      } catch {
+        return utm;
+      }
+    })();
+
     const { error } = await supabase.from("contact_submissions").insert({
       name: parsed.data.name,
       email: parsed.data.email,
       service: "System Audit Request",
       budget_range: parsed.data.monthlyRevenue || null,
       message: compiledMessage,
+      lead_type: "system_audit",
+      website_url: parsed.data.websiteUrl,
+      store_type: parsed.data.storeType,
+      goals: parsed.data.goals,
+      utm_source: storedUtm.utm_source,
+      utm_medium: storedUtm.utm_medium,
+      utm_campaign: storedUtm.utm_campaign,
+      utm_term: storedUtm.utm_term,
+      utm_content: storedUtm.utm_content,
+      referrer: storedUtm.referrer,
+      landing_page: storedUtm.landing_page,
     });
 
     setLoading(false);
@@ -109,6 +201,7 @@ export function SystemAuditForm() {
       return;
     }
 
+    setSubmittedName(parsed.data.name.split(" ")[0]);
     setSubmitted(true);
     toast({
       title: "Audit request received",
@@ -121,14 +214,87 @@ export function SystemAuditForm() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass rounded-3xl p-10 md:p-14 border border-primary/20 gold-glow-sm text-center"
+        className="glass rounded-3xl p-10 md:p-14 border border-primary/20 gold-glow-sm"
       >
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/15 border border-primary/30 mb-5">
-          <ClipboardCheck className="w-7 h-7 text-primary" />
+        <div className="text-center mb-10">
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/15 border border-primary/30 mb-5"
+          >
+            <ClipboardCheck className="w-8 h-8 text-primary" />
+          </motion.div>
+          <h3 className="text-2xl md:text-4xl font-bold mb-3">
+            {submittedName ? `Thank you, ${submittedName}!` : "Audit request received"}
+          </h3>
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            Your System Audit request is in. Here's exactly what happens next.
+          </p>
         </div>
-        <h3 className="text-2xl md:text-3xl font-bold mb-3">Audit request received</h3>
-        <p className="text-muted-foreground max-w-md mx-auto">
-          We'll review your store and send a personalised audit + strategy call invite within 24 hours.
+
+        <div className="grid md:grid-cols-3 gap-4 mb-10">
+          {[
+            {
+              icon: ClipboardCheck,
+              step: "Step 1 — Today",
+              title: "Audit assigned",
+              desc: "A reviewer is assigned to your store within 1 business hour.",
+            },
+            {
+              icon: Sparkles,
+              step: "Step 2 — Within 24h",
+              title: "Personalised audit sent",
+              desc: "You'll receive a written audit covering design, conversion gaps, and growth levers.",
+            },
+            {
+              icon: CalendarCheck,
+              step: "Step 3 — Your call",
+              title: "Strategy session",
+              desc: "Book a 30-min call to walk through findings and next steps.",
+            },
+          ].map((s, i) => {
+            const Icon = s.icon;
+            return (
+              <motion.div
+                key={s.title}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 + i * 0.1, duration: 0.5 }}
+                className="rounded-2xl border border-white/5 bg-white/[0.02] p-5"
+              >
+                <div className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 mb-3">
+                  <Icon className="w-4 h-4 text-primary" />
+                </div>
+                <p className="text-[11px] font-semibold tracking-widest uppercase text-primary mb-1">
+                  {s.step}
+                </p>
+                <h4 className="font-semibold mb-1">{s.title}</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">
+            <Button
+              size="lg"
+              className="gradient-gold text-primary-foreground font-semibold w-full sm:w-auto hover:scale-[1.02] transition-transform"
+            >
+              <CalendarCheck className="w-4 h-4 mr-2" />
+              Book Your Strategy Call
+            </Button>
+          </a>
+          <Link to="/">
+            <Button size="lg" variant="outline" className="glass w-full sm:w-auto">
+              Back to Home
+            </Button>
+          </Link>
+        </div>
+
+        <p className="text-xs text-muted-foreground text-center mt-6 flex items-center justify-center gap-2">
+          <Mail className="w-3 h-3" /> A confirmation email is on its way to your inbox.
         </p>
       </motion.div>
     );
@@ -157,6 +323,22 @@ export function SystemAuditForm() {
       <p className="text-muted-foreground mb-8 max-w-xl">
         Share your store and goals. We'll send a tailored audit covering design, conversion gaps, and growth opportunities.
       </p>
+
+      {/* Honeypot — hidden from users, visible to bots */}
+      <div
+        aria-hidden="true"
+        className="absolute opacity-0 pointer-events-none -left-[9999px] -top-[9999px] h-0 w-0 overflow-hidden"
+      >
+        <Label htmlFor="company_website">Company Website (leave blank)</Label>
+        <Input
+          id="company_website"
+          name="company_website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form.company_website}
+          onChange={(e) => update("company_website", e.target.value)}
+        />
+      </div>
 
       <div className="grid md:grid-cols-2 gap-5">
         <div>
