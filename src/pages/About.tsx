@@ -16,6 +16,7 @@ import {
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import { SystemAuditForm } from "@/components/SystemAuditForm";
 import founderImg from "@/assets/founder-mou-barrac.jpeg";
 
 const services = [
@@ -211,6 +212,13 @@ export default function About() {
               ))}
             </div>
           </motion.div>
+        </section>
+
+        {/* System Audit Form */}
+        <section className="container px-4 md:px-6 mb-24">
+          <div className="max-w-4xl mx-auto">
+            <SystemAuditForm />
+          </div>
         </section>
 
         {/* CTA */}
