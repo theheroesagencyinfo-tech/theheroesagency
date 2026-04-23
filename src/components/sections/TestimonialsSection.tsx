@@ -151,6 +151,9 @@ export function TestimonialsSection() {
           </p>
         </motion.div>
 
+        {/* Trust Metrics Strip */}
+        <TestimonialsMetrics />
+
         {/* Testimonial Carousel */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
