@@ -21,12 +21,14 @@ import {
   EyeOff,
   Archive,
   Plus,
+  ClipboardList,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SystemAuditAdmin } from "@/components/admin/SystemAuditAdmin";
 import {
   AlertDialog,
   AlertDialogAction,
