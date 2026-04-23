@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Button } from "@/components/ui/button";
 import { ReviewForm } from "@/components/ReviewForm";
+import { TestimonialsMetrics } from "./TestimonialsMetrics";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Review {
@@ -149,6 +150,9 @@ export function TestimonialsSection() {
             Don't just take my word for it—hear from the brands I've helped transform.
           </p>
         </motion.div>
+
+        {/* Trust Metrics Strip */}
+        <TestimonialsMetrics />
 
         {/* Testimonial Carousel */}
         <motion.div
