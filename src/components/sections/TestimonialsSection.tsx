@@ -1,8 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Quote, PenLine, ExternalLink } from "lucide-react";
 
-// TODO: Replace with your actual Google Reviews URL
-const GOOGLE_REVIEWS_URL = "https://www.google.com/search?q=The+Heroes+Agency+reviews";
+const GOOGLE_REVIEWS_URL = "https://bit.ly/3OAFPLx";
 import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Button } from "@/components/ui/button";
@@ -144,11 +143,20 @@ export function TestimonialsSection() {
             Don't just take my word for it—hear from the brands I've helped transform.
           </p>
 
-          {/* Trusted by Google badge */}
-          <a
-            href={GOOGLE_REVIEWS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Trusted by Google badge - opens reviews in popup */}
+          <button
+            type="button"
+            onClick={() => {
+              const w = 720;
+              const h = 800;
+              const left = window.screenX + (window.outerWidth - w) / 2;
+              const top = window.screenY + (window.outerHeight - h) / 2;
+              window.open(
+                GOOGLE_REVIEWS_URL,
+                "google-reviews",
+                `popup=yes,width=${w},height=${h},left=${left},top=${top},noopener,noreferrer`
+              );
+            }}
             className="inline-flex items-center gap-2 glass border border-primary/30 rounded-full px-4 py-2 hover:bg-primary/10 transition-colors group"
             aria-label="View our Google reviews"
           >
@@ -165,7 +173,7 @@ export function TestimonialsSection() {
               ))}
             </div>
             <ExternalLink className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
-          </a>
+          </button>
         </motion.div>
 
         {/* Trust Metrics Strip */}
