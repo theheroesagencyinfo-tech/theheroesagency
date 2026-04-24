@@ -65,8 +65,9 @@ export function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  // Always start with fallback testimonials so the section renders immediately
+  // and never disappears, even if the network/database is slow or empty.
+  const [reviews, setReviews] = useState<Review[]>(fallbackTestimonials);
 
   useEffect(() => {
     fetchApprovedReviews();
@@ -82,13 +83,13 @@ export function TestimonialsSection() {
 
       if (error) throw error;
 
-      // Use fetched reviews if available, otherwise use fallbacks
-      setReviews(data && data.length > 0 ? data : fallbackTestimonials);
+      // Only swap in DB reviews when we actually have some — otherwise keep fallbacks visible.
+      if (data && data.length > 0) {
+        setReviews(data);
+      }
     } catch (error) {
       import.meta.env.DEV && console.error("Error fetching reviews:", error);
-      setReviews(fallbackTestimonials);
-    } finally {
-      setIsLoading(false);
+      // Keep fallback testimonials on error so the section never disappears.
     }
   };
 
@@ -121,16 +122,6 @@ export function TestimonialsSection() {
     // Optionally refresh reviews after submission
     fetchApprovedReviews();
   };
-
-  if (isLoading) {
-    return (
-      <section id="testimonials" className="py-24 relative overflow-hidden">
-        <div className="container px-4 md:px-6 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-primary"></div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="testimonials" className="py-24 relative overflow-hidden">

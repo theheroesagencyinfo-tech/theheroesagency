@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 
@@ -10,6 +12,8 @@ import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.
 import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.jpg";
 import nevuuImg from "@/assets/portfolio/www-nevuu-com.jpg";
 import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
+import hatkayImg from "@/assets/portfolio/hatkay-com.jpg";
+import haustierkostImg from "@/assets/portfolio/haustierkost-de.jpg";
 
 const projects = [
   {
@@ -67,6 +71,22 @@ const projects = [
     results: "Hair Business & Mentorship",
     image: hhgImg,
     url: "https://hhgproducts.com",
+  },
+  {
+    title: "Hatkay",
+    category: "Hair & Beauty",
+    description: "Premium hair and lifestyle brand with high-converting product pages and a polished, on-brand storefront.",
+    results: "Hair & Lifestyle Brand",
+    image: hatkayImg,
+    url: "https://www.hatkay.com",
+  },
+  {
+    title: "Haustierkost",
+    category: "Pet Food (DE)",
+    description: "German pet food and supplies store with localized UX, fast checkout and curated product collections.",
+    results: "DACH Pet Brand",
+    image: haustierkostImg,
+    url: "https://www.haustierkost.de",
   },
 ];
 
@@ -177,6 +197,20 @@ export function PortfolioSection() {
               index={index}
             />
           ))}
+        </div>
+
+        {/* See More */}
+        <div className="text-center mt-14">
+          <Button
+            asChild
+            size="lg"
+            className="gradient-gold text-primary-foreground font-semibold px-8 py-6 text-base gold-glow-sm hover:scale-105 transition-transform duration-300"
+          >
+            <Link to="/portfolio">
+              See More Projects
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

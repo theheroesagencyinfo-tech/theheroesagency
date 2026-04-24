@@ -2,13 +2,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { CALENDLY_URL } from "@/lib/links";
 
 export function CTASection() {
   const { ref, isVisible } = useScrollAnimation(0.2);
-
-  const scrollToContact = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   return (
     <section className="py-24 relative overflow-hidden">
@@ -55,12 +52,14 @@ export function CTASection() {
             transition={{ delay: 0.4, duration: 0.5 }}
           >
             <Button
+              asChild
               size="lg"
-              onClick={scrollToContact}
               className="gradient-gold text-primary-foreground font-bold px-10 py-7 text-lg gold-glow hover:scale-105 transition-transform duration-300"
             >
-              Book Your Free Strategy Call
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+                Book Your Free Strategy Call
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
             </Button>
           </motion.div>
 
