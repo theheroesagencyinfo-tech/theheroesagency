@@ -178,10 +178,16 @@ export function Footer() {
               </div>
 
               {/* Navigation */}
-              <nav className="flex items-center gap-6">
+              <nav className="flex items-center gap-6 flex-wrap justify-center">
                 {navLinks.map(link => <button key={link.label} onClick={() => scrollToSection(link.href)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {link.label}
                   </button>)}
+                <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Terms of Service
+                </Link>
                 <Link 
                   to="/admin" 
                   className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
