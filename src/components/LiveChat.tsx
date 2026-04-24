@@ -124,7 +124,10 @@ export function LiveChat() {
   };
 
   const startConversation = async () => {
-    if (!visitorName.trim()) return;
+    if (!visitorName.trim() || !visitorEmail.trim()) return;
+    // Basic email format check
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(visitorEmail.trim())) return;
+
     const uid = visitorUserId ?? (await ensureVisitorSession());
     if (!uid) return;
     if (!visitorUserId) setVisitorUserId(uid);
@@ -135,7 +138,7 @@ export function LiveChat() {
         visitor_id: uid,
         visitor_user_id: uid,
         visitor_name: visitorName,
-        visitor_email: visitorEmail || null,
+        visitor_email: visitorEmail,
       })
       .select()
       .single();
@@ -212,9 +215,15 @@ export function LiveChat() {
             <div className="gradient-gold p-4 flex items-center justify-between">
               <div>
                 <h3 className="font-bold text-primary-foreground">Live Chat</h3>
-                <p className="text-xs text-primary-foreground/80">
-                  We typically reply within minutes
-                </p>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                  </span>
+                  <p className="text-xs text-primary-foreground/90">
+                    We're online — typically reply in minutes
+                  </p>
+                </div>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
@@ -241,16 +250,21 @@ export function LiveChat() {
                         className="glass border-white/10"
                       />
                       <Input
-                        placeholder="Email (optional)"
+                        placeholder="Email *"
                         type="email"
                         value={visitorEmail}
                         onChange={(e) => setVisitorEmail(e.target.value)}
                         onKeyPress={handleKeyPress}
                         className="glass border-white/10"
+                        required
                       />
                       <Button
                         onClick={startConversation}
-                        disabled={!visitorName.trim()}
+                        disabled={
+                          !visitorName.trim() ||
+                          !visitorEmail.trim() ||
+                          !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(visitorEmail.trim())
+                        }
                         className="w-full gradient-gold text-primary-foreground"
                       >
                         Start Chat
