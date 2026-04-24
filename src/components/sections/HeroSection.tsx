@@ -7,17 +7,17 @@ import heroBanner from "@/assets/hero-banner.jpg";
 
 const stats = [
   { value: 150, suffix: "+", label: "Stores Built" },
-  { value: 25, suffix: "M+", label: "Revenue Generated" },
+  { value: 19, prefix: "$", suffix: "M+", label: "Revenue Generated" },
   { value: 340, suffix: "%", label: "Avg. Conversion Lift" },
 ];
 
-function StatItem({ value, suffix, label, isVisible }: { value: number; suffix: string; label: string; isVisible: boolean }) {
+function StatItem({ value, prefix = "", suffix, label, isVisible }: { value: number; prefix?: string; suffix: string; label: string; isVisible: boolean }) {
   const count = useCountUp(value, 2500, isVisible);
   
   return (
     <div className="text-center">
       <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-2">
-        {count}{suffix}
+        {prefix}{count}{suffix}
       </div>
       <div className="text-sm md:text-base text-muted-foreground uppercase tracking-wider">
         {label}
