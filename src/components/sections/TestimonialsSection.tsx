@@ -1,5 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight, Quote, PenLine } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, Quote, PenLine, ExternalLink } from "lucide-react";
+
+// TODO: Replace with your actual Google Reviews URL
+const GOOGLE_REVIEWS_URL = "https://www.google.com/search?q=The+Heroes+Agency+reviews";
 import { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Button } from "@/components/ui/button";
