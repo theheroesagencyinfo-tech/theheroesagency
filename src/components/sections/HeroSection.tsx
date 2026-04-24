@@ -3,6 +3,7 @@ import { ArrowRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
+import { CALENDLY_URL } from "@/lib/links";
 import heroBanner from "@/assets/hero-banner.jpg";
 
 const stats = [
@@ -95,12 +96,14 @@ export function HeroSection() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button
+              asChild
               size="lg"
               className="gradient-gold text-primary-foreground font-semibold px-8 py-6 text-lg gold-glow-sm hover:scale-105 transition-transform duration-300"
-              onClick={() => scrollToSection("contact")}
             >
-              Book a Strategy Call
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+                Book a Strategy Call
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
             </Button>
             <Button
               size="lg"
