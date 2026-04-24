@@ -450,6 +450,18 @@ export default function Admin() {
     }
   };
 
+  const clearConversation = async (id: string) => {
+    if (!confirm("Delete all messages in this conversation? This cannot be undone.")) return;
+    try {
+      const { error } = await supabase.from("chat_messages").delete().eq("conversation_id", id);
+      if (error) throw error;
+      setChatMessages([]);
+      toast({ title: "Cleared", description: "All messages removed from this conversation." });
+    } catch (error) {
+      toast({ title: "Error", description: "Failed to clear chat", variant: "destructive" });
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
@@ -946,15 +958,25 @@ export default function Admin() {
                           <p className="text-sm text-muted-foreground">{selectedConversation.visitor_email}</p>
                         )}
                       </div>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => closeConversation(selectedConversation.id)}
-                        disabled={selectedConversation.status === "closed"}
-                        className="glass"
-                      >
-                        <X className="w-4 h-4 mr-1" />Close
-                      </Button>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => clearConversation(selectedConversation.id)}
+                          className="glass"
+                        >
+                          <Trash2 className="w-4 h-4 mr-1" />Clear
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => closeConversation(selectedConversation.id)}
+                          disabled={selectedConversation.status === "closed"}
+                          className="glass"
+                        >
+                          <X className="w-4 h-4 mr-1" />Close
+                        </Button>
+                      </div>
                     </div>
 
                     {/* Messages */}
