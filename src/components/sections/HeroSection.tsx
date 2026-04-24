@@ -7,7 +7,7 @@ import heroBanner from "@/assets/hero-banner.jpg";
 
 const stats = [
   { value: 150, suffix: "+", label: "Stores Built" },
-  { value: 19, prefix: "$", suffix: "M+", label: "Revenue Generated" },
+  { value: 25, prefix: "$", suffix: "M+", label: "Revenue Generated" },
   { value: 340, suffix: "%", label: "Avg. Conversion Lift" },
 ];
 
