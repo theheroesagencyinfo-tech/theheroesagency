@@ -32,7 +32,7 @@ export function CTASection() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/30 mb-8"
           >
             <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm text-foreground/80">Limited availability for Q1 2024</span>
+            <span className="text-sm text-foreground/80">​Now Accepting a Few New Clients</span>
           </motion.div>
 
           {/* Headline */}

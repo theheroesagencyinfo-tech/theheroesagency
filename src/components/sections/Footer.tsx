@@ -110,9 +110,9 @@ export function Footer() {
 
               {/* Contact Info */}
               <div className="space-y-4 mb-8">
-                <a className="flex items-center gap-3 text-foreground/80 hover:text-primary transition-colors" href="mailto:theheroesagency.info@gmail.com">
+                <a className="flex items-center gap-3 text-foreground/80 hover:text-primary transition-colors" href="mailto:info@theheroesagency.org">
                   <Mail className="w-5 h-5 text-primary" />
-                  theheroesagency.info@gmail.com
+                  info@theheroesagency.org
 
                 </a>
                 <div className="flex items-center gap-3 text-foreground/80">
