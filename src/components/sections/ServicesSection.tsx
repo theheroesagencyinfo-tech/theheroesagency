@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Palette, TrendingUp, Zap } from "lucide-react";
+import { Palette, TrendingUp, Zap, Clapperboard } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 
@@ -21,6 +21,12 @@ const services = [
     title: "Automation & Growth",
     description: "Scale your store with smart automation, email flows, and growth strategies. From app integrations to marketing automation.",
     features: ["Email Flow Setup", "App Integration", "Inventory Automation", "Marketing Strategy"],
+  },
+  {
+    icon: Clapperboard,
+    title: "AI Commercial Production",
+    description: "High-impact AI-generated visuals and cinematic ad content crafted to position your brand, engage your audience, and increase conversions.",
+    features: ["AI Product Photography", "AI Video Ads", "AI Commercial Videos", "Product & Service Visuals"],
   },
 ];
 
@@ -105,7 +111,7 @@ export function ServicesSection() {
         </motion.div>
 
         {/* Service Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {services.map((service, index) => (
             <ServiceCard
               key={service.title}
