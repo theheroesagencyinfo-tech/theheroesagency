@@ -7,6 +7,7 @@ export function useAuth() {
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isCheckingRole, setIsCheckingRole] = useState(false);
 
   useEffect(() => {
     // Set up auth state listener FIRST
@@ -14,14 +15,15 @@ export function useAuth() {
       (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        
-        // Check admin status after auth change
+
         if (session?.user) {
+          setIsCheckingRole(true);
           setTimeout(() => {
             checkAdminStatus(session.user.id);
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsCheckingRole(false);
         }
       }
     );
@@ -30,11 +32,13 @@ export function useAuth() {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
-        checkAdminStatus(session.user.id);
+        setIsCheckingRole(true);
+        checkAdminStatus(session.user.id).finally(() => setIsLoading(false));
+      } else {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     });
 
     return () => subscription.unsubscribe();
@@ -54,6 +58,8 @@ export function useAuth() {
     } catch (error) {
       import.meta.env.DEV && console.error("Error checking admin status:", error);
       setIsAdmin(false);
+    } finally {
+      setIsCheckingRole(false);
     }
   };
 
@@ -67,7 +73,7 @@ export function useAuth() {
 
   const signUp = async (email: string, password: string) => {
     const redirectUrl = `${window.location.origin}/`;
-    
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -86,7 +92,7 @@ export function useAuth() {
   return {
     user,
     session,
-    isLoading,
+    isLoading: isLoading || isCheckingRole,
     isAdmin,
     signIn,
     signUp,
