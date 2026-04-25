@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { notifyAdmin } from "@/lib/notifyAdmin";
 
 const auditSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -200,6 +201,18 @@ export function SystemAuditForm() {
       });
       return;
     }
+
+    notifyAdmin({
+      type: "system_audit",
+      name: parsed.data.name,
+      email: parsed.data.email,
+      message: compiledMessage,
+      meta: {
+        website: parsed.data.websiteUrl,
+        store_type: parsed.data.storeType,
+        revenue: parsed.data.monthlyRevenue || "—",
+      },
+    });
 
     setSubmittedName(parsed.data.name.split(" ")[0]);
     setSubmitted(true);

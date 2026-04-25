@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { notifyAdmin } from "@/lib/notifyAdmin";
 
 const services = [
   "Shopify Design",
@@ -87,6 +88,20 @@ export function ContactForm() {
       });
 
       if (error) throw error;
+
+      // Notify admin inbox (non-blocking)
+      notifyAdmin({
+        type: "contact",
+        name: data.name,
+        email: data.email,
+        phone: data.phone || undefined,
+        message: data.message,
+        meta: {
+          service: data.service,
+          company: data.company || "—",
+          budget: data.custom_budget || data.budget_range || "—",
+        },
+      });
 
       setIsSubmitted(true);
       reset();

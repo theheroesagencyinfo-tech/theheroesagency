@@ -18,6 +18,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { CALENDLY_URL } from "@/lib/links";
+import { notifyAdmin } from "@/lib/notifyAdmin";
 
 const quoteSchema = z.object({
   first_name: z.string().trim().min(1, "First name is required").max(50),
@@ -82,6 +83,19 @@ export function QuoteRequestDialog({
       });
 
       if (error) throw error;
+
+      notifyAdmin({
+        type: "quote_request",
+        name: `${data.first_name} ${data.last_name}`.trim(),
+        email: data.email,
+        phone: data.whatsapp || undefined,
+        message,
+        meta: {
+          segment: segment || "—",
+          project_type: data.project_type,
+          wants_call: data.schedule_call,
+        },
+      });
 
       setIsSubmitted(true);
 
