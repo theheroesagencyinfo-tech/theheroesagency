@@ -10,6 +10,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { notifyAdmin } from "@/lib/notifyAdmin";
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100, "Name must be less than 100 characters"),
   email: z.string().trim().email("Please enter a valid email").max(255, "Email must be less than 255 characters"),
@@ -35,16 +37,20 @@ const socialLinks = [{
 }];
 const navLinks = [{
   label: "Services",
-  href: "#services"
+  href: "#services",
+  type: "section" as const,
 }, {
   label: "Process",
-  href: "#process"
+  href: "#process",
+  type: "section" as const,
 }, {
   label: "Portfolio",
-  href: "#portfolio"
+  href: "/portfolio",
+  type: "route" as const,
 }, {
   label: "Testimonials",
-  href: "#testimonials"
+  href: "#testimonials",
+  type: "section" as const,
 }];
 export function Footer() {
   const {
@@ -66,8 +72,31 @@ export function Footer() {
     resolver: zodResolver(contactSchema)
   });
   const onSubmit = async (data: ContactFormData) => {
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: data.name,
+      email: data.email,
+      service: "Website inquiry",
+      message: data.message,
+      lead_type: "footer_contact",
+    });
+
+    if (error) {
+      toast({
+        title: "Couldn't send",
+        description: "Please try again in a moment.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    notifyAdmin({
+      type: "contact",
+      name: data.name,
+      email: data.email,
+      message: data.message,
+      meta: { source: "footer" },
+    });
+
     toast({
       title: "Message sent!",
       description: "Thank you for reaching out. I'll get back to you within 24 hours."
@@ -179,9 +208,15 @@ export function Footer() {
 
               {/* Navigation */}
               <nav className="flex items-center gap-6 flex-wrap justify-center">
-                {navLinks.map(link => <button key={link.label} onClick={() => scrollToSection(link.href)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                {navLinks.map(link => link.type === "route" ? (
+                  <Link key={link.label} to={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                     {link.label}
-                  </button>)}
+                  </Link>
+                ) : (
+                  <button key={link.label} onClick={() => scrollToSection(link.href)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    {link.label}
+                  </button>
+                ))}
                 <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                   Privacy Policy
                 </Link>
