@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
@@ -12,13 +13,26 @@ const stats = [
   { value: 340, suffix: "%", label: "Avg. Conversion Lift" },
 ];
 
-function StatItem({ value, prefix = "", suffix, label, isVisible }: { value: number; prefix?: string; suffix: string; label: string; isVisible: boolean }) {
+function StatItem({
+  value,
+  prefix = "",
+  suffix,
+  label,
+  isVisible,
+}: {
+  value: number;
+  prefix?: string;
+  suffix: string;
+  label: string;
+  isVisible: boolean;
+}) {
   const count = useCountUp(value, 2500, isVisible);
-  
   return (
     <div className="text-center">
       <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-2">
-        {prefix}{count}{suffix}
+        {prefix}
+        {count}
+        {suffix}
       </div>
       <div className="text-sm md:text-base text-muted-foreground uppercase tracking-wider">
         {label}
@@ -29,14 +43,31 @@ function StatItem({ value, prefix = "", suffix, label, isVisible }: { value: num
 
 export function HeroSection() {
   const { ref, isVisible } = useScrollAnimation(0.2);
+  const sectionRef = useRef<HTMLElement>(null);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  // Cursor-reveal: track mouse position on the section so the banner
+  // image becomes clearer in a circle around the cursor.
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    el.style.setProperty("--mx", `${x}%`);
+    el.style.setProperty("--my", `${y}%`);
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Banner image as full background */}
+    <section
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+      className="hero-reveal relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
+      style={{ ["--mx" as never]: "50%", ["--my" as never]: "50%" }}
+    >
+      {/* Banner — base (slightly dimmed) */}
       <div className="absolute inset-0 z-0">
         <img
           src={heroBanner}
@@ -45,24 +76,49 @@ export function HeroSection() {
           height={1080}
           className="w-full h-full object-cover"
         />
-        {/* Dark overlays for legibility */}
-        <div className="absolute inset-0 bg-background/70" />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/50 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60" />
+        <div className="absolute inset-0 bg-background/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background" />
       </div>
 
-      {/* Background glow effects */}
-      <div className="absolute inset-0 bg-glow-top z-[1]" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] animate-pulse-glow z-[1]" />
+      {/* Banner — sharp layer revealed in a circle around the cursor */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1] pointer-events-none transition-opacity duration-500"
+        style={{
+          WebkitMaskImage:
+            "radial-gradient(280px circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.6) 45%, transparent 75%)",
+          maskImage:
+            "radial-gradient(280px circle at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.6) 45%, transparent 75%)",
+        }}
+      >
+        <img
+          src={heroBanner}
+          alt=""
+          width={1920}
+          height={1080}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Soft sky-blue glow following the cursor */}
+      <div
+        aria-hidden
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(420px circle at var(--mx) var(--my), hsl(var(--sky) / 0.18), transparent 60%)",
+        }}
+      />
+
+      <div className="absolute inset-0 bg-glow-top z-[2]" />
 
       <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-4xl mx-auto text-center mb-16"
+          className="max-w-3xl mx-auto text-center mb-20"
         >
-          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -70,25 +126,23 @@ export function HeroSection() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-primary/20 mb-8"
           >
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm text-muted-foreground">Available for new projects</span>
+            <span className="text-sm text-muted-foreground">
+              Available for new projects
+            </span>
           </motion.div>
 
-          {/* Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1] drop-shadow-2xl">
-            I Build{" "}
-            <span className="text-gradient">High-Converting</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
+            I Build <span className="text-gradient">High-Converting</span>
             <br />
             Shopify Stores
           </h1>
 
-          {/* Subtitle */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
             Elite eCommerce consultant specializing in premium Shopify design,
             conversion optimization, and growth strategies that drive
             <span className="text-foreground font-medium"> real results</span>.
           </p>
 
-          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -117,7 +171,6 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Stats */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
@@ -131,12 +184,11 @@ export function HeroSection() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
       >
         <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
           <motion.div
