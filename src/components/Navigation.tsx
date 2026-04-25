@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const navLinks = [
   { label: "Services", href: "#services", type: "section" as const },
@@ -73,21 +74,26 @@ export function Navigation() {
               ))}
             </nav>
 
-            <Button
-              onClick={handleContact}
-              className="hidden md:flex gradient-gold text-primary-foreground font-semibold hover:scale-105 transition-transform duration-300"
-            >
-              Let's Talk
-            </Button>
+            <div className="hidden md:flex items-center gap-3">
+              <ThemeToggle />
+              <Button
+                onClick={handleContact}
+                className="gradient-gold text-primary-foreground font-semibold hover:scale-105 transition-transform duration-300"
+              >
+                Let's Talk
+              </Button>
+            </div>
 
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </Button>
+            <div className="flex md:hidden items-center gap-2">
+              <ThemeToggle />
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </Button>
+            </div>
           </div>
         </div>
       </motion.header>

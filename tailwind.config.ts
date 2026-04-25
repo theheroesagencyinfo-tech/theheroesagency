@@ -57,8 +57,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        gold: "hsl(var(--gold))",
-        amber: "hsl(var(--amber))",
+        sky: "hsl(var(--sky))",
+        "sky-deep": "hsl(var(--sky-deep))",
+        "sky-glow": "hsl(var(--sky-glow))",
       },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],

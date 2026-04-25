@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { reviewSchema, ReviewFormData } from "@/lib/reviewSchema";
 import { supabase } from "@/integrations/supabase/client";
+import { notifyAdmin } from "@/lib/notifyAdmin";
 
 interface ReviewFormProps {
   onSuccess?: () => void;
@@ -56,6 +57,17 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
       });
 
       if (error) throw error;
+
+      notifyAdmin({
+        type: "review",
+        name: data.name,
+        email: data.email,
+        message: data.message,
+        meta: {
+          rating: `${data.star_rating}★`,
+          company: data.company || "—",
+        },
+      });
 
       setSubmitStatus("success");
       reset();
