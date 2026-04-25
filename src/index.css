@@ -120,39 +120,39 @@
     @apply hover:bg-card/60 hover:border-white/20 transition-all duration-300;
   }
   
-  /* Gold gradient text */
+  /* Brand gradient text (sky blue) */
   .text-gradient {
-    background: linear-gradient(to right, hsl(43 96% 56%), hsl(32 95% 54%), hsl(43 96% 56%));
+    background: linear-gradient(to right, hsl(var(--sky-deep)), hsl(var(--sky)), hsl(var(--sky-glow)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
-  /* Gold glow effect */
+
+  /* Brand glow (sky blue) — legacy class names kept for compatibility */
   .gold-glow {
-    box-shadow: 0 0 40px hsl(43 96% 56% / 0.15), 0 0 80px hsl(43 96% 56% / 0.1);
+    box-shadow: 0 0 40px hsl(var(--sky) / 0.18), 0 0 80px hsl(var(--sky) / 0.12);
   }
-  
+
   .gold-glow-sm {
-    box-shadow: 0 0 20px hsl(43 96% 56% / 0.15);
+    box-shadow: 0 0 20px hsl(var(--sky) / 0.18);
   }
-  
-  /* Gradient backgrounds */
+
+  /* Brand gradient backgrounds (sky blue) */
   .gradient-gold {
-    background: linear-gradient(to right, hsl(43 96% 56%), hsl(32 95% 50%), hsl(43 96% 56%));
+    background: linear-gradient(to right, hsl(var(--sky-deep)), hsl(var(--sky)), hsl(var(--sky-glow)));
   }
-  
+
   .gradient-gold-vertical {
-    background: linear-gradient(to bottom, hsl(43 96% 56%), hsl(32 95% 50%), hsl(43 96% 56%));
+    background: linear-gradient(to bottom, hsl(var(--sky-deep)), hsl(var(--sky)), hsl(var(--sky-glow)));
   }
-  
+
   /* Subtle background glow */
   .bg-glow {
-    background: radial-gradient(ellipse at center, hsl(43 96% 56% / 0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, hsl(var(--sky) / 0.10) 0%, transparent 70%);
   }
-  
+
   .bg-glow-top {
-    background: radial-gradient(ellipse at top, hsl(43 96% 56% / 0.12) 0%, transparent 60%);
+    background: radial-gradient(ellipse at top, hsl(var(--sky) / 0.14) 0%, transparent 60%);
   }
 
   /* Cursor-following spotlight (use with useMouseGlow) */
@@ -167,7 +167,7 @@
     pointer-events: none;
     background: radial-gradient(
       600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      hsl(43 96% 56% / 0.08),
+      hsl(var(--sky) / 0.10),
       transparent 40%
     );
     opacity: 0;
@@ -191,7 +191,7 @@
     pointer-events: none;
     background: radial-gradient(
       280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      hsl(43 96% 56% / 0.12),
+      hsl(var(--sky) / 0.14),
       transparent 50%
     );
     opacity: 0;
@@ -229,6 +229,6 @@
   }
   .hover-lift:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 40px -20px hsl(43 96% 56% / 0.25);
+    box-shadow: 0 20px 40px -20px hsl(var(--sky) / 0.30);
   }
 }
