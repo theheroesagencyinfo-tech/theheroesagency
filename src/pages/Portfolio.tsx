@@ -13,10 +13,22 @@ import darntoughImg from "@/assets/portfolio/darntough-com.jpg";
 import trndaImg from "@/assets/portfolio/trnda-com.jpg";
 import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.jpg";
 import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.jpg";
-import nevuuImg from "@/assets/portfolio/www-nevuu-com.jpg";
 import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
 import hatkayImg from "@/assets/portfolio/hatkay-com.jpg";
 import haustierkostImg from "@/assets/portfolio/haustierkost-de.jpg";
+
+// New featured projects (top of portfolio)
+import takeletlooseImg from "@/assets/portfolio/takeletloose-com.png";
+import valevaImg from "@/assets/portfolio/valeva-shop.png";
+import velaxenImg from "@/assets/portfolio/velaxen-shop.png";
+import milolabImg from "@/assets/portfolio/milolabco-com.png";
+import azureImg from "@/assets/portfolio/azureboutique-co.png";
+import gisouImg from "@/assets/portfolio/gisou-com.png";
+import getrenuImg from "@/assets/portfolio/getrenu-com.png";
+import trimtasteImg from "@/assets/portfolio/trimtaste-com.png";
+import nurricoImg from "@/assets/portfolio/nurrico-com.png";
+import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.png";
+import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.png";
 
 import mDtcSkincare from "@/assets/portfolio/marketing/dtc-skincare-dashboard.jpg";
 import mApparel from "@/assets/portfolio/marketing/apparel-relaunch-dashboard.jpg";
