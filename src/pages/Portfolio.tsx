@@ -98,21 +98,27 @@ const segments: Segment[] = [
   },
 ];
 
-function ProjectTile({ project }: { project: Project }) {
+function ProjectTile({
+  project,
+  onImageClick,
+}: {
+  project: Project;
+  onImageClick: (p: Project) => void;
+}) {
   const ref = useMouseGlow<HTMLDivElement>();
-  const Wrapper: any = project.url ? "a" : "div";
-  const wrapperProps = project.url
-    ? { href: project.url, target: "_blank", rel: "noopener noreferrer" }
-    : {};
 
   return (
-    <Wrapper
+    <div
       ref={ref}
-      {...wrapperProps}
       className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 block"
     >
       {project.image ? (
-        <div className="relative h-48 overflow-hidden bg-muted">
+        <button
+          type="button"
+          onClick={() => onImageClick(project)}
+          className="relative h-48 w-full overflow-hidden bg-muted block cursor-zoom-in"
+          aria-label={`Open larger preview of ${project.title}`}
+        >
           <img
             src={project.image}
             alt={`${project.title} preview`}
@@ -122,19 +128,16 @@ function ProjectTile({ project }: { project: Project }) {
             className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-          {project.url && (
-            <div className="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-              <ExternalLink className="w-5 h-5 text-primary" />
-            </div>
-          )}
-        </div>
+          <div className="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <ExternalLink className="w-5 h-5 text-primary" />
+          </div>
+        </button>
       ) : (
         <div className="h-32 gradient-gold opacity-20" />
       )}
       <div className="p-5">
-        <h3 className="text-lg font-bold text-foreground flex items-center gap-2 group-hover:text-gradient transition-all">
+        <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
           {project.title}
-          {project.url && <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100" />}
         </h3>
         <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
           {project.description}
@@ -142,8 +145,18 @@ function ProjectTile({ project }: { project: Project }) {
         {project.meta && (
           <p className="text-sm font-semibold text-primary mt-3">{project.meta}</p>
         )}
+        {project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-primary hover:underline"
+          >
+            Visit site <ArrowUpRight className="w-4 h-4" />
+          </a>
+        )}
       </div>
-    </Wrapper>
+    </div>
   );
 }
 
