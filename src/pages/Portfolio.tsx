@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ExternalLink, ArrowUpRight, X } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 
@@ -16,6 +17,15 @@ import nevuuImg from "@/assets/portfolio/www-nevuu-com.jpg";
 import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
 import hatkayImg from "@/assets/portfolio/hatkay-com.jpg";
 import haustierkostImg from "@/assets/portfolio/haustierkost-de.jpg";
+
+import mDtcSkincare from "@/assets/portfolio/marketing/dtc-skincare-dashboard.jpg";
+import mApparel from "@/assets/portfolio/marketing/apparel-relaunch-dashboard.jpg";
+import mOutdoor from "@/assets/portfolio/marketing/outdoor-seo-ads.jpg";
+import mPet from "@/assets/portfolio/marketing/pet-subscription-growth.jpg";
+import aKlaviyo from "@/assets/portfolio/automation/klaviyo-flows.jpg";
+import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
+import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
+import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
 
 type Project = {
   title: string;
@@ -56,10 +66,10 @@ const segments: Segment[] = [
     blurb:
       "Performance campaigns, email/SMS flows and CRO experiments that turn traffic into reliable revenue.",
     projects: [
-      { title: "DTC Skincare Scale-Up", description: "Paid social + lifecycle email program.", meta: "+312% ROAS in 90 days" },
-      { title: "Apparel Brand Relaunch", description: "Full funnel rebuild, creative testing and retention.", meta: "$1.8M added in Y1" },
-      { title: "Outdoor Equipment Brand", description: "SEO + Google/Meta ads with Klaviyo flows.", meta: "4.2× LTV uplift" },
-      { title: "Pet Nutrition Subscription", description: "Subscription growth + retention strategy.", meta: "61% subscriber growth" },
+      { title: "DTC Skincare Scale-Up", description: "Paid social + lifecycle email program driving record-breaking returns on ad spend.", meta: "+312% ROAS in 90 days", image: mDtcSkincare },
+      { title: "Apparel Brand Relaunch", description: "Full-funnel rebuild, creative testing and retention strategy across paid and owned channels.", meta: "$1.8M added in Y1", image: mApparel },
+      { title: "Outdoor Equipment Brand", description: "SEO programme combined with Google & Meta ads and Klaviyo lifecycle flows.", meta: "4.2× LTV uplift", image: mOutdoor },
+      { title: "Pet Nutrition Subscription", description: "Subscription acquisition + retention strategy with cohort-based optimisation.", meta: "+61% subscriber growth", image: mPet },
     ],
   },
   {
@@ -68,10 +78,10 @@ const segments: Segment[] = [
     blurb:
       "End-to-end automations for marketing, ops and customer experience — Klaviyo, Zapier, n8n and custom workflows.",
     projects: [
-      { title: "Klaviyo Lifecycle Suite", description: "Welcome, browse abandon, post-purchase & win-back flows." },
-      { title: "Order Ops Automation", description: "Shopify ↔ 3PL ↔ accounting automated reconciliation." },
-      { title: "Lead Routing Pipeline", description: "Forms → CRM → Slack → calendar booking, fully automated." },
-      { title: "Review & UGC Engine", description: "Automated review collection + UGC asset routing." },
+      { title: "Klaviyo Lifecycle Suite", description: "Welcome, browse abandon, post-purchase & win-back flows generating recurring revenue on autopilot.", image: aKlaviyo },
+      { title: "Order Ops Automation", description: "Shopify ↔ 3PL ↔ accounting automated reconciliation cutting manual ops by 80%.", image: aOrderOps },
+      { title: "Lead Routing Pipeline", description: "Forms → CRM → Slack → calendar booking, fully automated lead capture.", image: aLeadRouting },
+      { title: "Review & UGC Engine", description: "Automated review collection + UGC asset routing into ad creative pipelines.", image: aReviewUgc },
     ],
   },
   {
@@ -88,21 +98,27 @@ const segments: Segment[] = [
   },
 ];
 
-function ProjectTile({ project }: { project: Project }) {
+function ProjectTile({
+  project,
+  onImageClick,
+}: {
+  project: Project;
+  onImageClick: (p: Project) => void;
+}) {
   const ref = useMouseGlow<HTMLDivElement>();
-  const Wrapper: any = project.url ? "a" : "div";
-  const wrapperProps = project.url
-    ? { href: project.url, target: "_blank", rel: "noopener noreferrer" }
-    : {};
 
   return (
-    <Wrapper
+    <div
       ref={ref}
-      {...wrapperProps}
       className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 block"
     >
       {project.image ? (
-        <div className="relative h-48 overflow-hidden bg-muted">
+        <button
+          type="button"
+          onClick={() => onImageClick(project)}
+          className="relative h-48 w-full overflow-hidden bg-muted block cursor-zoom-in"
+          aria-label={`Open larger preview of ${project.title}`}
+        >
           <img
             src={project.image}
             alt={`${project.title} preview`}
@@ -112,19 +128,16 @@ function ProjectTile({ project }: { project: Project }) {
             className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-          {project.url && (
-            <div className="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-              <ExternalLink className="w-5 h-5 text-primary" />
-            </div>
-          )}
-        </div>
+          <div className="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <ExternalLink className="w-5 h-5 text-primary" />
+          </div>
+        </button>
       ) : (
         <div className="h-32 gradient-gold opacity-20" />
       )}
       <div className="p-5">
-        <h3 className="text-lg font-bold text-foreground flex items-center gap-2 group-hover:text-gradient transition-all">
+        <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
           {project.title}
-          {project.url && <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100" />}
         </h3>
         <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
           {project.description}
@@ -132,14 +145,25 @@ function ProjectTile({ project }: { project: Project }) {
         {project.meta && (
           <p className="text-sm font-semibold text-primary mt-3">{project.meta}</p>
         )}
+        {project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-primary hover:underline"
+          >
+            Visit site <ArrowUpRight className="w-4 h-4" />
+          </a>
+        )}
       </div>
-    </Wrapper>
+    </div>
   );
 }
 
 const Portfolio = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [activeSegment, setActiveSegment] = useState<string | undefined>();
+  const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
 
   const openQuote = (segmentTitle: string) => {
     setActiveSegment(segmentTitle);
@@ -196,7 +220,7 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {segment.projects.map((p) => (
-                  <ProjectTile key={p.title} project={p} />
+                  <ProjectTile key={p.title} project={p} onImageClick={setLightboxProject} />
                 ))}
               </div>
             </motion.section>
@@ -209,6 +233,48 @@ const Portfolio = () => {
         onOpenChange={setQuoteOpen}
         segment={activeSegment}
       />
+
+      {/* Lightbox */}
+      <Dialog open={!!lightboxProject} onOpenChange={(o) => !o && setLightboxProject(null)}>
+        <DialogContent className="max-w-5xl p-0 overflow-hidden bg-background border-primary/20">
+          {lightboxProject && (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setLightboxProject(null)}
+                className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full glass flex items-center justify-center hover:bg-primary/20 transition-colors"
+                aria-label="Close preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              {lightboxProject.image && (
+                <img
+                  src={lightboxProject.image}
+                  alt={`${lightboxProject.title} full preview`}
+                  className="w-full h-auto max-h-[75vh] object-contain bg-black/40"
+                />
+              )}
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-2">{lightboxProject.title}</h3>
+                <p className="text-muted-foreground">{lightboxProject.description}</p>
+                {lightboxProject.meta && (
+                  <p className="text-primary font-semibold mt-3">{lightboxProject.meta}</p>
+                )}
+                {lightboxProject.url && (
+                  <a
+                    href={lightboxProject.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-primary hover:underline"
+                  >
+                    Visit site <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
