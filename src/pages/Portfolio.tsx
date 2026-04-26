@@ -61,12 +61,25 @@ const segments: Segment[] = [
     blurb:
       "Premium Shopify storefronts engineered for conversion — strategic UX, custom theme work and on-brand visuals.",
     projects: [
+      // New featured projects pushed to the top
+      { title: "Take Let Loose", description: "DTC gut-health supplement brand. Bold typography, subscription quiz and Recharge integration drive repeat orders.", image: takeletlooseImg, url: "https://takeletloose.com" },
+      { title: "Valeva", description: "Premium hair & scalp wellness brand. Cinematic hero, founder story and high-trust review carousel built for conversion.", image: valevaImg, url: "https://valeva.shop" },
+      { title: "Velaxen", description: "Cognitive support supplement store with flash-sale urgency, benefit grid and a high-converting single-product funnel.", image: velaxenImg, url: "https://velaxen.shop" },
+      { title: "Milo Lab Co.", description: "Premium pet care brand with editorial cinematography, single-hero CTA and a polished checkout experience.", image: milolabImg, url: "https://milolabco.com" },
+      { title: "Azure Boutique", description: "Batana-oil hair-growth brand. Quiz-led discovery, bundles and lifecycle flows powering a fast-scaling DTC store.", image: azureImg, url: "https://azureboutique.co" },
+      { title: "Gisou", description: "Honey-infused haircare flagship. Editorial storytelling, lip & hair collections and conversion-tuned PDPs.", image: gisouImg, url: "https://gisou.com" },
+      { title: "ReNu (getrenu)", description: "Vet-recommended pet grooming brand — FreshFur brush + cleansing mist with bundle upsells and subscription management.", image: getrenuImg, url: "https://getrenu.com" },
+      { title: "Trim Taste", description: "Berberine + Yerba Mate cutting-mix supplement. Editorial PDP, social proof and benefit-led funnel built for paid traffic.", image: trimtasteImg, url: "https://trimtaste.com" },
+      { title: "Nurri", description: "Pheromone gummy brand with playful identity, single-product funnel and subscription management built in.", image: nurricoImg, url: "https://www.nurrico.com" },
+      { title: "Primal Edge", description: "Bison organ supplement with editorial long-form PDP, ancestral storytelling and premium typography system.", image: primaledgeImg, url: "https://buy-primaledge.com" },
+      { title: "Luxury Pillows", description: "Premium goose-down pillow brand. Sale-driven hero, social proof and a streamlined single-SKU funnel.", image: luxurypillowsImg, url: "https://luxurypillows.co" },
+
+      // Original featured projects
       { title: "Retrospec", description: "Outdoor & e-bike brand with quiz-driven product discovery.", image: retrospecImg, url: "https://retrospec.com" },
       { title: "Darn Tough", description: "Heritage merino socks — advanced filtering and subscriptions.", image: darntoughImg, url: "https://darntough.com" },
       { title: "TRNDA", description: "Luxury Egyptian-inspired watches with elegant showcases.", image: trndaImg, url: "https://trnda.com" },
       { title: "Weightlifting House", description: "Champion-endorsed athletic store with bundle system.", image: weightliftingImg, url: "https://ukstore.weightliftinghouse.com" },
       { title: "Goondiwindi Cotton", description: "Australian farm-to-fashion seasonal collections.", image: goondiwindiImg, url: "https://goondiwindicotton.com.au" },
-      { title: "Nevuu", description: "Skincare brand with sleek photography and fast checkout.", image: nevuuImg, url: "https://www.nevuu.com" },
       { title: "HHG Products", description: "Hair business and mentorship platform with rich catalog.", image: hhgImg, url: "https://hhgproducts.com" },
       { title: "Hatkay", description: "Hair & lifestyle brand with on-brand storefront.", image: hatkayImg, url: "https://www.hatkay.com" },
       { title: "Haustierkost", description: "German pet food store with localized UX.", image: haustierkostImg, url: "https://www.haustierkost.de" },
