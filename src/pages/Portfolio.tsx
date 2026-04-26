@@ -163,6 +163,7 @@ function ProjectTile({
 const Portfolio = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [activeSegment, setActiveSegment] = useState<string | undefined>();
+  const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
 
   const openQuote = (segmentTitle: string) => {
     setActiveSegment(segmentTitle);
@@ -219,7 +220,7 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {segment.projects.map((p) => (
-                  <ProjectTile key={p.title} project={p} />
+                  <ProjectTile key={p.title} project={p} onImageClick={setLightboxProject} />
                 ))}
               </div>
             </motion.section>
@@ -232,6 +233,48 @@ const Portfolio = () => {
         onOpenChange={setQuoteOpen}
         segment={activeSegment}
       />
+
+      {/* Lightbox */}
+      <Dialog open={!!lightboxProject} onOpenChange={(o) => !o && setLightboxProject(null)}>
+        <DialogContent className="max-w-5xl p-0 overflow-hidden bg-background border-primary/20">
+          {lightboxProject && (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setLightboxProject(null)}
+                className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full glass flex items-center justify-center hover:bg-primary/20 transition-colors"
+                aria-label="Close preview"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              {lightboxProject.image && (
+                <img
+                  src={lightboxProject.image}
+                  alt={`${lightboxProject.title} full preview`}
+                  className="w-full h-auto max-h-[75vh] object-contain bg-black/40"
+                />
+              )}
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-2">{lightboxProject.title}</h3>
+                <p className="text-muted-foreground">{lightboxProject.description}</p>
+                {lightboxProject.meta && (
+                  <p className="text-primary font-semibold mt-3">{lightboxProject.meta}</p>
+                )}
+                {lightboxProject.url && (
+                  <a
+                    href={lightboxProject.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 mt-4 text-sm font-semibold text-primary hover:underline"
+                  >
+                    Visit site <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
