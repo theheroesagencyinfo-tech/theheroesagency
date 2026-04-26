@@ -20,8 +20,9 @@ interface Conversation {
   status: string;
 }
 
-// Ensures the visitor has an authenticated (anonymous) Supabase session
-// so RLS policies can identify them via auth.uid() instead of a spoofable header.
+// Ensures the visitor has a Supabase session so RLS can identify them via auth.uid().
+// IMPORTANT: only creates an anonymous session on demand (when the chat is opened),
+// so it never hijacks the auth state of real admin users browsing the site.
 const ensureVisitorSession = async (): Promise<string | null> => {
   const { data: { session } } = await supabase.auth.getSession();
   if (session?.user) return session.user.id;
@@ -59,10 +60,13 @@ export function LiveChat() {
   }, [messages]);
 
   useEffect(() => {
-    // Establish anonymous auth session, then look for an existing conversation.
+    // Only check for an existing conversation if there is ALREADY a session.
+    // Do NOT create an anonymous session on page load — that would block real
+    // admin sign-ins and pollute the user_roles lookups.
     const init = async () => {
-      const uid = await ensureVisitorSession();
-      if (!uid) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
+      const uid = session.user.id;
       setVisitorUserId(uid);
 
       const { data } = await supabase
@@ -79,6 +83,14 @@ export function LiveChat() {
     };
     init();
   }, []);
+
+  // Lazily create an anonymous session the first time the visitor opens the chat.
+  useEffect(() => {
+    if (!isOpen || visitorUserId) return;
+    ensureVisitorSession().then((uid) => {
+      if (uid) setVisitorUserId(uid);
+    });
+  }, [isOpen, visitorUserId]);
 
   const fetchMessages = async () => {
     if (!conversation) return;
