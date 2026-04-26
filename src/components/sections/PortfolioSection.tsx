@@ -10,12 +10,114 @@ import darntoughImg from "@/assets/portfolio/darntough-com.jpg";
 import trndaImg from "@/assets/portfolio/trnda-com.jpg";
 import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.jpg";
 import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.jpg";
-import nevuuImg from "@/assets/portfolio/www-nevuu-com.jpg";
 import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
 import hatkayImg from "@/assets/portfolio/hatkay-com.jpg";
 import haustierkostImg from "@/assets/portfolio/haustierkost-de.jpg";
 
+import takeletlooseImg from "@/assets/portfolio/takeletloose-com.png";
+import valevaImg from "@/assets/portfolio/valeva-shop.png";
+import velaxenImg from "@/assets/portfolio/velaxen-shop.png";
+import milolabImg from "@/assets/portfolio/milolabco-com.png";
+import azureImg from "@/assets/portfolio/azureboutique-co.png";
+import gisouImg from "@/assets/portfolio/gisou-com.png";
+import getrenuImg from "@/assets/portfolio/getrenu-com.png";
+import trimtasteImg from "@/assets/portfolio/trimtaste-com.png";
+import nurricoImg from "@/assets/portfolio/nurrico-com.png";
+import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.png";
+import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.png";
+
 const projects = [
+  // New featured projects pushed to the top
+  {
+    title: "Take Let Loose",
+    category: "Gut Health DTC",
+    description: "Bold supplement brand with subscription-first design, playful typography and Recharge-powered repeat orders.",
+    results: "DTC Supplement Brand",
+    image: takeletlooseImg,
+    url: "https://takeletloose.com",
+  },
+  {
+    title: "Valeva",
+    category: "Hair & Scalp Wellness",
+    description: "Cinematic, founder-led haircare flagship with high-trust review carousel and conversion-tuned PDPs.",
+    results: "Premium Haircare Brand",
+    image: valevaImg,
+    url: "https://valeva.shop",
+  },
+  {
+    title: "Velaxen",
+    category: "Cognitive Support",
+    description: "Single-product nootropic store with flash-sale urgency, benefit grid and a high-converting funnel.",
+    results: "Nootropic Brand",
+    image: velaxenImg,
+    url: "https://velaxen.shop",
+  },
+  {
+    title: "Milo Lab Co.",
+    category: "Premium Pet Care",
+    description: "Editorial pet-care brand with cinematic hero, single-CTA layout and a polished checkout experience.",
+    results: "12,000+ Sold",
+    image: milolabImg,
+    url: "https://milolabco.com",
+  },
+  {
+    title: "Azure Boutique",
+    category: "Hair Growth (Batana)",
+    description: "Quiz-led batana-oil brand with bundles, subscriptions and lifecycle flows powering rapid DTC scale.",
+    results: "Fast-Scaling DTC",
+    image: azureImg,
+    url: "https://azureboutique.co",
+  },
+  {
+    title: "Gisou",
+    category: "Honey-Infused Beauty",
+    description: "Iconic honey-infused haircare and lip oil flagship with editorial storytelling and immersive PDPs.",
+    results: "Global Beauty Brand",
+    image: gisouImg,
+    url: "https://gisou.com",
+  },
+  {
+    title: "ReNu",
+    category: "Pet Grooming",
+    description: "Vet-recommended FreshFur brush + cleansing mist store with bundle upsells and subscription management.",
+    results: "45K+ Reviews",
+    image: getrenuImg,
+    url: "https://getrenu.com",
+  },
+  {
+    title: "Trim Taste",
+    category: "Weight & Metabolism",
+    description: "Berberine + Yerba Mate cutting-mix brand with editorial PDP, social proof and benefit-led funnel.",
+    results: "8,200+ Reviews",
+    image: trimtasteImg,
+    url: "https://trimtaste.com",
+  },
+  {
+    title: "Nurri",
+    category: "Pheromone Gummies",
+    description: "Playful single-product wellness brand with subscription management and a confident visual identity.",
+    results: "Single-Product DTC",
+    image: nurricoImg,
+    url: "https://www.nurrico.com",
+  },
+  {
+    title: "Primal Edge",
+    category: "Ancestral Supplements",
+    description: "Bison organ supplement with editorial long-form PDP, ancestral storytelling and premium typography.",
+    results: "12,800+ Verified Reviews",
+    image: primaledgeImg,
+    url: "https://buy-primaledge.com",
+  },
+  {
+    title: "Luxury Pillows",
+    category: "Premium Sleep",
+    description: "Goose-down pillow brand with sale-driven hero, social proof and a streamlined single-SKU funnel.",
+    results: "47,000+ Sleepers",
+    image: luxurypillowsImg,
+    url: "https://luxurypillows.co",
+  },
+
+  // Original featured projects
   {
     title: "Retrospec",
     category: "Bikes & Outdoor",
@@ -57,17 +159,9 @@ const projects = [
     url: "https://goondiwindicotton.com.au",
   },
   {
-    title: "Nevuu",
-    category: "Beauty Kit",
-    description: "Premium tech accessories and lifestyle products with sleek product photography and streamlined checkout.",
-    results: "Skincare Brand",
-    image: nevuuImg,
-    url: "https://www.nevuu.com",
-  },
-  {
     title: "HHG Products",
-    category: "​Hair",
-    description: "Quality home and garden products with user-friendly navigation and comprehensive product catalogs.",
+    category: "Hair",
+    description: "Quality hair and lifestyle products with user-friendly navigation and comprehensive product catalogs.",
     results: "Hair Business & Mentorship",
     image: hhgImg,
     url: "https://hhgproducts.com",
