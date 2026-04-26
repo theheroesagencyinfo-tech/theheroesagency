@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ExternalLink, ArrowUpRight, X } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 
@@ -16,6 +17,15 @@ import nevuuImg from "@/assets/portfolio/www-nevuu-com.jpg";
 import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
 import hatkayImg from "@/assets/portfolio/hatkay-com.jpg";
 import haustierkostImg from "@/assets/portfolio/haustierkost-de.jpg";
+
+import mDtcSkincare from "@/assets/portfolio/marketing/dtc-skincare-dashboard.jpg";
+import mApparel from "@/assets/portfolio/marketing/apparel-relaunch-dashboard.jpg";
+import mOutdoor from "@/assets/portfolio/marketing/outdoor-seo-ads.jpg";
+import mPet from "@/assets/portfolio/marketing/pet-subscription-growth.jpg";
+import aKlaviyo from "@/assets/portfolio/automation/klaviyo-flows.jpg";
+import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
+import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
+import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
 
 type Project = {
   title: string;
@@ -56,10 +66,10 @@ const segments: Segment[] = [
     blurb:
       "Performance campaigns, email/SMS flows and CRO experiments that turn traffic into reliable revenue.",
     projects: [
-      { title: "DTC Skincare Scale-Up", description: "Paid social + lifecycle email program.", meta: "+312% ROAS in 90 days" },
-      { title: "Apparel Brand Relaunch", description: "Full funnel rebuild, creative testing and retention.", meta: "$1.8M added in Y1" },
-      { title: "Outdoor Equipment Brand", description: "SEO + Google/Meta ads with Klaviyo flows.", meta: "4.2× LTV uplift" },
-      { title: "Pet Nutrition Subscription", description: "Subscription growth + retention strategy.", meta: "61% subscriber growth" },
+      { title: "DTC Skincare Scale-Up", description: "Paid social + lifecycle email program driving record-breaking returns on ad spend.", meta: "+312% ROAS in 90 days", image: mDtcSkincare },
+      { title: "Apparel Brand Relaunch", description: "Full-funnel rebuild, creative testing and retention strategy across paid and owned channels.", meta: "$1.8M added in Y1", image: mApparel },
+      { title: "Outdoor Equipment Brand", description: "SEO programme combined with Google & Meta ads and Klaviyo lifecycle flows.", meta: "4.2× LTV uplift", image: mOutdoor },
+      { title: "Pet Nutrition Subscription", description: "Subscription acquisition + retention strategy with cohort-based optimisation.", meta: "+61% subscriber growth", image: mPet },
     ],
   },
   {
@@ -68,10 +78,10 @@ const segments: Segment[] = [
     blurb:
       "End-to-end automations for marketing, ops and customer experience — Klaviyo, Zapier, n8n and custom workflows.",
     projects: [
-      { title: "Klaviyo Lifecycle Suite", description: "Welcome, browse abandon, post-purchase & win-back flows." },
-      { title: "Order Ops Automation", description: "Shopify ↔ 3PL ↔ accounting automated reconciliation." },
-      { title: "Lead Routing Pipeline", description: "Forms → CRM → Slack → calendar booking, fully automated." },
-      { title: "Review & UGC Engine", description: "Automated review collection + UGC asset routing." },
+      { title: "Klaviyo Lifecycle Suite", description: "Welcome, browse abandon, post-purchase & win-back flows generating recurring revenue on autopilot.", image: aKlaviyo },
+      { title: "Order Ops Automation", description: "Shopify ↔ 3PL ↔ accounting automated reconciliation cutting manual ops by 80%.", image: aOrderOps },
+      { title: "Lead Routing Pipeline", description: "Forms → CRM → Slack → calendar booking, fully automated lead capture.", image: aLeadRouting },
+      { title: "Review & UGC Engine", description: "Automated review collection + UGC asset routing into ad creative pipelines.", image: aReviewUgc },
     ],
   },
   {
