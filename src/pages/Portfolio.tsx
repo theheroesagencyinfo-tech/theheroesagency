@@ -30,10 +30,8 @@ import nurricoImg from "@/assets/portfolio/nurrico-com.png";
 import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.png";
 import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.png";
 
-import mDtcSkincare from "@/assets/portfolio/marketing/dtc-skincare-dashboard.jpg";
-import mApparel from "@/assets/portfolio/marketing/apparel-relaunch-dashboard.jpg";
-import mOutdoor from "@/assets/portfolio/marketing/outdoor-seo-ads.jpg";
-import mPet from "@/assets/portfolio/marketing/pet-subscription-growth.jpg";
+// Generic marketing visuals (legacy) — replaced with real brand case studies below
+
 // Real brand marketing case studies
 import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.jpg";
 import mValeva from "@/assets/portfolio/marketing/brands/valeva.jpg";
@@ -61,7 +59,7 @@ import googleAdsLogo from "@/assets/logos/googleads.svg";
 import pinterestLogo from "@/assets/logos/pinterest.svg";
 import makeLogo from "@/assets/logos/make.svg";
 import n8nLogo from "@/assets/logos/n8n.svg";
-import huggingfaceLogo from "@/assets/logos/huggingface.svg";
+
 
 // Wordmark logos rendered inline so they inherit currentColor (works in light + dark theme)
 import klaviyoSvg from "@/assets/logos/klaviyo.svg?raw";
