@@ -30,10 +30,8 @@ import nurricoImg from "@/assets/portfolio/nurrico-com.png";
 import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.png";
 import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.png";
 
-import mDtcSkincare from "@/assets/portfolio/marketing/dtc-skincare-dashboard.jpg";
-import mApparel from "@/assets/portfolio/marketing/apparel-relaunch-dashboard.jpg";
-import mOutdoor from "@/assets/portfolio/marketing/outdoor-seo-ads.jpg";
-import mPet from "@/assets/portfolio/marketing/pet-subscription-growth.jpg";
+// Generic marketing visuals (legacy) — replaced with real brand case studies below
+
 // Real brand marketing case studies
 import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.jpg";
 import mValeva from "@/assets/portfolio/marketing/brands/valeva.jpg";
@@ -44,6 +42,9 @@ import mRenu from "@/assets/portfolio/marketing/brands/renu.jpg";
 import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.jpg";
 import mNurri from "@/assets/portfolio/marketing/brands/nurri.jpg";
 import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.jpg";
+import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.jpg";
+import mGisou from "@/assets/portfolio/marketing/brands/gisou.jpg";
+import mHealora from "@/assets/portfolio/marketing/brands/healora.jpg";
 import aKlaviyo from "@/assets/portfolio/automation/klaviyo-flows.jpg";
 import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
 import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
@@ -58,7 +59,7 @@ import googleAdsLogo from "@/assets/logos/googleads.svg";
 import pinterestLogo from "@/assets/logos/pinterest.svg";
 import makeLogo from "@/assets/logos/make.svg";
 import n8nLogo from "@/assets/logos/n8n.svg";
-import huggingfaceLogo from "@/assets/logos/huggingface.svg";
+
 
 // Wordmark logos rendered inline so they inherit currentColor (works in light + dark theme)
 import klaviyoSvg from "@/assets/logos/klaviyo.svg?raw";
@@ -142,11 +143,11 @@ const segments: Segment[] = [
       { title: "Nurri — Men's Pheromone Gummies", description: "Buy-1-Get-1 stacked-offer funnel with auto-refill subscription. Bold packaging-first creative scaled across Meta and TikTok.", meta: "$267K–$485K /mo revenue · 180K monthly visits · 5,066 reviews", image: mNurri },
       { title: "Primal Edge — Bison Testosterone Booster", description: "Long-form editorial PDP with clinical positioning and bundle ladder (Buy 2 Get 1 / Buy 3 Get 2). 50,000+ customers acquired through Meta + Google.", meta: "$27K–$49K /mo revenue · +2,728% 1-month growth · 4.8★ rating", image: mPrimalEdge },
 
-      // Original case studies
-      { title: "DTC Skincare Scale-Up", description: "Paid social + lifecycle email program driving record-breaking returns on ad spend.", meta: "+312% ROAS in 90 days", image: mDtcSkincare },
-      { title: "Apparel Brand Relaunch", description: "Full-funnel rebuild, creative testing and retention strategy across paid and owned channels.", meta: "$1.8M added in Y1", image: mApparel },
-      { title: "Outdoor Equipment Brand", description: "SEO programme combined with Google & Meta ads and Klaviyo lifecycle flows.", meta: "4.2× LTV uplift", image: mOutdoor },
-      { title: "Pet Nutrition Subscription", description: "Subscription acquisition + retention strategy with cohort-based optimisation.", meta: "+61% subscriber growth", image: mPet },
+      // Featured large-scale brand case studies
+      { title: "Gisou — Honey-Infused Haircare", description: "Global haircare flagship scaled with Meta + Google + TikTok creative testing engine, lifecycle email and influencer-led storytelling. Editorial PDPs and bundle-led AOV strategy across EU & US.", meta: "$799K–$1.5M /mo revenue · 320,500 monthly visits · 286 active ads", image: mGisou },
+      { title: "Healora — Wellness DTC Brand", description: "Rapid-growth health & wellness store scaled from launch to 90K monthly visits in 6 months. Aggressive Meta-ads testing, lifecycle flows and conversion-optimized PDPs.", meta: "$151K–$274K /mo revenue · 90,428 monthly visits · +17.5% 7-day growth", image: mHealora },
+      { title: "Luxury Pillows — Premium Sleep Brand", description: "Goose-down luxury pillow brand with sale-driven hero, urgency timer and streamlined single-SKU funnel. Meta-ads creative testing across EU & UK markets.", meta: "$45K–$81K /mo revenue · 18,222 monthly visits · 48 active Meta ads", image: mLuxuryPillows },
+
     ],
   },
   {
@@ -176,7 +177,6 @@ const segments: Segment[] = [
       { name: "Grok", svg: grokSvg },
       { name: "Gemini", svg: geminiSvg },
       { name: "Higgsfield", svg: higgsfieldSvg },
-      { name: "Hugging Face", logo: huggingfaceLogo },
       { name: "Kling", svg: klingSvg },
     ],
     projects: [
