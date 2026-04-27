@@ -281,9 +281,9 @@ export function PortfolioSection() {
           </p>
         </motion.div>
 
-        {/* Project Grid */}
+        {/* Project Grid — show only top 6 on homepage */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {projects.map((project, index) => (
+          {projects.slice(0, 6).map((project, index) => (
             <ProjectCard
               key={project.title}
               {...project}

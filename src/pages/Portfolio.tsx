@@ -39,6 +39,22 @@ import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
 import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
 import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
 
+// Platform logos
+import shopifyLogo from "@/assets/logos/shopify.svg";
+import facebookLogo from "@/assets/logos/facebook.svg";
+import instagramLogo from "@/assets/logos/instagram.svg";
+import xLogo from "@/assets/logos/x.svg";
+import googleAdsLogo from "@/assets/logos/googleads.svg";
+import pinterestLogo from "@/assets/logos/pinterest.svg";
+import klaviyoLogo from "@/assets/logos/klaviyo.svg";
+import makeLogo from "@/assets/logos/make.svg";
+import n8nLogo from "@/assets/logos/n8n.svg";
+import soraLogo from "@/assets/logos/sora.svg";
+import grokLogo from "@/assets/logos/grok.svg";
+import geminiLogo from "@/assets/logos/gemini.svg";
+import huggingfaceLogo from "@/assets/logos/huggingface.svg";
+import klingLogo from "@/assets/logos/kling.svg";
+
 type Project = {
   title: string;
   description: string;
@@ -47,10 +63,13 @@ type Project = {
   meta?: string;
 };
 
+type Platform = { name: string; logo: string };
+
 type Segment = {
   id: string;
   title: string;
   blurb: string;
+  platforms?: Platform[];
   projects: Project[];
 };
 
@@ -60,6 +79,7 @@ const segments: Segment[] = [
     title: "Shopify Website Design / Redesign",
     blurb:
       "Premium Shopify storefronts engineered for conversion — strategic UX, custom theme work and on-brand visuals.",
+    platforms: [{ name: "Shopify", logo: shopifyLogo }],
     projects: [
       // New featured projects pushed to the top
       { title: "Take Let Loose", description: "DTC gut-health supplement brand. Bold typography, subscription quiz and Recharge integration drive repeat orders.", image: takeletlooseImg, url: "https://takeletloose.com" },
@@ -90,6 +110,13 @@ const segments: Segment[] = [
     title: "Marketing & Revenue Generated",
     blurb:
       "Performance campaigns, email/SMS flows and CRO experiments that turn traffic into reliable revenue.",
+    platforms: [
+      { name: "Facebook", logo: facebookLogo },
+      { name: "Instagram", logo: instagramLogo },
+      { name: "X", logo: xLogo },
+      { name: "Google Ads", logo: googleAdsLogo },
+      { name: "Pinterest", logo: pinterestLogo },
+    ],
     projects: [
       { title: "DTC Skincare Scale-Up", description: "Paid social + lifecycle email program driving record-breaking returns on ad spend.", meta: "+312% ROAS in 90 days", image: mDtcSkincare },
       { title: "Apparel Brand Relaunch", description: "Full-funnel rebuild, creative testing and retention strategy across paid and owned channels.", meta: "$1.8M added in Y1", image: mApparel },
@@ -102,6 +129,11 @@ const segments: Segment[] = [
     title: "Automation Set-Up",
     blurb:
       "End-to-end automations for marketing, ops and customer experience — Klaviyo, Zapier, n8n and custom workflows.",
+    platforms: [
+      { name: "Klaviyo", logo: klaviyoLogo },
+      { name: "Make", logo: makeLogo },
+      { name: "n8n", logo: n8nLogo },
+    ],
     projects: [
       { title: "Klaviyo Lifecycle Suite", description: "Welcome, browse abandon, post-purchase & win-back flows generating recurring revenue on autopilot.", image: aKlaviyo },
       { title: "Order Ops Automation", description: "Shopify ↔ 3PL ↔ accounting automated reconciliation cutting manual ops by 80%.", image: aOrderOps },
@@ -114,6 +146,13 @@ const segments: Segment[] = [
     title: "AI Commercial Videos",
     blurb:
       "AI-generated product commercials and brand films — fast-turnaround creative for ads and social.",
+    platforms: [
+      { name: "Sora", logo: soraLogo },
+      { name: "Grok", logo: grokLogo },
+      { name: "Gemini", logo: geminiLogo },
+      { name: "Hugging Face", logo: huggingfaceLogo },
+      { name: "Kling", logo: klingLogo },
+    ],
     projects: [
       { title: "Product Hero Spots", description: "15s & 30s AI-generated hero ads for Meta and TikTok." },
       { title: "Brand Story Films", description: "60–90s narrative films blending AI footage with brand assets." },
@@ -233,6 +272,30 @@ const Portfolio = () => {
                     {segment.title}
                   </h2>
                   <p className="text-muted-foreground max-w-2xl">{segment.blurb}</p>
+                  {segment.platforms && segment.platforms.length > 0 && (
+                    <div className="mt-5 flex flex-wrap items-center gap-2 sm:gap-3">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mr-1">
+                        Supported {segment.platforms.length === 1 ? "Platform" : "Platforms"}:
+                      </span>
+                      {segment.platforms.map((p) => (
+                        <span
+                          key={p.name}
+                          title={p.name}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-primary/10 hover:border-primary/30 transition-colors"
+                        >
+                          <img
+                            src={p.logo}
+                            alt={`${p.name} logo`}
+                            loading="lazy"
+                            className="h-4 w-auto sm:h-5 object-contain"
+                          />
+                          <span className="text-xs sm:text-sm font-medium text-foreground/90">
+                            {p.name}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <Button
                   onClick={() => openQuote(segment.title)}
