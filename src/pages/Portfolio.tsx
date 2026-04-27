@@ -39,6 +39,22 @@ import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
 import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
 import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
 
+// Platform logos
+import shopifyLogo from "@/assets/logos/shopify.svg";
+import facebookLogo from "@/assets/logos/facebook.svg";
+import instagramLogo from "@/assets/logos/instagram.svg";
+import xLogo from "@/assets/logos/x.svg";
+import googleAdsLogo from "@/assets/logos/googleads.svg";
+import pinterestLogo from "@/assets/logos/pinterest.svg";
+import klaviyoLogo from "@/assets/logos/klaviyo.svg";
+import makeLogo from "@/assets/logos/make.svg";
+import n8nLogo from "@/assets/logos/n8n.svg";
+import soraLogo from "@/assets/logos/sora.svg";
+import grokLogo from "@/assets/logos/grok.svg";
+import geminiLogo from "@/assets/logos/gemini.svg";
+import huggingfaceLogo from "@/assets/logos/huggingface.svg";
+import klingLogo from "@/assets/logos/kling.svg";
+
 type Project = {
   title: string;
   description: string;
@@ -47,10 +63,13 @@ type Project = {
   meta?: string;
 };
 
+type Platform = { name: string; logo: string };
+
 type Segment = {
   id: string;
   title: string;
   blurb: string;
+  platforms?: Platform[];
   projects: Project[];
 };
 
