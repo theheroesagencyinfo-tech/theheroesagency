@@ -272,6 +272,30 @@ const Portfolio = () => {
                     {segment.title}
                   </h2>
                   <p className="text-muted-foreground max-w-2xl">{segment.blurb}</p>
+                  {segment.platforms && segment.platforms.length > 0 && (
+                    <div className="mt-5 flex flex-wrap items-center gap-2 sm:gap-3">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mr-1">
+                        Supported {segment.platforms.length === 1 ? "Platform" : "Platforms"}:
+                      </span>
+                      {segment.platforms.map((p) => (
+                        <span
+                          key={p.name}
+                          title={p.name}
+                          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-primary/10 hover:border-primary/30 transition-colors"
+                        >
+                          <img
+                            src={p.logo}
+                            alt={`${p.name} logo`}
+                            loading="lazy"
+                            className="h-4 w-auto sm:h-5 object-contain"
+                          />
+                          <span className="text-xs sm:text-sm font-medium text-foreground/90">
+                            {p.name}
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <Button
                   onClick={() => openQuote(segment.title)}
