@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Send, Linkedin, Twitter, Instagram, Dribbble, Mail, MapPin, Shield } from "lucide-react";
+import { Send, Linkedin, Instagram, Facebook, Mail, MapPin, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,22 +18,37 @@ const contactSchema = z.object({
   message: z.string().trim().min(10, "Message must be at least 10 characters").max(1000, "Message must be less than 1000 characters")
 });
 type ContactFormData = z.infer<typeof contactSchema>;
+// Inline TikTok and X (Twitter) marks since lucide-react doesn't ship them as standard icons here
+const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.45a8.16 8.16 0 0 0 4.77 1.52V6.55a4.85 4.85 0 0 1-1.84-.14z"/>
+  </svg>
+);
+const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
 const socialLinks = [{
   icon: Linkedin,
-  href: "#",
+  href: "https://www.linkedin.com/in/theheroes-agency",
   label: "LinkedIn"
 }, {
-  icon: Twitter,
-  href: "#",
-  label: "Twitter"
-}, {
   icon: Instagram,
-  href: "#",
+  href: "https://www.instagram.com/theheroes_agency",
   label: "Instagram"
 }, {
-  icon: Dribbble,
-  href: "#",
-  label: "Dribbble"
+  icon: TikTokIcon,
+  href: "https://www.tiktok.com/@theheroesagency",
+  label: "TikTok"
+}, {
+  icon: Facebook,
+  href: "https://www.facebook.com/share/18Hjqf3KRJ/?mibextid=wwXIfr",
+  label: "Facebook"
+}, {
+  icon: XIcon,
+  href: "https://x.com/moubarrac",
+  label: "X (Twitter)"
 }];
 const navLinks = [{
   label: "Services",
