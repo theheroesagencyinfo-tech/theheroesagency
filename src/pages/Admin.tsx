@@ -152,7 +152,7 @@ export default function Admin() {
 
   useEffect(() => {
     if (!isLoading && !user) {
-      navigate("/auth");
+      navigate("/auth", { replace: true });
     }
   }, [user, isLoading, navigate]);
 
@@ -475,16 +475,31 @@ export default function Admin() {
     );
   }
 
+  if (!user) {
+    // Redirecting to /auth — render nothing to avoid flash
+    return null;
+  }
+
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
         <div className="glass rounded-2xl p-8 text-center max-w-md">
-          <h1 className="text-2xl font-bold mb-4">Access Denied</h1>
-          <p className="text-muted-foreground mb-6">You don't have permission to access the admin panel.</p>
-          <Button onClick={() => navigate("/")} variant="outline" className="glass">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Home
-          </Button>
+          <h1 className="text-2xl font-bold mb-3">Admin sign-in required</h1>
+          <p className="text-muted-foreground mb-6">
+            You're signed in as <span className="text-foreground font-medium">{user.email}</span>, but this account doesn't have admin access yet. Sign in with the admin email to continue.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <Button
+              onClick={async () => { await signOut(); navigate("/auth"); }}
+              className="gradient-gold text-primary-foreground font-semibold"
+            >
+              Sign in as admin
+            </Button>
+            <Button onClick={() => navigate("/")} variant="outline" className="glass">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Home
+            </Button>
+          </div>
         </div>
       </div>
     );

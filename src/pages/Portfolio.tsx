@@ -34,26 +34,39 @@ import mDtcSkincare from "@/assets/portfolio/marketing/dtc-skincare-dashboard.jp
 import mApparel from "@/assets/portfolio/marketing/apparel-relaunch-dashboard.jpg";
 import mOutdoor from "@/assets/portfolio/marketing/outdoor-seo-ads.jpg";
 import mPet from "@/assets/portfolio/marketing/pet-subscription-growth.jpg";
+// Real brand marketing case studies
+import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.jpg";
+import mValeva from "@/assets/portfolio/marketing/brands/valeva.jpg";
+import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.jpg";
+import mAzure from "@/assets/portfolio/marketing/brands/azure.jpg";
+import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.jpg";
+import mRenu from "@/assets/portfolio/marketing/brands/renu.jpg";
+import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.jpg";
+import mNurri from "@/assets/portfolio/marketing/brands/nurri.jpg";
+import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.jpg";
 import aKlaviyo from "@/assets/portfolio/automation/klaviyo-flows.jpg";
 import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
 import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
 import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
 
-// Platform logos
+// Platform logos — colored brand SVGs as <img>
 import shopifyLogo from "@/assets/logos/shopify.svg";
 import facebookLogo from "@/assets/logos/facebook.svg";
 import instagramLogo from "@/assets/logos/instagram.svg";
 import xLogo from "@/assets/logos/x.svg";
 import googleAdsLogo from "@/assets/logos/googleads.svg";
 import pinterestLogo from "@/assets/logos/pinterest.svg";
-import klaviyoLogo from "@/assets/logos/klaviyo.svg";
 import makeLogo from "@/assets/logos/make.svg";
 import n8nLogo from "@/assets/logos/n8n.svg";
-import soraLogo from "@/assets/logos/sora.svg";
-import grokLogo from "@/assets/logos/grok.svg";
-import geminiLogo from "@/assets/logos/gemini.svg";
 import huggingfaceLogo from "@/assets/logos/huggingface.svg";
-import klingLogo from "@/assets/logos/kling.svg";
+
+// Wordmark logos rendered inline so they inherit currentColor (works in light + dark theme)
+import klaviyoSvg from "@/assets/logos/klaviyo.svg?raw";
+import soraSvg from "@/assets/logos/sora.svg?raw";
+import grokSvg from "@/assets/logos/grok.svg?raw";
+import geminiSvg from "@/assets/logos/gemini.svg?raw";
+import klingSvg from "@/assets/logos/kling.svg?raw";
+import higgsfieldSvg from "@/assets/logos/higgsfield.svg?raw";
 
 type Project = {
   title: string;
@@ -63,7 +76,7 @@ type Project = {
   meta?: string;
 };
 
-type Platform = { name: string; logo: string };
+type Platform = { name: string; logo?: string; svg?: string };
 
 type Segment = {
   id: string;
@@ -118,6 +131,18 @@ const segments: Segment[] = [
       { name: "Pinterest", logo: pinterestLogo },
     ],
     projects: [
+      // Real brand campaigns (featured)
+      { title: "Take Let Loose — Gut Health Supplement", description: "Subscription-led DTC funnel for an oxygenated-magnesium daily capsule. Paid social + Klaviyo lifecycle flows scaled subscriber base while driving 189+ verified reviews.", meta: "$62K–$112K /mo revenue · 55.8K monthly visits · 456 active Meta ads", image: mLetLoose },
+      { title: "Valeva — Golden Hair Growth Oil", description: "Premium hair & scalp brand with cinematic PDP, refill subscription and Meta-ads creative testing engine generating consistent month-over-month growth.", meta: "$13K–$23K /mo revenue · 25K monthly visits · +695% 6-month growth", image: mValeva },
+      { title: "Milo Lab Co. — Pet Dental Spray", description: "Single-product dental health funnel for dogs & cats. Vet-led storytelling, urgency-driven offer stack and free-gift bundles paired with Meta ads.", meta: "$15K–$27K /mo revenue · 9,963 verified reviews · 4.8★ rating", image: mMiloLab },
+      { title: "Azure Boutique — Batana Hair Conditioner", description: "Quiz-led discovery + bundle PDP with dermatologist-credibility positioning. Paid social and influencer creative drove explosive scale through Q1.", meta: "$340K–$617K /mo revenue · 253K monthly visits · +213% 6-month growth", image: mAzure },
+      { title: "Velaxen — Cognitive Boost Supplement", description: "Flash-sale, urgency-driven single-product funnel with bundle offers and free-gift stack. Built for high-volume Meta-ads scaling.", meta: "119,293 customers · 4.9★ rating · 1M+ bottles sold worldwide", image: mVelaxen },
+      { title: "ReNu FreshFur — Waterless Pet Grooming", description: "Bundle-based PDP with 'Most Popular' & 'Best Value' framing, mist-refill subscription and lifecycle email program built for retention.", meta: "$83K–$151K /mo revenue · 86K monthly visits · 45,578 verified reviews", image: mRenu },
+      { title: "Trim Taste — Cutting Drink Mix", description: "Berberine + Yerba Mate weight-management brand. Buy-more-save-more bundles, subscription option and benefit-led ad creatives.", meta: "$50K–$91K /mo revenue · 49.6K monthly visits · 8,258 reviews", image: mTrimTaste },
+      { title: "Nurri — Men's Pheromone Gummies", description: "Buy-1-Get-1 stacked-offer funnel with auto-refill subscription. Bold packaging-first creative scaled across Meta and TikTok.", meta: "$267K–$485K /mo revenue · 180K monthly visits · 5,066 reviews", image: mNurri },
+      { title: "Primal Edge — Bison Testosterone Booster", description: "Long-form editorial PDP with clinical positioning and bundle ladder (Buy 2 Get 1 / Buy 3 Get 2). 50,000+ customers acquired through Meta + Google.", meta: "$27K–$49K /mo revenue · +2,728% 1-month growth · 4.8★ rating", image: mPrimalEdge },
+
+      // Original case studies
       { title: "DTC Skincare Scale-Up", description: "Paid social + lifecycle email program driving record-breaking returns on ad spend.", meta: "+312% ROAS in 90 days", image: mDtcSkincare },
       { title: "Apparel Brand Relaunch", description: "Full-funnel rebuild, creative testing and retention strategy across paid and owned channels.", meta: "$1.8M added in Y1", image: mApparel },
       { title: "Outdoor Equipment Brand", description: "SEO programme combined with Google & Meta ads and Klaviyo lifecycle flows.", meta: "4.2× LTV uplift", image: mOutdoor },
@@ -130,7 +155,7 @@ const segments: Segment[] = [
     blurb:
       "End-to-end automations for marketing, ops and customer experience — Klaviyo, Zapier, n8n and custom workflows.",
     platforms: [
-      { name: "Klaviyo", logo: klaviyoLogo },
+      { name: "Klaviyo", svg: klaviyoSvg },
       { name: "Make", logo: makeLogo },
       { name: "n8n", logo: n8nLogo },
     ],
@@ -147,11 +172,12 @@ const segments: Segment[] = [
     blurb:
       "AI-generated product commercials and brand films — fast-turnaround creative for ads and social.",
     platforms: [
-      { name: "Sora", logo: soraLogo },
-      { name: "Grok", logo: grokLogo },
-      { name: "Gemini", logo: geminiLogo },
+      { name: "Sora", svg: soraSvg },
+      { name: "Grok", svg: grokSvg },
+      { name: "Gemini", svg: geminiSvg },
+      { name: "Higgsfield", svg: higgsfieldSvg },
       { name: "Hugging Face", logo: huggingfaceLogo },
-      { name: "Kling", logo: klingLogo },
+      { name: "Kling", svg: klingSvg },
     ],
     projects: [
       { title: "Product Hero Spots", description: "15s & 30s AI-generated hero ads for Meta and TikTok." },
@@ -283,12 +309,20 @@ const Portfolio = () => {
                           title={p.name}
                           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-primary/10 hover:border-primary/30 transition-colors"
                         >
-                          <img
-                            src={p.logo}
-                            alt={`${p.name} logo`}
-                            loading="lazy"
-                            className="h-4 w-auto sm:h-5 object-contain"
-                          />
+                          {p.svg ? (
+                            <span
+                              aria-label={`${p.name} logo`}
+                              className="inline-flex items-center text-foreground h-4 sm:h-5 [&>svg]:h-full [&>svg]:w-auto"
+                              dangerouslySetInnerHTML={{ __html: p.svg }}
+                            />
+                          ) : (
+                            <img
+                              src={p.logo}
+                              alt={`${p.name} logo`}
+                              loading="lazy"
+                              className="h-4 w-auto sm:h-5 object-contain"
+                            />
+                          )}
                           <span className="text-xs sm:text-sm font-medium text-foreground/90">
                             {p.name}
                           </span>
