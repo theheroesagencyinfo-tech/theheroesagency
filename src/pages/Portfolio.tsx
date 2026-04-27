@@ -328,8 +328,6 @@ const Portfolio = () => {
                           </span>
                         </span>
                       ))}
-                        </span>
-                      ))}
                     </div>
                   )}
                 </div>
