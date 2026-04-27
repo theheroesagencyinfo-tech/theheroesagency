@@ -34,6 +34,16 @@ import mDtcSkincare from "@/assets/portfolio/marketing/dtc-skincare-dashboard.jp
 import mApparel from "@/assets/portfolio/marketing/apparel-relaunch-dashboard.jpg";
 import mOutdoor from "@/assets/portfolio/marketing/outdoor-seo-ads.jpg";
 import mPet from "@/assets/portfolio/marketing/pet-subscription-growth.jpg";
+// Real brand marketing case studies
+import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.jpg";
+import mValeva from "@/assets/portfolio/marketing/brands/valeva.jpg";
+import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.jpg";
+import mAzure from "@/assets/portfolio/marketing/brands/azure.jpg";
+import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.jpg";
+import mRenu from "@/assets/portfolio/marketing/brands/renu.jpg";
+import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.jpg";
+import mNurri from "@/assets/portfolio/marketing/brands/nurri.jpg";
+import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.jpg";
 import aKlaviyo from "@/assets/portfolio/automation/klaviyo-flows.jpg";
 import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
 import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
