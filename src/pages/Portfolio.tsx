@@ -309,15 +309,25 @@ const Portfolio = () => {
                           title={p.name}
                           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass border border-primary/10 hover:border-primary/30 transition-colors"
                         >
-                          <img
-                            src={p.logo}
-                            alt={`${p.name} logo`}
-                            loading="lazy"
-                            className="h-4 w-auto sm:h-5 object-contain"
-                          />
+                          {p.svg ? (
+                            <span
+                              aria-label={`${p.name} logo`}
+                              className="inline-flex items-center text-foreground h-4 sm:h-5 [&>svg]:h-full [&>svg]:w-auto"
+                              dangerouslySetInnerHTML={{ __html: p.svg }}
+                            />
+                          ) : (
+                            <img
+                              src={p.logo}
+                              alt={`${p.name} logo`}
+                              loading="lazy"
+                              className="h-4 w-auto sm:h-5 object-contain"
+                            />
+                          )}
                           <span className="text-xs sm:text-sm font-medium text-foreground/90">
                             {p.name}
                           </span>
+                        </span>
+                      ))}
                         </span>
                       ))}
                     </div>
