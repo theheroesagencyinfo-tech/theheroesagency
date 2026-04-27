@@ -39,21 +39,24 @@ import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
 import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
 import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
 
-// Platform logos
+// Platform logos — colored brand SVGs as <img>
 import shopifyLogo from "@/assets/logos/shopify.svg";
 import facebookLogo from "@/assets/logos/facebook.svg";
 import instagramLogo from "@/assets/logos/instagram.svg";
 import xLogo from "@/assets/logos/x.svg";
 import googleAdsLogo from "@/assets/logos/googleads.svg";
 import pinterestLogo from "@/assets/logos/pinterest.svg";
-import klaviyoLogo from "@/assets/logos/klaviyo.svg";
 import makeLogo from "@/assets/logos/make.svg";
 import n8nLogo from "@/assets/logos/n8n.svg";
-import soraLogo from "@/assets/logos/sora.svg";
-import grokLogo from "@/assets/logos/grok.svg";
-import geminiLogo from "@/assets/logos/gemini.svg";
 import huggingfaceLogo from "@/assets/logos/huggingface.svg";
-import klingLogo from "@/assets/logos/kling.svg";
+
+// Wordmark logos rendered inline so they inherit currentColor (works in light + dark theme)
+import klaviyoSvg from "@/assets/logos/klaviyo.svg?raw";
+import soraSvg from "@/assets/logos/sora.svg?raw";
+import grokSvg from "@/assets/logos/grok.svg?raw";
+import geminiSvg from "@/assets/logos/gemini.svg?raw";
+import klingSvg from "@/assets/logos/kling.svg?raw";
+import higgsfieldSvg from "@/assets/logos/higgsfield.svg?raw";
 
 type Project = {
   title: string;
