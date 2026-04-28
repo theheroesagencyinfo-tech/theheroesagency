@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Store, Clock, DollarSign } from "lucide-react";
+import { Store, Clock, DollarSign, TrendingUp } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
@@ -25,6 +25,13 @@ const metrics = [
     suffix: "M+",
     label: "Revenue Generated",
     description: "For clients worldwide",
+  },
+  {
+    icon: TrendingUp,
+    value: 340,
+    suffix: "%",
+    label: "Avg. Conversion Lift",
+    description: "Across optimized stores",
   },
 ];
 
@@ -84,7 +91,7 @@ export function TrustMetrics() {
       <div className="absolute inset-0 bg-glow opacity-50" />
       
       <div ref={ref} className="container relative z-10 px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto">
           {metrics.map((metric, index) => (
             <MetricCard 
               key={metric.label} 
