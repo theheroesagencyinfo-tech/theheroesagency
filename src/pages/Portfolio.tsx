@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, ArrowUpRight, X } from "lucide-react";
+import { ArrowRight, ExternalLink, ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -45,10 +45,11 @@ import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.jpg";
 import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.jpg";
 import mGisou from "@/assets/portfolio/marketing/brands/gisou.jpg";
 import mHealora from "@/assets/portfolio/marketing/brands/healora.jpg";
-import aKlaviyo from "@/assets/portfolio/automation/klaviyo-flows.jpg";
-import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
-import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
-import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
+import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.jpg";
+import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.jpg";
+import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.jpg";
+import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.jpg";
+import aSocialFactory from "@/assets/portfolio/automation/social-factory.jpg";
 
 // Platform logos — colored brand SVGs as <img>
 import shopifyLogo from "@/assets/logos/shopify.svg";
@@ -73,8 +74,10 @@ type Project = {
   title: string;
   description: string;
   image?: string;
+  images?: string[];
   url?: string;
   meta?: string;
+  fit?: "cover" | "contain";
 };
 
 type Platform = { name: string; logo?: string; svg?: string };
