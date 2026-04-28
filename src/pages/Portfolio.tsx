@@ -228,12 +228,14 @@ function ProjectTile({
   const hasSlider = gallery.length > 1;
   const isContain = project.fit === "contain";
   const fitClass = isContain ? "object-contain" : "object-cover object-top";
-  // Contain (marketing/automation screenshots) → fluid aspect ratio so the full
-  // thumbnail is visible at every breakpoint without cropping. Cover tiles keep
-  // a fixed height for a uniform grid.
+  // Contain (marketing/automation screenshots) → natural image ratio so the full
+  // thumbnail is visible at every breakpoint without any crop or hover zoom.
   const mediaClass = isContain
-    ? "relative w-full aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] overflow-hidden bg-muted block cursor-zoom-in"
+    ? "relative w-full overflow-hidden bg-muted block cursor-zoom-in"
     : "relative h-56 w-full overflow-hidden bg-muted block cursor-zoom-in";
+  const imageClass = isContain
+    ? "w-full h-auto object-contain bg-background"
+    : `w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`;
 
   const next = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -261,8 +263,8 @@ function ProjectTile({
             alt={`${project.title} preview ${slide + 1}`}
             loading="lazy"
             width={1280}
-            height={896}
-            className={`w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`}
+            height={isContain ? undefined : 896}
+            className={imageClass}
           />
           {project.fit !== "contain" && (
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent pointer-events-none" />
