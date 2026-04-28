@@ -2,47 +2,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useCountUp } from "@/hooks/useCountUp";
 import { CALENDLY_URL } from "@/lib/links";
 import heroBanner from "@/assets/hero-banner.jpg";
 
-const stats = [
-  { value: 150, suffix: "+", label: "Stores Built" },
-  { value: 25, prefix: "$", suffix: "M+", label: "Revenue Generated" },
-  { value: 340, suffix: "%", label: "Avg. Conversion Lift" },
-];
-
-function StatItem({
-  value,
-  prefix = "",
-  suffix,
-  label,
-  isVisible,
-}: {
-  value: number;
-  prefix?: string;
-  suffix: string;
-  label: string;
-  isVisible: boolean;
-}) {
-  const count = useCountUp(value, 2500, isVisible);
-  return (
-    <div className="text-center">
-      <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-2">
-        {prefix}
-        {count}
-        {suffix}
-      </div>
-      <div className="text-sm md:text-base text-muted-foreground uppercase tracking-wider">
-        {label}
-      </div>
-    </div>
-  );
-}
-
 export function HeroSection() {
-  const { ref, isVisible } = useScrollAnimation(0.2);
   const sectionRef = useRef<HTMLElement>(null);
 
   const scrollToSection = (id: string) =>
@@ -117,7 +80,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-3xl mx-auto text-center mb-20"
+          className="max-w-3xl mx-auto text-center"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -171,17 +134,6 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-3xl mx-auto"
-        >
-          {stats.map((stat) => (
-            <StatItem key={stat.label} {...stat} isVisible={isVisible} />
-          ))}
-        </motion.div>
       </div>
 
       <motion.div

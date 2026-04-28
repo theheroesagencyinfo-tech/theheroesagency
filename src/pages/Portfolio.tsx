@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ExternalLink, ArrowUpRight, X } from "lucide-react";
+import { ArrowRight, ExternalLink, ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
@@ -45,10 +45,11 @@ import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.jpg";
 import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.jpg";
 import mGisou from "@/assets/portfolio/marketing/brands/gisou.jpg";
 import mHealora from "@/assets/portfolio/marketing/brands/healora.jpg";
-import aKlaviyo from "@/assets/portfolio/automation/klaviyo-flows.jpg";
-import aOrderOps from "@/assets/portfolio/automation/order-ops-pipeline.jpg";
-import aLeadRouting from "@/assets/portfolio/automation/lead-routing.jpg";
-import aReviewUgc from "@/assets/portfolio/automation/review-ugc-engine.jpg";
+import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.jpg";
+import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.jpg";
+import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.jpg";
+import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.jpg";
+import aSocialFactory from "@/assets/portfolio/automation/social-factory.jpg";
 
 // Platform logos — colored brand SVGs as <img>
 import shopifyLogo from "@/assets/logos/shopify.svg";
@@ -73,8 +74,10 @@ type Project = {
   title: string;
   description: string;
   image?: string;
+  images?: string[];
   url?: string;
   meta?: string;
+  fit?: "cover" | "contain";
 };
 
 type Platform = { name: string; logo?: string; svg?: string };
@@ -133,20 +136,20 @@ const segments: Segment[] = [
     ],
     projects: [
       // Real brand campaigns (featured)
-      { title: "Take Let Loose — Gut Health Supplement", description: "Subscription-led DTC funnel for an oxygenated-magnesium daily capsule. Paid social + Klaviyo lifecycle flows scaled subscriber base while driving 189+ verified reviews.", meta: "$62K–$112K /mo revenue · 55.8K monthly visits · 456 active Meta ads", image: mLetLoose },
-      { title: "Valeva — Golden Hair Growth Oil", description: "Premium hair & scalp brand with cinematic PDP, refill subscription and Meta-ads creative testing engine generating consistent month-over-month growth.", meta: "$13K–$23K /mo revenue · 25K monthly visits · +695% 6-month growth", image: mValeva },
-      { title: "Milo Lab Co. — Pet Dental Spray", description: "Single-product dental health funnel for dogs & cats. Vet-led storytelling, urgency-driven offer stack and free-gift bundles paired with Meta ads.", meta: "$15K–$27K /mo revenue · 9,963 verified reviews · 4.8★ rating", image: mMiloLab },
-      { title: "Azure Boutique — Batana Hair Conditioner", description: "Quiz-led discovery + bundle PDP with dermatologist-credibility positioning. Paid social and influencer creative drove explosive scale through Q1.", meta: "$340K–$617K /mo revenue · 253K monthly visits · +213% 6-month growth", image: mAzure },
-      { title: "Velaxen — Cognitive Boost Supplement", description: "Flash-sale, urgency-driven single-product funnel with bundle offers and free-gift stack. Built for high-volume Meta-ads scaling.", meta: "119,293 customers · 4.9★ rating · 1M+ bottles sold worldwide", image: mVelaxen },
-      { title: "ReNu FreshFur — Waterless Pet Grooming", description: "Bundle-based PDP with 'Most Popular' & 'Best Value' framing, mist-refill subscription and lifecycle email program built for retention.", meta: "$83K–$151K /mo revenue · 86K monthly visits · 45,578 verified reviews", image: mRenu },
-      { title: "Trim Taste — Cutting Drink Mix", description: "Berberine + Yerba Mate weight-management brand. Buy-more-save-more bundles, subscription option and benefit-led ad creatives.", meta: "$50K–$91K /mo revenue · 49.6K monthly visits · 8,258 reviews", image: mTrimTaste },
-      { title: "Nurri — Men's Pheromone Gummies", description: "Buy-1-Get-1 stacked-offer funnel with auto-refill subscription. Bold packaging-first creative scaled across Meta and TikTok.", meta: "$267K–$485K /mo revenue · 180K monthly visits · 5,066 reviews", image: mNurri },
-      { title: "Primal Edge — Bison Testosterone Booster", description: "Long-form editorial PDP with clinical positioning and bundle ladder (Buy 2 Get 1 / Buy 3 Get 2). 50,000+ customers acquired through Meta + Google.", meta: "$27K–$49K /mo revenue · +2,728% 1-month growth · 4.8★ rating", image: mPrimalEdge },
+      { title: "Take Let Loose — Gut Health Supplement", description: "Subscription-led DTC funnel for an oxygenated-magnesium daily capsule. Paid social + Klaviyo lifecycle flows scaled subscriber base while driving 189+ verified reviews.", meta: "$62K–$112K /mo revenue · 55.8K monthly visits · 456 active Meta ads", image: mLetLoose, fit: "contain" },
+      { title: "Valeva — Golden Hair Growth Oil", description: "Premium hair & scalp brand with cinematic PDP, refill subscription and Meta-ads creative testing engine generating consistent month-over-month growth.", meta: "$13K–$23K /mo revenue · 25K monthly visits · +695% 6-month growth", image: mValeva, fit: "contain" },
+      { title: "Milo Lab Co. — Pet Dental Spray", description: "Single-product dental health funnel for dogs & cats. Vet-led storytelling, urgency-driven offer stack and free-gift bundles paired with Meta ads.", meta: "$15K–$27K /mo revenue · 9,963 verified reviews · 4.8★ rating", image: mMiloLab, fit: "contain" },
+      { title: "Azure Boutique — Batana Hair Conditioner", description: "Quiz-led discovery + bundle PDP with dermatologist-credibility positioning. Paid social and influencer creative drove explosive scale through Q1.", meta: "$340K–$617K /mo revenue · 253K monthly visits · +213% 6-month growth", image: mAzure, fit: "contain" },
+      { title: "Velaxen — Cognitive Boost Supplement", description: "Flash-sale, urgency-driven single-product funnel with bundle offers and free-gift stack. Built for high-volume Meta-ads scaling.", meta: "119,293 customers · 4.9★ rating · 1M+ bottles sold worldwide", image: mVelaxen, fit: "contain" },
+      { title: "ReNu FreshFur — Waterless Pet Grooming", description: "Bundle-based PDP with 'Most Popular' & 'Best Value' framing, mist-refill subscription and lifecycle email program built for retention.", meta: "$83K–$151K /mo revenue · 86K monthly visits · 45,578 verified reviews", image: mRenu, fit: "contain" },
+      { title: "Trim Taste — Cutting Drink Mix", description: "Berberine + Yerba Mate weight-management brand. Buy-more-save-more bundles, subscription option and benefit-led ad creatives.", meta: "$50K–$91K /mo revenue · 49.6K monthly visits · 8,258 reviews", image: mTrimTaste, fit: "contain" },
+      { title: "Nurri — Men's Pheromone Gummies", description: "Buy-1-Get-1 stacked-offer funnel with auto-refill subscription. Bold packaging-first creative scaled across Meta and TikTok.", meta: "$267K–$485K /mo revenue · 180K monthly visits · 5,066 reviews", image: mNurri, fit: "contain" },
+      { title: "Primal Edge — Bison Testosterone Booster", description: "Long-form editorial PDP with clinical positioning and bundle ladder (Buy 2 Get 1 / Buy 3 Get 2). 50,000+ customers acquired through Meta + Google.", meta: "$27K–$49K /mo revenue · +2,728% 1-month growth · 4.8★ rating", image: mPrimalEdge, fit: "contain" },
 
       // Featured large-scale brand case studies
-      { title: "Gisou — Honey-Infused Haircare", description: "Global haircare flagship scaled with Meta + Google + TikTok creative testing engine, lifecycle email and influencer-led storytelling. Editorial PDPs and bundle-led AOV strategy across EU & US.", meta: "$799K–$1.5M /mo revenue · 320,500 monthly visits · 286 active ads", image: mGisou },
-      { title: "Healora — Wellness DTC Brand", description: "Rapid-growth health & wellness store scaled from launch to 90K monthly visits in 6 months. Aggressive Meta-ads testing, lifecycle flows and conversion-optimized PDPs.", meta: "$151K–$274K /mo revenue · 90,428 monthly visits · +17.5% 7-day growth", image: mHealora },
-      { title: "Luxury Pillows — Premium Sleep Brand", description: "Goose-down luxury pillow brand with sale-driven hero, urgency timer and streamlined single-SKU funnel. Meta-ads creative testing across EU & UK markets.", meta: "$45K–$81K /mo revenue · 18,222 monthly visits · 48 active Meta ads", image: mLuxuryPillows },
+      { title: "Gisou — Honey-Infused Haircare", description: "Global haircare flagship scaled with Meta + Google + TikTok creative testing engine, lifecycle email and influencer-led storytelling. Editorial PDPs and bundle-led AOV strategy across EU & US.", meta: "$799K–$1.5M /mo revenue · 320,500 monthly visits · 286 active ads", image: mGisou, fit: "contain" },
+      { title: "Healora — Wellness DTC Brand", description: "Rapid-growth health & wellness store scaled from launch to 90K monthly visits in 6 months. Aggressive Meta-ads testing, lifecycle flows and conversion-optimized PDPs.", meta: "$151K–$274K /mo revenue · 90,428 monthly visits · +17.5% 7-day growth", image: mHealora, fit: "contain" },
+      { title: "Luxury Pillows — Premium Sleep Brand", description: "Goose-down luxury pillow brand with sale-driven hero, urgency timer and streamlined single-SKU funnel. Meta-ads creative testing across EU & UK markets.", meta: "$45K–$81K /mo revenue · 18,222 monthly visits · 48 active Meta ads", image: mLuxuryPillows, fit: "contain" },
 
     ],
   },
@@ -154,17 +157,41 @@ const segments: Segment[] = [
     id: "automation",
     title: "Automation Set-Up",
     blurb:
-      "End-to-end automations for marketing, ops and customer experience — Klaviyo, Zapier, n8n and custom workflows.",
+      "End-to-end automations for marketing, ops and customer experience — Klaviyo, Make, n8n and custom workflows.",
     platforms: [
       { name: "Klaviyo", svg: klaviyoSvg },
       { name: "Make", logo: makeLogo },
       { name: "n8n", logo: n8nLogo },
     ],
     projects: [
-      { title: "Klaviyo Lifecycle Suite", description: "Welcome, browse abandon, post-purchase & win-back flows generating recurring revenue on autopilot.", image: aKlaviyo },
-      { title: "Order Ops Automation", description: "Shopify ↔ 3PL ↔ accounting automated reconciliation cutting manual ops by 80%.", image: aOrderOps },
-      { title: "Lead Routing Pipeline", description: "Forms → CRM → Slack → calendar booking, fully automated lead capture.", image: aLeadRouting },
-      { title: "Review & UGC Engine", description: "Automated review collection + UGC asset routing into ad creative pipelines.", image: aReviewUgc },
+      {
+        title: "Klaviyo Post-Purchase Lifecycle Engine",
+        description: "Built and launched a fully-automated post-purchase Klaviyo flow segmenting new, repeat and loyal customers — triggering thank-you, 2nd-purchase incentives, cross-sell + discount and review-request emails on the perfect cadence. Result: $337K in attributed email revenue (47% of total store revenue) in a single 30-day window with zero manual sends.",
+        meta: "$337,952 attributed revenue (47.13% of total) · +25% vs prior period · 100% email-driven",
+        images: [aKlaviyoFlow1, aKlaviyoFlow2],
+        fit: "contain",
+      },
+      {
+        title: "Multi-Platform Social Posting Scheduler",
+        description: "n8n workflow that pulls a WordPress post, generates platform-tailored captions + AI images via OpenRouter, and auto-publishes to X, LinkedIn, Facebook and Instagram on a set schedule — with logging back into Google Sheets. Replaces a full social-media manager and ships consistent, on-brand content daily.",
+        meta: "4 platforms automated · Daily posts on autopilot · 90% time saved",
+        image: aSocialPublisher,
+        fit: "contain",
+      },
+      {
+        title: "Recruiting Agency — Email Outreach Automation",
+        description: "End-to-end recruiting pipeline: webhook captures candidate data → image hosted via imgbb → record created in Airtable → personalised Gmail follow-ups + Telegram alerts to recruiters. Daily scheduled job re-engages stale candidates automatically.",
+        meta: "Built for a recruiting agency · 100% hands-off candidate follow-up · Airtable + Gmail + Telegram",
+        image: aRecruitingMail,
+        fit: "contain",
+      },
+      {
+        title: "AI Social Media Content Factory",
+        description: "Enterprise-grade n8n agent: a Social Media Router Agent generates posts across X, Instagram, Facebook, LinkedIn, Threads & YouTube Shorts. Includes AI caption generation, dynamic image creation, human-in-the-loop email approval, Google Drive archiving and full analytics reporting back to Gmail. Drives consistent high-engagement posting at zero ongoing labour cost.",
+        meta: "6 platforms · AI captions + visuals · Approval gating · High-engagement output",
+        image: aSocialFactory,
+        fit: "contain",
+      },
     ],
   },
   {
@@ -196,31 +223,74 @@ function ProjectTile({
   onImageClick: (p: Project) => void;
 }) {
   const ref = useMouseGlow<HTMLDivElement>();
+  const gallery = project.images && project.images.length > 0 ? project.images : project.image ? [project.image] : [];
+  const [slide, setSlide] = useState(0);
+  const hasSlider = gallery.length > 1;
+  const fitClass = project.fit === "contain" ? "object-contain" : "object-cover object-top";
+
+  const next = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSlide((s) => (s + 1) % gallery.length);
+  };
+  const prev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSlide((s) => (s - 1 + gallery.length) % gallery.length);
+  };
 
   return (
     <div
       ref={ref}
       className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 block"
     >
-      {project.image ? (
+      {gallery.length > 0 ? (
         <button
           type="button"
-          onClick={() => onImageClick(project)}
-          className="relative h-48 w-full overflow-hidden bg-muted block cursor-zoom-in"
+          onClick={() => onImageClick({ ...project, image: gallery[slide] })}
+          className="relative h-56 w-full overflow-hidden bg-muted block cursor-zoom-in"
           aria-label={`Open larger preview of ${project.title}`}
         >
           <img
-            src={project.image}
-            alt={`${project.title} preview`}
+            src={gallery[slide]}
+            alt={`${project.title} preview ${slide + 1}`}
             loading="lazy"
             width={1280}
             height={896}
-            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+            className={`w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-          <div className="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <ExternalLink className="w-5 h-5 text-primary" />
+          {project.fit !== "contain" && (
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent pointer-events-none" />
+          )}
+          <div className="absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <ExternalLink className="w-4 h-4 text-primary" />
           </div>
+          {hasSlider && (
+            <>
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous image"
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4 text-foreground" />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next image"
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+              >
+                <ChevronRight className="w-4 h-4 text-foreground" />
+              </button>
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                {gallery.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-1.5 rounded-full transition-all ${i === slide ? "w-5 bg-primary" : "w-1.5 bg-foreground/40"}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </button>
       ) : (
         <div className="h-32 gradient-gold opacity-20" />
