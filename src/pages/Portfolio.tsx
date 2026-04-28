@@ -223,31 +223,74 @@ function ProjectTile({
   onImageClick: (p: Project) => void;
 }) {
   const ref = useMouseGlow<HTMLDivElement>();
+  const gallery = project.images && project.images.length > 0 ? project.images : project.image ? [project.image] : [];
+  const [slide, setSlide] = useState(0);
+  const hasSlider = gallery.length > 1;
+  const fitClass = project.fit === "contain" ? "object-contain" : "object-cover object-top";
+
+  const next = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSlide((s) => (s + 1) % gallery.length);
+  };
+  const prev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSlide((s) => (s - 1 + gallery.length) % gallery.length);
+  };
 
   return (
     <div
       ref={ref}
       className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 block"
     >
-      {project.image ? (
+      {gallery.length > 0 ? (
         <button
           type="button"
-          onClick={() => onImageClick(project)}
-          className="relative h-48 w-full overflow-hidden bg-muted block cursor-zoom-in"
+          onClick={() => onImageClick({ ...project, image: gallery[slide] })}
+          className="relative h-56 w-full overflow-hidden bg-muted block cursor-zoom-in"
           aria-label={`Open larger preview of ${project.title}`}
         >
           <img
-            src={project.image}
-            alt={`${project.title} preview`}
+            src={gallery[slide]}
+            alt={`${project.title} preview ${slide + 1}`}
             loading="lazy"
             width={1280}
             height={896}
-            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
+            className={`w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
-          <div className="absolute top-4 right-4 w-10 h-10 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-            <ExternalLink className="w-5 h-5 text-primary" />
+          {project.fit !== "contain" && (
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent pointer-events-none" />
+          )}
+          <div className="absolute top-3 right-3 w-9 h-9 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+            <ExternalLink className="w-4 h-4 text-primary" />
           </div>
+          {hasSlider && (
+            <>
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous image"
+                className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+              >
+                <ChevronLeft className="w-4 h-4 text-foreground" />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next image"
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+              >
+                <ChevronRight className="w-4 h-4 text-foreground" />
+              </button>
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                {gallery.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-1.5 rounded-full transition-all ${i === slide ? "w-5 bg-primary" : "w-1.5 bg-foreground/40"}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </button>
       ) : (
         <div className="h-32 gradient-gold opacity-20" />
