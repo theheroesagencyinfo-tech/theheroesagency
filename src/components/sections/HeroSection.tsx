@@ -7,11 +7,6 @@ import { useCountUp } from "@/hooks/useCountUp";
 import { CALENDLY_URL } from "@/lib/links";
 import heroBanner from "@/assets/hero-banner.jpg";
 
-const stats = [
-  { value: 150, suffix: "+", label: "Stores Built" },
-  { value: 25, prefix: "$", suffix: "M+", label: "Revenue Generated" },
-  { value: 340, suffix: "%", label: "Avg. Conversion Lift" },
-];
 
 function StatItem({
   value,
@@ -117,7 +112,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-3xl mx-auto text-center mb-20"
+          className="max-w-3xl mx-auto text-center"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -171,17 +166,6 @@ export function HeroSection() {
           </motion.div>
         </motion.div>
 
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isVisible ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-3xl mx-auto"
-        >
-          {stats.map((stat) => (
-            <StatItem key={stat.label} {...stat} isVisible={isVisible} />
-          ))}
-        </motion.div>
       </div>
 
       <motion.div
