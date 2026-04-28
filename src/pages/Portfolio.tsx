@@ -226,7 +226,14 @@ function ProjectTile({
   const gallery = project.images && project.images.length > 0 ? project.images : project.image ? [project.image] : [];
   const [slide, setSlide] = useState(0);
   const hasSlider = gallery.length > 1;
-  const fitClass = project.fit === "contain" ? "object-contain" : "object-cover object-top";
+  const isContain = project.fit === "contain";
+  const fitClass = isContain ? "object-contain" : "object-cover object-top";
+  // Contain (marketing/automation screenshots) → fluid aspect ratio so the full
+  // thumbnail is visible at every breakpoint without cropping. Cover tiles keep
+  // a fixed height for a uniform grid.
+  const mediaClass = isContain
+    ? "relative w-full aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] overflow-hidden bg-muted block cursor-zoom-in"
+    : "relative h-56 w-full overflow-hidden bg-muted block cursor-zoom-in";
 
   const next = (e: React.MouseEvent) => {
     e.stopPropagation();
