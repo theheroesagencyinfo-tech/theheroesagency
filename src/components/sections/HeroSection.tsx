@@ -2,42 +2,10 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useCountUp } from "@/hooks/useCountUp";
 import { CALENDLY_URL } from "@/lib/links";
 import heroBanner from "@/assets/hero-banner.jpg";
 
-
-function StatItem({
-  value,
-  prefix = "",
-  suffix,
-  label,
-  isVisible,
-}: {
-  value: number;
-  prefix?: string;
-  suffix: string;
-  label: string;
-  isVisible: boolean;
-}) {
-  const count = useCountUp(value, 2500, isVisible);
-  return (
-    <div className="text-center">
-      <div className="text-4xl md:text-5xl lg:text-6xl font-bold text-gradient mb-2">
-        {prefix}
-        {count}
-        {suffix}
-      </div>
-      <div className="text-sm md:text-base text-muted-foreground uppercase tracking-wider">
-        {label}
-      </div>
-    </div>
-  );
-}
-
 export function HeroSection() {
-  const { ref, isVisible } = useScrollAnimation(0.2);
   const sectionRef = useRef<HTMLElement>(null);
 
   const scrollToSection = (id: string) =>
