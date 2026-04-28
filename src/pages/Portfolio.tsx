@@ -253,7 +253,7 @@ function ProjectTile({
         <button
           type="button"
           onClick={() => onImageClick({ ...project, image: gallery[slide] })}
-          className="relative h-56 w-full overflow-hidden bg-muted block cursor-zoom-in"
+          className={mediaClass}
           aria-label={`Open larger preview of ${project.title}`}
         >
           <img
