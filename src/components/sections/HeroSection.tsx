@@ -4,7 +4,12 @@ import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { CALENDLY_URL } from "@/lib/links";
 import heroBanner from "@/assets/hero-banner.jpg";
-import { trackEvent, CONVERSION_EVENTS } from "@/lib/analytics";
+
+const trackConversionEvent = (eventName: string, opts: { label?: string } = {}) => {
+  void import("@/lib/analytics").then(({ trackEvent }) => {
+    void trackEvent(eventName, opts);
+  });
+};
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -156,8 +161,8 @@ export function HeroSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                  trackEvent(CONVERSION_EVENTS.HERO_CTA_CLICK, { label: "Book a Strategy Call" });
-                  trackEvent(CONVERSION_EVENTS.CALENDLY_CLICK, { label: "Hero" });
+                  trackConversionEvent("hero_cta_click", { label: "Book a Strategy Call" });
+                  trackConversionEvent("calendly_click", { label: "Hero" });
                 }}
               >
                 Book a Strategy Call
@@ -169,7 +174,7 @@ export function HeroSection() {
               variant="outline"
               className="glass glass-hover border-primary/30 px-8 py-6 text-lg group"
               onClick={() => {
-                trackEvent(CONVERSION_EVENTS.HERO_CTA_CLICK, { label: "View My Work" });
+                trackConversionEvent("hero_cta_click", { label: "View My Work" });
                 scrollToSection("portfolio");
               }}
             >
