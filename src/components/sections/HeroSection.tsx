@@ -3,7 +3,7 @@ import { ArrowRight, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { CALENDLY_URL } from "@/lib/links";
-import heroBanner from "@/assets/hero-banner.jpg";
+import heroBanner from "@/assets/hero-banner.webp";
 
 const trackConversionEvent = (eventName: string, opts: { label?: string } = {}) => {
   void import("@/lib/analytics").then(({ trackEvent }) => {
