@@ -30,10 +30,13 @@ const DeferredToaster = () => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const schedule = window.requestIdleCallback || ((cb: IdleRequestCallback) => window.setTimeout(cb, 1500));
-    const cancel = window.cancelIdleCallback || window.clearTimeout;
-    const id = schedule(() => setReady(true));
-    return () => cancel(id as never);
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(() => setReady(true), { timeout: 2000 });
+      return () => window.cancelIdleCallback(id);
+    }
+
+    const id = globalThis.setTimeout(() => setReady(true), 1200);
+    return () => globalThis.clearTimeout(id);
   }, []);
 
   if (!ready) return null;
