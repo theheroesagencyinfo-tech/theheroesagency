@@ -24,6 +24,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { notifyAdmin } from "@/lib/notifyAdmin";
+import { trackEvent, CONVERSION_EVENTS } from "@/lib/analytics";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -171,6 +172,7 @@ export function Footer() {
       message: data.message,
       meta: { source: "footer" },
     });
+    trackEvent(CONVERSION_EVENTS.CONTACT_SUBMIT, { label: "footer" });
     toast({ title: "Message sent!", description: "Thank you for reaching out. I'll get back to you within 24 hours." });
     reset();
   };
@@ -187,6 +189,7 @@ export function Footer() {
       toast({ title: "Couldn't subscribe", description: "Please try again in a moment.", variant: "destructive" });
       return;
     }
+    trackEvent(CONVERSION_EVENTS.NEWSLETTER_SUBSCRIBE, { label: "footer" });
     toast({ title: "Subscribed!", description: "You're on the list. Watch your inbox for growth playbooks." });
     resetNl();
   };
@@ -229,6 +232,7 @@ export function Footer() {
                 <a
                   className="flex items-center gap-3 text-foreground/80 hover:text-primary transition-colors"
                   href="mailto:info@theheroesagency.org"
+                  onClick={() => trackEvent(CONVERSION_EVENTS.EMAIL_CLICK, { label: "footer" })}
                 >
                   <Mail className="w-5 h-5 text-primary" />
                   info@theheroesagency.org
@@ -247,6 +251,11 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
+                    onClick={() => {
+                      if (social.label === "WhatsApp") {
+                        trackEvent(CONVERSION_EVENTS.WHATSAPP_CLICK, { label: "footer" });
+                      }
+                    }}
                     className="w-11 h-11 rounded-xl glass flex items-center justify-center hover:bg-primary/20 hover:border-primary/30 transition-all duration-300"
                   >
                     <social.icon className="w-5 h-5 text-foreground/80" />
