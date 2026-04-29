@@ -264,12 +264,26 @@ function ProjectTile({
     setSlide((s) => (s - 1 + gallery.length) % gallery.length);
   };
 
+  const videoId = ytId(project.url);
+  const isVideo = !!videoId && !project.image && !project.images;
+
   return (
     <div
       ref={ref}
       className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 block"
     >
-      {gallery.length > 0 ? (
+      {isVideo ? (
+        <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: "9 / 16" }}>
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`}
+            title={project.title}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
+        </div>
+      ) : gallery.length > 0 ? (
         <button
           type="button"
           onClick={() => onImageClick({ ...project, image: gallery[slide] })}
@@ -336,7 +350,7 @@ function ProjectTile({
         {project.meta && (
           <p className="text-sm font-semibold text-primary mt-3">{project.meta}</p>
         )}
-        {project.url && (
+        {project.url && !isVideo && (
           <a
             href={project.url}
             target="_blank"
@@ -344,6 +358,16 @@ function ProjectTile({
             className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-primary hover:underline"
           >
             Visit site <ArrowUpRight className="w-4 h-4" />
+          </a>
+        )}
+        {isVideo && project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-primary hover:underline"
+          >
+            Watch on YouTube <ArrowUpRight className="w-4 h-4" />
           </a>
         )}
       </div>
