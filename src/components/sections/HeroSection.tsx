@@ -176,7 +176,7 @@ export function HeroSection() {
               View My Work
             </Button>
           </motion.div>
-        </motion.div>
+        </div>
 
       </div>
 
