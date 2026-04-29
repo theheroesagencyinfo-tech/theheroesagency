@@ -219,7 +219,7 @@ export default function About() {
                   key={s.title}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  viewport={{ amount: 0.15, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="glass rounded-2xl p-8 border border-white/5 hover:border-primary/30 transition-all duration-500 group"
                 >
@@ -248,7 +248,7 @@ export default function About() {
                   key={p.num}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  viewport={{ amount: 0.15, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className="relative glass rounded-2xl p-6 border border-white/5 hover:border-primary/30 transition-all duration-500"
                 >
@@ -289,24 +289,54 @@ export default function About() {
 
         {/* Outcome */}
         <section className="container px-4 md:px-6 mb-24">
-          <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center">
+          <motion.div {...fadeUp} className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Outcome</h2>
             <p className="text-muted-foreground text-lg mb-10">The result is a business that:</p>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {outcomes.map((o, i) => (
                 <motion.div
                   key={o}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ amount: 0.2 }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="glass rounded-xl p-6 border border-white/5"
+                  className="glass rounded-xl p-5 md:p-6 border border-white/5"
                 >
                   <CheckCircle2 className="w-6 h-6 text-primary mx-auto mb-3" />
-                  <p className="font-semibold">{o}</p>
+                  <p className="font-semibold text-sm md:text-base">{o}</p>
                 </motion.div>
               ))}
             </div>
+          </motion.div>
+        </section>
+
+        {/* FAQs */}
+        <section className="container px-4 md:px-6 mb-24">
+          <motion.div {...fadeUp} className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-3 block">
+                FAQs
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                Answers before you <span className="text-gradient">commit</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Everything founders ask us before starting a project — answered with the same honesty we bring to client work.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="glass rounded-2xl border border-primary/10 px-4 md:px-6 divide-y divide-white/5">
+              {faqs.map((item, i) => (
+                <AccordionItem key={item.q} value={`item-${i}`} className="border-0">
+                  <AccordionTrigger className="text-left text-base md:text-lg font-semibold hover:no-underline py-5">
+                    {item.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-sm md:text-base leading-relaxed pb-5">
+                    {item.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </motion.div>
         </section>
 
