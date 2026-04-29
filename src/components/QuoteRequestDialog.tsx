@@ -98,6 +98,11 @@ export function QuoteRequestDialog({
         },
       });
 
+      trackEvent(CONVERSION_EVENTS.PROPOSAL_CLICK, {
+        label: data.project_type,
+        metadata: { wants_call: data.schedule_call },
+      });
+
       setIsSubmitted(true);
 
       if (data.schedule_call === "yes") {
