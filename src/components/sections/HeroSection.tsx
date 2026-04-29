@@ -34,7 +34,7 @@ export function HeroSection() {
       <div className="absolute inset-0 z-0">
         <img
           src={heroBanner}
-          alt="Elite IT agency team building high-converting Shopify stores"
+          alt="TheHeroes Agency — elite Shopify design, marketing automation and AI commercial production studio"
           width={1920}
           height={1080}
           fetchPriority="high"
