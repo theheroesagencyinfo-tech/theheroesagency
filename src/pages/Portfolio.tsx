@@ -263,14 +263,18 @@ function ProjectTile({
           type="button"
           onClick={() => onImageClick({ ...project, image: gallery[slide] })}
           className={mediaClass}
+          style={containerStyle}
           aria-label={`Open larger preview of ${project.title}`}
         >
           <img
             src={gallery[slide]}
             alt={`${project.title} preview ${slide + 1}`}
             loading="lazy"
-            width={1280}
-            height={isContain ? undefined : 896}
+            decoding="async"
+            fetchPriority="low"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            width={NATURAL_W}
+            height={isContain ? NATURAL_H : 896}
             className={imageClass}
           />
           {project.fit !== "contain" && (
