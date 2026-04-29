@@ -16,6 +16,12 @@ import {
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { SystemAuditForm } from "@/components/SystemAuditForm";
 import { SEO } from "@/components/SEO";
 import founderImg from "@/assets/founder-mou-barrac-new.jpg";
@@ -51,12 +57,54 @@ const process = [
 ];
 
 const principles = ["Precision over noise", "Systems over shortcuts", "Performance over aesthetics alone"];
-const outcomes = ["Converts more efficiently", "Operates with less friction", "Scales without breaking"];
+const outcomes = [
+  "Converts more efficiently",
+  "Operates with less friction",
+  "Scales without breaking",
+  "Compounds growth predictably",
+];
 
+const faqs = [
+  {
+    q: "What exactly does TheHeroes Agency do?",
+    a: "We design and engineer end-to-end growth systems for eCommerce and service brands — Shopify storefronts, marketing funnels, AI commercial videos and automation infrastructure. Every engagement is built around one outcome: predictable, measurable revenue growth.",
+  },
+  {
+    q: "Who is the agency built for?",
+    a: "Founder-led brands and operators ready to scale past the DIY phase — typically Shopify stores doing $20k–$2M/month that need a senior partner to build the system behind the brand instead of stitching together freelancers.",
+  },
+  {
+    q: "How is this different from hiring a freelancer or a generic agency?",
+    a: "Most agencies sell deliverables. We deliver an integrated system where design, marketing, content and automation all reinforce each other. You work directly with senior strategists — no junior account managers, no template work, no recycled playbooks.",
+  },
+  {
+    q: "What kind of results can I realistically expect?",
+    a: "Our active client portfolio includes brands generating $13K to $1.5M/month with documented lifts of +213% to +2,728% over 1–6 months. Results vary by niche, offer and ad spend, but every project ships with clear KPIs and a measurable revenue target from day one.",
+  },
+  {
+    q: "How long does a typical project take?",
+    a: "A Shopify build or redesign ships in 3–6 weeks. Marketing systems and automation flows go live in 2–4 weeks. AI commercial creative is delivered in days, not weeks. You'll receive a milestone-based timeline before any work begins.",
+  },
+  {
+    q: "How much does it cost to work with you?",
+    a: "Engagements are scoped to outcomes, not hours. Most projects fall between $3K and $25K depending on scope, with retainer options for ongoing growth, ads management and automation. Book a free strategy call and you'll receive a transparent, fixed-scope proposal.",
+  },
+  {
+    q: "Do you offer support after launch?",
+    a: "Yes. Every build includes a post-launch optimisation window, and most clients continue with us on a monthly growth retainer covering CRO, lifecycle email, paid media and automation upkeep.",
+  },
+  {
+    q: "How do I get started?",
+    a: "Book a free 30-minute strategy call. We'll audit your current setup, identify the single biggest revenue lever, and only propose a project if we're confident we can move the number for you.",
+  },
+];
+
+// Animations: keep elements visible after they enter (no `once: true`) so
+// nothing ever fades back out when scrolled past.
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
+  viewport: { amount: 0.15, margin: "-80px" },
   transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
 };
 
