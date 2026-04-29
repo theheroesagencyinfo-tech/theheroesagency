@@ -46,10 +46,23 @@ const SectionFallback = () => <div aria-hidden className="min-h-[400px]" />;
 const DeferredBelowFold = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [observerReady, setObserverReady] = useState(false);
+
+  // Wait until the browser is idle after first paint before even attaching
+  // the IntersectionObserver. This keeps below-the-fold network requests
+  // (Supabase queries from lazy sections) out of the critical request chain.
+  useEffect(() => {
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(() => setObserverReady(true), { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = globalThis.setTimeout(() => setObserverReady(true), 1500);
+    return () => globalThis.clearTimeout(id);
+  }, []);
 
   useEffect(() => {
     const current = ref.current;
-    if (!current || shouldLoad) return;
+    if (!current || shouldLoad || !observerReady) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -58,12 +71,12 @@ const DeferredBelowFold = ({ children }: { children: ReactNode }) => {
           observer.disconnect();
         }
       },
-      { rootMargin: "0px" },
+      { rootMargin: "200px" },
     );
 
     observer.observe(current);
     return () => observer.disconnect();
-  }, [shouldLoad]);
+  }, [shouldLoad, observerReady]);
 
   return <div ref={ref}>{shouldLoad ? children : <SectionFallback />}</div>;
 };
