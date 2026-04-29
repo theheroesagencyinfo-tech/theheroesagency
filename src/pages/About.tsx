@@ -156,6 +156,15 @@ export default function About() {
               { "@type": "ListItem", position: 2, name: "About", item: "https://theheroesagency.lovable.app/about" },
             ],
           },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          },
         ]}
       />
       <Navigation />
