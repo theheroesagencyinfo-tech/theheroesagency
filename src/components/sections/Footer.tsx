@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Send, Linkedin, Instagram, Facebook, Mail, MapPin, Shield } from "lucide-react";
+import { Send, Linkedin, Instagram, Facebook, Mail, MapPin, Shield, Youtube, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,6 +49,14 @@ const socialLinks = [{
   icon: XIcon,
   href: "https://x.com/moubarrac",
   label: "X (Twitter)"
+}, {
+  icon: Youtube,
+  href: "https://www.youtube.com/@TheHeroesAgencyorg",
+  label: "YouTube"
+}, {
+  icon: MessageCircle,
+  href: "https://wa.me/13154541290",
+  label: "WhatsApp"
 }];
 const navLinks = [{
   label: "Services",
