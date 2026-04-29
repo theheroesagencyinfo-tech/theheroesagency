@@ -22,6 +22,7 @@ import {
   Archive,
   Plus,
   ClipboardList,
+  BarChart3,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +30,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SystemAuditAdmin } from "@/components/admin/SystemAuditAdmin";
+import { AnalyticsAdmin } from "@/components/admin/AnalyticsAdmin";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -529,8 +531,12 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        <Tabs defaultValue="reviews" className="space-y-8">
+        <Tabs defaultValue="analytics" className="space-y-8">
           <TabsList className="glass flex-wrap h-auto">
+            <TabsTrigger value="analytics" className="data-[state=active]:gradient-gold">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Analytics
+            </TabsTrigger>
             <TabsTrigger value="reviews" className="data-[state=active]:gradient-gold">
               <Star className="w-4 h-4 mr-2" />
               Reviews
@@ -561,6 +567,11 @@ export default function Admin() {
               </span>
             </TabsTrigger>
           </TabsList>
+
+          {/* Analytics Tab */}
+          <TabsContent value="analytics" className="space-y-6">
+            <AnalyticsAdmin />
+          </TabsContent>
 
           {/* System Audits Tab */}
           <TabsContent value="audits" className="space-y-6">
