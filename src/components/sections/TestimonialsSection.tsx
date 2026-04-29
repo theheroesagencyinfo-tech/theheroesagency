@@ -201,7 +201,7 @@ export function TestimonialsSection() {
                 className="group glass rounded-2xl p-4 md:p-5 flex flex-col items-center text-center gap-3 hover:bg-primary/10 hover:border-primary/40 hover:scale-[1.03] transition-all duration-300 border border-border/40"
               >
                 <div
-                  className={`w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-gradient-to-br ${TINTS[i % TINTS.length]} border-2 border-primary/40 flex items-center justify-center shadow-lg group-hover:gold-glow-sm transition-shadow`}
+                  className={`w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden bg-gradient-to-br ${TINTS[i % TINTS.length]} border-2 border-primary/40 flex items-center justify-center shadow-lg group-hover:gold-glow-sm transition-shadow`}
                 >
                   {AVATAR_BY_ID[r.id] ? (
                     <img
