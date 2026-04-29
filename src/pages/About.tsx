@@ -17,6 +17,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { SystemAuditForm } from "@/components/SystemAuditForm";
+import { SEO } from "@/components/SEO";
 import founderImg from "@/assets/founder-mou-barrac-new.jpg";
 
 const services = [
@@ -62,6 +63,53 @@ const fadeUp = {
 export default function About() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <SEO
+        title="About TheHeroes Agency — Shopify, Marketing & Automation Systems"
+        description="Founded by Mou Barrac, TheHeroes Agency builds Shopify stores, marketing systems, AI commercials and automation infrastructure that scale revenue with precision."
+        canonical="https://theheroesagency.lovable.app/about"
+        image="https://theheroesagency.lovable.app/og-about.jpg"
+        type="profile"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            name: "About TheHeroes Agency",
+            url: "https://theheroesagency.lovable.app/about",
+            description:
+              "TheHeroes Agency builds Shopify storefronts, marketing systems, AI commercials and automation infrastructure for brands that scale.",
+            isPartOf: {
+              "@type": "WebSite",
+              name: "The Heroes Agency",
+              url: "https://theheroesagency.lovable.app/",
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Mou Barrac",
+            jobTitle: "Founder & Lead Strategist",
+            worksFor: {
+              "@type": "Organization",
+              name: "The Heroes Agency",
+              url: "https://theheroesagency.lovable.app/",
+            },
+            url: "https://theheroesagency.lovable.app/about",
+            sameAs: [
+              "https://www.linkedin.com/in/theheroes-agency",
+              "https://www.instagram.com/theheroes_agency",
+              "https://x.com/moubarrac",
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://theheroesagency.lovable.app/" },
+              { "@type": "ListItem", position: 2, name: "About", item: "https://theheroesagency.lovable.app/about" },
+            ],
+          },
+        ]}
+      />
       <Navigation />
       <main className="pt-32 pb-20">
         {/* Hero */}
