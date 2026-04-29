@@ -15,6 +15,33 @@ import {
 import { ReviewForm } from "@/components/ReviewForm";
 import { TestimonialsMetrics } from "./TestimonialsMetrics";
 import { supabase } from "@/integrations/supabase/client";
+import avatarSarah from "@/assets/avatars/sarah-mitchell.jpg";
+import avatarMarcus from "@/assets/avatars/marcus-chen.jpg";
+import avatarEmily from "@/assets/avatars/emily-rodriguez.jpg";
+import avatarDavid from "@/assets/avatars/david-park.jpg";
+import avatarJasmine from "@/assets/avatars/jasmine-patel.jpg";
+import avatarAhmed from "@/assets/avatars/ahmed-khalil.jpg";
+import avatarOlivia from "@/assets/avatars/olivia-bennett.jpg";
+import avatarRavi from "@/assets/avatars/ravi-shankar.jpg";
+import avatarSophie from "@/assets/avatars/sophie-laurent.jpg";
+import avatarTomas from "@/assets/avatars/tomas-garcia.jpg";
+import avatarNaomi from "@/assets/avatars/naomi-sato.jpg";
+import avatarLiam from "@/assets/avatars/liam-foster.jpg";
+
+const AVATAR_BY_ID: Record<string, string> = {
+  "fb-1": avatarSarah,
+  "fb-2": avatarMarcus,
+  "fb-3": avatarEmily,
+  "fb-4": avatarDavid,
+  "fb-5": avatarJasmine,
+  "fb-6": avatarAhmed,
+  "fb-7": avatarOlivia,
+  "fb-8": avatarRavi,
+  "fb-9": avatarSophie,
+  "fb-10": avatarTomas,
+  "fb-11": avatarNaomi,
+  "fb-12": avatarLiam,
+};
 
 interface Review {
   id: string;
@@ -174,11 +201,22 @@ export function TestimonialsSection() {
                 className="group glass rounded-2xl p-4 md:p-5 flex flex-col items-center text-center gap-3 hover:bg-primary/10 hover:border-primary/40 hover:scale-[1.03] transition-all duration-300 border border-border/40"
               >
                 <div
-                  className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br ${TINTS[i % TINTS.length]} border-2 border-primary/40 flex items-center justify-center shadow-lg group-hover:gold-glow-sm transition-shadow`}
+                  className={`w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden bg-gradient-to-br ${TINTS[i % TINTS.length]} border-2 border-primary/40 flex items-center justify-center shadow-lg group-hover:gold-glow-sm transition-shadow`}
                 >
-                  <span className="text-lg md:text-xl font-bold text-primary">
-                    {getInitials(r.name)}
-                  </span>
+                  {AVATAR_BY_ID[r.id] ? (
+                    <img
+                      src={AVATAR_BY_ID[r.id]}
+                      alt={`Headshot of ${r.name}`}
+                      width={512}
+                      height={512}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-lg md:text-xl font-bold text-primary">
+                      {getInitials(r.name)}
+                    </span>
+                  )}
                 </div>
                 <div className="min-w-0 w-full">
                   <div className="text-sm md:text-base font-semibold text-foreground truncate">
@@ -237,10 +275,21 @@ export function TestimonialsSection() {
             <>
               <DialogHeader>
                 <div className="flex items-center gap-4 mb-2">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary/30 to-amber-500/20 border-2 border-primary/40 flex items-center justify-center">
-                    <span className="text-lg font-bold text-primary">
-                      {getInitials(active.name)}
-                    </span>
+                  <div className="w-14 h-14 rounded-full overflow-hidden bg-gradient-to-br from-primary/30 to-amber-500/20 border-2 border-primary/40 flex items-center justify-center">
+                    {AVATAR_BY_ID[active.id] ? (
+                      <img
+                        src={AVATAR_BY_ID[active.id]}
+                        alt={`Headshot of ${active.name}`}
+                        width={512}
+                        height={512}
+                        loading="lazy"
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-lg font-bold text-primary">
+                        {getInitials(active.name)}
+                      </span>
+                    )}
                   </div>
                   <div className="text-left">
                     <DialogTitle className="text-lg">{active.name}</DialogTitle>
