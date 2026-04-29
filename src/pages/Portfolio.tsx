@@ -236,6 +236,13 @@ function ProjectTile({
   const imageClass = isContain
     ? "w-full h-auto object-contain bg-background"
     : `w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`;
+  // Reserve layout space using the image's intrinsic aspect ratio for "contain"
+  // tiles so lazy-loaded screenshots don't cause CLS.
+  const NATURAL_W = 1280;
+  const NATURAL_H = 800; // good average for marketing/automation captures
+  const containerStyle = isContain
+    ? { aspectRatio: `${NATURAL_W} / ${NATURAL_H}` }
+    : undefined;
 
   const next = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -256,14 +263,18 @@ function ProjectTile({
           type="button"
           onClick={() => onImageClick({ ...project, image: gallery[slide] })}
           className={mediaClass}
+          style={containerStyle}
           aria-label={`Open larger preview of ${project.title}`}
         >
           <img
             src={gallery[slide]}
             alt={`${project.title} preview ${slide + 1}`}
             loading="lazy"
-            width={1280}
-            height={isContain ? undefined : 896}
+            decoding="async"
+            fetchPriority="low"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            width={NATURAL_W}
+            height={isContain ? NATURAL_H : 896}
             className={imageClass}
           />
           {project.fit !== "contain" && (
