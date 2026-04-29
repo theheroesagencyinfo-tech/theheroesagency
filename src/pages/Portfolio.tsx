@@ -236,6 +236,13 @@ function ProjectTile({
   const imageClass = isContain
     ? "w-full h-auto object-contain bg-background"
     : `w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`;
+  // Reserve layout space using the image's intrinsic aspect ratio for "contain"
+  // tiles so lazy-loaded screenshots don't cause CLS.
+  const NATURAL_W = 1280;
+  const NATURAL_H = 800; // good average for marketing/automation captures
+  const containerStyle = isContain
+    ? { aspectRatio: `${NATURAL_W} / ${NATURAL_H}` }
+    : undefined;
 
   const next = (e: React.MouseEvent) => {
     e.stopPropagation();
