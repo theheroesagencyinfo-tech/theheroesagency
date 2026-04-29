@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { reviewSchema, ReviewFormData } from "@/lib/reviewSchema";
 import { supabase } from "@/integrations/supabase/client";
 import { notifyAdmin } from "@/lib/notifyAdmin";
+import { trackEvent, CONVERSION_EVENTS } from "@/lib/analytics";
 
 interface ReviewFormProps {
   onSuccess?: () => void;
@@ -68,6 +69,8 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
           company: data.company || "—",
         },
       });
+
+      trackEvent(CONVERSION_EVENTS.REVIEW_SUBMIT, { label: `${data.star_rating}★` });
 
       setSubmitStatus("success");
       reset();

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { CALENDLY_URL } from "@/lib/links";
 import heroBanner from "@/assets/hero-banner.jpg";
+import { trackEvent, CONVERSION_EVENTS } from "@/lib/analytics";
 
 export function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -122,7 +123,15 @@ export function HeroSection() {
               size="lg"
               className="gradient-gold text-primary-foreground font-semibold px-8 py-6 text-lg gold-glow-sm hover:scale-105 transition-transform duration-300"
             >
-              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => {
+                  trackEvent(CONVERSION_EVENTS.HERO_CTA_CLICK, { label: "Book a Strategy Call" });
+                  trackEvent(CONVERSION_EVENTS.CALENDLY_CLICK, { label: "Hero" });
+                }}
+              >
                 Book a Strategy Call
                 <ArrowRight className="ml-2 h-5 w-5" />
               </a>
@@ -131,7 +140,10 @@ export function HeroSection() {
               size="lg"
               variant="outline"
               className="glass glass-hover border-primary/30 px-8 py-6 text-lg group"
-              onClick={() => scrollToSection("portfolio")}
+              onClick={() => {
+                trackEvent(CONVERSION_EVENTS.HERO_CTA_CLICK, { label: "View My Work" });
+                scrollToSection("portfolio");
+              }}
             >
               <Play className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
               View My Work

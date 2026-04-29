@@ -3,6 +3,25 @@ import { supabase } from "@/integrations/supabase/client";
 const SESSION_KEY = "tha_session_id";
 const VIEW_DEDUPE_MS = 500;
 
+// Conversion event names — keep these stable so the admin funnel works.
+export const CONVERSION_EVENTS = {
+  HERO_CTA_CLICK: "hero_cta_click",
+  CONTACT_SUBMIT: "contact_submit",
+  EMAIL_CLICK: "email_click",
+  PROPOSAL_CLICK: "proposal_click",
+  WHATSAPP_CLICK: "whatsapp_click",
+  CALENDLY_CLICK: "calendly_click",
+  REVIEW_SUBMIT: "review_submit",
+  NEWSLETTER_SUBSCRIBE: "newsletter_subscribe",
+} as const;
+
+// Funnel order used by the admin Funnel report.
+export const FUNNEL_STEPS: { key: string; label: string }[] = [
+  { key: CONVERSION_EVENTS.HERO_CTA_CLICK, label: "Hero CTA click" },
+  { key: CONVERSION_EVENTS.PROPOSAL_CLICK, label: "Proposal / quote click" },
+  { key: CONVERSION_EVENTS.CONTACT_SUBMIT, label: "Contact form submit" },
+];
+
 let lastViewKey = "";
 let lastViewAt = 0;
 

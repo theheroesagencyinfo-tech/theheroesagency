@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { CALENDLY_URL } from "@/lib/links";
 import { notifyAdmin } from "@/lib/notifyAdmin";
+import { trackEvent, CONVERSION_EVENTS } from "@/lib/analytics";
 
 const quoteSchema = z.object({
   first_name: z.string().trim().min(1, "First name is required").max(50),
@@ -95,6 +96,11 @@ export function QuoteRequestDialog({
           project_type: data.project_type,
           wants_call: data.schedule_call,
         },
+      });
+
+      trackEvent(CONVERSION_EVENTS.PROPOSAL_CLICK, {
+        label: data.project_type,
+        metadata: { wants_call: data.schedule_call },
       });
 
       setIsSubmitted(true);
