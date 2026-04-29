@@ -207,13 +207,24 @@ const segments: Segment[] = [
       { name: "Kling", svg: klingSvg },
     ],
     projects: [
-      { title: "Product Hero Spots", description: "15s & 30s AI-generated hero ads for Meta and TikTok." },
-      { title: "Brand Story Films", description: "60–90s narrative films blending AI footage with brand assets." },
-      { title: "Performance Creative Packs", description: "Batches of testable variants per campaign." },
-      { title: "Founder/UGC Style AI", description: "AI avatars and scripts for high-volume UGC-style ads." },
+      { title: "AI Commercial — Spot 01", description: "High-impact AI-generated product commercial built for paid social. Shot-by-shot direction, motion and grading delivered in days, not weeks.", url: "https://youtube.com/shorts/AeEZySYJrz4" },
+      { title: "AI Commercial — Spot 02", description: "Cinematic AI brand spot engineered to stop the scroll on Reels, TikTok and Shorts.", url: "https://youtube.com/shorts/_ljd9oG7XA0" },
+      { title: "AI Commercial — Spot 03", description: "Bold, conversion-tuned AI commercial — punchy hook, product-first storytelling, ready-to-launch creative.", url: "https://youtube.com/shorts/k7gwXiEoNBo" },
+      { title: "AI Commercial — Spot 04", description: "Premium AI brand film with photoreal product visuals and editorial pacing.", url: "https://youtu.be/vFYi5BDqbog" },
+      { title: "AI Commercial — Spot 05", description: "AI-generated launch creative built for performance — engineered around hook, demo and CTA.", url: "https://youtu.be/4cEzhOXqEX8" },
+      { title: "AI Commercial — Spot 06", description: "Photoreal AI commercial with cinematic lighting and brand-grade motion design.", url: "https://youtu.be/8HI8OSllL4U" },
+      { title: "AI Commercial — Spot 07", description: "Story-led AI commercial blending lifestyle visuals with high-end product shots.", url: "https://youtu.be/CDZLI5RkQk4" },
+      { title: "AI Commercial — Spot 08", description: "Scroll-stopping AI ad creative built to drive clicks, sign-ups and sales across Meta, TikTok and YouTube.", url: "https://youtu.be/Wp_Men64gdY" },
     ],
   },
 ];
+
+// Helper: extract YouTube video id from any youtube/shorts/youtu.be URL
+const ytId = (url?: string): string | null => {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|shorts\/|v=)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+};
 
 function ProjectTile({
   project,
