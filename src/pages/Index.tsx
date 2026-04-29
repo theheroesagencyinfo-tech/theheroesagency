@@ -82,6 +82,19 @@ const DeferredBelowFold = ({ children }: { children: ReactNode }) => {
 };
 
 const Index = () => {
+  const [chatReady, setChatReady] = useState(false);
+
+  // Defer LiveChat mount until the browser is idle so it never competes
+  // with hero hydration / first interaction for main-thread time.
+  useEffect(() => {
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(() => setChatReady(true), { timeout: 4000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = globalThis.setTimeout(() => setChatReady(true), 3000);
+    return () => globalThis.clearTimeout(id);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
@@ -127,9 +140,11 @@ const Index = () => {
       <Suspense fallback={<SectionFallback />}>
         <Footer />
       </Suspense>
-      <Suspense fallback={null}>
-        <LiveChat />
-      </Suspense>
+      {chatReady && (
+        <Suspense fallback={null}>
+          <LiveChat />
+        </Suspense>
+      )}
     </div>
   );
 };
