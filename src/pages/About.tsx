@@ -71,7 +71,7 @@ const faqs = [
   },
   {
     q: "Who is the agency built for?",
-    a: "Founder-led brands and operators ready to scale past the DIY phase — typically Shopify stores doing $20k–$2M/month that need a senior partner to build the system behind the brand instead of stitching together freelancers.",
+    a: "Founder-led brands and operators ready to scale past the DIY phase — typically Shopify stores doing $20k–$2M/month that need a senior partner to build the system behind the brand instead of stitching together freelancers. We also partner with experts, consultants and agencies looking to outsource client projects to a senior team they can trust — Shopify builds, marketing systems, AI commercials and automation delivered white-label, on time, on brand.",
   },
   {
     q: "How is this different from hiring a freelancer or a generic agency?",
@@ -83,7 +83,7 @@ const faqs = [
   },
   {
     q: "How long does a typical project take?",
-    a: "A Shopify build or redesign ships in 3–6 weeks. Marketing systems and automation flows go live in 2–4 weeks. AI commercial creative is delivered in days, not weeks. You'll receive a milestone-based timeline before any work begins.",
+    a: "A Shopify build or redesign ships in 3–7 days max depending on complexity. Marketing systems and automation flows go live in 2–4 weeks. AI commercial creative is delivered in days, not weeks. You'll receive a milestone-based timeline before any work begins.",
   },
   {
     q: "How much does it cost to work with you?",
