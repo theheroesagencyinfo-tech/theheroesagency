@@ -379,6 +379,21 @@ const Portfolio = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [activeSegment, setActiveSegment] = useState<string | undefined>();
   const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const lbGallery = lightboxProject
+    ? lightboxProject.images && lightboxProject.images.length > 0
+      ? lightboxProject.images
+      : lightboxProject.image
+        ? [lightboxProject.image]
+        : []
+    : [];
+  const openLightbox = (p: Project) => {
+    setLightboxProject(p);
+    // If a specific image was passed (from tile slider), start at that index
+    const all = p.images && p.images.length > 0 ? p.images : p.image ? [p.image] : [];
+    const idx = p.image ? Math.max(0, all.indexOf(p.image)) : 0;
+    setLightboxIndex(idx);
+  };
 
   const openQuote = (segmentTitle: string) => {
     setActiveSegment(segmentTitle);
@@ -467,7 +482,7 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {segment.projects.map((p) => (
-                  <ProjectTile key={p.title} project={p} onImageClick={setLightboxProject} />
+                  <ProjectTile key={p.title} project={p} onImageClick={openLightbox} />
                 ))}
               </div>
             </motion.section>
@@ -494,12 +509,45 @@ const Portfolio = () => {
               >
                 <X className="w-5 h-5" />
               </button>
-              {lightboxProject.image && (
-                <img
-                  src={lightboxProject.image}
-                  alt={`${lightboxProject.title} full preview`}
-                  className="w-full h-auto max-h-[75vh] object-contain bg-black/40"
-                />
+              {lbGallery.length > 0 && (
+                <div className="relative bg-black/40">
+                  <img
+                    src={lbGallery[lightboxIndex]}
+                    alt={`${lightboxProject.title} full preview ${lightboxIndex + 1}`}
+                    className="w-full h-auto max-h-[75vh] object-contain"
+                  />
+                  {lbGallery.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setLightboxIndex((i) => (i - 1 + lbGallery.length) % lbGallery.length)}
+                        aria-label="Previous image"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-foreground" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setLightboxIndex((i) => (i + 1) % lbGallery.length)}
+                        aria-label="Next image"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                      >
+                        <ChevronRight className="w-5 h-5 text-foreground" />
+                      </button>
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        {lbGallery.map((_, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => setLightboxIndex(i)}
+                            aria-label={`Go to image ${i + 1}`}
+                            className={`h-2 rounded-full transition-all ${i === lightboxIndex ? "w-6 bg-primary" : "w-2 bg-foreground/40"}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               )}
               <div className="p-6">
                 <h3 className="text-2xl font-bold mb-2">{lightboxProject.title}</h3>
