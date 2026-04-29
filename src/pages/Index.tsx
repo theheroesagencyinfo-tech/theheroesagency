@@ -1,17 +1,47 @@
+import { Suspense, lazy } from "react";
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { TrustMetrics } from "@/components/sections/TrustMetrics";
-import { ServicesSection } from "@/components/sections/ServicesSection";
-import { ProcessSection } from "@/components/sections/ProcessSection";
-import { PortfolioSection } from "@/components/sections/PortfolioSection";
-import { WhyMeSection } from "@/components/sections/WhyMeSection";
-import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
-import { BlogSection } from "@/components/sections/BlogSection";
-import { ContactSection } from "@/components/sections/ContactSection";
-import { CTASection } from "@/components/sections/CTASection";
-import { Footer } from "@/components/sections/Footer";
-import { LiveChat } from "@/components/LiveChat";
 import { SEO } from "@/components/SEO";
+
+// Lazy-load below-the-fold sections so they don't block the main thread on
+// first paint. Each chunk loads as the user scrolls / when the browser is idle,
+// dramatically reducing the longest-task duration (Max Potential FID).
+const ServicesSection = lazy(() =>
+  import("@/components/sections/ServicesSection").then((m) => ({ default: m.ServicesSection })),
+);
+const ProcessSection = lazy(() =>
+  import("@/components/sections/ProcessSection").then((m) => ({ default: m.ProcessSection })),
+);
+const PortfolioSection = lazy(() =>
+  import("@/components/sections/PortfolioSection").then((m) => ({ default: m.PortfolioSection })),
+);
+const WhyMeSection = lazy(() =>
+  import("@/components/sections/WhyMeSection").then((m) => ({ default: m.WhyMeSection })),
+);
+const TestimonialsSection = lazy(() =>
+  import("@/components/sections/TestimonialsSection").then((m) => ({
+    default: m.TestimonialsSection,
+  })),
+);
+const BlogSection = lazy(() =>
+  import("@/components/sections/BlogSection").then((m) => ({ default: m.BlogSection })),
+);
+const ContactSection = lazy(() =>
+  import("@/components/sections/ContactSection").then((m) => ({ default: m.ContactSection })),
+);
+const CTASection = lazy(() =>
+  import("@/components/sections/CTASection").then((m) => ({ default: m.CTASection })),
+);
+const Footer = lazy(() =>
+  import("@/components/sections/Footer").then((m) => ({ default: m.Footer })),
+);
+const LiveChat = lazy(() =>
+  import("@/components/LiveChat").then((m) => ({ default: m.LiveChat })),
+);
+
+// Reserve vertical space so deferred sections don't cause layout shift.
+const SectionFallback = () => <div aria-hidden className="min-h-[400px]" />;
 
 const Index = () => {
   return (
@@ -43,17 +73,23 @@ const Index = () => {
       <main>
         <HeroSection />
         <TrustMetrics />
-        <ServicesSection />
-        <ProcessSection />
-        <PortfolioSection />
-        <WhyMeSection />
-        <TestimonialsSection />
-        <BlogSection />
-        <ContactSection />
-        <CTASection />
+        <Suspense fallback={<SectionFallback />}>
+          <ServicesSection />
+          <ProcessSection />
+          <PortfolioSection />
+          <WhyMeSection />
+          <TestimonialsSection />
+          <BlogSection />
+          <ContactSection />
+          <CTASection />
+        </Suspense>
       </main>
-      <Footer />
-      <LiveChat />
+      <Suspense fallback={<SectionFallback />}>
+        <Footer />
+      </Suspense>
+      <Suspense fallback={null}>
+        <LiveChat />
+      </Suspense>
     </div>
   );
 };
