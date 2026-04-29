@@ -25,9 +25,19 @@
     
     <meta name="twitter:image" content="https://storage.googleapis.com/gpt-engineer-file-uploads/Rv6tPtrR5EatC0rEuX4aVUJoDej2/social-images/social-1777194595877-WhatsApp_Image_2026-04-23_at_8.47.06_AM.webp">
 
-    <!-- Performance: preconnect to Supabase for faster API hits -->
+    <!-- Performance: preconnect/dns-prefetch for faster API + media -->
     <link rel="preconnect" href="https://gvyzlvevzosexdoekrtz.supabase.co" crossorigin />
     <link rel="dns-prefetch" href="https://gvyzlvevzosexdoekrtz.supabase.co" />
+    <link rel="preconnect" href="https://www.youtube.com" crossorigin />
+    <link rel="preconnect" href="https://i.ytimg.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.youtube.com" />
+
+    <!-- Site protection: discourage casual copying / inspection -->
+    <style>
+      html, body { -webkit-user-select: none; -ms-user-select: none; user-select: none; -webkit-touch-callout: none; }
+      input, textarea, [contenteditable="true"], .allow-select { -webkit-user-select: text !important; user-select: text !important; }
+      img, video { -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
+    </style>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -54,5 +64,20 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Discourage right-click, devtools shortcuts, drag-save, and copy.
+      (function () {
+        var allow = function (t) { return t && (t.closest && (t.closest('input,textarea,[contenteditable="true"],.allow-select'))); };
+        document.addEventListener('contextmenu', function (e) { if (!allow(e.target)) e.preventDefault(); });
+        document.addEventListener('dragstart', function (e) { var n = e.target && e.target.nodeName; if (n === 'IMG' || n === 'VIDEO') e.preventDefault(); });
+        document.addEventListener('copy', function (e) { if (!allow(e.target)) e.preventDefault(); });
+        document.addEventListener('keydown', function (e) {
+          var k = (e.key || '').toLowerCase();
+          if (e.key === 'F12') return e.preventDefault();
+          if ((e.ctrlKey || e.metaKey) && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) return e.preventDefault();
+          if ((e.ctrlKey || e.metaKey) && (k === 'u' || k === 's')) return e.preventDefault();
+        });
+      })();
+    </script>
   </body>
 </html>
