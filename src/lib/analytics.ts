@@ -70,13 +70,13 @@ export async function trackEvent(
   opts: { label?: string; metadata?: Record<string, unknown> } = {}
 ) {
   try {
-    await supabase.from("page_events").insert({
+    await supabase.from("page_events").insert([{
       session_id: getSessionId(),
       event_name,
       path: window.location.pathname,
       label: opts.label || null,
-      metadata: opts.metadata || null,
-    });
+      metadata: (opts.metadata || null) as never,
+    }]);
   } catch (err) {
     if (import.meta.env.DEV) console.warn("trackEvent failed", err);
   }
