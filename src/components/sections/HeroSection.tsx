@@ -95,7 +95,7 @@ export function HeroSection() {
           alt=""
           width={1920}
           height={1080}
-          loading="lazy"
+          decoding="async"
           decoding="async"
           aria-hidden="true"
           className="w-full h-full object-cover"
