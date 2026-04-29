@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useRef, useState, type ReactNode } from "react";
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { TrustMetrics } from "@/components/sections/TrustMetrics";
@@ -43,6 +43,31 @@ const LiveChat = lazy(() =>
 // Reserve vertical space so deferred sections don't cause layout shift.
 const SectionFallback = () => <div aria-hidden className="min-h-[400px]" />;
 
+const DeferredBelowFold = ({ children }: { children: ReactNode }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const current = ref.current;
+    if (!current || shouldLoad) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "0px" },
+    );
+
+    observer.observe(current);
+    return () => observer.disconnect();
+  }, [shouldLoad]);
+
+  return <div ref={ref}>{shouldLoad ? children : <SectionFallback />}</div>;
+};
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -73,16 +98,18 @@ const Index = () => {
       <main>
         <HeroSection />
         <TrustMetrics />
-        <Suspense fallback={<SectionFallback />}>
-          <ServicesSection />
-          <ProcessSection />
-          <PortfolioSection />
-          <WhyMeSection />
-          <TestimonialsSection />
-          <BlogSection />
-          <ContactSection />
-          <CTASection />
-        </Suspense>
+        <DeferredBelowFold>
+          <Suspense fallback={<SectionFallback />}>
+            <ServicesSection />
+            <ProcessSection />
+            <PortfolioSection />
+            <WhyMeSection />
+            <TestimonialsSection />
+            <BlogSection />
+            <ContactSection />
+            <CTASection />
+          </Suspense>
+        </DeferredBelowFold>
       </main>
       <Suspense fallback={<SectionFallback />}>
         <Footer />

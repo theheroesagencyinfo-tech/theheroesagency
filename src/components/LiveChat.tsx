@@ -81,7 +81,13 @@ export function LiveChat() {
         setShowNameForm(false);
       }
     };
-    init();
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(() => void init(), { timeout: 2500 });
+      return () => window.cancelIdleCallback(id);
+    }
+
+    const id = globalThis.setTimeout(() => void init(), 1600);
+    return () => globalThis.clearTimeout(id);
   }, []);
 
   // Lazily create an anonymous session the first time the visitor opens the chat.
