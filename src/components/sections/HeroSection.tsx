@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { CALENDLY_URL } from "@/lib/links";
 import heroBanner from "@/assets/hero-banner.jpg";
@@ -14,14 +14,42 @@ export function HeroSection() {
 
   // Cursor-reveal: track mouse position on the section so the banner
   // image becomes clearer in a circle around the cursor.
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+  // Performance: cache the section rect (refreshed on scroll/resize) and
+  // coalesce style writes via rAF to avoid forced reflows on every mousemove.
+  const rectRef = useRef<DOMRect | null>(null);
+  const frameRef = useRef(0);
+  const pendingRef = useRef({ x: 50, y: 50 });
+
+  useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    el.style.setProperty("--mx", `${x}%`);
-    el.style.setProperty("--my", `${y}%`);
+    const refresh = () => {
+      rectRef.current = el.getBoundingClientRect();
+    };
+    refresh();
+    window.addEventListener("scroll", refresh, { passive: true });
+    window.addEventListener("resize", refresh);
+    return () => {
+      window.removeEventListener("scroll", refresh);
+      window.removeEventListener("resize", refresh);
+      if (frameRef.current) cancelAnimationFrame(frameRef.current);
+    };
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const el = sectionRef.current;
+    const rect = rectRef.current;
+    if (!el || !rect) return;
+    pendingRef.current.x = ((e.clientX - rect.left) / rect.width) * 100;
+    pendingRef.current.y = ((e.clientY - rect.top) / rect.height) * 100;
+    if (frameRef.current) return;
+    frameRef.current = requestAnimationFrame(() => {
+      frameRef.current = 0;
+      const node = sectionRef.current;
+      if (!node) return;
+      node.style.setProperty("--mx", `${pendingRef.current.x}%`);
+      node.style.setProperty("--my", `${pendingRef.current.y}%`);
+    });
   };
 
   return (

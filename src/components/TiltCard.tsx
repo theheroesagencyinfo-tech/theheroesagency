@@ -1,5 +1,5 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface TiltCardProps {
@@ -36,9 +36,31 @@ export function TiltCard({
   const glareX = useTransform(xSpring, [-0.5, 0.5], ["0%", "100%"]);
   const glareY = useTransform(ySpring, [-0.5, 0.5], ["0%", "100%"]);
 
+  // Cache the rect so we don't trigger a forced reflow on every mousemove.
+  const rectRef = useRef<DOMRect | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const refresh = () => {
+      rectRef.current = el.getBoundingClientRect();
+    };
+    refresh();
+    window.addEventListener("scroll", refresh, { passive: true });
+    window.addEventListener("resize", refresh);
+    return () => {
+      window.removeEventListener("scroll", refresh);
+      window.removeEventListener("resize", refresh);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (ref.current) rectRef.current = ref.current.getBoundingClientRect();
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
+    const rect = rectRef.current;
+    if (!rect) return;
     const px = (e.clientX - rect.left) / rect.width - 0.5;
     const py = (e.clientY - rect.top) / rect.height - 0.5;
     x.set(px);
