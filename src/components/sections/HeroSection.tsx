@@ -114,12 +114,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-glow-top z-[2]" />
 
       <div className="container relative z-10 px-4 md:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-3xl mx-auto text-center"
-        >
+        <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
