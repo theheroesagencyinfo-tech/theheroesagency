@@ -17,7 +17,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { SystemAuditForm } from "@/components/SystemAuditForm";
-import founderImg from "@/assets/founder-mou-barrac.jpeg";
+import founderImg from "@/assets/founder-mou-barrac-new.jpg";
 
 const services = [
   {

@@ -207,13 +207,24 @@ const segments: Segment[] = [
       { name: "Kling", svg: klingSvg },
     ],
     projects: [
-      { title: "Product Hero Spots", description: "15s & 30s AI-generated hero ads for Meta and TikTok." },
-      { title: "Brand Story Films", description: "60–90s narrative films blending AI footage with brand assets." },
-      { title: "Performance Creative Packs", description: "Batches of testable variants per campaign." },
-      { title: "Founder/UGC Style AI", description: "AI avatars and scripts for high-volume UGC-style ads." },
+      { title: "AI Commercial — Spot 01", description: "High-impact AI-generated product commercial built for paid social. Shot-by-shot direction, motion and grading delivered in days, not weeks.", url: "https://youtube.com/shorts/AeEZySYJrz4" },
+      { title: "AI Commercial — Spot 02", description: "Cinematic AI brand spot engineered to stop the scroll on Reels, TikTok and Shorts.", url: "https://youtube.com/shorts/_ljd9oG7XA0" },
+      { title: "AI Commercial — Spot 03", description: "Bold, conversion-tuned AI commercial — punchy hook, product-first storytelling, ready-to-launch creative.", url: "https://youtube.com/shorts/k7gwXiEoNBo" },
+      { title: "AI Commercial — Spot 04", description: "Premium AI brand film with photoreal product visuals and editorial pacing.", url: "https://youtu.be/vFYi5BDqbog" },
+      { title: "AI Commercial — Spot 05", description: "AI-generated launch creative built for performance — engineered around hook, demo and CTA.", url: "https://youtu.be/4cEzhOXqEX8" },
+      { title: "AI Commercial — Spot 06", description: "Photoreal AI commercial with cinematic lighting and brand-grade motion design.", url: "https://youtu.be/8HI8OSllL4U" },
+      { title: "AI Commercial — Spot 07", description: "Story-led AI commercial blending lifestyle visuals with high-end product shots.", url: "https://youtu.be/CDZLI5RkQk4" },
+      { title: "AI Commercial — Spot 08", description: "Scroll-stopping AI ad creative built to drive clicks, sign-ups and sales across Meta, TikTok and YouTube.", url: "https://youtu.be/Wp_Men64gdY" },
     ],
   },
 ];
+
+// Helper: extract YouTube video id from any youtube/shorts/youtu.be URL
+const ytId = (url?: string): string | null => {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|shorts\/|v=)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+};
 
 function ProjectTile({
   project,
@@ -253,12 +264,26 @@ function ProjectTile({
     setSlide((s) => (s - 1 + gallery.length) % gallery.length);
   };
 
+  const videoId = ytId(project.url);
+  const isVideo = !!videoId && !project.image && !project.images;
+
   return (
     <div
       ref={ref}
       className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 block"
     >
-      {gallery.length > 0 ? (
+      {isVideo ? (
+        <div className="relative w-full overflow-hidden bg-black" style={{ aspectRatio: "9 / 16" }}>
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`}
+            title={project.title}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+            className="absolute inset-0 w-full h-full"
+          />
+        </div>
+      ) : gallery.length > 0 ? (
         <button
           type="button"
           onClick={() => onImageClick({ ...project, image: gallery[slide] })}
@@ -325,7 +350,7 @@ function ProjectTile({
         {project.meta && (
           <p className="text-sm font-semibold text-primary mt-3">{project.meta}</p>
         )}
-        {project.url && (
+        {project.url && !isVideo && (
           <a
             href={project.url}
             target="_blank"
@@ -333,6 +358,16 @@ function ProjectTile({
             className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-primary hover:underline"
           >
             Visit site <ArrowUpRight className="w-4 h-4" />
+          </a>
+        )}
+        {isVideo && project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-primary hover:underline"
+          >
+            Watch on YouTube <ArrowUpRight className="w-4 h-4" />
           </a>
         )}
       </div>
@@ -344,6 +379,21 @@ const Portfolio = () => {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [activeSegment, setActiveSegment] = useState<string | undefined>();
   const [lightboxProject, setLightboxProject] = useState<Project | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const lbGallery = lightboxProject
+    ? lightboxProject.images && lightboxProject.images.length > 0
+      ? lightboxProject.images
+      : lightboxProject.image
+        ? [lightboxProject.image]
+        : []
+    : [];
+  const openLightbox = (p: Project) => {
+    setLightboxProject(p);
+    // If a specific image was passed (from tile slider), start at that index
+    const all = p.images && p.images.length > 0 ? p.images : p.image ? [p.image] : [];
+    const idx = p.image ? Math.max(0, all.indexOf(p.image)) : 0;
+    setLightboxIndex(idx);
+  };
 
   const openQuote = (segmentTitle: string) => {
     setActiveSegment(segmentTitle);
@@ -432,7 +482,7 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {segment.projects.map((p) => (
-                  <ProjectTile key={p.title} project={p} onImageClick={setLightboxProject} />
+                  <ProjectTile key={p.title} project={p} onImageClick={openLightbox} />
                 ))}
               </div>
             </motion.section>
@@ -459,12 +509,45 @@ const Portfolio = () => {
               >
                 <X className="w-5 h-5" />
               </button>
-              {lightboxProject.image && (
-                <img
-                  src={lightboxProject.image}
-                  alt={`${lightboxProject.title} full preview`}
-                  className="w-full h-auto max-h-[75vh] object-contain bg-black/40"
-                />
+              {lbGallery.length > 0 && (
+                <div className="relative bg-black/40">
+                  <img
+                    src={lbGallery[lightboxIndex]}
+                    alt={`${lightboxProject.title} full preview ${lightboxIndex + 1}`}
+                    className="w-full h-auto max-h-[75vh] object-contain"
+                  />
+                  {lbGallery.length > 1 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setLightboxIndex((i) => (i - 1 + lbGallery.length) % lbGallery.length)}
+                        aria-label="Previous image"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-foreground" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setLightboxIndex((i) => (i + 1) % lbGallery.length)}
+                        aria-label="Next image"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
+                      >
+                        <ChevronRight className="w-5 h-5 text-foreground" />
+                      </button>
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        {lbGallery.map((_, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => setLightboxIndex(i)}
+                            aria-label={`Go to image ${i + 1}`}
+                            className={`h-2 rounded-full transition-all ${i === lightboxIndex ? "w-6 bg-primary" : "w-2 bg-foreground/40"}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               )}
               <div className="p-6">
                 <h3 className="text-2xl font-bold mb-2">{lightboxProject.title}</h3>
