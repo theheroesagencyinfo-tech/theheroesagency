@@ -16,6 +16,12 @@ import {
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { SystemAuditForm } from "@/components/SystemAuditForm";
 import { SEO } from "@/components/SEO";
 import founderImg from "@/assets/founder-mou-barrac-new.jpg";
@@ -51,12 +57,54 @@ const process = [
 ];
 
 const principles = ["Precision over noise", "Systems over shortcuts", "Performance over aesthetics alone"];
-const outcomes = ["Converts more efficiently", "Operates with less friction", "Scales without breaking"];
+const outcomes = [
+  "Converts more efficiently",
+  "Operates with less friction",
+  "Scales without breaking",
+  "Compounds growth predictably",
+];
 
+const faqs = [
+  {
+    q: "What exactly does TheHeroes Agency do?",
+    a: "We design and engineer end-to-end growth systems for eCommerce and service brands — Shopify storefronts, marketing funnels, AI commercial videos and automation infrastructure. Every engagement is built around one outcome: predictable, measurable revenue growth.",
+  },
+  {
+    q: "Who is the agency built for?",
+    a: "Founder-led brands and operators ready to scale past the DIY phase — typically Shopify stores doing $20k–$2M/month that need a senior partner to build the system behind the brand instead of stitching together freelancers.",
+  },
+  {
+    q: "How is this different from hiring a freelancer or a generic agency?",
+    a: "Most agencies sell deliverables. We deliver an integrated system where design, marketing, content and automation all reinforce each other. You work directly with senior strategists — no junior account managers, no template work, no recycled playbooks.",
+  },
+  {
+    q: "What kind of results can I realistically expect?",
+    a: "Our active client portfolio includes brands generating $13K to $1.5M/month with documented lifts of +213% to +2,728% over 1–6 months. Results vary by niche, offer and ad spend, but every project ships with clear KPIs and a measurable revenue target from day one.",
+  },
+  {
+    q: "How long does a typical project take?",
+    a: "A Shopify build or redesign ships in 3–6 weeks. Marketing systems and automation flows go live in 2–4 weeks. AI commercial creative is delivered in days, not weeks. You'll receive a milestone-based timeline before any work begins.",
+  },
+  {
+    q: "How much does it cost to work with you?",
+    a: "Engagements are scoped to outcomes, not hours. Most projects fall between $3K and $25K depending on scope, with retainer options for ongoing growth, ads management and automation. Book a free strategy call and you'll receive a transparent, fixed-scope proposal.",
+  },
+  {
+    q: "Do you offer support after launch?",
+    a: "Yes. Every build includes a post-launch optimisation window, and most clients continue with us on a monthly growth retainer covering CRO, lifecycle email, paid media and automation upkeep.",
+  },
+  {
+    q: "How do I get started?",
+    a: "Book a free 30-minute strategy call. We'll audit your current setup, identify the single biggest revenue lever, and only propose a project if we're confident we can move the number for you.",
+  },
+];
+
+// Animations: keep elements visible after they enter (no `once: true`) so
+// nothing ever fades back out when scrolled past.
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
+  viewport: { amount: 0.15, margin: "-80px" },
   transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
 };
 
@@ -107,6 +155,15 @@ export default function About() {
               { "@type": "ListItem", position: 1, name: "Home", item: "https://theheroesagency.lovable.app/" },
               { "@type": "ListItem", position: 2, name: "About", item: "https://theheroesagency.lovable.app/about" },
             ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
           },
         ]}
       />
@@ -171,7 +228,7 @@ export default function About() {
                   key={s.title}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  viewport={{ amount: 0.15, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
                   className="glass rounded-2xl p-8 border border-white/5 hover:border-primary/30 transition-all duration-500 group"
                 >
@@ -200,7 +257,7 @@ export default function About() {
                   key={p.num}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
+                  viewport={{ amount: 0.15, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className="relative glass rounded-2xl p-6 border border-white/5 hover:border-primary/30 transition-all duration-500"
                 >
@@ -241,24 +298,54 @@ export default function About() {
 
         {/* Outcome */}
         <section className="container px-4 md:px-6 mb-24">
-          <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center">
+          <motion.div {...fadeUp} className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Outcome</h2>
             <p className="text-muted-foreground text-lg mb-10">The result is a business that:</p>
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {outcomes.map((o, i) => (
                 <motion.div
                   key={o}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ amount: 0.2 }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="glass rounded-xl p-6 border border-white/5"
+                  className="glass rounded-xl p-5 md:p-6 border border-white/5"
                 >
                   <CheckCircle2 className="w-6 h-6 text-primary mx-auto mb-3" />
-                  <p className="font-semibold">{o}</p>
+                  <p className="font-semibold text-sm md:text-base">{o}</p>
                 </motion.div>
               ))}
             </div>
+          </motion.div>
+        </section>
+
+        {/* FAQs */}
+        <section className="container px-4 md:px-6 mb-24">
+          <motion.div {...fadeUp} className="max-w-3xl mx-auto">
+            <div className="text-center mb-10">
+              <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-3 block">
+                FAQs
+              </span>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">
+                Answers before you <span className="text-gradient">commit</span>
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Everything founders ask us before starting a project — answered with the same honesty we bring to client work.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="glass rounded-2xl border border-primary/10 px-4 md:px-6 divide-y divide-white/5">
+              {faqs.map((item, i) => (
+                <AccordionItem key={item.q} value={`item-${i}`} className="border-0">
+                  <AccordionTrigger className="text-left text-base md:text-lg font-semibold hover:no-underline py-5">
+                    {item.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground text-sm md:text-base leading-relaxed pb-5">
+                    {item.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </motion.div>
         </section>
 
