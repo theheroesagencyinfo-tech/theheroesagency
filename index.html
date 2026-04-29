@@ -65,8 +65,12 @@
   <meta name="twitter:description" content="The Heroes Agency builds high-converting Shopify stores, automated marketing systems, and AI commercial videos that grow revenue. Book your free strategy call.">
 </head>
 
-  <body>
-    <div id="root"></div>
+  <body style="background-color: hsl(222, 47%, 5%); color: hsl(210, 40%, 98%); margin: 0;">
+    <div id="root">
+      <!-- Inline FCP placeholder: paints immediately so the browser doesn't wait for React.
+           Replaced as soon as React mounts. Invisible to users (matches dark theme). -->
+      <div aria-hidden="true" style="min-height: 100vh; background-color: hsl(222, 47%, 5%);"></div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
       // Discourage right-click, devtools shortcuts, drag-save, and copy.
