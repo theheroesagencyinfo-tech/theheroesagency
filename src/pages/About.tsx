@@ -87,7 +87,7 @@ const faqs = [
   },
   {
     q: "How much does it cost to work with you?",
-    a: "Engagements are scoped to outcomes, not hours. Most projects fall between $3K and $25K depending on scope, with retainer options for ongoing growth, ads management and automation. Book a free strategy call and you'll receive a transparent, fixed-scope proposal.",
+    a: "It depends on the scope of the project. Get in touch so we can discuss your goals and requirements, and we'll send you a tailored quote.",
   },
   {
     q: "Do you offer support after launch?",
