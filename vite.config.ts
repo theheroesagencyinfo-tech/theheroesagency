@@ -28,12 +28,6 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           react: ["react", "react-dom", "react-router-dom"],
           motion: ["framer-motion"],
-          ui: [
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-tabs",
-            "@radix-ui/react-toast",
-            "@radix-ui/react-tooltip",
-          ],
         },
       },
     },
