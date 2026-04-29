@@ -14,14 +14,14 @@ export function AnalyticsTracker() {
     };
 
     if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(track, { timeout: 2000 });
+      const id = window.requestIdleCallback(track, { timeout: 4000 });
       return () => {
         cancelled = true;
         window.cancelIdleCallback(id);
       };
     }
 
-    const id = globalThis.setTimeout(track, 1200);
+    const id = globalThis.setTimeout(track, 2500);
     return () => {
       cancelled = true;
       globalThis.clearTimeout(id);
