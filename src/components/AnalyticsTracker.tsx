@@ -13,7 +13,7 @@ export function AnalyticsTracker() {
       });
     };
 
-    if ("requestIdleCallback" in window) {
+    if (typeof window.requestIdleCallback === "function") {
       const id = window.requestIdleCallback(track, { timeout: 2000 });
       return () => {
         cancelled = true;
@@ -21,10 +21,10 @@ export function AnalyticsTracker() {
       };
     }
 
-    const id = window.setTimeout(track, 1200);
+    const id = globalThis.setTimeout(track, 1200);
     return () => {
       cancelled = true;
-      window.clearTimeout(id);
+      globalThis.clearTimeout(id);
     };
   }, [location.pathname, location.search]);
   return null;
