@@ -18,6 +18,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { notifyAdmin } from "@/lib/notifyAdmin";
+import { trackEvent, CONVERSION_EVENTS } from "@/lib/analytics";
 
 const services = [
   "Shopify Design",
@@ -101,6 +102,11 @@ export function ContactForm() {
           company: data.company || "—",
           budget: data.custom_budget || data.budget_range || "—",
         },
+      });
+
+      trackEvent(CONVERSION_EVENTS.CONTACT_SUBMIT, {
+        label: data.service,
+        metadata: { budget: data.custom_budget || data.budget_range || null },
       });
 
       setIsSubmitted(true);
