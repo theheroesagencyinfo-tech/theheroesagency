@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { CALENDLY_URL } from "@/lib/links";
+import { openCalendlyPopup } from "@/lib/calendly";
 import heroBanner from "@/assets/hero-banner.webp";
 
 const trackConversionEvent = (eventName: string, opts: { label?: string } = {}) => {
@@ -146,22 +146,16 @@ export function HeroSection() {
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <Button
-              asChild
               size="lg"
               className="gradient-gold text-primary-foreground font-semibold px-8 py-6 text-lg gold-glow-sm hover:scale-105 transition-transform duration-300"
+              onClick={() => {
+                trackConversionEvent("hero_cta_click", { label: "Book a Strategy Call" });
+                trackConversionEvent("calendly_click", { label: "Hero" });
+                void openCalendlyPopup();
+              }}
             >
-              <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => {
-                  trackConversionEvent("hero_cta_click", { label: "Book a Strategy Call" });
-                  trackConversionEvent("calendly_click", { label: "Hero" });
-                }}
-              >
-                Book a Strategy Call
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
+              Book a Strategy Call
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button
               size="lg"
