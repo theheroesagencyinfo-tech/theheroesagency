@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { CALENDLY_URL } from "@/lib/links";
+import { openCalendlyPopup } from "@/lib/calendly";
 import { notifyAdmin } from "@/lib/notifyAdmin";
 import { trackEvent, CONVERSION_EVENTS } from "@/lib/analytics";
 
@@ -106,9 +106,9 @@ export function QuoteRequestDialog({
       setIsSubmitted(true);
 
       if (data.schedule_call === "yes") {
-        // Brief delay so the user sees the confirmation before redirect.
+        // Brief delay so the user sees the confirmation before the popup opens.
         setTimeout(() => {
-          window.open(CALENDLY_URL, "_blank", "noopener,noreferrer");
+          void openCalendlyPopup();
         }, 600);
       }
     } catch (err) {
@@ -158,12 +158,10 @@ export function QuoteRequestDialog({
             </p>
             {scheduleCall === "yes" && (
               <Button
-                asChild
                 className="w-full gradient-gold text-primary-foreground"
+                onClick={() => openCalendlyPopup()}
               >
-                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
-                  Open Calendar
-                </a>
+                Open Calendar
               </Button>
             )}
             <Button
