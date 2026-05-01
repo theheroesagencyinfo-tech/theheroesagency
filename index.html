@@ -36,22 +36,54 @@
       img, video { -webkit-user-drag: none; user-drag: none; pointer-events: auto; }
     </style>
 
-    <!-- Structured Data -->
+    <!-- Structured Data: Organization + ProfessionalService + WebSite -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "The Heroes Agency",
-      "url": "https://theheroesagency.lovable.app/",
-      "email": "info@theheroesagency.org",
-      "description": "Shopify design, marketing automation, and AI commercial production agency.",
-      "sameAs": [
-        "https://www.linkedin.com/in/theheroes-agency",
-        "https://www.instagram.com/theheroes_agency",
-        "https://www.tiktok.com/@theheroesagency",
-        "https://www.facebook.com/share/18Hjqf3KRJ/",
-        "https://x.com/moubarrac",
-        "https://www.youtube.com/@TheHeroesAgencyorg"
+      "@graph": [
+        {
+          "@type": ["Organization", "ProfessionalService"],
+          "@id": "https://theheroesagency.lovable.app/#organization",
+          "name": "The Heroes Agency",
+          "alternateName": ["TheHeroes Agency", "Heroes Agency"],
+          "url": "https://theheroesagency.lovable.app/",
+          "email": "info@theheroesagency.org",
+          "description": "Elite eCommerce growth partner specializing in high-converting Shopify design, marketing automation, and AI commercial video production for ambitious DTC brands.",
+          "founder": { "@type": "Person", "name": "Mou Barrac" },
+          "areaServed": "Worldwide",
+          "serviceType": [
+            "Shopify Design & Development",
+            "Shopify Redesign",
+            "Marketing Automation",
+            "Klaviyo Email Marketing",
+            "Conversion Rate Optimization",
+            "AI Commercial Video Production",
+            "AI Product Photography",
+            "Paid Media Management"
+          ],
+          "knowsAbout": [
+            "Shopify", "Shopify Plus", "Klaviyo", "Make.com", "n8n",
+            "Meta Ads", "Google Ads", "TikTok Ads",
+            "Sora", "Kling", "Higgsfield", "Google Gemini", "Veo",
+            "Conversion Rate Optimization", "DTC eCommerce"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/theheroes-agency",
+            "https://www.instagram.com/theheroes_agency",
+            "https://www.tiktok.com/@theheroesagency",
+            "https://www.facebook.com/share/18Hjqf3KRJ/",
+            "https://x.com/moubarrac",
+            "https://www.youtube.com/@TheHeroesAgencyorg"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://theheroesagency.lovable.app/#website",
+          "url": "https://theheroesagency.lovable.app/",
+          "name": "The Heroes Agency",
+          "publisher": { "@id": "https://theheroesagency.lovable.app/#organization" },
+          "inLanguage": "en"
+        }
       ]
     }
     </script>

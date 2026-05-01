@@ -1,0 +1,32 @@
+# The Heroes Agency
+
+> Elite eCommerce growth partner specializing in high-converting Shopify design, marketing automation systems, and AI-generated commercial video production. We help DTC brands scale revenue through conversion-focused storefronts, automated funnels, and cinematic AI ads.
+
+The Heroes Agency is a results-driven digital agency founded by Mou Barrac. We build premium Shopify experiences, deploy automated marketing systems (Klaviyo, Make, n8n), and produce AI commercial videos using tools like Sora, Kling, Higgsfield, and Google Gemini. Our work has powered 7-figure brands, with measurable lifts in conversion rate, AOV, and retention.
+
+## Core Services
+- [Shopify Design & Development](https://theheroesagency.lovable.app/about): Custom-coded, conversion-optimized Shopify storefronts and redesigns engineered for speed, UX, and revenue.
+- [Marketing Automation](https://theheroesagency.lovable.app/about): Email/SMS flows, retention systems, paid ads management (Meta, Google, TikTok), and full-funnel automation via Klaviyo, Make, and n8n.
+- [AI Commercial Production](https://theheroesagency.lovable.app/about): Cinematic AI-generated product videos and commercials using Sora, Kling, Higgsfield, Veo, and Gemini.
+- [Conversion Rate Optimization](https://theheroesagency.lovable.app/about): Data-driven CRO, A/B testing, and storefront audits to maximize revenue per visitor.
+- [Brand & Creative Strategy](https://theheroesagency.lovable.app/about): Visual identity, product photography (AI + traditional), and high-converting creative direction.
+
+## Pages
+- [Home](https://theheroesagency.lovable.app/): Overview of services, portfolio highlights, testimonials, and free strategy call booking.
+- [About](https://theheroesagency.lovable.app/about): Founder story, agency philosophy, full service breakdown, and free system audit.
+- [Portfolio](https://theheroesagency.lovable.app/portfolio): Live case studies of Shopify builds, marketing campaigns, and AI commercials for real DTC brands.
+- [Blog](https://theheroesagency.lovable.app/blog): Insights on Shopify, eCommerce growth, marketing automation, and AI in advertising.
+
+## Markdown Mirrors (for AI/LLM ingestion)
+- [/index.md](https://theheroesagency.lovable.app/index.md): Plain-text overview of the agency.
+- [/about.md](https://theheroesagency.lovable.app/about.md): Plain-text about page and services.
+- [/services.md](https://theheroesagency.lovable.app/services.md): Detailed service descriptions.
+
+## Contact
+- Email: info@theheroesagency.org
+- Website: https://theheroesagency.lovable.app
+- Custom domain: https://www.theheroesagency.org
+- Book a free strategy call: https://theheroesagency.lovable.app/#contact
+
+## Keywords
+Shopify agency, Shopify design, Shopify redesign, Shopify Plus, eCommerce growth, DTC marketing, conversion rate optimization, CRO, marketing automation, Klaviyo expert, email marketing, retention marketing, Meta ads, Google Ads, TikTok ads, AI commercial, AI video ads, Sora, Kling, Higgsfield, Gemini, AI product photography, ecommerce consultant, Shopify developer, funnel automation, n8n, Make.com.
