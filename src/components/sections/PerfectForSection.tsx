@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { ShoppingBag, Sparkles, Briefcase, Download, Shirt } from "lucide-react";
+import { ShoppingBag, Sparkles, Briefcase, Download, Shirt, Building2, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 
@@ -29,7 +30,17 @@ const items = [
     title: "Print on Demand Store",
     description: "Beautiful POD storefronts wired for catalog growth and retention.",
   },
+  {
+    icon: Building2,
+    title: "B2B Website",
+    description: "Enterprise-grade B2B portals with quoting, gated catalogs, and bulk ordering.",
+  },
 ];
+
+function scrollToContact() {
+  const el = document.getElementById("contact");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 function Card({
   icon: Icon,
@@ -96,6 +107,22 @@ export function PerfectForSection() {
             <Card key={item.title} {...item} index={index} isVisible={isVisible} />
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="text-center mt-12"
+        >
+          <Button
+            onClick={scrollToContact}
+            size="lg"
+            className="gradient-gold text-primary-foreground hover:opacity-90 transition-opacity gold-glow-sm"
+          >
+            Make an Enquiry
+            <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
