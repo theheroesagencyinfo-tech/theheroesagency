@@ -10,6 +10,9 @@ import { SEO } from "@/components/SEO";
 const ServicesSection = lazy(() =>
   import("@/components/sections/ServicesSection").then((m) => ({ default: m.ServicesSection })),
 );
+const PerfectForSection = lazy(() =>
+  import("@/components/sections/PerfectForSection").then((m) => ({ default: m.PerfectForSection })),
+);
 const ProcessSection = lazy(() =>
   import("@/components/sections/ProcessSection").then((m) => ({ default: m.ProcessSection })),
 );
@@ -127,6 +130,7 @@ const Index = () => {
         <DeferredBelowFold>
           <Suspense fallback={<SectionFallback />}>
             <ServicesSection />
+            <PerfectForSection />
             <ProcessSection />
             <PortfolioSection />
             <WhyMeSection />
