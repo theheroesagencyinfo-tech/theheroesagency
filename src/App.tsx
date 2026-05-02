@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
-import { ScrollScene } from "@/components/ScrollScene";
+
 import Index from "./pages/Index";
 
 const Toaster = lazy(() => import("@/components/ui/toaster").then((m) => ({ default: m.Toaster })));
@@ -54,7 +54,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <AnalyticsTracker />
-        <ScrollScene />
+        
         <DeferredToaster />
         <Suspense fallback={<RouteFallback />}>
           <Routes>
