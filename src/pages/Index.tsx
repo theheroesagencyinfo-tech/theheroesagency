@@ -3,6 +3,7 @@ import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { TrustMetrics } from "@/components/sections/TrustMetrics";
 import { SEO } from "@/components/SEO";
+import { ScrollReveal3D } from "@/components/ScrollReveal3D";
 
 // Lazy-load below-the-fold sections so they don't block the main thread on
 // first paint. Each chunk loads as the user scrolls / when the browser is idle,
@@ -129,15 +130,15 @@ const Index = () => {
         <TrustMetrics />
         <DeferredBelowFold>
           <Suspense fallback={<SectionFallback />}>
-            <ServicesSection />
-            <PerfectForSection />
-            <ProcessSection />
-            <PortfolioSection />
-            <WhyMeSection />
-            <TestimonialsSection />
-            <BlogSection />
-            <ContactSection />
-            <CTASection />
+            <ScrollReveal3D><ServicesSection /></ScrollReveal3D>
+            <ScrollReveal3D tilt={6}><PerfectForSection /></ScrollReveal3D>
+            <ScrollReveal3D><ProcessSection /></ScrollReveal3D>
+            <ScrollReveal3D tilt={10}><PortfolioSection /></ScrollReveal3D>
+            <ScrollReveal3D><WhyMeSection /></ScrollReveal3D>
+            <ScrollReveal3D tilt={6}><TestimonialsSection /></ScrollReveal3D>
+            <ScrollReveal3D><BlogSection /></ScrollReveal3D>
+            <ScrollReveal3D tilt={4}><ContactSection /></ScrollReveal3D>
+            <ScrollReveal3D><CTASection /></ScrollReveal3D>
           </Suspense>
         </DeferredBelowFold>
       </main>
