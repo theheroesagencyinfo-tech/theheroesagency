@@ -227,6 +227,32 @@ const ytId = (url?: string): string | null => {
   return m ? m[1] : null;
 };
 
+// Preload first 3 above-the-fold images at high priority for fast LCP.
+function PortfolioPreload() {
+  useEffect(() => {
+    const links: HTMLLinkElement[] = [];
+    segments[0].projects.slice(0, 3).forEach((p) => {
+      if (!p.image) return;
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = p.image.img.src;
+      const srcset = p.image.sources.avif ?? p.image.sources.webp;
+      if (srcset) {
+        link.setAttribute("imagesrcset", srcset);
+        link.setAttribute("imagesizes", "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw");
+      }
+      (link as unknown as { fetchPriority: string }).fetchPriority = "high";
+      document.head.appendChild(link);
+      links.push(link);
+    });
+    return () => {
+      links.forEach((l) => l.parentNode?.removeChild(l));
+    };
+  }, []);
+  return null;
+}
+
 function ProjectTile({
   project,
   onImageClick,
