@@ -1,0 +1,23 @@
+# Hashed assets — safe to cache forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Static images in /assets
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML — always revalidate so deploys roll out instantly
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# SEO / config files
+/robots.txt
+  Cache-Control: public, max-age=3600
+/sitemap.xml
+  Cache-Control: public, max-age=3600
