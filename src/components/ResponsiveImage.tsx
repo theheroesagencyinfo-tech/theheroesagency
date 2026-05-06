@@ -60,15 +60,18 @@ export function ResponsiveImage({
     return () => io.disconnect();
   }, [eager, inView, rootMargin]);
 
-  const ratio = aspectRatio ?? `${picture.img.w} / ${picture.img.h}`;
-
   return (
     <div
       ref={wrapRef}
       className={cn("relative w-full overflow-hidden bg-muted/40", wrapperClassName)}
-      style={{ aspectRatio: ratio }}
+      style={aspectRatio ? { aspectRatio } : undefined}
     >
       {!loaded && (
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60"
+        />
+      )}
         <div
           aria-hidden="true"
           className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60"
