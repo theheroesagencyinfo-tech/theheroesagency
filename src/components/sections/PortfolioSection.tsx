@@ -266,6 +266,7 @@ export function PortfolioSection() {
 
   return (
     <section id="portfolio" ref={sectionRef} className="py-24 relative cursor-glow">
+      <ImagePreload srcs={projects.slice(0, 3).map((p) => p.image)} />
       <div className="container px-4 md:px-6 relative z-10">
         {/* Section Header */}
         <motion.div
