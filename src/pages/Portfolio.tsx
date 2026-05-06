@@ -501,7 +501,7 @@ const Portfolio = () => {
                   <ProjectTile key={p.title} project={p} onImageClick={openLightbox} eager={idx === 0 && i < 3} />
                 ))}
               </div>
-            </motion.section>
+            </section>
           ))}
         </div>
       </main>
