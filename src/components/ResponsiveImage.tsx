@@ -33,6 +33,7 @@ export function ResponsiveImage({
   aspectRatio,
 }: ResponsiveImageProps) {
   const [loaded, setLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
 
   const ratio = aspectRatio ?? `${picture.img.w} / ${picture.img.h}`;
   return (
@@ -40,33 +41,45 @@ export function ResponsiveImage({
       className={cn("relative w-full overflow-hidden bg-muted/40", wrapperClassName)}
       style={{ aspectRatio: ratio }}
     >
-      {!loaded && (
+      {!loaded && !errored && (
         <div
           aria-hidden="true"
           className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60"
         />
       )}
-      <picture>
-        {Object.entries(picture.sources).map(([type, srcset]) => (
-          <source key={type} type={`image/${type}`} srcSet={srcset} sizes={sizes} />
-        ))}
-        <img
-          src={picture.img.src}
-          alt={alt}
-          width={picture.img.w}
-          height={picture.img.h}
-          loading={eager ? "eager" : "lazy"}
-          decoding="async"
-          {...{ fetchpriority: eager ? "high" : "auto" }}
-          sizes={sizes}
-          onLoad={() => setLoaded(true)}
-          className={cn(
-            "absolute inset-0 w-full h-full transition-opacity duration-500",
-            loaded ? "opacity-100" : "opacity-0",
-            className,
-          )}
-        />
-      </picture>
+      {errored ? (
+        <div
+          role="img"
+          aria-label={alt}
+          className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-muted/60 via-background/40 to-muted/60 text-muted-foreground p-4 text-center"
+        >
+          <ImageOff className="h-8 w-8 opacity-70" aria-hidden="true" />
+          <span className="text-xs font-medium line-clamp-2 max-w-[90%]">{alt || "Image unavailable"}</span>
+        </div>
+      ) : (
+        <picture>
+          {Object.entries(picture.sources).map(([type, srcset]) => (
+            <source key={type} type={`image/${type}`} srcSet={srcset} sizes={sizes} />
+          ))}
+          <img
+            src={picture.img.src}
+            alt={alt}
+            width={picture.img.w}
+            height={picture.img.h}
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+            {...{ fetchpriority: eager ? "high" : "auto" }}
+            sizes={sizes}
+            onLoad={() => setLoaded(true)}
+            onError={() => setErrored(true)}
+            className={cn(
+              "absolute inset-0 w-full h-full transition-opacity duration-500",
+              loaded ? "opacity-100" : "opacity-0",
+              className,
+            )}
+          />
+        </picture>
+      )}
     </div>
   );
 }
