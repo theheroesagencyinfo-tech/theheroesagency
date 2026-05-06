@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { LazyImage } from "@/components/LazyImage";
+import { ImagePreload } from "@/components/ImagePreload";
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp";
