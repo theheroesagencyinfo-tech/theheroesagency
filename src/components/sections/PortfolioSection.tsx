@@ -4,27 +4,28 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
+import { LazyImage } from "@/components/LazyImage";
 
-import retrospecImg from "@/assets/portfolio/retrospec-com.jpg";
-import darntoughImg from "@/assets/portfolio/darntough-com.jpg";
-import trndaImg from "@/assets/portfolio/trnda-com.jpg";
-import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.jpg";
-import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.jpg";
-import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
-import hatkayImg from "@/assets/portfolio/hatkay-com.jpg";
-import haustierkostImg from "@/assets/portfolio/haustierkost-de.jpg";
+import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
+import darntoughImg from "@/assets/portfolio/darntough-com.webp";
+import trndaImg from "@/assets/portfolio/trnda-com.webp";
+import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.webp";
+import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.webp";
+import hhgImg from "@/assets/portfolio/hhgproducts-com.webp";
+import hatkayImg from "@/assets/portfolio/hatkay-com.webp";
+import haustierkostImg from "@/assets/portfolio/haustierkost-de.webp";
 
-import takeletlooseImg from "@/assets/portfolio/takeletloose-com.png";
-import valevaImg from "@/assets/portfolio/valeva-shop.png";
-import velaxenImg from "@/assets/portfolio/velaxen-shop.png";
-import milolabImg from "@/assets/portfolio/milolabco-com.png";
-import azureImg from "@/assets/portfolio/azureboutique-co.png";
-import gisouImg from "@/assets/portfolio/gisou-com.png";
-import getrenuImg from "@/assets/portfolio/getrenu-com.png";
-import trimtasteImg from "@/assets/portfolio/trimtaste-com.png";
-import nurricoImg from "@/assets/portfolio/nurrico-com.png";
-import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.png";
-import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.png";
+import takeletlooseImg from "@/assets/portfolio/takeletloose-com.webp";
+import valevaImg from "@/assets/portfolio/valeva-shop.webp";
+import velaxenImg from "@/assets/portfolio/velaxen-shop.webp";
+import milolabImg from "@/assets/portfolio/milolabco-com.webp";
+import azureImg from "@/assets/portfolio/azureboutique-co.webp";
+import gisouImg from "@/assets/portfolio/gisou-com.webp";
+import getrenuImg from "@/assets/portfolio/getrenu-com.webp";
+import trimtasteImg from "@/assets/portfolio/trimtaste-com.webp";
+import nurricoImg from "@/assets/portfolio/nurrico-com.webp";
+import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.webp";
+import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.webp";
 
 const projects = [
   // New featured projects pushed to the top
@@ -218,15 +219,14 @@ function ProjectCard({
     >
       {/* Image */}
       <div className="relative h-56 overflow-hidden bg-muted">
-        <img
+        <LazyImage
           src={image}
           alt={`${title} website screenshot`}
-          loading="lazy"
-          decoding="async"
-          fetchPriority="low"
+          eager={index < 3}
           width={1280}
           height={896}
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          wrapperClassName="absolute inset-0"
           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
