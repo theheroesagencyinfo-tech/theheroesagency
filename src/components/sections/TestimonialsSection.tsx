@@ -15,18 +15,18 @@ import {
 import { ReviewForm } from "@/components/ReviewForm";
 import { TestimonialsMetrics } from "./TestimonialsMetrics";
 import { supabase } from "@/integrations/supabase/client";
-import avatarSarah from "@/assets/avatars/sarah-mitchell.jpg";
-import avatarMarcus from "@/assets/avatars/marcus-chen.jpg";
-import avatarEmily from "@/assets/avatars/emily-rodriguez.jpg";
-import avatarDavid from "@/assets/avatars/david-park.jpg";
-import avatarJasmine from "@/assets/avatars/jasmine-patel.jpg";
-import avatarAhmed from "@/assets/avatars/ahmed-khalil.jpg";
-import avatarOlivia from "@/assets/avatars/olivia-bennett.jpg";
-import avatarRavi from "@/assets/avatars/ravi-shankar.jpg";
-import avatarSophie from "@/assets/avatars/sophie-laurent.jpg";
-import avatarTomas from "@/assets/avatars/tomas-garcia.jpg";
-import avatarNaomi from "@/assets/avatars/naomi-sato.jpg";
-import avatarLiam from "@/assets/avatars/liam-foster.jpg";
+import avatarSarah from "@/assets/avatars/sarah-mitchell.webp";
+import avatarMarcus from "@/assets/avatars/marcus-chen.webp";
+import avatarEmily from "@/assets/avatars/emily-rodriguez.webp";
+import avatarDavid from "@/assets/avatars/david-park.webp";
+import avatarJasmine from "@/assets/avatars/jasmine-patel.webp";
+import avatarAhmed from "@/assets/avatars/ahmed-khalil.webp";
+import avatarOlivia from "@/assets/avatars/olivia-bennett.webp";
+import avatarRavi from "@/assets/avatars/ravi-shankar.webp";
+import avatarSophie from "@/assets/avatars/sophie-laurent.webp";
+import avatarTomas from "@/assets/avatars/tomas-garcia.webp";
+import avatarNaomi from "@/assets/avatars/naomi-sato.webp";
+import avatarLiam from "@/assets/avatars/liam-foster.webp";
 
 const AVATAR_BY_ID: Record<string, string> = {
   "fb-1": avatarSarah,

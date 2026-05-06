@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/accordion";
 import { SystemAuditForm } from "@/components/SystemAuditForm";
 import { SEO } from "@/components/SEO";
-import founderImg from "@/assets/founder-mou-barrac-new.jpg";
+import founderImg from "@/assets/founder-mou-barrac-new.webp";
 
 const services = [
   {
