@@ -219,15 +219,14 @@ function ProjectCard({
     >
       {/* Image */}
       <div className="relative h-56 overflow-hidden bg-muted">
-        <img
+        <LazyImage
           src={image}
           alt={`${title} website screenshot`}
-          loading="lazy"
-          decoding="async"
-          fetchPriority="low"
+          eager={index < 3}
           width={1280}
           height={896}
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          wrapperClassName="absolute inset-0"
           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
