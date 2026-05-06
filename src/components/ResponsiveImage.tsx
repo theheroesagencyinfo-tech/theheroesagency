@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 
 export interface PictureSource {
@@ -16,12 +16,11 @@ interface ResponsiveImageProps {
   eager?: boolean;
   /** Style aspect ratio override; defaults to intrinsic image ratio. */
   aspectRatio?: string;
-  rootMargin?: string;
 }
 
 /**
  * Renders an AVIF/WebP <picture> with responsive srcset.
- * Below-the-fold images are deferred via IntersectionObserver until near the viewport.
+ * Uses native lazy loading so tiles always stay mounted and visible while scrolling.
  */
 export function ResponsiveImage({
   picture,
@@ -31,45 +30,12 @@ export function ResponsiveImage({
   wrapperClassName,
   eager = false,
   aspectRatio,
-  rootMargin,
 }: ResponsiveImageProps) {
-  const [inView, setInView] = useState(eager);
   const [loaded, setLoaded] = useState(false);
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (eager || inView) return;
-    const node = wrapRef.current;
-    if (!node) return;
-    if (typeof IntersectionObserver === "undefined") {
-      setInView(true);
-      return;
-    }
-    // Smaller rootMargin on mobile to avoid skipping tiles during fast scroll;
-    // a tiny threshold ensures we trigger as soon as any part is near the viewport.
-    const isMobile =
-      typeof window !== "undefined" &&
-      window.matchMedia("(max-width: 767px)").matches;
-    const effectiveRootMargin = rootMargin ?? (isMobile ? "150px" : "400px");
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting || e.intersectionRatio > 0) {
-            setInView(true);
-            io.disconnect();
-          }
-        });
-      },
-      { rootMargin: effectiveRootMargin, threshold: 0.01 },
-    );
-    io.observe(node);
-    return () => io.disconnect();
-  }, [eager, inView, rootMargin]);
 
   const ratio = aspectRatio ?? `${picture.img.w} / ${picture.img.h}`;
   return (
     <div
-      ref={wrapRef}
       className={cn("relative w-full overflow-hidden bg-muted/40", wrapperClassName)}
       style={{ aspectRatio: ratio }}
     >
@@ -79,29 +45,27 @@ export function ResponsiveImage({
           className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60"
         />
       )}
-      {inView && (
-        <picture>
-          {Object.entries(picture.sources).map(([type, srcset]) => (
-            <source key={type} type={`image/${type}`} srcSet={srcset} sizes={sizes} />
-          ))}
-          <img
-            src={picture.img.src}
-            alt={alt}
-            width={picture.img.w}
-            height={picture.img.h}
-            loading={eager ? "eager" : "lazy"}
-            decoding="async"
-            fetchPriority={eager ? "high" : "low"}
-            sizes={sizes}
-            onLoad={() => setLoaded(true)}
-            className={cn(
-              "absolute inset-0 w-full h-full transition-opacity duration-500",
-              loaded ? "opacity-100" : "opacity-0",
-              className,
-            )}
-          />
-        </picture>
-      )}
+      <picture>
+        {Object.entries(picture.sources).map(([type, srcset]) => (
+          <source key={type} type={`image/${type}`} srcSet={srcset} sizes={sizes} />
+        ))}
+        <img
+          src={picture.img.src}
+          alt={alt}
+          width={picture.img.w}
+          height={picture.img.h}
+          loading={eager ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={eager ? "high" : "auto"}
+          sizes={sizes}
+          onLoad={() => setLoaded(true)}
+          className={cn(
+            "absolute inset-0 w-full h-full transition-opacity duration-500",
+            loaded ? "opacity-100" : "opacity-0",
+            className,
+          )}
+        />
+      </picture>
     </div>
   );
 }
