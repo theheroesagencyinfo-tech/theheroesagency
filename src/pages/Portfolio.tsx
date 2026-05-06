@@ -7,51 +7,50 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
-import { LazyImage } from "@/components/LazyImage";
-import { ImagePreload } from "@/components/ImagePreload";
+import { ResponsiveImage, type PictureSource } from "@/components/ResponsiveImage";
 
-import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
-import darntoughImg from "@/assets/portfolio/darntough-com.webp";
-import trndaImg from "@/assets/portfolio/trnda-com.webp";
-import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.webp";
-import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.webp";
-import hhgImg from "@/assets/portfolio/hhgproducts-com.webp";
-import hatkayImg from "@/assets/portfolio/hatkay-com.webp";
-import haustierkostImg from "@/assets/portfolio/haustierkost-de.webp";
+import retrospecImg from "@/assets/portfolio/retrospec-com.webp?responsive";
+import darntoughImg from "@/assets/portfolio/darntough-com.webp?responsive";
+import trndaImg from "@/assets/portfolio/trnda-com.webp?responsive";
+import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.webp?responsive";
+import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.webp?responsive";
+import hhgImg from "@/assets/portfolio/hhgproducts-com.webp?responsive";
+import hatkayImg from "@/assets/portfolio/hatkay-com.webp?responsive";
+import haustierkostImg from "@/assets/portfolio/haustierkost-de.webp?responsive";
 
 // New featured projects (top of portfolio)
-import takeletlooseImg from "@/assets/portfolio/takeletloose-com.webp";
-import valevaImg from "@/assets/portfolio/valeva-shop.webp";
-import velaxenImg from "@/assets/portfolio/velaxen-shop.webp";
-import milolabImg from "@/assets/portfolio/milolabco-com.webp";
-import azureImg from "@/assets/portfolio/azureboutique-co.webp";
-import gisouImg from "@/assets/portfolio/gisou-com.webp";
-import getrenuImg from "@/assets/portfolio/getrenu-com.webp";
-import trimtasteImg from "@/assets/portfolio/trimtaste-com.webp";
-import nurricoImg from "@/assets/portfolio/nurrico-com.webp";
-import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.webp";
-import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.webp";
+import takeletlooseImg from "@/assets/portfolio/takeletloose-com.webp?responsive";
+import valevaImg from "@/assets/portfolio/valeva-shop.webp?responsive";
+import velaxenImg from "@/assets/portfolio/velaxen-shop.webp?responsive";
+import milolabImg from "@/assets/portfolio/milolabco-com.webp?responsive";
+import azureImg from "@/assets/portfolio/azureboutique-co.webp?responsive";
+import gisouImg from "@/assets/portfolio/gisou-com.webp?responsive";
+import getrenuImg from "@/assets/portfolio/getrenu-com.webp?responsive";
+import trimtasteImg from "@/assets/portfolio/trimtaste-com.webp?responsive";
+import nurricoImg from "@/assets/portfolio/nurrico-com.webp?responsive";
+import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.webp?responsive";
+import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.webp?responsive";
 
 // Generic marketing visuals (legacy) — replaced with real brand case studies below
 
 // Real brand marketing case studies
-import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.webp";
-import mValeva from "@/assets/portfolio/marketing/brands/valeva.webp";
-import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.webp";
-import mAzure from "@/assets/portfolio/marketing/brands/azure.webp";
-import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.webp";
-import mRenu from "@/assets/portfolio/marketing/brands/renu.webp";
-import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.webp";
-import mNurri from "@/assets/portfolio/marketing/brands/nurri.webp";
-import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.webp";
-import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.webp";
-import mGisou from "@/assets/portfolio/marketing/brands/gisou.webp";
-import mHealora from "@/assets/portfolio/marketing/brands/healora.webp";
-import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.webp";
-import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.webp";
-import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.webp";
-import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.webp";
-import aSocialFactory from "@/assets/portfolio/automation/social-factory.webp";
+import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.webp?responsive";
+import mValeva from "@/assets/portfolio/marketing/brands/valeva.webp?responsive";
+import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.webp?responsive";
+import mAzure from "@/assets/portfolio/marketing/brands/azure.webp?responsive";
+import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.webp?responsive";
+import mRenu from "@/assets/portfolio/marketing/brands/renu.webp?responsive";
+import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.webp?responsive";
+import mNurri from "@/assets/portfolio/marketing/brands/nurri.webp?responsive";
+import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.webp?responsive";
+import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.webp?responsive";
+import mGisou from "@/assets/portfolio/marketing/brands/gisou.webp?responsive";
+import mHealora from "@/assets/portfolio/marketing/brands/healora.webp?responsive";
+import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.webp?responsive";
+import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.webp?responsive";
+import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.webp?responsive";
+import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.webp?responsive";
+import aSocialFactory from "@/assets/portfolio/automation/social-factory.webp?responsive";
 
 // Platform logos — colored brand SVGs as <img>
 import shopifyLogo from "@/assets/logos/shopify.svg";
