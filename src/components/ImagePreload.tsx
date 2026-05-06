@@ -16,8 +16,7 @@ export function ImagePreload({ srcs, fetchPriority = "high" }: { srcs: string[];
       link.rel = "preload";
       link.as = "image";
       link.href = src;
-      // @ts-expect-error — fetchpriority is valid HTML, not yet typed everywhere
-      link.fetchPriority = fetchPriority;
+      (link as unknown as { fetchPriority: string }).fetchPriority = fetchPriority;
       document.head.appendChild(link);
       links.push(link);
     });
