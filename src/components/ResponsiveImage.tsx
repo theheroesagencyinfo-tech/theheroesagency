@@ -60,11 +60,12 @@ export function ResponsiveImage({
     return () => io.disconnect();
   }, [eager, inView, rootMargin]);
 
+  const ratio = aspectRatio ?? `${picture.img.w} / ${picture.img.h}`;
   return (
     <div
       ref={wrapRef}
       className={cn("relative w-full overflow-hidden bg-muted/40", wrapperClassName)}
-      style={aspectRatio ? { aspectRatio } : undefined}
+      style={{ aspectRatio: ratio }}
     >
       {!loaded && (
         <div
