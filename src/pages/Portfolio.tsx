@@ -403,6 +403,13 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
+      <ImagePreload
+        srcs={segments
+          .flatMap((s) => s.projects.slice(0, 3))
+          .map((p) => p.image)
+          .filter((s): s is string => Boolean(s))
+          .slice(0, 3)}
+      />
       <main>
         {/* Hero */}
         <section className="pt-32 pb-12 relative">
