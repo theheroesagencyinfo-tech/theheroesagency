@@ -531,11 +531,18 @@ const Portfolio = () => {
               </button>
               {lbGallery.length > 0 && (
                 <div className="relative bg-black/40">
-                  <img
-                    src={lbGallery[lightboxIndex]}
-                    alt={`${lightboxProject.title} full preview ${lightboxIndex + 1}`}
-                    className="w-full h-auto max-h-[75vh] object-contain"
-                  />
+                  <picture>
+                    {Object.entries(lbGallery[lightboxIndex].sources).map(([type, srcset]) => (
+                      <source key={type} type={`image/${type}`} srcSet={srcset} />
+                    ))}
+                    <img
+                      src={lbGallery[lightboxIndex].img.src}
+                      width={lbGallery[lightboxIndex].img.w}
+                      height={lbGallery[lightboxIndex].img.h}
+                      alt={`${lightboxProject.title} full preview ${lightboxIndex + 1}`}
+                      className="w-full h-auto max-h-[75vh] object-contain"
+                    />
+                  </picture>
                   {lbGallery.length > 1 && (
                     <>
                       <button
