@@ -61,7 +61,6 @@ export function ResponsiveImage({
   }, [eager, inView, rootMargin]);
 
   const ratio = aspectRatio ?? `${picture.img.w} / ${picture.img.h}`;
-
   return (
     <div
       ref={wrapRef}
@@ -100,3 +99,4 @@ export function ResponsiveImage({
     </div>
   );
 }
+

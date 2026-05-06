@@ -443,13 +443,9 @@ const Portfolio = () => {
         {/* Segments */}
         <div className="container px-4 md:px-6 pb-24 space-y-24">
           {segments.map((segment, idx) => (
-            <motion.section
+            <section
               key={segment.id}
               id={segment.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0, margin: "0px 0px -10% 0px" }}
-              transition={{ duration: 0.5, delay: 0 }}
               className="max-w-6xl mx-auto"
             >
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
@@ -505,7 +501,7 @@ const Portfolio = () => {
                   <ProjectTile key={p.title} project={p} onImageClick={openLightbox} eager={idx === 0 && i < 3} />
                 ))}
               </div>
-            </motion.section>
+            </section>
           ))}
         </div>
       </main>
