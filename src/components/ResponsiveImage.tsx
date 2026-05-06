@@ -84,7 +84,7 @@ export function ResponsiveImage({
             height={picture.img.h}
             loading={eager ? "eager" : "lazy"}
             decoding="async"
-            fetchpriority={eager ? "high" : "low"}
+            fetchPriority={eager ? "high" : "low"}
             sizes={sizes}
             onLoad={() => setLoaded(true)}
             className={cn(
