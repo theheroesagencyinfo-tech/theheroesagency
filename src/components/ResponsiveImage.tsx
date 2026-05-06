@@ -98,29 +98,4 @@ export function ResponsiveImage({
     </div>
   );
 }
-      {inView && (
-        <picture>
-          {Object.entries(picture.sources).map(([type, srcset]) => (
-            <source key={type} type={`image/${type}`} srcSet={srcset} sizes={sizes} />
-          ))}
-          <img
-            src={picture.img.src}
-            alt={alt}
-            width={picture.img.w}
-            height={picture.img.h}
-            loading={eager ? "eager" : "lazy"}
-            decoding="async"
-            fetchPriority={eager ? "high" : "low"}
-            sizes={sizes}
-            onLoad={() => setLoaded(true)}
-            className={cn(
-              "absolute inset-0 w-full h-full transition-opacity duration-500",
-              loaded ? "opacity-100" : "opacity-0",
-              className,
-            )}
-          />
-        </picture>
-      )}
-    </div>
-  );
-}
+
