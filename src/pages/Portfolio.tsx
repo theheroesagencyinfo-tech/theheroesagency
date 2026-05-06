@@ -231,9 +231,11 @@ const ytId = (url?: string): string | null => {
 function ProjectTile({
   project,
   onImageClick,
+  eager = false,
 }: {
   project: Project;
   onImageClick: (p: Project) => void;
+  eager?: boolean;
 }) {
   const ref = useMouseGlow<HTMLDivElement>();
   const gallery = project.images && project.images.length > 0 ? project.images : project.image ? [project.image] : [];
