@@ -76,10 +76,9 @@ export function ReviewForm({ onSuccess }: ReviewFormProps) {
       reset();
       onSuccess?.();
     } catch (error: unknown) {
+      import.meta.env.DEV && console.error("Review submission failed:", error);
       setSubmitStatus("error");
-      setErrorMessage(
-        error instanceof Error ? error.message : "Failed to submit review. Please try again."
-      );
+      setErrorMessage("Failed to submit your review. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
