@@ -448,8 +448,8 @@ const Portfolio = () => {
               id={segment.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: idx * 0.05 }}
+              viewport={{ once: true, amount: 0, margin: "0px 0px -10% 0px" }}
+              transition={{ duration: 0.5, delay: 0 }}
               className="max-w-6xl mx-auto"
             >
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
