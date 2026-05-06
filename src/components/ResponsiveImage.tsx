@@ -31,7 +31,7 @@ export function ResponsiveImage({
   wrapperClassName,
   eager = false,
   aspectRatio,
-  rootMargin = "300px",
+  rootMargin,
 }: ResponsiveImageProps) {
   const [inView, setInView] = useState(eager);
   const [loaded, setLoaded] = useState(false);
@@ -45,16 +45,22 @@ export function ResponsiveImage({
       setInView(true);
       return;
     }
+    // Smaller rootMargin on mobile to avoid skipping tiles during fast scroll;
+    // a tiny threshold ensures we trigger as soon as any part is near the viewport.
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 767px)").matches;
+    const effectiveRootMargin = rootMargin ?? (isMobile ? "150px" : "400px");
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) {
+          if (e.isIntersecting || e.intersectionRatio > 0) {
             setInView(true);
             io.disconnect();
           }
         });
       },
-      { rootMargin },
+      { rootMargin: effectiveRootMargin, threshold: 0.01 },
     );
     io.observe(node);
     return () => io.disconnect();
