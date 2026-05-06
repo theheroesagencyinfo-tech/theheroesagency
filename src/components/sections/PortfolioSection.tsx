@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { LazyImage } from "@/components/LazyImage";
+import { ImagePreload } from "@/components/ImagePreload";
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp";
