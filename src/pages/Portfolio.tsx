@@ -8,48 +8,48 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 
-import retrospecImg from "@/assets/portfolio/retrospec-com.jpg";
-import darntoughImg from "@/assets/portfolio/darntough-com.jpg";
-import trndaImg from "@/assets/portfolio/trnda-com.jpg";
-import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.jpg";
-import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.jpg";
-import hhgImg from "@/assets/portfolio/hhgproducts-com.jpg";
-import hatkayImg from "@/assets/portfolio/hatkay-com.jpg";
-import haustierkostImg from "@/assets/portfolio/haustierkost-de.jpg";
+import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
+import darntoughImg from "@/assets/portfolio/darntough-com.webp";
+import trndaImg from "@/assets/portfolio/trnda-com.webp";
+import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.webp";
+import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.webp";
+import hhgImg from "@/assets/portfolio/hhgproducts-com.webp";
+import hatkayImg from "@/assets/portfolio/hatkay-com.webp";
+import haustierkostImg from "@/assets/portfolio/haustierkost-de.webp";
 
 // New featured projects (top of portfolio)
-import takeletlooseImg from "@/assets/portfolio/takeletloose-com.png";
-import valevaImg from "@/assets/portfolio/valeva-shop.png";
-import velaxenImg from "@/assets/portfolio/velaxen-shop.png";
-import milolabImg from "@/assets/portfolio/milolabco-com.png";
-import azureImg from "@/assets/portfolio/azureboutique-co.png";
-import gisouImg from "@/assets/portfolio/gisou-com.png";
-import getrenuImg from "@/assets/portfolio/getrenu-com.png";
-import trimtasteImg from "@/assets/portfolio/trimtaste-com.png";
-import nurricoImg from "@/assets/portfolio/nurrico-com.png";
-import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.png";
-import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.png";
+import takeletlooseImg from "@/assets/portfolio/takeletloose-com.webp";
+import valevaImg from "@/assets/portfolio/valeva-shop.webp";
+import velaxenImg from "@/assets/portfolio/velaxen-shop.webp";
+import milolabImg from "@/assets/portfolio/milolabco-com.webp";
+import azureImg from "@/assets/portfolio/azureboutique-co.webp";
+import gisouImg from "@/assets/portfolio/gisou-com.webp";
+import getrenuImg from "@/assets/portfolio/getrenu-com.webp";
+import trimtasteImg from "@/assets/portfolio/trimtaste-com.webp";
+import nurricoImg from "@/assets/portfolio/nurrico-com.webp";
+import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.webp";
+import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.webp";
 
 // Generic marketing visuals (legacy) — replaced with real brand case studies below
 
 // Real brand marketing case studies
-import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.jpg";
-import mValeva from "@/assets/portfolio/marketing/brands/valeva.jpg";
-import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.jpg";
-import mAzure from "@/assets/portfolio/marketing/brands/azure.jpg";
-import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.jpg";
-import mRenu from "@/assets/portfolio/marketing/brands/renu.jpg";
-import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.jpg";
-import mNurri from "@/assets/portfolio/marketing/brands/nurri.jpg";
-import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.jpg";
-import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.jpg";
-import mGisou from "@/assets/portfolio/marketing/brands/gisou.jpg";
-import mHealora from "@/assets/portfolio/marketing/brands/healora.jpg";
-import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.jpg";
-import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.jpg";
-import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.jpg";
-import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.jpg";
-import aSocialFactory from "@/assets/portfolio/automation/social-factory.jpg";
+import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.webp";
+import mValeva from "@/assets/portfolio/marketing/brands/valeva.webp";
+import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.webp";
+import mAzure from "@/assets/portfolio/marketing/brands/azure.webp";
+import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.webp";
+import mRenu from "@/assets/portfolio/marketing/brands/renu.webp";
+import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.webp";
+import mNurri from "@/assets/portfolio/marketing/brands/nurri.webp";
+import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.webp";
+import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.webp";
+import mGisou from "@/assets/portfolio/marketing/brands/gisou.webp";
+import mHealora from "@/assets/portfolio/marketing/brands/healora.webp";
+import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.webp";
+import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.webp";
+import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.webp";
+import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.webp";
+import aSocialFactory from "@/assets/portfolio/automation/social-factory.webp";
 
 // Platform logos — colored brand SVGs as <img>
 import shopifyLogo from "@/assets/logos/shopify.svg";
