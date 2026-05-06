@@ -292,15 +292,13 @@ function ProjectTile({
           style={containerStyle}
           aria-label={`Open larger preview of ${project.title}`}
         >
-          <img
+          <LazyImage
             src={gallery[slide]}
             alt={`${project.title} preview ${slide + 1}`}
-            loading="lazy"
-            decoding="async"
-            fetchPriority="low"
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             width={NATURAL_W}
             height={isContain ? NATURAL_H : 896}
+            wrapperClassName="absolute inset-0"
             className={imageClass}
           />
           {project.fit !== "contain" && (
