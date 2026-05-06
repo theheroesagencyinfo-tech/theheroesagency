@@ -500,7 +500,12 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {segment.projects.map((p, i) => (
-                  <ProjectTile key={p.title} project={p} onImageClick={openLightbox} eager={idx === 0 && i < 3} />
+                  <ProjectTile
+                    key={p.title}
+                    project={p}
+                    onImageClick={openLightbox}
+                    eager={idx === 0 && i === 0}
+                  />
                 ))}
               </div>
             </section>
