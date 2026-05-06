@@ -231,7 +231,9 @@ const ytId = (url?: string): string | null => {
 function PortfolioPreload() {
   useEffect(() => {
     const links: HTMLLinkElement[] = [];
-    segments[0].projects.slice(0, 3).forEach((p) => {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    const count = isMobile ? 1 : 2;
+    segments[0].projects.slice(0, count).forEach((p) => {
       if (!p.image) return;
       const link = document.createElement("link");
       link.rel = "preload";
@@ -240,7 +242,7 @@ function PortfolioPreload() {
       const srcset = p.image.sources.avif ?? p.image.sources.webp;
       if (srcset) {
         link.setAttribute("imagesrcset", srcset);
-        link.setAttribute("imagesizes", "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw");
+        link.setAttribute("imagesizes", isMobile ? "100vw" : "(min-width: 1024px) 33vw, 50vw");
       }
       (link as unknown as { fetchPriority: string }).fetchPriority = "high";
       document.head.appendChild(link);
@@ -498,7 +500,12 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {segment.projects.map((p, i) => (
-                  <ProjectTile key={p.title} project={p} onImageClick={openLightbox} eager={idx === 0 && i < 3} />
+                  <ProjectTile
+                    key={p.title}
+                    project={p}
+                    onImageClick={openLightbox}
+                    eager={idx === 0 && i === 0}
+                  />
                 ))}
               </div>
             </section>
