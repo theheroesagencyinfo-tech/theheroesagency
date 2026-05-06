@@ -241,22 +241,14 @@ function ProjectTile({
   const [slide, setSlide] = useState(0);
   const hasSlider = gallery.length > 1;
   const isContain = project.fit === "contain";
-  const fitClass = isContain ? "object-contain" : "object-cover object-top";
-  // Contain (marketing/automation screenshots) → natural image ratio so the full
-  // thumbnail is visible at every breakpoint without any crop or hover zoom.
   const mediaClass = isContain
     ? "relative w-full overflow-hidden bg-muted block cursor-zoom-in"
     : "relative h-56 w-full overflow-hidden bg-muted block cursor-zoom-in";
-  const imageClass = isContain
-    ? "w-full h-auto object-contain bg-background"
-    : `w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`;
-  // Reserve layout space using the image's intrinsic aspect ratio for "contain"
-  // tiles so lazy-loaded screenshots don't cause CLS.
-  const NATURAL_W = 1280;
-  const NATURAL_H = 800; // good average for marketing/automation captures
-  const containerStyle = isContain
-    ? { aspectRatio: `${NATURAL_W} / ${NATURAL_H}` }
+  const current = gallery[slide];
+  const aspect = isContain && current
+    ? `${current.img.w} / ${current.img.h}`
     : undefined;
+  const containerStyle = isContain ? { aspectRatio: aspect } : undefined;
 
   const next = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -286,22 +278,21 @@ function ProjectTile({
             className="absolute inset-0 w-full h-full"
           />
         </div>
-      ) : gallery.length > 0 ? (
+      ) : current ? (
         <button
           type="button"
-          onClick={() => onImageClick({ ...project, image: gallery[slide] })}
+          onClick={() => onImageClick({ ...project, image: current })}
           className={mediaClass}
           style={containerStyle}
           aria-label={`Open larger preview of ${project.title}`}
         >
-          <LazyImage
-            src={gallery[slide]}
+          <ResponsiveImage
+            picture={current}
             alt={`${project.title} preview ${slide + 1}`}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            width={NATURAL_W}
-            height={isContain ? NATURAL_H : 896}
             wrapperClassName="absolute inset-0"
-            className={imageClass}
+            aspectRatio={isContain ? aspect : undefined}
+            className={isContain ? "object-contain" : "object-cover object-top transition-transform duration-700 group-hover:scale-105"}
             eager={eager && slide === 0}
           />
           {project.fit !== "contain" && (
