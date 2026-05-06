@@ -72,11 +72,32 @@ export function ResponsiveImage({
           className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60"
         />
       )}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 animate-pulse bg-gradient-to-br from-muted/60 via-muted/30 to-muted/60"
-        />
+      {inView && (
+        <picture>
+          {Object.entries(picture.sources).map(([type, srcset]) => (
+            <source key={type} type={`image/${type}`} srcSet={srcset} sizes={sizes} />
+          ))}
+          <img
+            src={picture.img.src}
+            alt={alt}
+            width={picture.img.w}
+            height={picture.img.h}
+            loading={eager ? "eager" : "lazy"}
+            decoding="async"
+            fetchpriority={eager ? "high" : "low"}
+            sizes={sizes}
+            onLoad={() => setLoaded(true)}
+            className={cn(
+              "absolute inset-0 w-full h-full transition-opacity duration-500",
+              loaded ? "opacity-100" : "opacity-0",
+              className,
+            )}
+          />
+        </picture>
       )}
+    </div>
+  );
+}
       {inView && (
         <picture>
           {Object.entries(picture.sources).map(([type, srcset]) => (
