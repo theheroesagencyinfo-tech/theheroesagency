@@ -74,8 +74,8 @@ import higgsfieldSvg from "@/assets/logos/higgsfield.svg?raw";
 type Project = {
   title: string;
   description: string;
-  image?: string;
-  images?: string[];
+  image?: PictureSource;
+  images?: PictureSource[];
   url?: string;
   meta?: string;
   fit?: "cover" | "contain";
