@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, ExternalLink, ArrowUpRight, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
@@ -7,51 +7,50 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
-import { LazyImage } from "@/components/LazyImage";
-import { ImagePreload } from "@/components/ImagePreload";
+import { ResponsiveImage, type PictureSource } from "@/components/ResponsiveImage";
 
-import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
-import darntoughImg from "@/assets/portfolio/darntough-com.webp";
-import trndaImg from "@/assets/portfolio/trnda-com.webp";
-import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.webp";
-import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.webp";
-import hhgImg from "@/assets/portfolio/hhgproducts-com.webp";
-import hatkayImg from "@/assets/portfolio/hatkay-com.webp";
-import haustierkostImg from "@/assets/portfolio/haustierkost-de.webp";
+import retrospecImg from "@/assets/portfolio/retrospec-com.webp?responsive";
+import darntoughImg from "@/assets/portfolio/darntough-com.webp?responsive";
+import trndaImg from "@/assets/portfolio/trnda-com.webp?responsive";
+import weightliftingImg from "@/assets/portfolio/ukstore-weightliftinghouse-com.webp?responsive";
+import goondiwindiImg from "@/assets/portfolio/goondiwindicotton-com-au.webp?responsive";
+import hhgImg from "@/assets/portfolio/hhgproducts-com.webp?responsive";
+import hatkayImg from "@/assets/portfolio/hatkay-com.webp?responsive";
+import haustierkostImg from "@/assets/portfolio/haustierkost-de.webp?responsive";
 
 // New featured projects (top of portfolio)
-import takeletlooseImg from "@/assets/portfolio/takeletloose-com.webp";
-import valevaImg from "@/assets/portfolio/valeva-shop.webp";
-import velaxenImg from "@/assets/portfolio/velaxen-shop.webp";
-import milolabImg from "@/assets/portfolio/milolabco-com.webp";
-import azureImg from "@/assets/portfolio/azureboutique-co.webp";
-import gisouImg from "@/assets/portfolio/gisou-com.webp";
-import getrenuImg from "@/assets/portfolio/getrenu-com.webp";
-import trimtasteImg from "@/assets/portfolio/trimtaste-com.webp";
-import nurricoImg from "@/assets/portfolio/nurrico-com.webp";
-import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.webp";
-import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.webp";
+import takeletlooseImg from "@/assets/portfolio/takeletloose-com.webp?responsive";
+import valevaImg from "@/assets/portfolio/valeva-shop.webp?responsive";
+import velaxenImg from "@/assets/portfolio/velaxen-shop.webp?responsive";
+import milolabImg from "@/assets/portfolio/milolabco-com.webp?responsive";
+import azureImg from "@/assets/portfolio/azureboutique-co.webp?responsive";
+import gisouImg from "@/assets/portfolio/gisou-com.webp?responsive";
+import getrenuImg from "@/assets/portfolio/getrenu-com.webp?responsive";
+import trimtasteImg from "@/assets/portfolio/trimtaste-com.webp?responsive";
+import nurricoImg from "@/assets/portfolio/nurrico-com.webp?responsive";
+import primaledgeImg from "@/assets/portfolio/buy-primaledge-com.webp?responsive";
+import luxurypillowsImg from "@/assets/portfolio/luxurypillows-co.webp?responsive";
 
 // Generic marketing visuals (legacy) — replaced with real brand case studies below
 
 // Real brand marketing case studies
-import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.webp";
-import mValeva from "@/assets/portfolio/marketing/brands/valeva.webp";
-import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.webp";
-import mAzure from "@/assets/portfolio/marketing/brands/azure.webp";
-import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.webp";
-import mRenu from "@/assets/portfolio/marketing/brands/renu.webp";
-import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.webp";
-import mNurri from "@/assets/portfolio/marketing/brands/nurri.webp";
-import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.webp";
-import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.webp";
-import mGisou from "@/assets/portfolio/marketing/brands/gisou.webp";
-import mHealora from "@/assets/portfolio/marketing/brands/healora.webp";
-import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.webp";
-import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.webp";
-import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.webp";
-import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.webp";
-import aSocialFactory from "@/assets/portfolio/automation/social-factory.webp";
+import mLetLoose from "@/assets/portfolio/marketing/brands/letloose.webp?responsive";
+import mValeva from "@/assets/portfolio/marketing/brands/valeva.webp?responsive";
+import mMiloLab from "@/assets/portfolio/marketing/brands/milolab.webp?responsive";
+import mAzure from "@/assets/portfolio/marketing/brands/azure.webp?responsive";
+import mVelaxen from "@/assets/portfolio/marketing/brands/velaxen.webp?responsive";
+import mRenu from "@/assets/portfolio/marketing/brands/renu.webp?responsive";
+import mTrimTaste from "@/assets/portfolio/marketing/brands/trimtaste.webp?responsive";
+import mNurri from "@/assets/portfolio/marketing/brands/nurri.webp?responsive";
+import mPrimalEdge from "@/assets/portfolio/marketing/brands/primaledge.webp?responsive";
+import mLuxuryPillows from "@/assets/portfolio/marketing/brands/luxurypillows.webp?responsive";
+import mGisou from "@/assets/portfolio/marketing/brands/gisou.webp?responsive";
+import mHealora from "@/assets/portfolio/marketing/brands/healora.webp?responsive";
+import aKlaviyoFlow1 from "@/assets/portfolio/automation/klaviyo-flow-1.webp?responsive";
+import aKlaviyoFlow2 from "@/assets/portfolio/automation/klaviyo-flow-2.webp?responsive";
+import aSocialPublisher from "@/assets/portfolio/automation/social-publisher.webp?responsive";
+import aRecruitingMail from "@/assets/portfolio/automation/recruiting-mail.webp?responsive";
+import aSocialFactory from "@/assets/portfolio/automation/social-factory.webp?responsive";
 
 // Platform logos — colored brand SVGs as <img>
 import shopifyLogo from "@/assets/logos/shopify.svg";
@@ -75,8 +74,8 @@ import higgsfieldSvg from "@/assets/logos/higgsfield.svg?raw";
 type Project = {
   title: string;
   description: string;
-  image?: string;
-  images?: string[];
+  image?: PictureSource;
+  images?: PictureSource[];
   url?: string;
   meta?: string;
   fit?: "cover" | "contain";
@@ -228,6 +227,32 @@ const ytId = (url?: string): string | null => {
   return m ? m[1] : null;
 };
 
+// Preload first 3 above-the-fold images at high priority for fast LCP.
+function PortfolioPreload() {
+  useEffect(() => {
+    const links: HTMLLinkElement[] = [];
+    segments[0].projects.slice(0, 3).forEach((p) => {
+      if (!p.image) return;
+      const link = document.createElement("link");
+      link.rel = "preload";
+      link.as = "image";
+      link.href = p.image.img.src;
+      const srcset = p.image.sources.avif ?? p.image.sources.webp;
+      if (srcset) {
+        link.setAttribute("imagesrcset", srcset);
+        link.setAttribute("imagesizes", "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw");
+      }
+      (link as unknown as { fetchPriority: string }).fetchPriority = "high";
+      document.head.appendChild(link);
+      links.push(link);
+    });
+    return () => {
+      links.forEach((l) => l.parentNode?.removeChild(l));
+    };
+  }, []);
+  return null;
+}
+
 function ProjectTile({
   project,
   onImageClick,
@@ -242,22 +267,14 @@ function ProjectTile({
   const [slide, setSlide] = useState(0);
   const hasSlider = gallery.length > 1;
   const isContain = project.fit === "contain";
-  const fitClass = isContain ? "object-contain" : "object-cover object-top";
-  // Contain (marketing/automation screenshots) → natural image ratio so the full
-  // thumbnail is visible at every breakpoint without any crop or hover zoom.
   const mediaClass = isContain
     ? "relative w-full overflow-hidden bg-muted block cursor-zoom-in"
     : "relative h-56 w-full overflow-hidden bg-muted block cursor-zoom-in";
-  const imageClass = isContain
-    ? "w-full h-auto object-contain bg-background"
-    : `w-full h-full ${fitClass} transition-transform duration-700 group-hover:scale-105 bg-background`;
-  // Reserve layout space using the image's intrinsic aspect ratio for "contain"
-  // tiles so lazy-loaded screenshots don't cause CLS.
-  const NATURAL_W = 1280;
-  const NATURAL_H = 800; // good average for marketing/automation captures
-  const containerStyle = isContain
-    ? { aspectRatio: `${NATURAL_W} / ${NATURAL_H}` }
+  const current = gallery[slide];
+  const aspect = isContain && current
+    ? `${current.img.w} / ${current.img.h}`
     : undefined;
+  const containerStyle = isContain ? { aspectRatio: aspect } : undefined;
 
   const next = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -287,22 +304,21 @@ function ProjectTile({
             className="absolute inset-0 w-full h-full"
           />
         </div>
-      ) : gallery.length > 0 ? (
+      ) : current ? (
         <button
           type="button"
-          onClick={() => onImageClick({ ...project, image: gallery[slide] })}
+          onClick={() => onImageClick({ ...project, image: current })}
           className={mediaClass}
           style={containerStyle}
           aria-label={`Open larger preview of ${project.title}`}
         >
-          <LazyImage
-            src={gallery[slide]}
+          <ResponsiveImage
+            picture={current}
             alt={`${project.title} preview ${slide + 1}`}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            width={NATURAL_W}
-            height={isContain ? NATURAL_H : 896}
             wrapperClassName="absolute inset-0"
-            className={imageClass}
+            aspectRatio={isContain ? aspect : undefined}
+            className={isContain ? "object-contain" : "object-cover object-top transition-transform duration-700 group-hover:scale-105"}
             eager={eager && slide === 0}
           />
           {project.fit !== "contain" && (
@@ -406,13 +422,7 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
-      <ImagePreload
-        srcs={segments
-          .flatMap((s) => s.projects.slice(0, 3))
-          .map((p) => p.image)
-          .filter((s): s is string => Boolean(s))
-          .slice(0, 3)}
-      />
+      <PortfolioPreload />
       <main>
         {/* Hero */}
         <section className="pt-32 pb-12 relative">
@@ -521,11 +531,18 @@ const Portfolio = () => {
               </button>
               {lbGallery.length > 0 && (
                 <div className="relative bg-black/40">
-                  <img
-                    src={lbGallery[lightboxIndex]}
-                    alt={`${lightboxProject.title} full preview ${lightboxIndex + 1}`}
-                    className="w-full h-auto max-h-[75vh] object-contain"
-                  />
+                  <picture>
+                    {Object.entries(lbGallery[lightboxIndex].sources).map(([type, srcset]) => (
+                      <source key={type} type={`image/${type}`} srcSet={srcset} />
+                    ))}
+                    <img
+                      src={lbGallery[lightboxIndex].img.src}
+                      width={lbGallery[lightboxIndex].img.w}
+                      height={lbGallery[lightboxIndex].img.h}
+                      alt={`${lightboxProject.title} full preview ${lightboxIndex + 1}`}
+                      className="w-full h-auto max-h-[75vh] object-contain"
+                    />
+                  </picture>
                   {lbGallery.length > 1 && (
                     <>
                       <button
