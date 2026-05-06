@@ -303,6 +303,7 @@ function ProjectTile({
             height={isContain ? NATURAL_H : 896}
             wrapperClassName="absolute inset-0"
             className={imageClass}
+            eager={eager && slide === 0}
           />
           {project.fit !== "contain" && (
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent pointer-events-none" />
