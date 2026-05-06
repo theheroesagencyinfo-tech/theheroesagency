@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { LazyImage } from "@/components/LazyImage";
+import { ImagePreload } from "@/components/ImagePreload";
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp";
@@ -265,6 +266,7 @@ export function PortfolioSection() {
 
   return (
     <section id="portfolio" ref={sectionRef} className="py-24 relative cursor-glow">
+      <ImagePreload srcs={projects.slice(0, 3).map((p) => p.image)} />
       <div className="container px-4 md:px-6 relative z-10">
         {/* Section Header */}
         <motion.div

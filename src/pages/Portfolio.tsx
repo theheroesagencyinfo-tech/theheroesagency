@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { LazyImage } from "@/components/LazyImage";
+import { ImagePreload } from "@/components/ImagePreload";
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp";
@@ -230,9 +231,11 @@ const ytId = (url?: string): string | null => {
 function ProjectTile({
   project,
   onImageClick,
+  eager = false,
 }: {
   project: Project;
   onImageClick: (p: Project) => void;
+  eager?: boolean;
 }) {
   const ref = useMouseGlow<HTMLDivElement>();
   const gallery = project.images && project.images.length > 0 ? project.images : project.image ? [project.image] : [];
@@ -300,6 +303,7 @@ function ProjectTile({
             height={isContain ? NATURAL_H : 896}
             wrapperClassName="absolute inset-0"
             className={imageClass}
+            eager={eager && slide === 0}
           />
           {project.fit !== "contain" && (
             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/10 to-transparent pointer-events-none" />
@@ -402,6 +406,13 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
+      <ImagePreload
+        srcs={segments
+          .flatMap((s) => s.projects.slice(0, 3))
+          .map((p) => p.image)
+          .filter((s): s is string => Boolean(s))
+          .slice(0, 3)}
+      />
       <main>
         {/* Hero */}
         <section className="pt-32 pb-12 relative">
@@ -480,8 +491,8 @@ const Portfolio = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {segment.projects.map((p) => (
-                  <ProjectTile key={p.title} project={p} onImageClick={openLightbox} />
+                {segment.projects.map((p, i) => (
+                  <ProjectTile key={p.title} project={p} onImageClick={openLightbox} eager={i < 3} />
                 ))}
               </div>
             </motion.section>
