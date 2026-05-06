@@ -396,13 +396,21 @@ const Portfolio = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation />
-      <ImagePreload
-        srcs={segments
-          .flatMap((s) => s.projects.slice(0, 3))
-          .map((p) => p.image)
-          .filter((s): s is string => Boolean(s))
-          .slice(0, 3)}
-      />
+      {/* Preload first 3 above-the-fold AVIF sources for fast LCP */}
+      <head>
+        {segments[0].projects.slice(0, 3).map((p) =>
+          p.image ? (
+            <link
+              key={p.title}
+              rel="preload"
+              as="image"
+              href={p.image.img.src}
+              imageSrcSet={p.image.sources.avif ?? p.image.sources.webp}
+              imageSizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            />
+          ) : null,
+        )}
+      </head>
       <main>
         {/* Hero */}
         <section className="pt-32 pb-12 relative">
