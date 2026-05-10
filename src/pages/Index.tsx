@@ -57,10 +57,10 @@ const DeferredBelowFold = ({ children }: { children: ReactNode }) => {
   // (Supabase queries from lazy sections) out of the critical request chain.
   useEffect(() => {
     if (typeof window.requestIdleCallback === "function") {
-      const id = window.requestIdleCallback(() => setObserverReady(true), { timeout: 3000 });
+      const id = window.requestIdleCallback(() => setObserverReady(true), { timeout: 1000 });
       return () => window.cancelIdleCallback(id);
     }
-    const id = globalThis.setTimeout(() => setObserverReady(true), 1500);
+    const id = globalThis.setTimeout(() => setObserverReady(true), 300);
     return () => globalThis.clearTimeout(id);
   }, []);
 
@@ -75,7 +75,7 @@ const DeferredBelowFold = ({ children }: { children: ReactNode }) => {
           observer.disconnect();
         }
       },
-      { rootMargin: "200px" },
+      { rootMargin: "800px 0px" },
     );
 
     observer.observe(current);
