@@ -1,8 +1,14 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
+import { SEO } from "@/components/SEO";
 
 const Privacy = () => (
   <div className="min-h-screen bg-background text-foreground">
+    <SEO
+      title="Privacy Policy — TheHeroes Agency"
+      description="How TheHeroes Agency collects, uses and protects information you share via our website, forms and live chat."
+      canonical="https://theheroesagency.lovable.app/privacy"
+    />
     <Navigation />
     <main className="pt-32 pb-24">
       <article className="container px-4 md:px-6 max-w-3xl mx-auto prose prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
