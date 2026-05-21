@@ -102,8 +102,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="TheHeroes Agency — Shopify Design, Marketing Automation & AI Commercials"
-        description="The Heroes Agency builds high-converting Shopify stores, automated marketing systems, and AI commercial videos that grow revenue. Book your free strategy call."
+        title="TheHeroes Agency — Shopify Design & Growth Systems"
+        description="Shopify design, marketing automation, and AI commercials that grow revenue. Book your free strategy call with The Heroes Agency."
         canonical="https://theheroesagency.lovable.app/"
         image="https://theheroesagency.lovable.app/og-home.jpg"
         jsonLd={{

@@ -8,6 +8,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { ResponsiveImage, type PictureSource } from "@/components/ResponsiveImage";
+import { SEO } from "@/components/SEO";
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp?responsive";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp?responsive";
@@ -423,6 +424,24 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <SEO
+        title="Portfolio — Shopify Builds & Brand Case Studies"
+        description="Selected Shopify storefronts, marketing systems and AI commercial work delivered by TheHeroes Agency for ambitious DTC brands."
+        canonical="https://theheroesagency.lovable.app/portfolio"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "TheHeroes Agency Portfolio",
+          url: "https://theheroesagency.lovable.app/portfolio",
+          description:
+            "Shopify design, marketing and AI commercial case studies from TheHeroes Agency.",
+          isPartOf: {
+            "@type": "WebSite",
+            name: "The Heroes Agency",
+            url: "https://theheroesagency.lovable.app/",
+          },
+        }}
+      />
       <Navigation />
       <PortfolioPreload />
       <main>

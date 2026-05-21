@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
@@ -46,6 +47,31 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Blog — Shopify & eCommerce Growth Insights"
+        description="Strategies, frameworks and lessons on Shopify design, marketing automation, AI commercials and conversion for ambitious DTC brands."
+        canonical="https://theheroesagency.lovable.app/blog"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          name: "TheHeroes Agency Blog",
+          url: "https://theheroesagency.lovable.app/blog",
+          description:
+            "Insights on Shopify design, marketing automation, AI commercials and eCommerce growth.",
+          isPartOf: {
+            "@type": "WebSite",
+            name: "The Heroes Agency",
+            url: "https://theheroesagency.lovable.app/",
+          },
+          hasPart: posts.map((p) => ({
+            "@type": "BlogPosting",
+            headline: p.title,
+            url: `https://theheroesagency.lovable.app/blog/${p.slug}`,
+            datePublished: p.published_at || p.created_at,
+            author: { "@type": "Person", name: p.author_name },
+          })),
+        }}
+      />
       <Navigation />
       <main className="pt-24 pb-16">
         <div className="container px-4 md:px-6">

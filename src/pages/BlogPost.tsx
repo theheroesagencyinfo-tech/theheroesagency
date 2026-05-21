@@ -6,6 +6,7 @@ import DOMPurify from "dompurify";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
+import { SEO } from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
@@ -71,8 +72,36 @@ export default function BlogPostPage() {
     FORBID_ATTR: ["onerror", "onload", "onclick", "onmouseover", "onfocus", "onblur", "onchange", "onsubmit"],
   });
 
+  const postUrl = `https://theheroesagency.lovable.app/blog/${post.slug}`;
+  const rawExcerpt = (post.excerpt || post.content.replace(/<[^>]+>/g, "")).trim();
+  const description = rawExcerpt.length > 155 ? `${rawExcerpt.slice(0, 152)}...` : rawExcerpt;
+  const title = post.title.length > 58 ? `${post.title.slice(0, 55)}...` : post.title;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title={title}
+        description={description}
+        canonical={postUrl}
+        image={post.cover_image_url || undefined}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: post.title,
+          description,
+          datePublished: post.published_at || post.created_at,
+          dateModified: post.published_at || post.created_at,
+          author: { "@type": "Person", name: post.author_name },
+          image: post.cover_image_url || undefined,
+          mainEntityOfPage: postUrl,
+          publisher: {
+            "@type": "Organization",
+            name: "The Heroes Agency",
+            url: "https://theheroesagency.lovable.app/",
+          },
+        }}
+      />
       <Navigation />
       <main className="pt-24 pb-16">
         <article className="container px-4 md:px-6 max-w-4xl mx-auto">

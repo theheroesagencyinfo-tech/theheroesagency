@@ -112,8 +112,8 @@ export default function About() {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="About TheHeroes Agency — Shopify, Marketing & Automation Systems"
-        description="Founded by Mou Barrac, TheHeroes Agency builds Shopify stores, marketing systems, AI commercials and automation infrastructure that scale revenue with precision."
+        title="About TheHeroes Agency — Shopify & Growth Systems"
+        description="Founded by Mou Barrac, TheHeroes Agency builds Shopify stores, marketing systems, AI commercials and automation that scale revenue."
         canonical="https://theheroesagency.lovable.app/about"
         image="https://theheroesagency.lovable.app/og-about.jpg"
         type="profile"

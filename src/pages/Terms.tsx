@@ -1,8 +1,14 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
+import { SEO } from "@/components/SEO";
 
 const Terms = () => (
   <div className="min-h-screen bg-background text-foreground">
+    <SEO
+      title="Terms of Service — TheHeroes Agency"
+      description="The terms that govern your use of TheHeroes Agency website, content and contact channels."
+      canonical="https://theheroesagency.lovable.app/terms"
+    />
     <Navigation />
     <main className="pt-32 pb-24">
       <article className="container px-4 md:px-6 max-w-3xl mx-auto prose prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
