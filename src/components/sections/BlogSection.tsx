@@ -104,7 +104,7 @@ export function BlogSection() {
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
-          animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
         >
