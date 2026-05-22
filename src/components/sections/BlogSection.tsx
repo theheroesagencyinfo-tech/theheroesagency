@@ -24,7 +24,7 @@ function BlogCard({ post, index, isVisible }: { post: BlogPost; index: number; i
     <motion.article
       ref={cardRef as any}
       initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
-      animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       transition={{ delay: index * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8 }}
       className="card-spotlight glass rounded-2xl overflow-hidden group hover:border-primary/30 transition-all duration-500"
