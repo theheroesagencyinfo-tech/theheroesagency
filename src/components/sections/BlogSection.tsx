@@ -127,7 +127,7 @@ export function BlogSection() {
 
         <motion.div
           initial={{ opacity: 0 }}
-          animate={isVisible ? { opacity: 1 } : {}}
+          animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.5 }}
           className="text-center mt-12"
         >
