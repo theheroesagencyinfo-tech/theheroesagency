@@ -1,80 +1,55 @@
+# SEO Plan: Rank for Shopify Expert Keywords
 
-# Premium Shopify Specialist Portfolio
+**Goal:** rank for `shopify expert`, `shopify website`, `shopify store design`, `shopify fix`, `shopify optimization`, and your overall category.
 
-## Overview
-A dark luxury portfolio website with glassmorphism design, gold & amber gradient accents, and a high-conversion layout that positions you as an elite eCommerce consultant.
+**Honest expectation:** "Shopify" alone is owned by Shopify.com — no one outranks them. For the rest (shopify expert, store design, fix, optimization), page-1 rankings take 3–6 months of consistent content + backlinks. This plan builds the on-site foundation; backlinks (Shopify Partners directory, Clutch, guest posts) are the off-site half you'll need to drive yourself.
 
----
+## 1. Keyword validation (Semrush)
+Run `keyword_research` + `keyword_compare` on the target list to confirm real volume/difficulty and pull long-tail variants. Output a one-keyword-per-page map (avoids cannibalization).
 
-## Design System
-- **Theme**: Dark mode with rich black/charcoal backgrounds
-- **Accents**: Gold to amber gradients, subtle warm glows
-- **Cards**: Frosted glass effect with blur and semi-transparent borders
-- **Typography**: Large, bold headings with elegant body text
-- **Spacing**: Generous whitespace for premium feel
-- **Animations**: Smooth fade-ins, hover effects, and subtle parallax
+## 2. Dedicated service landing pages
+Today everything lives on `/`. Google can only rank one page per query — you need a focused page per keyword:
+- `/shopify-expert`
+- `/shopify-store-design`
+- `/shopify-optimization` (speed + CRO)
+- `/shopify-website-fix` (audits, bug fixes, theme repair)
+- `/shopify-marketing-agency`
 
----
+Each page: keyword in H1, 800–1200 words original copy, FAQ block, mini case study, internal links, unique SEO title/description/canonical, `Service` + `FAQPage` JSON-LD.
 
-## Sections
+## 3. Homepage upgrade
+- H1 + intro tuned to include "Shopify Expert" naturally
+- New Services grid linking to the 5 pages above
+- `ProfessionalService` JSON-LD (helps category ranking)
+- Tightened SEO title leading with the strongest keyword
 
-### 1. Hero Section
-- Bold headline establishing expertise
-- Compelling subtitle about results & outcomes
-- Two CTA buttons: "Book a Strategy Call" + "View My Work"
-- Animated statistics that count up on scroll (stores built, revenue generated, conversion rate improvement)
-- Subtle gradient glow background effect
+## 4. Existing pages tune-up
+- About: Shopify credentials language + `Person` JSON-LD
+- Portfolio: project blurbs mention "Shopify store design / optimization / fix"
+- Blog posts: each internal-links to the matching service page
+- `BreadcrumbList` JSON-LD across inner pages
 
-### 2. Trust Metrics Bar
-- Large animated numbers: Stores Built • Years Experience • Revenue Generated for Clients
-- Glassmorphism card styling
-- Icons with gold accent colors
+## 5. Sitemap + robots
+- Add the 5 new routes to `public/sitemap.xml`
+- robots.txt already allows all — no change
 
-### 3. Services Section
-- 3 premium service cards with glassmorphism design
-- **Shopify Design**: Custom store creation
-- **Conversion Optimization**: A/B testing & UX improvements
-- **Automation & Growth**: Email flows, apps, scaling strategies
-- Hover animations with glow effects
+## 6. Weekly blog engine alignment
+Your Thursday auto-generator already runs. Update its topic pool to rotate through these target keywords so every post reinforces one and links to its service page.
 
-### 4. Process Section
-- 6-step horizontal timeline (vertical on mobile)
-- Strategy → UX Research → Design → Development → Optimization → Launch
-- Numbered steps with gold accents
-- Brief descriptions under each
+## 7. Google Search Console
+Verify the domain via the connector, submit the sitemap, monitor impressions/rankings per keyword.
 
-### 5. Portfolio Section
-- Project cards with image, client/project name, description
-- Results metrics on each (e.g., "+180% conversion rate")
-- Hover effect reveals more details
-- 3-4 placeholder projects showcasing different types of work
+## Technical details
+- New routes in `src/App.tsx`; new files in `src/pages/`
+- Reuse existing `<SEO>` component
+- Edit `public/sitemap.xml` directly (current mechanism is static)
+- Update `supabase/functions/generate-weekly-blog-posts` topic list
+- Copy will be human-quality, not stuffed
 
-### 6. Why Work With Me
-- Split layout with compelling copy on one side
-- Key differentiators as bullet points with checkmarks
-- Focus on strategy, results, and premium experience
-
-### 7. Testimonials Carousel
-- Auto-rotating testimonial cards
-- Client name, company, photo placeholder
-- Star ratings
-- Navigation dots
-
-### 8. Strong CTA Section
-- Full-width gradient background
-- Compelling headline "Ready to Scale Your Shopify Store?"
-- Large primary button to book a call
-
-### 9. Footer
-- **Contact form**: Name, email, message with validation
-- Social links (LinkedIn, Twitter/X, Instagram, Dribbble)
-- Copyright and quick navigation links
+## Out of scope (you must drive)
+- **Backlinks** — biggest ranking factor. List on Shopify Partners, Clutch, G2; do guest posts; get client testimonials with links.
+- **Google Business Profile** — if you serve a region.
 
 ---
 
-## Technical Notes
-- Fully responsive (mobile-first approach)
-- Contact form with Zod validation (backend integration can be added later)
-- Smooth scroll navigation
-- Intersection Observer for scroll-triggered animations
-- All placeholder content easily replaceable
+Want me to do **all of the above**, or start with the **5 service pages + homepage upgrade** (fastest impact) and layer the rest after?
