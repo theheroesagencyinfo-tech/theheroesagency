@@ -71,6 +71,14 @@ const exploreLinks: FooterLink[] = [
   { label: "Testimonials", href: "#testimonials", type: "section" },
 ];
 
+const shopifyServiceLinks: FooterLink[] = [
+  { label: "Shopify Expert", href: "/shopify-expert", type: "route" },
+  { label: "Shopify Store Design", href: "/shopify-store-design", type: "route" },
+  { label: "Shopify Optimization", href: "/shopify-optimization", type: "route" },
+  { label: "Shopify Website Fix", href: "/shopify-website-fix", type: "route" },
+  { label: "Shopify Marketing Agency", href: "/shopify-marketing-agency", type: "route" },
+];
+
 const resourceLinks: FooterLink[] = [
   { label: "Privacy Policy", href: "/privacy", type: "route" },
   { label: "Terms of Service", href: "/terms", type: "route" },
@@ -334,6 +342,7 @@ export function Footer() {
           <div className="border-t border-border/50 pt-12 mb-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
               <FooterLinkGroup title="Explore" links={exploreLinks} onSection={scrollToSection} />
+              <FooterLinkGroup title="Shopify Services" links={shopifyServiceLinks} onSection={scrollToSection} />
               <FooterLinkGroup title="Resources" links={resourceLinks} onSection={scrollToSection} />
 
               {/* Newsletter */}

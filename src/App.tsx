@@ -20,6 +20,11 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const ShopifyExpert = lazy(() => import("./pages/ShopifyExpert"));
+const ShopifyStoreDesign = lazy(() => import("./pages/ShopifyStoreDesign"));
+const ShopifyOptimization = lazy(() => import("./pages/ShopifyOptimization"));
+const ShopifyWebsiteFix = lazy(() => import("./pages/ShopifyWebsiteFix"));
+const ShopifyMarketingAgency = lazy(() => import("./pages/ShopifyMarketingAgency"));
 
 const queryClient = new QueryClient();
 
@@ -67,6 +72,11 @@ const App = () => (
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/shopify-expert" element={<ShopifyExpert />} />
+            <Route path="/shopify-store-design" element={<ShopifyStoreDesign />} />
+            <Route path="/shopify-optimization" element={<ShopifyOptimization />} />
+            <Route path="/shopify-website-fix" element={<ShopifyWebsiteFix />} />
+            <Route path="/shopify-marketing-agency" element={<ShopifyMarketingAgency />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

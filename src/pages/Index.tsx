@@ -102,27 +102,45 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="TheHeroes Agency — Shopify Design & Growth Systems"
-        description="Shopify design, marketing automation, and AI commercials that grow revenue. Book your free strategy call with The Heroes Agency."
+        title="Shopify Expert — Store Design, Fix & Optimization | The Heroes Agency"
+        description="Senior Shopify expert for store design, website fixes, speed and conversion optimization, and DTC marketing. Book a free strategy call with The Heroes Agency."
         canonical="https://theheroesagency.lovable.app/"
         image="https://theheroesagency.lovable.app/og-home.jpg"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          name: "The Heroes Agency",
-          url: "https://theheroesagency.lovable.app/",
-          email: "info@theheroesagency.org",
-          description:
-            "Shopify design, marketing automation, and AI commercial production agency.",
-          sameAs: [
-            "https://www.linkedin.com/in/theheroes-agency",
-            "https://www.instagram.com/theheroes_agency",
-            "https://www.tiktok.com/@theheroesagency",
-            "https://www.facebook.com/share/18Hjqf3KRJ/",
-            "https://x.com/moubarrac",
-            "https://www.youtube.com/@TheHeroesAgencyorg",
-          ],
-        }}
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            name: "The Heroes Agency",
+            url: "https://theheroesagency.lovable.app/",
+            email: "info@theheroesagency.org",
+            description:
+              "Shopify expert agency for store design, website fixes, speed and conversion optimization, and DTC marketing.",
+            areaServed: "Worldwide",
+            knowsAbout: [
+              "Shopify",
+              "Shopify Plus",
+              "Shopify store design",
+              "Shopify optimization",
+              "Shopify website fix",
+              "Conversion rate optimization",
+              "DTC marketing",
+            ],
+            sameAs: [
+              "https://www.linkedin.com/in/theheroes-agency",
+              "https://www.instagram.com/theheroes_agency",
+              "https://www.tiktok.com/@theheroesagency",
+              "https://www.facebook.com/share/18Hjqf3KRJ/",
+              "https://x.com/moubarrac",
+              "https://www.youtube.com/@TheHeroesAgencyorg",
+            ],
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "The Heroes Agency",
+            url: "https://theheroesagency.lovable.app/",
+          },
+        ]}
       />
       <Navigation />
       <main>
