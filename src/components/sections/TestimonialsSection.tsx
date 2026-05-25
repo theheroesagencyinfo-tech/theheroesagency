@@ -231,6 +231,12 @@ export function TestimonialsSection() {
                     <Star key={s} className="w-3 h-3 fill-primary text-primary" />
                   ))}
                 </div>
+                <time
+                  dateTime={r.created_at}
+                  className="text-[10px] uppercase tracking-wider text-muted-foreground/70"
+                >
+                  {new Date(r.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+                </time>
               </button>
             ))}
           </div>
@@ -298,10 +304,18 @@ export function TestimonialsSection() {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: active.star_rating }).map((_, s) => (
-                    <Star key={s} className="w-4 h-4 fill-primary text-primary" />
-                  ))}
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: active.star_rating }).map((_, s) => (
+                      <Star key={s} className="w-4 h-4 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <time
+                    dateTime={active.created_at}
+                    className="text-xs text-muted-foreground"
+                  >
+                    Published {new Date(active.created_at).toLocaleDateString(undefined, { month: "long", day: "numeric", year: "numeric" })}
+                  </time>
                 </div>
               </DialogHeader>
               <div className="relative pt-2">
