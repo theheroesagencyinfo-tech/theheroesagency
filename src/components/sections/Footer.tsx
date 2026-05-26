@@ -239,11 +239,11 @@ export function Footer() {
               <div className="space-y-4 mb-8">
                 <a
                   className="flex items-center gap-3 text-foreground/80 hover:text-primary transition-colors"
-                  href="mailto:info@theheroesagency.org"
+                  href="mailto:theheroesagency.info@gmail.com"
                   onClick={() => trackEvent(CONVERSION_EVENTS.EMAIL_CLICK, { label: "footer" })}
                 >
                   <Mail className="w-5 h-5 text-primary" />
-                  info@theheroesagency.org
+                  theheroesagency.info@gmail.com
                 </a>
                 <div className="flex items-center gap-3 text-foreground/80">
                   <MapPin className="w-5 h-5 text-primary" />

@@ -112,7 +112,7 @@ const Index = () => {
             "@type": "ProfessionalService",
             name: "The Heroes Agency",
             url: "https://theheroesagency.lovable.app/",
-            email: "info@theheroesagency.org",
+            email: "theheroesagency.info@gmail.com",
             description:
               "Shopify expert agency for store design, website fixes, speed and conversion optimization, and DTC marketing.",
             areaServed: "Worldwide",
