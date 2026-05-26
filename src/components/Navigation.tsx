@@ -45,7 +45,7 @@ export function Navigation() {
       navigate("/#contact");
       return;
     }
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "auto", block: "start" });
   };
 
   return (
