@@ -36,7 +36,7 @@ export function Navigation() {
       navigate(`/${link.href}`);
       return;
     }
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(id)?.scrollIntoView({ behavior: "auto", block: "start" });
   };
 
   const handleContact = () => {
