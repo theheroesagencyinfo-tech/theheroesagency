@@ -50,8 +50,8 @@ const Privacy = () => (
         <p>
           You may request access, correction or deletion of your personal data
           at any time by emailing{" "}
-          <a className="text-primary" href="mailto:info@theheroesagency.org">
-            info@theheroesagency.org
+          <a className="text-primary" href="mailto:theheroesagency.info@gmail.com">
+            theheroesagency.info@gmail.com
           </a>
           .
         </p>
@@ -59,8 +59,8 @@ const Privacy = () => (
         <h2 className="text-2xl font-bold mt-10 mb-3">Contact</h2>
         <p>
           Questions about this policy? Reach us at{" "}
-          <a className="text-primary" href="mailto:info@theheroesagency.org">
-            info@theheroesagency.org
+          <a className="text-primary" href="mailto:theheroesagency.info@gmail.com">
+            theheroesagency.info@gmail.com
           </a>
           .
         </p>

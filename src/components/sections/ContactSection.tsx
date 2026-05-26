@@ -49,10 +49,10 @@ export function ContactSection() {
                   <div>
                     <p className="font-medium">Email</p>
                     <a 
-                      href="mailto:info@theheroesagency.org" 
+                      href="mailto:theheroesagency.info@gmail.com" 
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      info@theheroesagency.org
+                      theheroesagency.info@gmail.com
                     </a>
                   </div>
                 </div>
