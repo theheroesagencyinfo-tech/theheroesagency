@@ -71,9 +71,9 @@ export function HeroSection() {
           alt="TheHeroes Agency — elite Shopify design, marketing automation and AI commercial production studio"
           width={1920}
           height={1080}
-          fetchPriority="high"
           decoding="async"
           className="w-full h-full object-cover"
+          {...({ fetchpriority: "high" } as Record<string, string>)}
         />
         <div className="absolute inset-0 bg-background/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background" />
