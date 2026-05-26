@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, MessageCircle, MapPin } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { ContactForm } from "@/components/ContactForm";
@@ -59,15 +59,17 @@ export function ContactSection() {
 
                 <div className="flex items-start gap-4">
                   <div className="p-2 rounded-lg bg-primary/10">
-                    <Phone className="w-5 h-5 text-primary" />
+                    <MessageCircle className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-medium">Phone</p>
+                    <p className="font-medium">WhatsApp</p>
                     <a 
-                      href="tel:+1 (315) 454- 1290" 
+                      href="https://wa.me/13154541290" 
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      +1 (315) 454- 1290
+                      +1 (315) 454-1290
                     </a>
                   </div>
                 </div>

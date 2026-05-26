@@ -71,9 +71,9 @@ export function HeroSection() {
           alt="TheHeroes Agency — elite Shopify design, marketing automation and AI commercial production studio"
           width={1920}
           height={1080}
-          fetchPriority="high"
           decoding="async"
           className="w-full h-full object-cover"
+          {...({ fetchpriority: "high" } as Record<string, string>)}
         />
         <div className="absolute inset-0 bg-background/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/60 to-background" />
@@ -174,20 +174,6 @@ export function HeroSection() {
 
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex items-start justify-center p-2">
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-1.5 h-1.5 rounded-full bg-primary"
-          />
-        </div>
-      </motion.div>
     </section>
   );
 }
