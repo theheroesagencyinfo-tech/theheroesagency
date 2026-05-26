@@ -340,7 +340,7 @@ export function Footer() {
 
           {/* Grouped link columns + newsletter */}
           <div className="border-t border-border/50 pt-12 mb-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
               <FooterLinkGroup title="Explore" links={exploreLinks} onSection={scrollToSection} />
               <FooterLinkGroup title="Shopify Services" links={shopifyServiceLinks} onSection={scrollToSection} />
               <FooterLinkGroup title="Resources" links={resourceLinks} onSection={scrollToSection} />
