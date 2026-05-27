@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useRef, useState, type ReactNode } from "react";
 import { Navigation } from "@/components/Navigation";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { AchievementsMarquee } from "@/components/sections/AchievementsMarquee";
 import { TrustMetrics } from "@/components/sections/TrustMetrics";
 import { SEO } from "@/components/SEO";
 
@@ -145,6 +146,7 @@ const Index = () => {
       <Navigation />
       <main>
         <HeroSection />
+        <AchievementsMarquee />
         <TrustMetrics />
         <DeferredBelowFold>
           <Suspense fallback={<SectionFallback />}>
