@@ -216,7 +216,7 @@ export function Footer() {
       <div className="absolute inset-0 bg-glow opacity-20" />
 
       <div ref={ref} className="container px-4 md:px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1600px] mx-auto">
           {/* Main Footer Content */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
             {/* Left Side - Contact Info & Social */}

@@ -467,7 +467,7 @@ const Portfolio = () => {
             <section
               key={segment.id}
               id={segment.id}
-              className="max-w-6xl mx-auto"
+              className="max-w-[1500px] mx-auto"
             >
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
                 <div>

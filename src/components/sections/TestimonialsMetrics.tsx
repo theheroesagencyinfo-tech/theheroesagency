@@ -13,7 +13,7 @@ export function TestimonialsMetrics() {
   const { ref, isVisible } = useScrollAnimation(0.2);
 
   return (
-    <div ref={ref} className="max-w-5xl mx-auto px-4 md:px-6 mb-12">
+    <div ref={ref} className="max-w-[1400px] mx-auto px-4 md:px-6 mb-12">
       <div className="glass rounded-2xl p-6 md:p-8 gold-glow-sm">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4">
           {metrics.map((metric, index) => {

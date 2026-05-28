@@ -190,7 +190,7 @@ export function TestimonialsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 max-w-5xl mx-auto"
+          className="mt-12 max-w-[1400px] mx-auto"
         >
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {reviews.map((r, i) => (
