@@ -68,7 +68,7 @@ export function CTASection() {
             transition={{ delay: 0.6, duration: 0.5 }}
             className="text-sm text-muted-foreground mt-6"
           >
-            No commitment required • Response within 24 hours
+            No commitment required • Response within 12 hours
           </motion.p>
         </div>
       </motion.div>

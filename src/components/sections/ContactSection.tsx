@@ -26,7 +26,7 @@ export function ContactSection() {
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Ready to transform your Shopify store? Fill out the form below and 
-            we'll get back to you within 24 hours.
+            we'll get back to you within 12 hours.
           </p>
         </motion.div>
 
@@ -91,7 +91,7 @@ export function ContactSection() {
             <div className="glass rounded-2xl p-6">
               <h3 className="text-xl font-bold mb-4">Response Time</h3>
               <p className="text-muted-foreground">
-                We typically respond within <span className="text-primary font-semibold">24 hours</span>. 
+                We typically respond within <span className="text-primary font-semibold">12 hours</span>. 
                 For urgent inquiries, please mention it in your message.
               </p>
             </div>
