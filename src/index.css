@@ -238,19 +238,41 @@
     box-shadow: 0 20px 40px -20px hsl(var(--sky) / 0.30);
   }
 
-  /* Marquee — infinite horizontal scroll */
+  /* Marquee — infinite horizontal scroll (both directions) */
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+  @keyframes marquee-reverse {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+  }
   .animate-marquee {
     animation: marquee 40s linear infinite;
+    will-change: transform;
+  }
+  .animate-marquee-reverse {
+    animation: marquee-reverse 45s linear infinite;
+    will-change: transform;
+  }
+  .animate-marquee-slow {
+    animation: marquee 55s linear infinite;
+    will-change: transform;
+  }
+  .marquee-row:hover .animate-marquee,
+  .marquee-row:hover .animate-marquee-reverse,
+  .marquee-row:hover .animate-marquee-slow {
+    animation-play-state: paused;
   }
   @media (max-width: 768px) {
-    .animate-marquee { animation-duration: 25s; }
+    .animate-marquee,
+    .animate-marquee-slow { animation-duration: 28s; }
+    .animate-marquee-reverse { animation-duration: 32s; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .animate-marquee { animation: none; }
+    .animate-marquee,
+    .animate-marquee-reverse,
+    .animate-marquee-slow { animation: none; }
   }
 
   /* Storytelling scroll reveal — applied automatically to <section> elements */
