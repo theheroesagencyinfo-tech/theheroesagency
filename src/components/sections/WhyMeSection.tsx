@@ -64,7 +64,7 @@ export function WhyMeSection() {
       <div className="absolute inset-0 bg-glow opacity-30" />
 
       <div className="container px-4 md:px-6 relative z-10">
-        <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-7xl mx-auto items-center">
+        <div ref={ref} className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-[1600px] mx-auto items-center">
           {/* Left Side - Content */}
           <motion.div
             initial={{ opacity: 0, x: -40, filter: "blur(6px)" }}

@@ -111,7 +111,7 @@ export function ServicesSection() {
         </motion.div>
 
         {/* Service Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-[1600px] mx-auto">
           {services.map((service, index) => (
             <ServiceCard
               key={service.title}

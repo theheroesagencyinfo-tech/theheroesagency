@@ -91,7 +91,7 @@ export function TrustMetrics() {
       <div className="absolute inset-0 bg-glow opacity-50" />
       
       <div ref={ref} className="container relative z-10 px-4 md:px-6">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 max-w-[1600px] mx-auto">
           {metrics.map((metric, index) => (
             <MetricCard 
               key={metric.label} 
