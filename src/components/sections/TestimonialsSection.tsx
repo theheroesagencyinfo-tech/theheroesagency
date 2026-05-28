@@ -185,21 +185,30 @@ export function TestimonialsSection() {
         {/* Trust Metrics Strip */}
         <TestimonialsMetrics />
 
-        {/* Avatar Grid — 2 per row mobile, 4 per row desktop */}
+        {/* Reviews — 3 continuous marquee rows (top: left, middle: right, bottom: left) */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-12 max-w-[1400px] mx-auto"
+          className="mt-12 -mx-4 md:-mx-6"
         >
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-            {reviews.map((r, i) => (
+          {(() => {
+            const row1 = reviews.slice(0, 4);
+            const row2 = reviews.slice(4, 8);
+            const row3 = reviews.slice(8, 12);
+            const rows: { items: Review[]; cls: string }[] = [
+              { items: row1, cls: "animate-marquee" },
+              { items: row2, cls: "animate-marquee-reverse" },
+              { items: row3, cls: "animate-marquee-slow" },
+            ];
+
+            const renderCard = (r: Review, i: number, keyPrefix: string) => (
               <button
-                key={r.id}
+                key={`${keyPrefix}-${r.id}-${i}`}
                 type="button"
                 onClick={() => setActive(r)}
                 aria-label={`Read review from ${r.name}`}
-                className="group glass rounded-2xl p-4 md:p-5 flex flex-col items-center text-center gap-3 hover:bg-primary/10 hover:border-primary/40 hover:scale-[1.03] transition-all duration-300 border border-border/40"
+                className="group glass rounded-2xl p-4 md:p-5 flex flex-col items-center text-center gap-3 hover:bg-primary/10 hover:border-primary/40 hover:scale-[1.03] transition-all duration-300 border border-border/40 shrink-0 w-[260px] md:w-[300px]"
               >
                 <div
                   className={`w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden bg-gradient-to-br ${TINTS[i % TINTS.length]} border-2 border-primary/40 flex items-center justify-center shadow-lg group-hover:gold-glow-sm transition-shadow`}
@@ -232,15 +241,35 @@ export function TestimonialsSection() {
                     <Star key={s} className="w-3 h-3 fill-primary text-primary" />
                   ))}
                 </div>
-                <time
-                  dateTime={r.created_at}
-                  className="text-[10px] uppercase tracking-wider text-muted-foreground/70"
-                >
-                  {new Date(r.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
-                </time>
+                <p className="text-xs text-muted-foreground/90 line-clamp-3 leading-snug">
+                  "{r.message}"
+                </p>
               </button>
-            ))}
-          </div>
+            );
+
+            return (
+              <div className="space-y-5 md:space-y-6">
+                {rows.map((row, idx) => {
+                  if (row.items.length === 0) return null;
+                  const loop = [...row.items, ...row.items, ...row.items];
+                  return (
+                    <div
+                      key={idx}
+                      className="marquee-row relative w-full overflow-hidden"
+                      aria-label={`Client reviews row ${idx + 1}`}
+                    >
+                      <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-background to-transparent z-10" />
+                      <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-background to-transparent z-10" />
+                      <div className={`flex w-max gap-4 md:gap-6 ${row.cls}`}>
+                        {loop.map((r, i) => renderCard(r, i, `r${idx}`))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })()}
+
 
           {/* Write a Review */}
           <motion.div
