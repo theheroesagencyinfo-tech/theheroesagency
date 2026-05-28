@@ -181,7 +181,7 @@ export function Footer() {
       meta: { source: "footer" },
     });
     trackEvent(CONVERSION_EVENTS.CONTACT_SUBMIT, { label: "footer" });
-    toast({ title: "Message sent!", description: "Thank you for reaching out. I'll get back to you within 24 hours." });
+    toast({ title: "Message sent!", description: "Thank you for reaching out. I'll get back to you within 12 hours." });
     reset();
   };
 

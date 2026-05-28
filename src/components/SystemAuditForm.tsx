@@ -218,7 +218,7 @@ export function SystemAuditForm() {
     setSubmitted(true);
     toast({
       title: "Audit request received",
-      description: "We'll review your store and reach out within 24 hours.",
+      description: "We'll review your store and reach out within 12 hours.",
     });
   };
 
