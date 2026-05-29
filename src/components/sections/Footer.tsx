@@ -375,10 +375,12 @@ export function Footer() {
 
           {/* Bottom Bar — Big shimmering brand */}
           <div className="border-t border-border/50 pt-10">
+          {/* Bottom Bar — Big shimmering brand */}
+          <div className="border-t border-border/50 pt-10">
             <div className="text-center mb-6">
               <Link to="/" className="inline-block">
                 <span
-                  className="block text-6xl sm:text-7xl md:text-[9rem] lg:text-[12rem] xl:text-[14rem] leading-none font-extrabold tracking-tight bg-clip-text text-transparent animate-shimmer"
+                  className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-none font-extrabold tracking-tight bg-clip-text text-transparent animate-shimmer"
                   style={{
                     backgroundImage:
                       "linear-gradient(110deg, hsl(var(--primary)) 0%, hsl(var(--foreground)) 25%, hsl(var(--primary)) 50%, hsl(var(--foreground)) 75%, hsl(var(--primary)) 100%)",
@@ -389,6 +391,10 @@ export function Footer() {
                 </span>
               </Link>
             </div>
+            <p className="text-sm text-muted-foreground text-center">
+              © {new Date().getFullYear()} The Heroes Agency. All rights reserved.
+            </p>
+          </div>
             <p className="text-sm text-muted-foreground text-center">
               © {new Date().getFullYear()} The Heroes Agency. All rights reserved.
             </p>
