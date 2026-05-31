@@ -72,4 +72,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://www.theheroesagency.org/sitemap.xml
-Sitemap: https://www.theheroesagency.org/sitemap.xml
