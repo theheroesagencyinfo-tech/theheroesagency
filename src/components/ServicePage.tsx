@@ -27,7 +27,7 @@ export type ServicePageProps = {
   relatedLinks?: { label: string; href: string }[];
 };
 
-const SITE = "https://theheroesagency.lovable.app";
+const SITE = "https://www.theheroesagency.org";
 
 export function ServicePage(props: ServicePageProps) {
   const url = `${SITE}/${props.slug}`;

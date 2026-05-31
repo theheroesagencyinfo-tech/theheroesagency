@@ -16,7 +16,7 @@ Every engagement is tied to a measurable outcome: conversion rate, AOV, retentio
 5. Brand & Creative Direction
 
 ## Free System Audit
-Get a senior-level audit of your Shopify store, ad accounts, or email program — at no cost. Request via https://theheroesagency.lovable.app/about
+Get a senior-level audit of your Shopify store, ad accounts, or email program — at no cost. Request via https://www.theheroesagency.org/about
 
 ## Contact
 info@theheroesagency.org

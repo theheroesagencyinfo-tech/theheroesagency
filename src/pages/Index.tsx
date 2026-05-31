@@ -105,14 +105,14 @@ const Index = () => {
       <SEO
         title="Shopify Expert — Store Design, Fix & Optimization | The Heroes Agency"
         description="Senior Shopify expert for store design, website fixes, speed and conversion optimization, and DTC marketing. Book a free strategy call with The Heroes Agency."
-        canonical="https://theheroesagency.lovable.app/"
-        image="https://theheroesagency.lovable.app/og-home.jpg"
+        canonical="https://www.theheroesagency.org/"
+        image="https://www.theheroesagency.org/og-home.jpg"
         jsonLd={[
           {
             "@context": "https://schema.org",
             "@type": "ProfessionalService",
             name: "The Heroes Agency",
-            url: "https://theheroesagency.lovable.app/",
+            url: "https://www.theheroesagency.org/",
             email: "theheroesagency.info@gmail.com",
             description:
               "Shopify expert agency for store design, website fixes, speed and conversion optimization, and DTC marketing.",
@@ -139,7 +139,7 @@ const Index = () => {
             "@context": "https://schema.org",
             "@type": "WebSite",
             name: "The Heroes Agency",
-            url: "https://theheroesagency.lovable.app/",
+            url: "https://www.theheroesagency.org/",
           },
         ]}
       />

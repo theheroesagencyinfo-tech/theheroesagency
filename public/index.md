@@ -17,5 +17,5 @@ Elite eCommerce growth partner specializing in high-converting Shopify design, m
 
 ## Contact
 - Email: info@theheroesagency.org
-- Book a free strategy call: https://theheroesagency.lovable.app/#contact
-- Site: https://theheroesagency.lovable.app
+- Book a free strategy call: https://www.theheroesagency.org/#contact
+- Site: https://www.theheroesagency.org

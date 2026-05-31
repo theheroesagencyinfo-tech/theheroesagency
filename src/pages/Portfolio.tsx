@@ -427,18 +427,18 @@ const Portfolio = () => {
       <SEO
         title="Portfolio — Shopify Builds & Brand Case Studies"
         description="Selected Shopify storefronts, marketing systems and AI commercial work delivered by TheHeroes Agency for ambitious DTC brands."
-        canonical="https://theheroesagency.lovable.app/portfolio"
+        canonical="https://www.theheroesagency.org/portfolio"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "TheHeroes Agency Portfolio",
-          url: "https://theheroesagency.lovable.app/portfolio",
+          url: "https://www.theheroesagency.org/portfolio",
           description:
             "Shopify design, marketing and AI commercial case studies from TheHeroes Agency.",
           isPartOf: {
             "@type": "WebSite",
             name: "The Heroes Agency",
-            url: "https://theheroesagency.lovable.app/",
+            url: "https://www.theheroesagency.org/",
           },
         }}
       />

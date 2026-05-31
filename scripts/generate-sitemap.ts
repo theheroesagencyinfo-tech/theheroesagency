@@ -4,7 +4,7 @@
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
-const BASE_URL = "https://theheroesagency.lovable.app";
+const BASE_URL = "https://www.theheroesagency.org";
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL || "https://gvyzlvevzosexdoekrtz.supabase.co";
 const SUPABASE_KEY =
   process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||

@@ -7,7 +7,7 @@ const Terms = () => (
     <SEO
       title="Terms of Service — TheHeroes Agency"
       description="The terms that govern your use of TheHeroes Agency website, content and contact channels."
-      canonical="https://theheroesagency.lovable.app/terms"
+      canonical="https://www.theheroesagency.org/terms"
     />
     <Navigation />
     <main className="pt-32 pb-24">

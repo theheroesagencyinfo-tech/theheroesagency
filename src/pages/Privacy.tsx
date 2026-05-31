@@ -7,7 +7,7 @@ const Privacy = () => (
     <SEO
       title="Privacy Policy — TheHeroes Agency"
       description="How TheHeroes Agency collects, uses and protects information you share via our website, forms and live chat."
-      canonical="https://theheroesagency.lovable.app/privacy"
+      canonical="https://www.theheroesagency.org/privacy"
     />
     <Navigation />
     <main className="pt-32 pb-24">
