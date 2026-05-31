@@ -72,7 +72,7 @@ export default function BlogPostPage() {
     FORBID_ATTR: ["onerror", "onload", "onclick", "onmouseover", "onfocus", "onblur", "onchange", "onsubmit"],
   });
 
-  const postUrl = `https://theheroesagency.lovable.app/blog/${post.slug}`;
+  const postUrl = `https://www.theheroesagency.org/blog/${post.slug}`;
   const rawExcerpt = (post.excerpt || post.content.replace(/<[^>]+>/g, "")).trim();
   const description = rawExcerpt.length > 155 ? `${rawExcerpt.slice(0, 152)}...` : rawExcerpt;
   const title = post.title.length > 58 ? `${post.title.slice(0, 55)}...` : post.title;
@@ -98,7 +98,7 @@ export default function BlogPostPage() {
           publisher: {
             "@type": "Organization",
             name: "The Heroes Agency",
-            url: "https://theheroesagency.lovable.app/",
+            url: "https://www.theheroesagency.org/",
           },
         }}
       />

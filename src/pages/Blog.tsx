@@ -50,23 +50,23 @@ export default function Blog() {
       <SEO
         title="Blog — Shopify & eCommerce Growth Insights"
         description="Strategies, frameworks and lessons on Shopify design, marketing automation, AI commercials and conversion for ambitious DTC brands."
-        canonical="https://theheroesagency.lovable.app/blog"
+        canonical="https://www.theheroesagency.org/blog"
         jsonLd={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           name: "TheHeroes Agency Blog",
-          url: "https://theheroesagency.lovable.app/blog",
+          url: "https://www.theheroesagency.org/blog",
           description:
             "Insights on Shopify design, marketing automation, AI commercials and eCommerce growth.",
           isPartOf: {
             "@type": "WebSite",
             name: "The Heroes Agency",
-            url: "https://theheroesagency.lovable.app/",
+            url: "https://www.theheroesagency.org/",
           },
           hasPart: posts.map((p) => ({
             "@type": "BlogPosting",
             headline: p.title,
-            url: `https://theheroesagency.lovable.app/blog/${p.slug}`,
+            url: `https://www.theheroesagency.org/blog/${p.slug}`,
             datePublished: p.published_at || p.created_at,
             author: { "@type": "Person", name: p.author_name },
           })),

@@ -25,4 +25,4 @@ Visual identity, hybrid AI + traditional photography, landing page design for pa
 3. Scoped proposal with KPIs
 4. Ship, measure, iterate
 
-Contact: info@theheroesagency.org · https://theheroesagency.lovable.app
+Contact: info@theheroesagency.org · https://www.theheroesagency.org

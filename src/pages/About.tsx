@@ -114,21 +114,21 @@ export default function About() {
       <SEO
         title="About TheHeroes Agency — Shopify & Growth Systems"
         description="Founded by Mou Barrac, TheHeroes Agency builds Shopify stores, marketing systems, AI commercials and automation that scale revenue."
-        canonical="https://theheroesagency.lovable.app/about"
-        image="https://theheroesagency.lovable.app/og-about.jpg"
+        canonical="https://www.theheroesagency.org/about"
+        image="https://www.theheroesagency.org/og-about.jpg"
         type="profile"
         jsonLd={[
           {
             "@context": "https://schema.org",
             "@type": "AboutPage",
             name: "About TheHeroes Agency",
-            url: "https://theheroesagency.lovable.app/about",
+            url: "https://www.theheroesagency.org/about",
             description:
               "TheHeroes Agency builds Shopify storefronts, marketing systems, AI commercials and automation infrastructure for brands that scale.",
             isPartOf: {
               "@type": "WebSite",
               name: "The Heroes Agency",
-              url: "https://theheroesagency.lovable.app/",
+              url: "https://www.theheroesagency.org/",
             },
           },
           {
@@ -139,9 +139,9 @@ export default function About() {
             worksFor: {
               "@type": "Organization",
               name: "The Heroes Agency",
-              url: "https://theheroesagency.lovable.app/",
+              url: "https://www.theheroesagency.org/",
             },
-            url: "https://theheroesagency.lovable.app/about",
+            url: "https://www.theheroesagency.org/about",
             sameAs: [
               "https://www.linkedin.com/in/theheroes-agency",
               "https://www.instagram.com/theheroes_agency",
@@ -152,8 +152,8 @@ export default function About() {
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              { "@type": "ListItem", position: 1, name: "Home", item: "https://theheroesagency.lovable.app/" },
-              { "@type": "ListItem", position: 2, name: "About", item: "https://theheroesagency.lovable.app/about" },
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://www.theheroesagency.org/" },
+              { "@type": "ListItem", position: 2, name: "About", item: "https://www.theheroesagency.org/about" },
             ],
           },
           {
