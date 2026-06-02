@@ -38,6 +38,10 @@ const ContactSection = lazy(() =>
 const CTASection = lazy(() =>
   import("@/components/sections/CTASection").then((m) => ({ default: m.CTASection })),
 );
+const FAQSection = lazy(() =>
+  import("@/components/sections/FAQSection").then((m) => ({ default: m.FAQSection })),
+);
+import { homepageFaqs } from "@/components/sections/FAQSection";
 const Footer = lazy(() =>
   import("@/components/sections/Footer").then((m) => ({ default: m.Footer })),
 );
@@ -141,6 +145,15 @@ const Index = () => {
             name: "The Heroes Agency",
             url: "https://www.theheroesagency.org/",
           },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: homepageFaqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          },
         ]}
       />
       <Navigation />
@@ -157,6 +170,7 @@ const Index = () => {
             <WhyMeSection />
             <TestimonialsSection />
             <BlogSection />
+            <FAQSection />
             <ContactSection />
             <CTASection />
           </Suspense>
