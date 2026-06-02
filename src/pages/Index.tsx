@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { AchievementsMarquee } from "@/components/sections/AchievementsMarquee";
 import { TrustMetrics } from "@/components/sections/TrustMetrics";
 import { SEO } from "@/components/SEO";
+import { homepageFaqs } from "@/components/sections/FAQSection";
 
 
 // Lazy-load below-the-fold sections so they don't block the main thread on
@@ -41,7 +42,6 @@ const CTASection = lazy(() =>
 const FAQSection = lazy(() =>
   import("@/components/sections/FAQSection").then((m) => ({ default: m.FAQSection })),
 );
-import { homepageFaqs } from "@/components/sections/FAQSection";
 const Footer = lazy(() =>
   import("@/components/sections/Footer").then((m) => ({ default: m.Footer })),
 );
