@@ -103,7 +103,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SEO
-        title="Shopify Expert — Store Design, Fix & Optimization | The Heroes Agency"
+        title="Shopify Expert: Store Design & Optimization | TheHeroes"
         description="Senior Shopify expert for store design, website fixes, speed and conversion optimization, and DTC marketing. Book a free strategy call with The Heroes Agency."
         canonical="https://www.theheroesagency.org/"
         image="https://www.theheroesagency.org/og-home.jpg"
