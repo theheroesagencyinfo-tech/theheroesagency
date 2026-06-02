@@ -46,7 +46,7 @@ export function FAQSection() {
       className="relative py-24 md:py-32 px-4 md:px-6"
       aria-labelledby="faq-heading"
     >
-      <div className="container max-w-4xl">
+      <div className="container max-w-none">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
