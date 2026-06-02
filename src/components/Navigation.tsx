@@ -107,6 +107,7 @@ export function Navigation() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           className="fixed inset-0 z-40 glass pt-24"
+          id="mobile-nav"
         >
           <nav className="container px-4 py-8 flex flex-col gap-6">
             {navLinks.map((link) => (
