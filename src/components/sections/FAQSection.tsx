@@ -37,7 +37,7 @@ export const homepageFaqs = [
 ];
 
 export function FAQSection() {
-  const { ref, isInView } = useScrollAnimation();
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <section
@@ -49,7 +49,7 @@ export function FAQSection() {
       <div className="container max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
@@ -73,7 +73,7 @@ export function FAQSection() {
             <motion.details
               key={f.q}
               initial={{ opacity: 0, y: 12 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: i * 0.05 }}
               className="glass rounded-xl p-5 md:p-6 group border border-white/5 hover:border-primary/30 transition-colors"
             >
