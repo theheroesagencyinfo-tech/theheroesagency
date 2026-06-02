@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { AchievementsMarquee } from "@/components/sections/AchievementsMarquee";
 import { TrustMetrics } from "@/components/sections/TrustMetrics";
 import { SEO } from "@/components/SEO";
+import { homepageFaqs } from "@/components/sections/FAQSection";
 
 
 // Lazy-load below-the-fold sections so they don't block the main thread on
@@ -37,6 +38,9 @@ const ContactSection = lazy(() =>
 );
 const CTASection = lazy(() =>
   import("@/components/sections/CTASection").then((m) => ({ default: m.CTASection })),
+);
+const FAQSection = lazy(() =>
+  import("@/components/sections/FAQSection").then((m) => ({ default: m.FAQSection })),
 );
 const Footer = lazy(() =>
   import("@/components/sections/Footer").then((m) => ({ default: m.Footer })),
@@ -141,6 +145,15 @@ const Index = () => {
             name: "The Heroes Agency",
             url: "https://www.theheroesagency.org/",
           },
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: homepageFaqs.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          },
         ]}
       />
       <Navigation />
@@ -157,6 +170,7 @@ const Index = () => {
             <WhyMeSection />
             <TestimonialsSection />
             <BlogSection />
+            <FAQSection />
             <ContactSection />
             <CTASection />
           </Suspense>
