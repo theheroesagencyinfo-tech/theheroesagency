@@ -6,6 +6,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
+import { ShopifyTopicsHub } from "@/components/sections/ShopifyTopicsHub";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
@@ -91,6 +92,10 @@ export default function Blog() {
               Expert tips, strategies, and industry insights to help your eCommerce business thrive.
             </p>
           </motion.div>
+
+          <ShopifyTopicsHub />
+
+
 
           {isLoading ? (
             <div className="flex items-center justify-center py-12">

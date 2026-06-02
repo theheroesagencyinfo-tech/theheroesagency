@@ -7,6 +7,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
+import { RelatedLinks } from "@/components/RelatedLinks";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
@@ -156,6 +157,8 @@ export default function BlogPostPage() {
               className="prose prose-lg prose-invert max-w-none"
               dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             />
+
+            <RelatedLinks />
           </motion.div>
         </article>
       </main>
