@@ -107,30 +107,58 @@
   <meta name="twitter:description" content="Shopify design, marketing automation, and AI commercials that grow revenue. Book your free strategy call with The Heroes Agency.">
 </head>
 
-  <body style="background-color: hsl(222, 47%, 5%); color: hsl(210, 40%, 98%); margin: 0;">
+  <!-- Theme init: applied BEFORE first paint so light/dark backgrounds + text match the user's
+       preference. Prevents flash-of-wrong-theme and ensures text remains readable on both themes. -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme-preference');
+        var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+        var theme = (stored === 'light' || stored === 'dark') ? stored : (prefersLight ? 'light' : 'dark');
+        var root = document.documentElement;
+        root.classList.remove('light', 'dark');
+        root.classList.add(theme);
+        root.style.colorScheme = theme;
+        // Bg/fg tokens kept in sync with src/index.css :root and .dark blocks.
+        var bg = theme === 'light' ? 'hsl(210, 40%, 98%)' : 'hsl(222, 47%, 5%)';
+        var fg = theme === 'light' ? 'hsl(222, 47%, 11%)' : 'hsl(210, 40%, 98%)';
+        root.style.setProperty('--initial-bg', bg);
+        root.style.setProperty('--initial-fg', fg);
+      } catch (e) { /* no-op: CSS fallback below */ }
+    })();
+  </script>
+  <style>
+    html { background-color: var(--initial-bg, hsl(222, 47%, 5%)); color: var(--initial-fg, hsl(210, 40%, 98%)); }
+    body { margin: 0; background-color: inherit; color: inherit; }
+  </style>
+  <body>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MMVN92SK"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <div id="root">
       <!-- Inline FCP placeholder: paints immediately so the browser doesn't wait for React.
-           Replaced as soon as React mounts. Invisible to users (matches dark theme). -->
-      <div aria-hidden="true" style="min-height: 100vh; background-color: hsl(222, 47%, 5%);"></div>
+           Inherits theme-aware bg from <html> so it's invisible on both light and dark. -->
+      <div aria-hidden="true" style="min-height: 100vh;"></div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      // Discourage right-click, devtools shortcuts, drag-save, and copy.
+      // Site protection — deferred to idle time so it never blocks first paint or INP.
       (function () {
-        var allow = function (t) { return t && (t.closest && (t.closest('input,textarea,[contenteditable="true"],.allow-select'))); };
-        document.addEventListener('contextmenu', function (e) { if (!allow(e.target)) e.preventDefault(); });
-        document.addEventListener('dragstart', function (e) { var n = e.target && e.target.nodeName; if (n === 'IMG' || n === 'VIDEO') e.preventDefault(); });
-        document.addEventListener('copy', function (e) { if (!allow(e.target)) e.preventDefault(); });
-        document.addEventListener('keydown', function (e) {
-          var k = (e.key || '').toLowerCase();
-          if (e.key === 'F12') return e.preventDefault();
-          if ((e.ctrlKey || e.metaKey) && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) return e.preventDefault();
-          if ((e.ctrlKey || e.metaKey) && (k === 'u' || k === 's')) return e.preventDefault();
-        });
+        var attach = function () {
+          var allow = function (t) { return t && (t.closest && (t.closest('input,textarea,[contenteditable="true"],.allow-select'))); };
+          document.addEventListener('contextmenu', function (e) { if (!allow(e.target)) e.preventDefault(); });
+          document.addEventListener('dragstart', function (e) { var n = e.target && e.target.nodeName; if (n === 'IMG' || n === 'VIDEO') e.preventDefault(); });
+          document.addEventListener('copy', function (e) { if (!allow(e.target)) e.preventDefault(); });
+          document.addEventListener('keydown', function (e) {
+            var k = (e.key || '').toLowerCase();
+            if (e.key === 'F12') return e.preventDefault();
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) return e.preventDefault();
+            if ((e.ctrlKey || e.metaKey) && (k === 'u' || k === 's')) return e.preventDefault();
+          });
+        };
+        if ('requestIdleCallback' in window) requestIdleCallback(attach, { timeout: 2000 });
+        else setTimeout(attach, 1200);
       })();
     </script>
   </body>
