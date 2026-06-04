@@ -899,7 +899,7 @@ export default function Admin() {
                     <motion.div
                       key={contact.id}
                       layout
-                      onClick={() => { setSelectedContact(contact); setAdminNotes(contact.admin_notes || ""); updateContactStatus(contact.id, "read"); }}
+                      onClick={() => { setSelectedContact(contact); setAdminNotes(contact.admin_notes || ""); setReplySubject(`Re: ${contact.service || "your message"}`); setReplyMessage(""); updateContactStatus(contact.id, "read"); }}
                       className={`glass rounded-xl p-4 cursor-pointer hover:border-primary/30 transition-all ${selectedContact?.id === contact.id ? "border-primary/50" : ""}`}
                     >
                       <div className="flex items-center justify-between mb-2">
