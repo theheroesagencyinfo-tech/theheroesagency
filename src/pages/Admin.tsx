@@ -977,6 +977,34 @@ export default function Admin() {
                       />
                       <Button onClick={saveContactNotes} size="sm" className="gradient-gold">Save Notes</Button>
                     </div>
+
+                    <div className="space-y-3 pt-4 border-t border-white/10">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-medium flex items-center gap-2"><Send className="w-4 h-4" /> Reply via Email</h4>
+                        <span className="text-xs text-muted-foreground">From: TheHeroes Agency · Replies → {ADMIN_REPLY_TO}</span>
+                      </div>
+                      <Input
+                        value={replySubject}
+                        onChange={(e) => setReplySubject(e.target.value)}
+                        placeholder="Subject"
+                        maxLength={200}
+                        className="glass border-white/10"
+                      />
+                      <Textarea
+                        value={replyMessage}
+                        onChange={(e) => setReplyMessage(e.target.value)}
+                        placeholder={`Hi ${selectedContact.name.split(" ")[0] || "there"},\n\nThanks for reaching out...`}
+                        rows={6}
+                        maxLength={5000}
+                        className="glass border-white/10"
+                      />
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-muted-foreground">{replyMessage.length}/5000</span>
+                        <Button onClick={sendReply} disabled={isSendingReply} size="sm" className="gradient-gold">
+                          {isSendingReply ? "Sending..." : (<><Send className="w-4 h-4 mr-1" />Send Reply</>)}
+                        </Button>
+                      </div>
+                    </div>
                   </motion.div>
                 ) : (
                   <div className="glass rounded-2xl p-12 text-center">
