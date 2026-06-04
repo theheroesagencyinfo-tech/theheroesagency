@@ -55,6 +55,7 @@ Deno.serve(async (req) => {
   let idempotencyKey: string
   let messageId: string
   let templateData: Record<string, any> = {}
+  let replyTo: string | undefined
   try {
     const body = await req.json()
     templateName = body.templateName || body.template_name
@@ -63,6 +64,10 @@ Deno.serve(async (req) => {
     idempotencyKey = body.idempotencyKey || body.idempotency_key || messageId
     if (body.templateData && typeof body.templateData === 'object') {
       templateData = body.templateData
+    }
+    const rt = body.replyTo || body.reply_to
+    if (typeof rt === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rt)) {
+      replyTo = rt
     }
   } catch {
     return new Response(
