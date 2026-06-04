@@ -364,6 +364,51 @@ export default function Admin() {
     }
   };
 
+  const sendReply = async () => {
+    if (!selectedContact) return;
+    const subject = replySubject.trim();
+    const message = replyMessage.trim();
+    if (!subject || !message) {
+      toast({ title: "Missing fields", description: "Add a subject and a message before sending.", variant: "destructive" });
+      return;
+    }
+    if (message.length > 5000 || subject.length > 200) {
+      toast({ title: "Too long", description: "Subject must be ≤200 and message ≤5000 characters.", variant: "destructive" });
+      return;
+    }
+    setIsSendingReply(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-transactional-email", {
+        body: {
+          templateName: "admin-reply",
+          recipientEmail: selectedContact.email,
+          replyTo: ADMIN_REPLY_TO,
+          idempotencyKey: `admin-reply-${selectedContact.id}-${Date.now()}`,
+          templateData: {
+            recipientName: selectedContact.name,
+            subject,
+            message,
+            senderName: "The Heroes Agency",
+          },
+        },
+      });
+      if (error) throw error;
+      if (data && (data as any).success === false) {
+        throw new Error((data as any).reason || "Send failed");
+      }
+      await supabase.from("contact_submissions").update({ status: "responded" }).eq("id", selectedContact.id);
+      setContacts((prev) => prev.map((c) => (c.id === selectedContact.id ? { ...c, status: "responded" } : c)));
+      setSelectedContact({ ...selectedContact, status: "responded" });
+      setReplySubject("");
+      setReplyMessage("");
+      toast({ title: "Reply sent", description: `Email queued to ${selectedContact.email}. Replies will arrive at ${ADMIN_REPLY_TO}.` });
+    } catch (err: any) {
+      toast({ title: "Error", description: err?.message || "Failed to send reply", variant: "destructive" });
+    } finally {
+      setIsSendingReply(false);
+    }
+  };
+
   const deleteContact = async (id: string) => {
     try {
       const { error } = await supabase.from("contact_submissions").delete().eq("id", id);
