@@ -48,11 +48,11 @@ export default MagicLinkEmail
 const main = { backgroundColor: '#ffffff', fontFamily: "'Helvetica Neue', Arial, sans-serif" }
 const container = { padding: '32px 28px', maxWidth: '560px' }
 const header = { borderBottom: '1px solid #f0e6d2', paddingBottom: '16px', marginBottom: '24px' }
-const brand = { fontSize: '12px', letterSpacing: '3px', color: '#b8860b', fontWeight: 'bold' as const, margin: 0 }
+const brand = { fontSize: '12px', letterSpacing: '3px', color: '#0369a1', fontWeight: 'bold' as const, margin: 0 }
 const h1 = { fontSize: '24px', fontWeight: 'bold' as const, color: '#0a0a0a', margin: '0 0 20px' }
 const text = { fontSize: '15px', color: '#3d3d3d', lineHeight: '1.6', margin: '0 0 20px' }
 const button = {
-  background: 'linear-gradient(135deg, #d4a017 0%, #b8860b 100%)',
+  background: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #0369a1 100%)',
   color: '#ffffff',
   fontSize: '15px',
   fontWeight: 'bold' as const,

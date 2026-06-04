@@ -42,14 +42,14 @@ export default ReauthenticationEmail
 const main = { backgroundColor: '#ffffff', fontFamily: "'Helvetica Neue', Arial, sans-serif" }
 const container = { padding: '32px 28px', maxWidth: '560px' }
 const header = { borderBottom: '1px solid #f0e6d2', paddingBottom: '16px', marginBottom: '24px' }
-const brand = { fontSize: '12px', letterSpacing: '3px', color: '#b8860b', fontWeight: 'bold' as const, margin: 0 }
+const brand = { fontSize: '12px', letterSpacing: '3px', color: '#0369a1', fontWeight: 'bold' as const, margin: 0 }
 const h1 = { fontSize: '24px', fontWeight: 'bold' as const, color: '#0a0a0a', margin: '0 0 20px' }
 const text = { fontSize: '15px', color: '#3d3d3d', lineHeight: '1.6', margin: '0 0 20px' }
 const codeStyle = {
   fontFamily: 'Courier, monospace',
   fontSize: '28px',
   fontWeight: 'bold' as const,
-  color: '#b8860b',
+  color: '#0369a1',
   letterSpacing: '4px',
   margin: '0 0 30px',
 }
