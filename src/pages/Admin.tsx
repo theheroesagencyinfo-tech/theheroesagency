@@ -143,6 +143,10 @@ export default function Admin() {
   const [contactFilter, setContactFilter] = useState<ContactFilter>("all");
   const [selectedContact, setSelectedContact] = useState<ContactSubmission | null>(null);
   const [adminNotes, setAdminNotes] = useState("");
+  const [replySubject, setReplySubject] = useState("");
+  const [replyMessage, setReplyMessage] = useState("");
+  const [isSendingReply, setIsSendingReply] = useState(false);
+  const ADMIN_REPLY_TO = "theheroesagency.info@gmail.com";
 
   // Chat state
   const [conversations, setConversations] = useState<ChatConversation[]>([]);
