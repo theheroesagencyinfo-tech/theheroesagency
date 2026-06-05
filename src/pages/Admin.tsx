@@ -128,6 +128,7 @@ export default function Admin() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
   const [isGeneratingCover, setIsGeneratingCover] = useState(false);
+  const [isBackfilling, setIsBackfilling] = useState(false);
   const [blogFilter, setBlogFilter] = useState<BlogFilter>("all");
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [postForm, setPostForm] = useState({
@@ -373,6 +374,42 @@ export default function Admin() {
     } finally {
       setIsGeneratingCover(false);
     }
+  };
+
+  const backfillMissingCovers = async () => {
+    const needsCover = posts.filter((p) => !p.cover_image_url?.trim());
+    if (needsCover.length === 0) {
+      toast({ title: "All set", description: "Every post already has a cover image." });
+      return;
+    }
+    setIsBackfilling(true);
+    let success = 0;
+    let failed = 0;
+    for (const post of needsCover) {
+      try {
+        const { data, error } = await supabase.functions.invoke("generate-blog-cover", {
+          body: { title: post.title, excerpt: post.excerpt ?? undefined },
+        });
+        if (error) throw error;
+        const url = (data as { url?: string })?.url;
+        if (!url) throw new Error("No URL returned");
+        const { error: upErr } = await supabase
+          .from("blog_posts")
+          .update({ cover_image_url: url })
+          .eq("id", post.id);
+        if (upErr) throw upErr;
+        setPosts((prev) => prev.map((p) => (p.id === post.id ? { ...p, cover_image_url: url } : p)));
+        success += 1;
+      } catch (e) {
+        console.error("Backfill failed for", post.id, e);
+        failed += 1;
+      }
+    }
+    setIsBackfilling(false);
+    toast({
+      title: "Backfill complete",
+      description: `${success} cover${success === 1 ? "" : "s"} generated${failed ? `, ${failed} failed` : ""}.`,
+    });
   };
 
   const savePost = async () => {
@@ -849,11 +886,25 @@ export default function Admin() {
                 </Button>
               ))}
               <Button
+                onClick={backfillMissingCovers}
+                disabled={isBackfilling}
+                variant="outline"
+                className="glass ml-auto"
+                title="Generate AI cover images for any published posts that don't have one yet"
+              >
+                {isBackfilling ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4 mr-2" />
+                )}
+                {isBackfilling ? "Generating…" : "Backfill missing covers"}
+              </Button>
+              <Button
                 onClick={() => {
                   setEditingPost(null);
                   setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" });
                 }}
-                className="gradient-gold ml-auto"
+                className="gradient-gold"
               >
                 <Plus className="w-4 h-4 mr-2" />New Post
               </Button>

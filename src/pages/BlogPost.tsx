@@ -106,7 +106,7 @@ export default function BlogPostPage() {
       />
       <Navigation />
       <main className="pt-24 pb-16">
-        <article className="container px-4 md:px-6 max-w-4xl mx-auto">
+        <article className="container px-4 md:px-6 max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -123,8 +123,12 @@ export default function BlogPostPage() {
               {post.cover_image_url ? (
                 <img
                   src={post.cover_image_url}
-                  alt={post.title}
+                  alt={`${post.title} — illustration for The Heroes Agency blog post`}
+                  width={1600}
+                  height={900}
+                  decoding="async"
                   className="w-full h-full object-cover"
+                  {...({ fetchpriority: "high" } as Record<string, string>)}
                 />
               ) : (
                 <BlogCoverFallback title={post.title} />

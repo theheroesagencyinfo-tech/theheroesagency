@@ -11,7 +11,7 @@ const Terms = () => (
     />
     <Navigation />
     <main className="pt-32 pb-24">
-      <article className="container px-4 md:px-6 max-w-3xl mx-auto prose prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
+      <article className="container px-4 md:px-6 max-w-5xl mx-auto prose prose-invert prose-headings:text-foreground prose-p:text-muted-foreground">
         <h1 className="text-4xl md:text-5xl font-bold mb-6">Terms of Service</h1>
         <p className="text-sm text-muted-foreground">
           Last updated: {new Date().toLocaleDateString()}

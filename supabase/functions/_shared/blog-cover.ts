@@ -52,6 +52,13 @@ Visual style: dark luxury, modern eCommerce/Shopify aesthetic, sky-blue accent g
     .upload(path, bytes, { contentType: "image/png", upsert: false });
   if (upErr) throw upErr;
 
-  const { data: pub } = opts.supabase.storage.from("blog-covers").getPublicUrl(path);
-  return pub.publicUrl;
+  // Bucket is private (workspace blocks public buckets); use a long-lived
+  // signed URL so the cover stays accessible from the public site and crawlers.
+  const tenYears = 60 * 60 * 24 * 365 * 10;
+  const { data: signed, error: signErr } = await opts.supabase.storage
+    .from("blog-covers")
+    .createSignedUrl(path, tenYears);
+  if (signErr || !signed) throw signErr ?? new Error("Failed to sign URL");
+  return signed.signedUrl;
 }
+
