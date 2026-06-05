@@ -47,6 +47,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { shouldRegenerateCover } from "@/lib/blogCover";
 
 // Types
 interface Review {
@@ -376,16 +377,17 @@ export default function Admin() {
     }
   };
 
-  const backfillMissingCovers = async () => {
-    const needsCover = posts.filter((p) => !p.cover_image_url?.trim());
-    if (needsCover.length === 0) {
-      toast({ title: "All set", description: "Every post already has a cover image." });
+  const regenerateCoversFor = async (target: "missing" | "all") => {
+    const candidates =
+      target === "all" ? posts : posts.filter((p) => !p.cover_image_url?.trim());
+    if (candidates.length === 0) {
+      toast({ title: "All set", description: "No posts to regenerate." });
       return;
     }
     setIsBackfilling(true);
     let success = 0;
     let failed = 0;
-    for (const post of needsCover) {
+    for (const post of candidates) {
       try {
         const { data, error } = await supabase.functions.invoke("generate-blog-cover", {
           body: { title: post.title, excerpt: post.excerpt ?? undefined },
@@ -401,26 +403,32 @@ export default function Admin() {
         setPosts((prev) => prev.map((p) => (p.id === post.id ? { ...p, cover_image_url: url } : p)));
         success += 1;
       } catch (e) {
-        console.error("Backfill failed for", post.id, e);
+        console.error("Cover generation failed for", post.id, e);
         failed += 1;
       }
     }
     setIsBackfilling(false);
     toast({
-      title: "Backfill complete",
-      description: `${success} cover${success === 1 ? "" : "s"} generated${failed ? `, ${failed} failed` : ""}.`,
+      title: target === "all" ? "Regeneration complete" : "Backfill complete",
+      description: `${success} cover${success === 1 ? "" : "s"} ${target === "all" ? "regenerated" : "generated"}${failed ? `, ${failed} failed` : ""}.`,
     });
   };
+
+  const backfillMissingCovers = () => regenerateCoversFor("missing");
+  const regenerateAllCovers = () => regenerateCoversFor("all");
+
 
   const savePost = async () => {
     try {
       let coverUrl = postForm.cover_image_url;
-      // Regenerate cover when: no cover yet, OR editing a post whose title/excerpt changed
-      // (so the visual stays in sync with the new content).
-      const titleOrExcerptChanged =
-        !!editingPost &&
-        (editingPost.title !== postForm.title || (editingPost.excerpt || "") !== postForm.excerpt);
-      const shouldRegenerate = !coverUrl?.trim() || titleOrExcerptChanged;
+      const shouldRegenerate = shouldRegenerateCover({
+        form: {
+          title: postForm.title,
+          excerpt: postForm.excerpt,
+          cover_image_url: postForm.cover_image_url,
+        },
+        editing: editingPost,
+      });
       if (shouldRegenerate) {
         const generated = await generateCoverImage();
         if (generated) coverUrl = generated;
@@ -904,6 +912,24 @@ export default function Admin() {
                   <Sparkles className="w-4 h-4 mr-2" />
                 )}
                 {isBackfilling ? "Generating…" : "Backfill missing covers"}
+              </Button>
+              <Button
+                onClick={() => {
+                  if (window.confirm("Regenerate AI covers for ALL posts? This replaces every existing cover image.")) {
+                    regenerateAllCovers();
+                  }
+                }}
+                disabled={isBackfilling}
+                variant="outline"
+                className="glass"
+                title="Regenerate fresh AI cover images for every blog post (replaces existing covers)"
+              >
+                {isBackfilling ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4 mr-2" />
+                )}
+                {isBackfilling ? "Generating…" : "Regenerate all covers"}
               </Button>
               <Button
                 onClick={() => {
