@@ -3,6 +3,7 @@ import { Palette, TrendingUp, Zap, Clapperboard } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { BorderBeam } from "@/components/magicui/border-beam";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass-card";
 
 const services = [
   {
@@ -46,45 +47,43 @@ function ServiceCard({
   isVisible: boolean;
   index: number;
 }) {
-  const cardRef = useMouseGlow<HTMLDivElement>();
   return (
     <motion.div
-      ref={cardRef}
       initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
       animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
       transition={{ delay: index * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8 }}
-      className="card-spotlight glass rounded-2xl p-8 group relative overflow-hidden hover:border-primary/30 transition-all duration-500 gold-glow-sm hover-lift"
+      className="group hover-lift"
     >
-      {/* Icon */}
-      <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 mb-6 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
-        <Icon className="w-7 h-7 text-primary" />
-      </div>
+      <LiquidGlassCard glowIntensity={0.45} className="p-8 h-full">
+        {/* Icon */}
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 mb-6 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+          <Icon className="w-7 h-7 text-primary" />
+        </div>
 
-      {/* Title */}
-      <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-gradient transition-all duration-300">
-        {title}
-      </h3>
+        {/* Title */}
+        <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-gradient transition-all duration-300">
+          {title}
+        </h3>
 
-      {/* Description */}
-      <p className="text-muted-foreground mb-6 leading-relaxed">
-        {description}
-      </p>
+        {/* Description */}
+        <p className="text-muted-foreground mb-6 leading-relaxed">{description}</p>
 
-      {/* Features */}
-      <ul className="space-y-3">
-        {features.map((feature) => (
-          <li key={feature} className="flex items-center gap-3 text-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-            <span className="text-foreground/80">{feature}</span>
-          </li>
-        ))}
-      </ul>
+        {/* Features */}
+        <ul className="space-y-3">
+          {features.map((feature) => (
+            <li key={feature} className="flex items-center gap-3 text-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+              <span className="text-foreground/80">{feature}</span>
+            </li>
+          ))}
+        </ul>
 
-      {/* Hover beam */}
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <BorderBeam size={160} duration={5} delay={index * 0.6} />
-      </div>
+        {/* Hover beam */}
+        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <BorderBeam size={160} duration={5} delay={index * 0.6} />
+        </div>
+      </LiquidGlassCard>
     </motion.div>
   );
 }
