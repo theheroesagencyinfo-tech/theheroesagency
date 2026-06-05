@@ -109,6 +109,25 @@ export default {
           "0%, 100%": { opacity: "0.4" },
           "50%": { opacity: "0.8" },
         },
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-600px)",
+            opacity: "0",
+          },
+        },
+        aurora: {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        "shimmer-slide": {
+          "0%": { transform: "translate(0%, 0%) rotate(0deg)" },
+          "100%": { transform: "translate(0%, 0%) rotate(360deg)" },
+        },
+        "border-beam": {
+          to: { offsetDistance: "100%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -118,6 +137,10 @@ export default {
         "scale-in": "scale-in 0.4s ease-out forwards",
         shimmer: "shimmer 8s ease-in-out infinite",
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
+        meteor: "meteor 6s linear infinite",
+        aurora: "aurora 8s ease-in-out infinite",
+        "shimmer-slide": "shimmer-slide 2.5s linear infinite",
+        "border-beam": "border-beam var(--duration, 6s) linear infinite",
       },
     },
   },
