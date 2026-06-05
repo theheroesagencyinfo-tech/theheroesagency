@@ -128,6 +128,7 @@ export default function Admin() {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
   const [isGeneratingCover, setIsGeneratingCover] = useState(false);
+  const [isBackfilling, setIsBackfilling] = useState(false);
   const [blogFilter, setBlogFilter] = useState<BlogFilter>("all");
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [postForm, setPostForm] = useState({
@@ -849,11 +850,25 @@ export default function Admin() {
                 </Button>
               ))}
               <Button
+                onClick={backfillMissingCovers}
+                disabled={isBackfilling}
+                variant="outline"
+                className="glass ml-auto"
+                title="Generate AI cover images for any published posts that don't have one yet"
+              >
+                {isBackfilling ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4 mr-2" />
+                )}
+                {isBackfilling ? "Generating…" : "Backfill missing covers"}
+              </Button>
+              <Button
                 onClick={() => {
                   setEditingPost(null);
                   setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" });
                 }}
-                className="gradient-gold ml-auto"
+                className="gradient-gold"
               >
                 <Plus className="w-4 h-4 mr-2" />New Post
               </Button>
