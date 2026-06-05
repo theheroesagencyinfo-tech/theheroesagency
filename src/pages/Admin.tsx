@@ -878,13 +878,39 @@ export default function Admin() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Cover Image URL</Label>
+                  <div className="flex items-center justify-between gap-2">
+                    <Label>Cover Image</Label>
+                    <Button
+                      type="button"
+                      onClick={generateCoverImage}
+                      disabled={isGeneratingCover}
+                      variant="outline"
+                      size="sm"
+                      className="glass"
+                    >
+                      {isGeneratingCover ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Sparkles className="w-4 h-4 mr-2" />
+                      )}
+                      {isGeneratingCover ? "Generating…" : "Generate with AI"}
+                    </Button>
+                  </div>
                   <Input
                     value={postForm.cover_image_url}
                     onChange={(e) => setPostForm((prev) => ({ ...prev, cover_image_url: e.target.value }))}
-                    placeholder="https://example.com/image.jpg"
+                    placeholder="https://… or click Generate with AI"
                     className="glass border-white/10"
                   />
+                  {postForm.cover_image_url ? (
+                    <div className="mt-2 aspect-video rounded-xl overflow-hidden border border-white/10 max-w-md">
+                      <img src={postForm.cover_image_url} alt="Cover preview" className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">
+                      Leave empty to auto-generate a fitting AI cover on save.
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label>Excerpt</Label>
