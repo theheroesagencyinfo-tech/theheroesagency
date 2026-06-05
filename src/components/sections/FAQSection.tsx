@@ -75,15 +75,15 @@ export function FAQSection() {
               initial={{ opacity: 0, y: 12 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="glass rounded-xl p-5 md:p-6 group border border-white/5 hover:border-primary/30 transition-colors"
+              className="glass rounded-xl p-5 md:p-6 group border border-white/5 hover:border-primary/30 transition-colors hover:shadow-[0_0_30px_-10px_hsl(var(--sky)/0.45)]"
             >
               <summary className="cursor-pointer font-medium text-foreground list-none flex justify-between items-center gap-4 text-base md:text-lg">
                 <span>{f.q}</span>
-                <span className="text-primary text-2xl flex-shrink-0 group-open:rotate-45 transition-transform">
+                <span className="text-primary text-2xl flex-shrink-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-open:rotate-[135deg]">
                   +
                 </span>
               </summary>
-              <p className="mt-4 text-muted-foreground leading-relaxed">
+              <p className="mt-4 text-muted-foreground leading-relaxed animate-fade-in">
                 {f.a}
               </p>
             </motion.details>

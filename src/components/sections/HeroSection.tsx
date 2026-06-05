@@ -3,6 +3,11 @@ import { ArrowRight, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { openCalendlyPopup } from "@/lib/calendly";
+import { Meteors } from "@/components/magicui/meteors";
+import { Particles } from "@/components/magicui/particles";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { BorderBeam } from "@/components/magicui/border-beam";
 import heroBanner from "@/assets/hero-banner.webp";
 
 const trackConversionEvent = (eventName: string, opts: { label?: string } = {}) => {
@@ -113,6 +118,10 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-glow-top z-[2]" />
 
+      {/* Layered particles + meteors (sky-blue) */}
+      <Particles className="z-[2]" quantity={70} color="#7dd3fc" />
+      <Meteors number={18} className="z-[2]" />
+
       <div className="container relative z-10 px-4 md:px-6">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
@@ -127,48 +136,60 @@ export function HeroSection() {
             </span>
           </motion.div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]">
-            I Build <span className="text-gradient">High-Converting</span>
+          <motion.h1
+            initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
+          >
+            I Build <AuroraText>High-Converting</AuroraText>
             <br />
             Shopify Stores
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.7 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+          >
             Elite eCommerce consultant specializing in premium Shopify design,
             conversion optimization, and growth strategies that drive
             <span className="text-foreground font-medium"> real results</span>.
-          </p>
+          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button
-              size="lg"
-              className="gradient-gold text-primary-foreground font-semibold px-8 py-6 text-lg gold-glow-sm hover:scale-105 transition-transform duration-300"
+            <ShimmerButton
               onClick={() => {
                 trackConversionEvent("hero_cta_click", { label: "Book a Strategy Call" });
                 trackConversionEvent("calendly_click", { label: "Hero" });
                 void openCalendlyPopup();
               }}
+              className="px-8 py-5 text-lg"
             >
               Book a Strategy Call
               <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="glass glass-hover border-primary/30 px-8 py-6 text-lg group"
-              onClick={() => {
-                trackConversionEvent("hero_cta_click", { label: "View My Work" });
-                scrollToSection("portfolio");
-              }}
-            >
-              <Play className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
-              View My Work
-            </Button>
+            </ShimmerButton>
+            <div className="relative isolate overflow-hidden rounded-xl">
+              <Button
+                size="lg"
+                variant="outline"
+                className="glass glass-hover border-primary/30 px-8 py-6 text-lg group relative z-10"
+                onClick={() => {
+                  trackConversionEvent("hero_cta_click", { label: "View My Work" });
+                  scrollToSection("portfolio");
+                }}
+              >
+                <Play className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
+                View My Work
+              </Button>
+              <BorderBeam size={120} duration={5} />
+            </div>
           </motion.div>
         </div>
 
