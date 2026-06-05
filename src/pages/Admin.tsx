@@ -915,6 +915,23 @@ export default function Admin() {
               </Button>
               <Button
                 onClick={() => {
+                  if (window.confirm("Regenerate AI covers for ALL posts? This replaces every existing cover image.")) {
+                    regenerateAllCovers();
+                  }
+                }}
+                disabled={isBackfilling}
+                variant="outline"
+                className="glass"
+                title="Regenerate fresh AI cover images for every blog post (replaces existing covers)"
+              >
+                {isBackfilling ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4 mr-2" />
+                )}
+                {isBackfilling ? "Generating…" : "Regenerate all covers"}
+              <Button
+                onClick={() => {
                   setEditingPost(null);
                   setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" });
                 }}
