@@ -203,37 +203,53 @@ export default function Admin() {
       } catch {}
     };
 
-    const channel = supabase
-      .channel("admin-notifications")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "contact_submissions" },
-        (payload) => {
-          const row = payload.new as ContactSubmission;
-          setContacts((prev) => (prev.some((c) => c.id === row.id) ? prev : [row, ...prev]));
-          toast({
-            title: `New ${row.service || "lead"} from ${row.name}`,
-            description: row.message?.slice(0, 120) || row.email,
-          });
-          notify("New lead received", `${row.name} — ${row.email}`);
-        }
-      )
-      .on(
-        "postgres_changes",
-        { event: "UPDATE", schema: "public", table: "contact_submissions" },
-        (payload) => {
-          const next = payload.new as ContactSubmission;
-          const prev = payload.old as Partial<ContactSubmission>;
-          setContacts((list) => list.map((c) => (c.id === next.id ? { ...c, ...next } : c)));
-          if (next.status === "responded" && prev.status !== "responded") {
+    // Poll contact_submissions instead of subscribing via Realtime — the table
+    // contains visitor PII and is no longer published to supabase_realtime to
+    // prevent any authenticated client from receiving row payloads.
+    let lastSeenIds = new Set<string>();
+    let lastStatusById = new Map<string, string | null>();
+    setContacts((prev) => {
+      lastSeenIds = new Set(prev.map((c) => c.id));
+      lastStatusById = new Map(prev.map((c) => [c.id, c.status ?? null]));
+      return prev;
+    });
+    const pollContacts = async () => {
+      const { data, error } = await supabase
+        .from("contact_submissions")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error || !data) return;
+      const rows = data as ContactSubmission[];
+      for (const row of rows) {
+        if (!lastSeenIds.has(row.id)) {
+          // Only toast after we've seen at least one poll baseline
+          if (lastSeenIds.size > 0) {
             toast({
-              title: "Lead marked as responded",
-              description: `${next.name} (${next.email})`,
+              title: `New ${row.service || "lead"} from ${row.name}`,
+              description: row.message?.slice(0, 120) || row.email,
             });
-            notify("Lead marked as responded", `${next.name} — ${next.email}`);
+            notify("New lead received", `${row.name} — ${row.email}`);
           }
+        } else if (
+          row.status === "responded" &&
+          lastStatusById.get(row.id) !== "responded"
+        ) {
+          toast({
+            title: "Lead marked as responded",
+            description: `${row.name} (${row.email})`,
+          });
+          notify("Lead marked as responded", `${row.name} — ${row.email}`);
         }
-      )
+      }
+      lastSeenIds = new Set(rows.map((r) => r.id));
+      lastStatusById = new Map(rows.map((r) => [r.id, r.status ?? null]));
+      setContacts(rows);
+    };
+    pollContacts();
+    const contactsInterval = window.setInterval(pollContacts, 20000);
+
+    const channel = supabase
+      .channel("admin-chat-notifications")
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "chat_messages" },
@@ -255,6 +271,7 @@ export default function Admin() {
       .subscribe();
 
     return () => {
+      window.clearInterval(contactsInterval);
       supabase.removeChannel(channel);
     };
   }, [user, isAdmin, selectedConversation?.id]);
@@ -657,7 +674,7 @@ export default function Admin() {
 
   const subscribeToChatMessages = (conversationId: string) => {
     const channel = supabase
-      .channel(`admin-chat-${conversationId}`)
+      .channel(`chat-${conversationId}`)
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "chat_messages", filter: `conversation_id=eq.${conversationId}` },
