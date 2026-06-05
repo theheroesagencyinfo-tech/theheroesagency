@@ -376,6 +376,42 @@ export default function Admin() {
     }
   };
 
+  const backfillMissingCovers = async () => {
+    const needsCover = posts.filter((p) => !p.cover_image_url?.trim());
+    if (needsCover.length === 0) {
+      toast({ title: "All set", description: "Every post already has a cover image." });
+      return;
+    }
+    setIsBackfilling(true);
+    let success = 0;
+    let failed = 0;
+    for (const post of needsCover) {
+      try {
+        const { data, error } = await supabase.functions.invoke("generate-blog-cover", {
+          body: { title: post.title, excerpt: post.excerpt ?? undefined },
+        });
+        if (error) throw error;
+        const url = (data as { url?: string })?.url;
+        if (!url) throw new Error("No URL returned");
+        const { error: upErr } = await supabase
+          .from("blog_posts")
+          .update({ cover_image_url: url })
+          .eq("id", post.id);
+        if (upErr) throw upErr;
+        setPosts((prev) => prev.map((p) => (p.id === post.id ? { ...p, cover_image_url: url } : p)));
+        success += 1;
+      } catch (e) {
+        console.error("Backfill failed for", post.id, e);
+        failed += 1;
+      }
+    }
+    setIsBackfilling(false);
+    toast({
+      title: "Backfill complete",
+      description: `${success} cover${success === 1 ? "" : "s"} generated${failed ? `, ${failed} failed` : ""}.`,
+    });
+  };
+
   const savePost = async () => {
     try {
       let coverUrl = postForm.cover_image_url;
