@@ -54,7 +54,7 @@ function ServiceCard({
       animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
       transition={{ delay: index * 0.12, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8 }}
-      className="card-spotlight glass rounded-2xl p-8 group hover:border-primary/30 transition-all duration-500 gold-glow-sm hover-lift"
+      className="card-spotlight glass rounded-2xl p-8 group relative overflow-hidden hover:border-primary/30 transition-all duration-500 gold-glow-sm hover-lift"
     >
       {/* Icon */}
       <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10 border border-primary/20 mb-6 group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
@@ -80,6 +80,11 @@ function ServiceCard({
           </li>
         ))}
       </ul>
+
+      {/* Hover beam */}
+      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <BorderBeam size={160} duration={5} delay={index * 0.6} />
+      </div>
     </motion.div>
   );
 }
