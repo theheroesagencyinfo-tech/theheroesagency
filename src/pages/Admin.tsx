@@ -23,6 +23,8 @@ import {
   Plus,
   ClipboardList,
   BarChart3,
+  Sparkles,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -348,10 +350,40 @@ export default function Admin() {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   };
 
+  const generateCoverImage = async (): Promise<string | null> => {
+    if (!postForm.title.trim()) {
+      toast({ title: "Add a title first", description: "We need the post title to generate a fitting image.", variant: "destructive" });
+      return null;
+    }
+    setIsGeneratingCover(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-blog-cover", {
+        body: { title: postForm.title, excerpt: postForm.excerpt },
+      });
+      if (error) throw error;
+      const url = (data as { url?: string })?.url;
+      if (!url) throw new Error("No URL returned");
+      setPostForm((prev) => ({ ...prev, cover_image_url: url }));
+      toast({ title: "Cover image generated" });
+      return url;
+    } catch (e) {
+      toast({ title: "Image generation failed", description: String(e), variant: "destructive" });
+      return null;
+    } finally {
+      setIsGeneratingCover(false);
+    }
+  };
+
   const savePost = async () => {
     try {
+      let coverUrl = postForm.cover_image_url;
+      if (!coverUrl?.trim()) {
+        const generated = await generateCoverImage();
+        if (generated) coverUrl = generated;
+      }
       const postData = {
         ...postForm,
+        cover_image_url: coverUrl || null,
         slug: postForm.slug || createSlug(postForm.title),
         published_at: postForm.status === "published" ? new Date().toISOString() : null,
       };
