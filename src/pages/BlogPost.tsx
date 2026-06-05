@@ -161,8 +161,17 @@ export default function BlogPostPage() {
               </p>
             )}
 
-            <div 
-              className="prose prose-lg prose-invert max-w-none"
+            <div
+              className="prose prose-lg prose-invert max-w-none
+                prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-foreground
+                prose-h2:text-3xl md:prose-h2:text-4xl prose-h2:mt-14 prose-h2:mb-5
+                prose-h3:text-2xl prose-h3:mt-10 prose-h3:mb-4
+                prose-p:text-foreground/85 prose-p:leading-[1.85] prose-p:my-6
+                prose-strong:text-foreground
+                prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+                prose-ul:my-6 prose-ol:my-6 prose-li:my-2 prose-li:leading-[1.8]
+                prose-blockquote:border-l-primary prose-blockquote:text-foreground/90 prose-blockquote:not-italic
+                prose-hr:my-12 prose-hr:border-border/40"
               dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             />
 
