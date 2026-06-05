@@ -2,6 +2,7 @@
 // and inserts them as published blog_posts. Triggered by pg_cron Thursdays 08:00 UTC.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { generateBlogCover } from "../_shared/blog-cover.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -153,11 +154,23 @@ Deno.serve(async (req) => {
       const baseSlug = slugify(post.title);
       const slug = `${baseSlug}-${now.toISOString().slice(0, 10)}-${Math.random().toString(36).slice(2, 6)}`;
 
+      let coverUrl: string | null = null;
+      try {
+        coverUrl = await generateBlogCover({
+          title: post.title,
+          excerpt: post.excerpt,
+          supabase,
+        });
+      } catch (imgErr) {
+        console.error("Cover generation failed", imgErr);
+      }
+
       const { error } = await supabase.from("blog_posts").insert({
         title: post.title.slice(0, 120),
         slug,
         excerpt: post.excerpt.slice(0, 200),
         content: post.content,
+        cover_image_url: coverUrl,
         author_name: "The Heroes Agency",
         status: "published",
         published_at: now.toISOString(),
