@@ -217,7 +217,7 @@ function ProjectCard({
       animate={isVisible ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
       transition={{ delay: index * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8 }}
-      className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 cursor-pointer block"
+      className="card-spotlight group glass rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500 cursor-pointer block relative"
     >
       {/* Image */}
       <div className="relative h-56 overflow-hidden bg-muted">
@@ -256,6 +256,11 @@ function ProjectCard({
         <p className="text-sm text-muted-foreground leading-relaxed">
           {description}
         </p>
+      </div>
+
+      {/* Hover beam */}
+      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <BorderBeam size={200} duration={6} delay={index * 0.4} />
       </div>
     </motion.a>
   );
