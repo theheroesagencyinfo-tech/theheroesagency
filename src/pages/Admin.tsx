@@ -415,7 +415,13 @@ export default function Admin() {
   const savePost = async () => {
     try {
       let coverUrl = postForm.cover_image_url;
-      if (!coverUrl?.trim()) {
+      // Regenerate cover when: no cover yet, OR editing a post whose title/excerpt changed
+      // (so the visual stays in sync with the new content).
+      const titleOrExcerptChanged =
+        !!editingPost &&
+        (editingPost.title !== postForm.title || (editingPost.excerpt || "") !== postForm.excerpt);
+      const shouldRegenerate = !coverUrl?.trim() || titleOrExcerptChanged;
+      if (shouldRegenerate) {
         const generated = await generateCoverImage();
         if (generated) coverUrl = generated;
       }
