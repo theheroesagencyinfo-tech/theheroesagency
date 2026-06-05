@@ -21,6 +21,7 @@ interface BlogPost {
   author_name: string;
   published_at: string | null;
   created_at: string;
+  updated_at?: string | null;
 }
 
 export default function BlogPostPage() {
