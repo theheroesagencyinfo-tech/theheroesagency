@@ -182,6 +182,78 @@ export default function Admin() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
 
+  // Real-time admin notifications: new leads, status -> responded, new visitor chat messages
+  useEffect(() => {
+    if (!user || !isAdmin) return;
+
+    // Best-effort browser notification permission (silent if denied)
+    if (typeof window !== "undefined" && "Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission().catch(() => {});
+    }
+    const notify = (title: string, body: string) => {
+      try {
+        if ("Notification" in window && Notification.permission === "granted" && document.visibilityState !== "visible") {
+          new Notification(title, { body, icon: "/favicon.ico" });
+        }
+      } catch {}
+    };
+
+    const channel = supabase
+      .channel("admin-notifications")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "contact_submissions" },
+        (payload) => {
+          const row = payload.new as ContactSubmission;
+          setContacts((prev) => (prev.some((c) => c.id === row.id) ? prev : [row, ...prev]));
+          toast({
+            title: `New ${row.service || "lead"} from ${row.name}`,
+            description: row.message?.slice(0, 120) || row.email,
+          });
+          notify("New lead received", `${row.name} — ${row.email}`);
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "contact_submissions" },
+        (payload) => {
+          const next = payload.new as ContactSubmission;
+          const prev = payload.old as Partial<ContactSubmission>;
+          setContacts((list) => list.map((c) => (c.id === next.id ? { ...c, ...next } : c)));
+          if (next.status === "responded" && prev.status !== "responded") {
+            toast({
+              title: "Lead marked as responded",
+              description: `${next.name} (${next.email})`,
+            });
+            notify("Lead marked as responded", `${next.name} — ${next.email}`);
+          }
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "chat_messages" },
+        (payload) => {
+          const msg = payload.new as ChatMessage;
+          // Only notify on visitor-sent messages; ignore admin echoes
+          if ((msg as any).sender_type && (msg as any).sender_type !== "visitor") return;
+          // Skip if user is already viewing this conversation
+          if (selectedConversation?.id === msg.conversation_id) return;
+          toast({
+            title: "New chat message",
+            description: msg.message?.slice(0, 140) || "Visitor sent a new message",
+          });
+          notify("New chat message", msg.message?.slice(0, 140) || "Visitor sent a message");
+          // Refresh conversation list so unread surfaces
+          fetchConversations();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user, isAdmin, selectedConversation?.id]);
+
   // Reviews functions
   const fetchReviews = async () => {
     setIsLoadingReviews(true);
