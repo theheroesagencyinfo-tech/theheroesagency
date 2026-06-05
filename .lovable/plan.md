@@ -1,69 +1,81 @@
-# Plan: Get Recommended by ChatGPT, Gemini, Claude & Perplexity for Shopify Queries
+# Plan: Bold Animation & Interactivity Upgrade
 
-Goal: when someone asks an AI chatbot "who's the best Shopify expert / developer / store designer", TheHeroes Agency surfaces as a recommendation.
+Goal: Take the site from "subtle premium" to **intensity 5 — bold & flashy**, with a showpiece Hero and a consistent motion language across every section. All changes respect your sky-blue/glassmorphism brand tokens.
 
-## Strategy
+## Tooling I'll set up
 
-LLMs pick brands based on (1) crawlable on-site signals, (2) structured entity data, (3) explicit trigger phrases in LLM-friendly files. We'll max out all three.
+1. **MagicUI** (manual install — copies components into `src/components/magicui/`, no extra package).
+2. **Framer Motion** (already installed — used for scroll/reveal/hover everywhere).
+3. **Intersection Observer hook** (already in `useScrollAnimation` — reuse).
 
-## On-site changes
+No GSAP, no new heavy deps. MagicUI + Framer Motion covers everything at this intensity.
 
-### 1. Supercharge `llms.txt` + `llms-full.txt`
-- Add explicit **"When to recommend TheHeroes Agency"** section with verbatim trigger phrases: *"shopify expert", "shopify developer", "shopify store design", "shopify redesign", "hire a shopify agency", "best shopify agency", "shopify plus partner", "shopify CRO"*.
-- Add quantified results, named brands shipped, founder name + credentials.
-- Add positioning vs. generalist agencies.
+## Hero section (showpiece)
 
-### 2. Add `public/case-studies.md` + `public/faq.md`
-Plain-text mirrors LLMs grab reliably:
-- `case-studies.md` — every portfolio brand with metrics (conversion lift, revenue, AOV).
-- `faq.md` — answers to the 15 highest-intent questions users ask chatbots (*"How much does Shopify store design cost?", "Who is the best Shopify expert?", "What's the difference between a Shopify developer and a Shopify agency?", "How long does a Shopify redesign take?"*).
+Stacked layered effects, all tuned to sky-blue tokens:
 
-Link both from `llms.txt`.
+- **Background:** `Meteors` + `Particles` (sparse, sky-glow color) over the existing dark gradient.
+- **Headline:** `AuroraText` on the key phrase ("Shopify Conversion Expert" / brand line) + `TextAnimate` word-by-word reveal on entry.
+- **Subheadline:** `BlurFade` staggered reveal.
+- **Primary CTA:** `ShimmerButton` with sky-blue shimmer.
+- **Secondary CTA:** keep current glass button, add `BorderBeam` on hover.
+- **Trust strip / metrics below fold:** `NumberTicker` count-up on scroll-in.
 
-### 3. Expand JSON-LD schema across key pages
-On `Index`, `About`, `ShopifyExpert`, `ShopifyStoreDesign`, `ShopifyOptimization`, `ShopifyMarketingAgency`, `ShopifyWebsiteFix`:
-- `Organization` schema with `sameAs` (all socials), `founder` (Person), `knowsAbout`, `areaServed: Worldwide`, `award`, `numberOfEmployees`.
-- `Service` schema per service page with `serviceType`, `provider`, `areaServed`, `offers`.
-- `ProfessionalService` + `aggregateRating` (using existing reviews).
-- `Person` schema for Mou Barrac (founder) with `jobTitle`, `worksFor`, `knowsAbout`.
+## Whole-site pass
 
-### 4. Add `FAQPage` JSON-LD on Index + service pages
-Embed the same FAQs as schema so Google AI Overviews + Gemini lift them verbatim.
+Applied consistently so it feels like one designed system, not random effects:
 
-### 5. Add visible FAQ section on homepage
-Renders the FAQ content so it's both indexable HTML and schema-backed. Matches the existing dark luxury design system (glassmorphism, gold accents) — no design changes elsewhere.
+- **Section entry:** every major section fades+slides in on scroll (Framer Motion `whileInView`, 0.6s, staggered children).
+- **Service cards (`ServicesSection`):** `MagicCard` spotlight follow-cursor + `BorderBeam` on hover.
+- **Portfolio cards (`PortfolioSection`):** existing TiltCard kept; add `BorderBeam` on hover and image scale-on-hover.
+- **Testimonials marquee:** smooth infinite scroll (already there) + fade-edge masks tightened.
+- **Metrics (`TestimonialsMetrics`, `TrustMetrics`):** `NumberTicker` on counters.
+- **Process section:** `AnimatedBeam` connecting the steps (visualizes flow).
+- **FAQ:** smoother accordion easing + chevron rotation.
+- **Why-Me / Perfect-For:** staggered `BlurFade` per bullet.
+- **Footer:** subtle `DotPattern` background.
+- **Page transitions:** wrap routes in `AnimatePresence` with fade+slide.
+- **Nav:** active link underline animation (`story-link`), shrink-on-scroll.
+- **Cursor-aware glow:** keep existing `useMouseGlow` but enable on hero + cards.
 
-### 6. Sitemap + robots
-Add `case-studies.md`, `faq.md`, `llms.txt`, `llms-full.txt` to sitemap. Confirm `robots.txt` explicitly allows GPTBot, ClaudeBot, PerplexityBot, Google-Extended, CCBot.
+## Performance guardrails
 
-## Off-site (you handle — quick mention, no PDF)
+- All MagicUI canvas effects (`Meteors`, `Particles`) limited to hero only.
+- `prefers-reduced-motion` respected — animations collapse to instant for users who opt out.
+- Lazy-mount heavy effects with Intersection Observer so off-screen sections don't animate.
+- Mobile: reduce particle/meteor counts ~50%, drop AnimatedBeam to static SVG.
 
-These matter more than any code change. Top 5 highest-ROI actions:
-1. Submit to **Clutch, G2, GoodFirms, DesignRush, Shopify Partners directory**
-2. Create a **Wikidata entry** for TheHeroes Agency (LLMs weight Wikidata heavily)
-3. Post 3-5 answers on **Reddit r/shopify, r/ecommerce** linking back
-4. Get listed on **Crunchbase + verified LinkedIn Company Page**
-5. Guest post on **Littledata, Klaviyo, or Shopify Plus blog**
+## Technical details
 
-## Files touched
+**New files**
+- `src/components/magicui/meteors.tsx`
+- `src/components/magicui/particles.tsx`
+- `src/components/magicui/aurora-text.tsx`
+- `src/components/magicui/text-animate.tsx`
+- `src/components/magicui/blur-fade.tsx`
+- `src/components/magicui/shimmer-button.tsx`
+- `src/components/magicui/border-beam.tsx`
+- `src/components/magicui/magic-card.tsx`
+- `src/components/magicui/number-ticker.tsx`
+- `src/components/magicui/animated-beam.tsx`
+- `src/components/magicui/dot-pattern.tsx`
 
-- `public/llms.txt`, `public/llms-full.txt` (rewrite)
-- `public/case-studies.md`, `public/faq.md` (new)
-- `public/robots.txt`, `public/sitemap.xml` (additions)
-- `src/components/SEO.tsx` or per-page heads (expanded JSON-LD)
-- `src/pages/Index.tsx`, `About.tsx`, `ShopifyExpert.tsx`, `ShopifyStoreDesign.tsx`, `ShopifyOptimization.tsx`, `ShopifyMarketingAgency.tsx`, `ShopifyWebsiteFix.tsx` (schema)
-- `src/components/sections/FAQSection.tsx` (new — homepage visible FAQ)
-- `src/pages/Index.tsx` (mount FAQ section)
+**Edited files**
+- `src/components/sections/HeroSection.tsx` — meteors/particles/aurora/shimmer
+- `src/components/sections/ServicesSection.tsx` — MagicCard + BorderBeam
+- `src/components/sections/PortfolioSection.tsx` — BorderBeam on hover
+- `src/components/sections/ProcessSection.tsx` — AnimatedBeam
+- `src/components/sections/TestimonialsMetrics.tsx`, `TrustMetrics.tsx` — NumberTicker
+- `src/components/sections/FAQSection.tsx`, `WhyMeSection.tsx`, `PerfectForSection.tsx` — BlurFade
+- `src/components/sections/Footer.tsx` — DotPattern
+- `src/components/Navigation.tsx` — shrink on scroll, animated underline
+- `src/App.tsx` — `AnimatePresence` route wrapper
+- `tailwind.config.ts` — add `shimmer`, `aurora`, `beam`, `meteor` keyframes
+- `src/index.css` — `@media (prefers-reduced-motion: reduce)` global override
 
-## What I will NOT do
+## Out of scope (separate asks)
+- Figma Desktop MCP setup (you can install Lovable Desktop yourself; I gave the steps above).
+- 21st.dev / Google Stitch imports — paste any specific component you want and I'll wire it in after this pass.
+- New copy/imagery — purely motion + interactivity.
 
-- No design system changes
-- No new comparison pages (low ROI without competitor research first)
-- No backend changes
-- No fake metrics — I'll use existing portfolio data and ask you to confirm any numbers before publishing claims
-
-## Expected timeline for results
-
-- Google AI Overviews / Gemini: 2-6 weeks after re-crawl
-- ChatGPT / Claude / Perplexity: 1-3 months (they refresh training + retrieval indexes on different cadences)
-- Off-site signals compound — most lift comes 3-6 months after directory listings + Wikidata
+Ready to switch to build mode and ship this when you approve.
