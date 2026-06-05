@@ -12,16 +12,22 @@ async function polish(field: "title" | "excerpt" | "content", value: string) {
   const apiKey = Deno.env.get("LOVABLE_API_KEY");
   if (!apiKey) throw new Error("LOVABLE_API_KEY missing");
 
-  const rules = `You are a senior human copy editor. Polish the following blog ${field} for punctuation, grammar, spacing, and readability.
+  const rules = `You are a senior human copy editor. Polish the following blog ${field} for punctuation, grammar, spacing, structure, and readability.
 
 STRICT RULES:
-- Do NOT change meaning, facts, structure, headings, links, or HTML tags.
-- Fix missing commas, periods, semicolons, apostrophes, quotes, capitalization.
-- Replace stray "—" overuse with proper commas/periods. Max 2 em dashes total.
+- Do NOT change meaning or facts. You MAY restructure paragraphs and convert dense prose into bullet or numbered lists for clarity.
+- Fix missing commas, periods, semicolons, apostrophes, quotes, capitalization. Use real curly quotes and apostrophes.
+- Collapse double spaces. Trim trailing whitespace. Ensure exactly one space after punctuation.
+- Replace stray "—" overuse with proper commas/periods. Max 2 em dashes total in the whole ${field}.
 - Remove generic AI tics: "unlock", "leverage", "supercharge", "game-changer", "delve", "tapestry", "navigate the landscape", "in today's fast-paced world", "in conclusion", "let's dive in", "harness the power", "revolutionize".
-- Keep paragraphs short (2-4 sentences). Add paragraph breaks only where readability clearly improves.
-- Preserve all existing HTML tags exactly (h2, h3, p, ul, ol, li, strong, em, a, blockquote). Do not add new tags.
+- Keep paragraphs short (2-4 sentences). Add paragraph breaks for breathing room.
+- ADD BULLET POINTS where they help readability:
+  * Any time a paragraph lists 3 or more discrete items, steps, benefits, signals, or examples, convert it to a <ul> with <li> items (or <ol> for ordered steps).
+  * Each <li> should be a short, scannable phrase or one sentence. Use parallel grammar.
+  * Place lists between paragraphs with clean spacing. Do not nest lists.
+- Allowed HTML tags only: h2, h3, p, ul, ol, li, strong, em, a, blockquote. Preserve existing href values. Do not invent new headings or links. Do not add inline styles, classes, divs, or spans.
 - Return ONLY the polished ${field}. No markdown fences. No commentary.`;
+
 
   const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
     method: "POST",
