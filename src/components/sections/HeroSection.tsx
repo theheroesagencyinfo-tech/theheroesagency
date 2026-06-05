@@ -118,10 +118,6 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-glow-top z-[2]" />
 
-      <div className="container relative z-10 px-4 md:px-6">
-        <div className="max-w-3xl mx-auto text-center">
-      <div className="absolute inset-0 bg-glow-top z-[2]" />
-
       {/* Layered particles + meteors (sky-blue) */}
       <Particles className="z-[2]" quantity={70} color="#7dd3fc" />
       <Meteors number={18} className="z-[2]" />
