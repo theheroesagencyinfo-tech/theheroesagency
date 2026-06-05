@@ -76,9 +76,69 @@ export default function BlogPostPage() {
   });
 
   const postUrl = `https://www.theheroesagency.org/blog/${post.slug}`;
-  const rawExcerpt = (post.excerpt || post.content.replace(/<[^>]+>/g, "")).trim();
+  const plainText = post.content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const rawExcerpt = (post.excerpt || plainText).trim();
   const description = rawExcerpt.length > 155 ? `${rawExcerpt.slice(0, 152)}...` : rawExcerpt;
   const title = post.title.length > 58 ? `${post.title.slice(0, 55)}...` : post.title;
+  const wordCount = plainText ? plainText.split(/\s+/).length : 0;
+  const keywords = Array.from(
+    new Set(
+      post.title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, "")
+        .split(/\s+/)
+        .filter((w) => w.length > 3),
+    ),
+  ).slice(0, 8);
+  const datePublished = post.published_at || post.created_at;
+  const dateModified = post.updated_at || datePublished;
+
+  const articleSchema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description,
+    datePublished,
+    dateModified,
+    author: {
+      "@type": "Person",
+      name: post.author_name,
+      url: "https://www.theheroesagency.org/about",
+    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": postUrl },
+    publisher: {
+      "@type": "Organization",
+      name: "The Heroes Agency",
+      url: "https://www.theheroesagency.org/",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.theheroesagency.org/placeholder.svg",
+      },
+    },
+    wordCount,
+    keywords: keywords.join(", "),
+    inLanguage: "en-US",
+    articleSection: "eCommerce & Shopify",
+    url: postUrl,
+  };
+  if (post.cover_image_url) {
+    articleSchema.image = {
+      "@type": "ImageObject",
+      url: post.cover_image_url,
+      width: 1600,
+      height: 900,
+    };
+  }
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://www.theheroesagency.org/" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://www.theheroesagency.org/blog" },
+      { "@type": "ListItem", position: 3, name: post.title, item: postUrl },
+    ],
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -88,23 +148,9 @@ export default function BlogPostPage() {
         canonical={postUrl}
         image={post.cover_image_url || undefined}
         type="article"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Article",
-          headline: post.title,
-          description,
-          datePublished: post.published_at || post.created_at,
-          dateModified: post.published_at || post.created_at,
-          author: { "@type": "Person", name: post.author_name },
-          image: post.cover_image_url || undefined,
-          mainEntityOfPage: postUrl,
-          publisher: {
-            "@type": "Organization",
-            name: "The Heroes Agency",
-            url: "https://www.theheroesagency.org/",
-          },
-        }}
+        jsonLd={[articleSchema, breadcrumbSchema]}
       />
+
       <Navigation />
       <main className="pt-24 pb-16">
         <article className="container px-4 md:px-6 max-w-6xl mx-auto">
