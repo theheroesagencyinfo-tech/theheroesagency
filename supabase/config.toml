@@ -15,3 +15,5 @@ project_id = "gvyzlvevzosexdoekrtz"
     verify_jwt = false
   [functions.handle-email-suppression]
     verify_jwt = false
+  [functions.generate-blog-cover]
+    verify_jwt = true

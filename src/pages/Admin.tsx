@@ -23,6 +23,8 @@ import {
   Plus,
   ClipboardList,
   BarChart3,
+  Sparkles,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -125,6 +127,7 @@ export default function Admin() {
   // Blog state
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
+  const [isGeneratingCover, setIsGeneratingCover] = useState(false);
   const [blogFilter, setBlogFilter] = useState<BlogFilter>("all");
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [postForm, setPostForm] = useState({
@@ -348,10 +351,40 @@ export default function Admin() {
     return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
   };
 
+  const generateCoverImage = async (): Promise<string | null> => {
+    if (!postForm.title.trim()) {
+      toast({ title: "Add a title first", description: "We need the post title to generate a fitting image.", variant: "destructive" });
+      return null;
+    }
+    setIsGeneratingCover(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-blog-cover", {
+        body: { title: postForm.title, excerpt: postForm.excerpt },
+      });
+      if (error) throw error;
+      const url = (data as { url?: string })?.url;
+      if (!url) throw new Error("No URL returned");
+      setPostForm((prev) => ({ ...prev, cover_image_url: url }));
+      toast({ title: "Cover image generated" });
+      return url;
+    } catch (e) {
+      toast({ title: "Image generation failed", description: String(e), variant: "destructive" });
+      return null;
+    } finally {
+      setIsGeneratingCover(false);
+    }
+  };
+
   const savePost = async () => {
     try {
+      let coverUrl = postForm.cover_image_url;
+      if (!coverUrl?.trim()) {
+        const generated = await generateCoverImage();
+        if (generated) coverUrl = generated;
+      }
       const postData = {
         ...postForm,
+        cover_image_url: coverUrl || null,
         slug: postForm.slug || createSlug(postForm.title),
         published_at: postForm.status === "published" ? new Date().toISOString() : null,
       };
@@ -845,13 +878,39 @@ export default function Admin() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label>Cover Image URL</Label>
+                  <div className="flex items-center justify-between gap-2">
+                    <Label>Cover Image</Label>
+                    <Button
+                      type="button"
+                      onClick={generateCoverImage}
+                      disabled={isGeneratingCover}
+                      variant="outline"
+                      size="sm"
+                      className="glass"
+                    >
+                      {isGeneratingCover ? (
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      ) : (
+                        <Sparkles className="w-4 h-4 mr-2" />
+                      )}
+                      {isGeneratingCover ? "Generating…" : "Generate with AI"}
+                    </Button>
+                  </div>
                   <Input
                     value={postForm.cover_image_url}
                     onChange={(e) => setPostForm((prev) => ({ ...prev, cover_image_url: e.target.value }))}
-                    placeholder="https://example.com/image.jpg"
+                    placeholder="https://… or click Generate with AI"
                     className="glass border-white/10"
                   />
+                  {postForm.cover_image_url ? (
+                    <div className="mt-2 aspect-video rounded-xl overflow-hidden border border-white/10 max-w-md">
+                      <img src={postForm.cover_image_url} alt="Cover preview" className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <p className="text-xs text-muted-foreground">
+                      Leave empty to auto-generate a fitting AI cover on save.
+                    </p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label>Excerpt</Label>

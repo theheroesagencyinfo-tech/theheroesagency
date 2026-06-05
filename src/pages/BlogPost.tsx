@@ -8,6 +8,7 @@ import { Footer } from "@/components/sections/Footer";
 import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { RelatedLinks } from "@/components/RelatedLinks";
+import { BlogCoverFallback } from "@/components/BlogCoverFallback";
 import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
@@ -118,15 +119,18 @@ export default function BlogPostPage() {
               </Button>
             </Link>
 
-            {post.cover_image_url && (
-              <div className="aspect-video rounded-2xl overflow-hidden mb-8">
+            <div className="aspect-video rounded-2xl overflow-hidden mb-8 border border-white/10">
+              {post.cover_image_url ? (
                 <img
                   src={post.cover_image_url}
                   alt={post.title}
                   className="w-full h-full object-cover"
                 />
-              </div>
-            )}
+              ) : (
+                <BlogCoverFallback title={post.title} />
+              )}
+            </div>
+
 
             <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
               <span className="flex items-center gap-1">
