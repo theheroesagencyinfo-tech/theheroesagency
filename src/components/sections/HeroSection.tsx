@@ -3,6 +3,11 @@ import { ArrowRight, Play } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { openCalendlyPopup } from "@/lib/calendly";
+import { Meteors } from "@/components/magicui/meteors";
+import { Particles } from "@/components/magicui/particles";
+import { AuroraText } from "@/components/magicui/aurora-text";
+import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { BorderBeam } from "@/components/magicui/border-beam";
 import heroBanner from "@/assets/hero-banner.webp";
 
 const trackConversionEvent = (eventName: string, opts: { label?: string } = {}) => {
