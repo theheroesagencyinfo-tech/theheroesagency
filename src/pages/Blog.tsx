@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { SEO } from "@/components/SEO";
 import { ShopifyTopicsHub } from "@/components/sections/ShopifyTopicsHub";
 import { supabase } from "@/integrations/supabase/client";
+import { BlogCoverFallback } from "@/components/BlogCoverFallback";
 
 interface BlogPost {
   id: string;
@@ -121,15 +122,18 @@ export default function Blog() {
                   transition={{ delay: index * 0.1, duration: 0.6 }}
                   className="glass rounded-2xl overflow-hidden group hover:border-primary/30 transition-all duration-500"
                 >
-                  {post.cover_image_url && (
-                    <div className="aspect-video overflow-hidden">
+                  <div className="aspect-video overflow-hidden">
+                    {post.cover_image_url ? (
                       <img
                         src={post.cover_image_url}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
                       />
-                    </div>
-                  )}
+                    ) : (
+                      <BlogCoverFallback title={post.title} className="group-hover:scale-105 transition-transform duration-500" />
+                    )}
+                  </div>
                   <div className="p-6">
                     <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                       <span className="flex items-center gap-1">
