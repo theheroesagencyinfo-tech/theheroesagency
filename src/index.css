@@ -300,5 +300,13 @@
       transform: none;
       transition: none;
     }
+    .animate-meteor,
+    .animate-aurora,
+    .animate-shimmer-slide,
+    .animate-border-beam,
+    .animate-shimmer,
+    .animate-pulse-glow {
+      animation: none !important;
+    }
   }
 }
