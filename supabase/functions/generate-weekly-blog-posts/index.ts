@@ -66,13 +66,24 @@ async function generatePost(topic: { focus: string; angle: string }) {
 Primary keyword: "${topic.focus}"
 Angle: ${topic.angle}
 
-Requirements:
-- Title: under 60 chars, includes the primary keyword naturally, action-oriented.
-- Excerpt: 1-2 sentences, under 155 chars, hooks the reader.
-- Content: 700-1000 words of valuable HTML (h2/h3, p, ul/ol, strong). No <h1>, no <html>, no <body>. Open with a punchy hook, deliver concrete tips and frameworks, weave in the primary keyword 4-6 times naturally, close with a CTA inviting the reader to book a strategy call with The Heroes Agency.
-- Tone: senior consultant, confident, specific, no fluff, no AI-sounding filler.
+WRITING STANDARDS (non-negotiable):
+- Sound like a senior human consultant, not an AI assistant.
+- Plain, confident prose. Short sentences. Real specifics (numbers, tool names, store types).
+- Proper punctuation throughout: commas, periods, semicolons where appropriate. Use real apostrophes and quotes.
+- No em-dash overuse (max 2 in the whole article). No "—" as a sentence connector tic.
+- Banned phrases / openers (do NOT use): "In today's fast-paced world", "In the world of", "In conclusion", "Let's dive in", "Buckle up", "Imagine this", "leverage", "unlock", "supercharge", "game-changer", "revolutionize", "harness the power", "delve", "tapestry", "in this article we will", "as an AI", "stay tuned", "in summary", "navigate the landscape".
+- No hype adjectives stacking (e.g. "powerful, transformative, cutting-edge").
+- Vary sentence length. Use paragraph breaks every 2-4 sentences for readability.
 
-Return ONLY a JSON object with this exact shape:
+STRUCTURE:
+- Title: under 60 chars, includes the primary keyword naturally, action-oriented, no clickbait.
+- Excerpt: 1-2 sentences, under 155 chars, concrete hook (no vague promises).
+- Content: 700-1000 words of clean HTML. Allowed tags: h2, h3, p, ul, ol, li, strong, em, a, blockquote. No <h1>, <html>, <body>, <div>, <span>, or inline styles.
+- Structure: 1 short intro paragraph, then 3-5 h2 sections each with 2-3 short paragraphs and at least one bullet list or numbered list across the article.
+- Weave the primary keyword in 4-6 times naturally (title, first paragraph, one h2, twice in body).
+- Close with a 2-3 sentence CTA inviting the reader to book a strategy call with The Heroes Agency. No hard sell.
+
+Return ONLY a JSON object with this exact shape, no markdown fences:
 {"title": "...", "excerpt": "...", "content": "<h2>...</h2>..."}`;
 
   const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
@@ -84,7 +95,7 @@ Return ONLY a JSON object with this exact shape:
     body: JSON.stringify({
       model: "google/gemini-2.5-flash",
       messages: [
-        { role: "system", content: "You write expert SEO content for an elite ecommerce agency. Always return strict JSON only." },
+        { role: "system", content: "You are a senior human B2B content writer for an elite Shopify consulting agency. You write tight, specific, well-punctuated prose that never sounds AI-generated. Always return strict JSON only, no markdown fences, no commentary." },
         { role: "user", content: prompt },
       ],
     }),
