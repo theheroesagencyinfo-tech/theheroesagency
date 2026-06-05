@@ -67,7 +67,7 @@ export function Navigation() {
                 <button
                   key={link.label}
                   onClick={() => handleNavClick(link)}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="relative text-sm text-muted-foreground hover:text-foreground transition-colors after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:origin-right after:scale-x-0 after:bg-gradient-to-r after:from-sky-deep after:via-sky after:to-sky-glow after:transition-transform after:duration-300 hover:after:origin-left hover:after:scale-x-100"
                 >
                   {link.label}
                 </button>
