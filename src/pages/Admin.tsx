@@ -930,6 +930,7 @@ export default function Admin() {
                   <Sparkles className="w-4 h-4 mr-2" />
                 )}
                 {isBackfilling ? "Generating…" : "Regenerate all covers"}
+              </Button>
               <Button
                 onClick={() => {
                   setEditingPost(null);
