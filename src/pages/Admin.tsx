@@ -417,6 +417,49 @@ export default function Admin() {
   const backfillMissingCovers = () => regenerateCoversFor("missing");
   const regenerateAllCovers = () => regenerateCoversFor("all");
 
+  const [isPolishing, setIsPolishing] = useState(false);
+  const polishAllPosts = async () => {
+    if (posts.length === 0) {
+      toast({ title: "Nothing to polish", description: "No posts found." });
+      return;
+    }
+    setIsPolishing(true);
+    let success = 0;
+    let failed = 0;
+    for (const post of posts) {
+      try {
+        const { data, error } = await supabase.functions.invoke("polish-blog-post", {
+          body: { id: post.id },
+        });
+        if (error) throw error;
+        const updated = data as { title?: string; excerpt?: string; content?: string };
+        setPosts((prev) =>
+          prev.map((p) =>
+            p.id === post.id
+              ? {
+                  ...p,
+                  title: updated.title ?? p.title,
+                  excerpt: updated.excerpt ?? p.excerpt,
+                  content: updated.content ?? p.content,
+                }
+              : p,
+          ),
+        );
+        success += 1;
+      } catch (e) {
+        console.error("Polish failed for", post.id, e);
+        failed += 1;
+      }
+    }
+    setIsPolishing(false);
+    toast({
+      title: "Polish complete",
+      description: `${success} post${success === 1 ? "" : "s"} polished${failed ? `, ${failed} failed` : ""}.`,
+    });
+  };
+
+
+
 
   const savePost = async () => {
     try {
@@ -930,6 +973,24 @@ export default function Admin() {
                   <Sparkles className="w-4 h-4 mr-2" />
                 )}
                 {isBackfilling ? "Generating…" : "Regenerate all covers"}
+              </Button>
+              <Button
+                onClick={() => {
+                  if (window.confirm("Polish punctuation, grammar, and readability for ALL posts? This rewrites copy in place (meaning preserved).")) {
+                    polishAllPosts();
+                  }
+                }}
+                disabled={isPolishing || isBackfilling}
+                variant="outline"
+                className="glass"
+                title="Use AI to fix punctuation, spacing, and AI-sounding phrases across every blog post"
+              >
+                {isPolishing ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : (
+                  <Sparkles className="w-4 h-4 mr-2" />
+                )}
+                {isPolishing ? "Polishing…" : "Polish all copy"}
               </Button>
               <Button
                 onClick={() => {
