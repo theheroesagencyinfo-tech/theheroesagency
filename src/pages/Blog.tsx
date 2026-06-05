@@ -126,9 +126,12 @@ export default function Blog() {
                     {post.cover_image_url ? (
                       <img
                         src={post.cover_image_url}
-                        alt={post.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        alt={`${post.title} — The Heroes Agency blog`}
+                        width={800}
+                        height={450}
                         loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
                       <BlogCoverFallback title={post.title} className="group-hover:scale-105 transition-transform duration-500" />

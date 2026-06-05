@@ -123,8 +123,12 @@ export default function BlogPostPage() {
               {post.cover_image_url ? (
                 <img
                   src={post.cover_image_url}
-                  alt={post.title}
+                  alt={`${post.title} — illustration for The Heroes Agency blog post`}
+                  width={1600}
+                  height={900}
+                  decoding="async"
                   className="w-full h-full object-cover"
+                  {...({ fetchpriority: "high" } as Record<string, string>)}
                 />
               ) : (
                 <BlogCoverFallback title={post.title} />
