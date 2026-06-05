@@ -991,6 +991,7 @@ export default function Admin() {
                   <Sparkles className="w-4 h-4 mr-2" />
                 )}
                 {isPolishing ? "Polishing…" : "Polish all copy"}
+              </Button>
               <Button
                 onClick={() => {
                   setEditingPost(null);
