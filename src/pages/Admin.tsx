@@ -127,6 +127,7 @@ export default function Admin() {
   // Blog state
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [isLoadingPosts, setIsLoadingPosts] = useState(true);
+  const [isGeneratingCover, setIsGeneratingCover] = useState(false);
   const [blogFilter, setBlogFilter] = useState<BlogFilter>("all");
   const [editingPost, setEditingPost] = useState<BlogPost | null>(null);
   const [postForm, setPostForm] = useState({
