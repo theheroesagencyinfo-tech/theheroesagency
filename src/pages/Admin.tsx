@@ -377,16 +377,17 @@ export default function Admin() {
     }
   };
 
-  const backfillMissingCovers = async () => {
-    const needsCover = posts.filter((p) => !p.cover_image_url?.trim());
-    if (needsCover.length === 0) {
-      toast({ title: "All set", description: "Every post already has a cover image." });
+  const regenerateCoversFor = async (target: "missing" | "all") => {
+    const candidates =
+      target === "all" ? posts : posts.filter((p) => !p.cover_image_url?.trim());
+    if (candidates.length === 0) {
+      toast({ title: "All set", description: "No posts to regenerate." });
       return;
     }
     setIsBackfilling(true);
     let success = 0;
     let failed = 0;
-    for (const post of needsCover) {
+    for (const post of candidates) {
       try {
         const { data, error } = await supabase.functions.invoke("generate-blog-cover", {
           body: { title: post.title, excerpt: post.excerpt ?? undefined },
@@ -402,16 +403,20 @@ export default function Admin() {
         setPosts((prev) => prev.map((p) => (p.id === post.id ? { ...p, cover_image_url: url } : p)));
         success += 1;
       } catch (e) {
-        console.error("Backfill failed for", post.id, e);
+        console.error("Cover generation failed for", post.id, e);
         failed += 1;
       }
     }
     setIsBackfilling(false);
     toast({
-      title: "Backfill complete",
-      description: `${success} cover${success === 1 ? "" : "s"} generated${failed ? `, ${failed} failed` : ""}.`,
+      title: target === "all" ? "Regeneration complete" : "Backfill complete",
+      description: `${success} cover${success === 1 ? "" : "s"} ${target === "all" ? "regenerated" : "generated"}${failed ? `, ${failed} failed` : ""}.`,
     });
   };
+
+  const backfillMissingCovers = () => regenerateCoversFor("missing");
+  const regenerateAllCovers = () => regenerateCoversFor("all");
+
 
   const savePost = async () => {
     try {
