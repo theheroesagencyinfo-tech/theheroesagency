@@ -71,4 +71,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://www.theheroesagency.org/sitemap.xml
+Sitemap: https://theheroesagency.lovable.app/sitemap.xml
