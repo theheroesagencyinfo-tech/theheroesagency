@@ -150,6 +150,9 @@ export default function Admin() {
     cover_image_url: "",
     author_name: "Admin",
     status: "draft",
+    focus_keyword: "",
+    meta_title: "",
+    meta_description: "",
   });
 
   // Contacts state
