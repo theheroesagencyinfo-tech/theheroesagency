@@ -154,6 +154,18 @@ export default function Admin() {
     meta_title: "",
     meta_description: "",
   });
+  const emptyPostForm = () => ({
+    title: "",
+    slug: "",
+    excerpt: "",
+    content: "",
+    cover_image_url: "",
+    author_name: "Admin",
+    status: "draft",
+    focus_keyword: "",
+    meta_title: "",
+    meta_description: "",
+  });
 
   // Contacts state
   const [contacts, setContacts] = useState<ContactSubmission[]>([]);
