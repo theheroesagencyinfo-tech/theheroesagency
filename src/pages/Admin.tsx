@@ -1123,6 +1123,44 @@ export default function Admin() {
                     className="glass border-white/10"
                   />
                 </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
+                  <div className="md:col-span-3 -mb-2">
+                    <Label className="text-sm font-semibold">SEO</Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Leave blank to auto-generate from the title and excerpt.
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs">Focus keyword</Label>
+                    <Input
+                      value={postForm.focus_keyword}
+                      onChange={(e) => setPostForm((prev) => ({ ...prev, focus_keyword: e.target.value }))}
+                      placeholder={deriveFocusKeyword(postForm.title) || "e.g. shopify cro"}
+                      className="glass border-white/10"
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <Label className="text-xs">Meta title ({(postForm.meta_title || buildMetaTitle({ title: postForm.title })).length}/60)</Label>
+                    <Input
+                      value={postForm.meta_title}
+                      onChange={(e) => setPostForm((prev) => ({ ...prev, meta_title: e.target.value }))}
+                      placeholder={buildMetaTitle({ title: postForm.title })}
+                      maxLength={70}
+                      className="glass border-white/10"
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-3">
+                    <Label className="text-xs">Meta description ({(postForm.meta_description || "").length}/155)</Label>
+                    <Textarea
+                      value={postForm.meta_description}
+                      onChange={(e) => setPostForm((prev) => ({ ...prev, meta_description: e.target.value }))}
+                      placeholder={buildMetaDescription({ excerpt: postForm.excerpt, content: postForm.content, focusKeyword: postForm.focus_keyword || deriveFocusKeyword(postForm.title) })}
+                      rows={2}
+                      maxLength={170}
+                      className="glass border-white/10"
+                    />
+                  </div>
+                </div>
                 <div className="space-y-2">
                   <Label>Content (HTML supported)</Label>
                   <Textarea
