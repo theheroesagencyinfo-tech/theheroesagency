@@ -21,7 +21,11 @@ export type Database = {
           cover_image_url: string | null
           created_at: string
           excerpt: string | null
+          focus_keyword: string | null
           id: string
+          keywords: string[] | null
+          meta_description: string | null
+          meta_title: string | null
           published_at: string | null
           slug: string
           status: string
@@ -34,7 +38,11 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          focus_keyword?: string | null
           id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
           slug: string
           status?: string
@@ -47,7 +55,11 @@ export type Database = {
           cover_image_url?: string | null
           created_at?: string
           excerpt?: string | null
+          focus_keyword?: string | null
           id?: string
+          keywords?: string[] | null
+          meta_description?: string | null
+          meta_title?: string | null
           published_at?: string | null
           slug?: string
           status?: string

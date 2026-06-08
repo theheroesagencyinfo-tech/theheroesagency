@@ -57,6 +57,32 @@ function slugify(s: string) {
     .slice(0, 80);
 }
 
+const BRAND = "The Heroes Agency";
+function truncate(s: string, max: number) {
+  const t = s.trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
+  const i = cut.lastIndexOf(" ");
+  return `${(i > max * 0.6 ? cut.slice(0, i) : cut).replace(/[.,;:!?-]+$/, "")}…`;
+}
+function buildMetaTitle(title: string) {
+  const withBrand = `${title} | ${BRAND}`;
+  return withBrand.length <= 60 ? withBrand : truncate(title, 60);
+}
+function buildMetaDescription(excerpt: string, focusKeyword: string) {
+  const src = excerpt.trim();
+  const hasKw = focusKeyword && src.toLowerCase().includes(focusKeyword.toLowerCase());
+  return truncate(`${hasKw || !focusKeyword ? "" : `${focusKeyword}: `}${src}`, 155);
+}
+function deriveKeywords(title: string, focusKeyword: string) {
+  const stop = new Set(["the","and","for","with","from","that","this","your","into","over","about","what","when","why","how"]);
+  const fromTitle = title.toLowerCase().replace(/[^a-z0-9\s]/g, "").split(/\s+/).filter((w) => w.length > 3 && !stop.has(w));
+  const set = new Set<string>();
+  if (focusKeyword) set.add(focusKeyword.toLowerCase());
+  for (const w of fromTitle) set.add(w);
+  return Array.from(set).slice(0, 10);
+}
+
 async function generatePost(topic: { focus: string; angle: string }) {
   const apiKey = Deno.env.get("LOVABLE_API_KEY");
   if (!apiKey) throw new Error("LOVABLE_API_KEY missing");
@@ -76,11 +102,13 @@ WRITING STANDARDS (non-negotiable):
 - Vary sentence length. Use paragraph breaks every 2-4 sentences for readability.
 
 STRUCTURE:
-- Title: under 60 chars, includes the primary keyword naturally, action-oriented, no clickbait.
-- Excerpt: 1-2 sentences, under 155 chars, concrete hook (no vague promises).
+- Title (H1, rendered separately by the site): under 60 chars, includes the primary keyword naturally, action-oriented, no clickbait. Do NOT include an <h1> in the content.
+- Excerpt: 1-2 sentences, under 155 chars, concrete hook (no vague promises). Include the primary keyword if natural.
 - Content: 700-1000 words of clean HTML. Allowed tags: h2, h3, p, ul, ol, li, strong, em, a, blockquote. No <h1>, <html>, <body>, <div>, <span>, or inline styles.
-- Structure: 1 short intro paragraph, then 3-5 h2 sections each with 2-3 short paragraphs and at least one bullet list or numbered list across the article.
-- Weave the primary keyword in 4-6 times naturally (title, first paragraph, one h2, twice in body).
+- The FIRST <h2> MUST contain the primary keyword verbatim or a close variant.
+- Use 3-5 <h2> sections total; each h2 is a scannable subheading (no questions stacked back-to-back).
+- Each h2 has 2-3 short paragraphs, and include at least one <ul> or <ol> across the article.
+- Weave the primary keyword in 4-6 times naturally (title, first paragraph, first h2, twice in body).
 - Close with a 2-3 sentence CTA inviting the reader to book a strategy call with The Heroes Agency. No hard sell.
 
 Return ONLY a JSON object with this exact shape, no markdown fences:
@@ -176,15 +204,23 @@ Deno.serve(async (req) => {
         console.error("Cover generation failed", imgErr);
       }
 
+      const focusKeyword = topic.focus;
+      const titleSafe = post.title.slice(0, 120);
+      const excerptSafe = post.excerpt.slice(0, 200);
+
       const { error } = await supabase.from("blog_posts").insert({
-        title: post.title.slice(0, 120),
+        title: titleSafe,
         slug,
-        excerpt: post.excerpt.slice(0, 200),
+        excerpt: excerptSafe,
         content: post.content,
         cover_image_url: coverUrl,
         author_name: "The Heroes Agency",
         status: "published",
         published_at: now.toISOString(),
+        focus_keyword: focusKeyword,
+        meta_title: buildMetaTitle(titleSafe),
+        meta_description: buildMetaDescription(excerptSafe, focusKeyword),
+        keywords: deriveKeywords(titleSafe, focusKeyword),
       });
 
       if (error) {

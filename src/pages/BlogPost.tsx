@@ -22,6 +22,10 @@ interface BlogPost {
   published_at: string | null;
   created_at: string;
   updated_at?: string | null;
+  focus_keyword?: string | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  keywords?: string[] | null;
 }
 
 export default function BlogPostPage() {
@@ -77,19 +81,25 @@ export default function BlogPostPage() {
 
   const postUrl = `https://www.theheroesagency.org/blog/${post.slug}`;
   const plainText = post.content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-  const rawExcerpt = (post.excerpt || plainText).trim();
-  const description = rawExcerpt.length > 155 ? `${rawExcerpt.slice(0, 152)}...` : rawExcerpt;
-  const title = post.title.length > 58 ? `${post.title.slice(0, 55)}...` : post.title;
+  const fallbackExcerpt = (post.excerpt || plainText).trim();
+  const description = (post.meta_description?.trim()) ||
+    (fallbackExcerpt.length > 155 ? `${fallbackExcerpt.slice(0, 152)}...` : fallbackExcerpt);
+  const title = (post.meta_title?.trim()) ||
+    (post.title.length > 58 ? `${post.title.slice(0, 55)}...` : post.title);
   const wordCount = plainText ? plainText.split(/\s+/).length : 0;
+  const titleKeywords = post.title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .split(/\s+/)
+    .filter((w) => w.length > 3);
+  const focusKw = post.focus_keyword?.trim().toLowerCase();
   const keywords = Array.from(
-    new Set(
-      post.title
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, "")
-        .split(/\s+/)
-        .filter((w) => w.length > 3),
-    ),
-  ).slice(0, 8);
+    new Set([
+      ...(focusKw ? [focusKw] : []),
+      ...((post.keywords || []).map((k) => k.toLowerCase())),
+      ...titleKeywords,
+    ]),
+  ).slice(0, 10);
   const datePublished = post.published_at || post.created_at;
   const dateModified = post.updated_at || datePublished;
 

@@ -48,6 +48,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { shouldRegenerateCover } from "@/lib/blogCover";
+import {
+  deriveFocusKeyword,
+  buildMetaTitle,
+  buildMetaDescription,
+  deriveKeywords,
+} from "@/lib/seoMeta";
 
 // Types
 interface Review {
@@ -74,6 +80,10 @@ interface BlogPost {
   status: string;
   published_at: string | null;
   created_at: string;
+  focus_keyword?: string | null;
+  meta_title?: string | null;
+  meta_description?: string | null;
+  keywords?: string[] | null;
 }
 
 interface ContactSubmission {
@@ -140,6 +150,21 @@ export default function Admin() {
     cover_image_url: "",
     author_name: "Admin",
     status: "draft",
+    focus_keyword: "",
+    meta_title: "",
+    meta_description: "",
+  });
+  const emptyPostForm = () => ({
+    title: "",
+    slug: "",
+    excerpt: "",
+    content: "",
+    cover_image_url: "",
+    author_name: "Admin",
+    status: "draft",
+    focus_keyword: "",
+    meta_title: "",
+    meta_description: "",
   });
 
   // Contacts state
@@ -493,11 +518,24 @@ export default function Admin() {
         const generated = await generateCoverImage();
         if (generated) coverUrl = generated;
       }
+      const focusKeyword = (postForm.focus_keyword || deriveFocusKeyword(postForm.title)).trim();
+      const metaTitle = (postForm.meta_title || buildMetaTitle({ title: postForm.title, focusKeyword })).trim();
+      const metaDescription = (postForm.meta_description || buildMetaDescription({
+        excerpt: postForm.excerpt,
+        content: postForm.content,
+        focusKeyword,
+      })).trim();
+      const keywords = deriveKeywords({ title: postForm.title, focusKeyword });
+
       const postData = {
         ...postForm,
         cover_image_url: coverUrl || null,
         slug: postForm.slug || createSlug(postForm.title),
         published_at: postForm.status === "published" ? new Date().toISOString() : null,
+        focus_keyword: focusKeyword || null,
+        meta_title: metaTitle || null,
+        meta_description: metaDescription || null,
+        keywords,
       };
 
       if (editingPost) {
@@ -513,7 +551,7 @@ export default function Admin() {
       }
 
       setEditingPost(null);
-      setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" });
+      setPostForm(emptyPostForm());
     } catch (error) {
       toast({ title: "Error", description: "Failed to save post", variant: "destructive" });
     }
@@ -540,6 +578,9 @@ export default function Admin() {
       cover_image_url: post.cover_image_url || "",
       author_name: post.author_name,
       status: post.status,
+      focus_keyword: post.focus_keyword || "",
+      meta_title: post.meta_title || "",
+      meta_description: post.meta_description || "",
     });
   };
 
@@ -1012,7 +1053,7 @@ export default function Admin() {
               <Button
                 onClick={() => {
                   setEditingPost(null);
-                  setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" });
+                  setPostForm(emptyPostForm());
                 }}
                 className="gradient-gold"
               >
@@ -1082,6 +1123,44 @@ export default function Admin() {
                     className="glass border-white/10"
                   />
                 </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 rounded-xl border border-white/10 bg-white/5">
+                  <div className="md:col-span-3 -mb-2">
+                    <Label className="text-sm font-semibold">SEO</Label>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Leave blank to auto-generate from the title and excerpt.
+                    </p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-xs">Focus keyword</Label>
+                    <Input
+                      value={postForm.focus_keyword}
+                      onChange={(e) => setPostForm((prev) => ({ ...prev, focus_keyword: e.target.value }))}
+                      placeholder={deriveFocusKeyword(postForm.title) || "e.g. shopify cro"}
+                      className="glass border-white/10"
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-2">
+                    <Label className="text-xs">Meta title ({(postForm.meta_title || buildMetaTitle({ title: postForm.title })).length}/60)</Label>
+                    <Input
+                      value={postForm.meta_title}
+                      onChange={(e) => setPostForm((prev) => ({ ...prev, meta_title: e.target.value }))}
+                      placeholder={buildMetaTitle({ title: postForm.title })}
+                      maxLength={70}
+                      className="glass border-white/10"
+                    />
+                  </div>
+                  <div className="space-y-2 md:col-span-3">
+                    <Label className="text-xs">Meta description ({(postForm.meta_description || "").length}/155)</Label>
+                    <Textarea
+                      value={postForm.meta_description}
+                      onChange={(e) => setPostForm((prev) => ({ ...prev, meta_description: e.target.value }))}
+                      placeholder={buildMetaDescription({ excerpt: postForm.excerpt, content: postForm.content, focusKeyword: postForm.focus_keyword || deriveFocusKeyword(postForm.title) })}
+                      rows={2}
+                      maxLength={170}
+                      className="glass border-white/10"
+                    />
+                  </div>
+                </div>
                 <div className="space-y-2">
                   <Label>Content (HTML supported)</Label>
                   <Textarea
@@ -1098,7 +1177,7 @@ export default function Admin() {
                   <Button onClick={() => { setPostForm((prev) => ({ ...prev, status: "published" })); savePost(); }} className="gradient-gold">
                     Publish
                   </Button>
-                  <Button onClick={() => { setEditingPost(null); setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" }); }} variant="ghost">
+                  <Button onClick={() => { setEditingPost(null); setPostForm(emptyPostForm()); }} variant="ghost">
                     Cancel
                   </Button>
                 </div>
