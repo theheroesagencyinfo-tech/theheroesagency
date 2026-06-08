@@ -538,7 +538,7 @@ export default function Admin() {
       }
 
       setEditingPost(null);
-      setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" });
+      setPostForm(emptyPostForm());
     } catch (error) {
       toast({ title: "Error", description: "Failed to save post", variant: "destructive" });
     }
@@ -1037,7 +1037,7 @@ export default function Admin() {
               <Button
                 onClick={() => {
                   setEditingPost(null);
-                  setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" });
+                  setPostForm(emptyPostForm());
                 }}
                 className="gradient-gold"
               >
@@ -1123,7 +1123,7 @@ export default function Admin() {
                   <Button onClick={() => { setPostForm((prev) => ({ ...prev, status: "published" })); savePost(); }} className="gradient-gold">
                     Publish
                   </Button>
-                  <Button onClick={() => { setEditingPost(null); setPostForm({ title: "", slug: "", excerpt: "", content: "", cover_image_url: "", author_name: "Admin", status: "draft" }); }} variant="ghost">
+                  <Button onClick={() => { setEditingPost(null); setPostForm(emptyPostForm()); }} variant="ghost">
                     Cancel
                   </Button>
                 </div>
