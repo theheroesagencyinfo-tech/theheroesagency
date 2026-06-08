@@ -204,15 +204,23 @@ Deno.serve(async (req) => {
         console.error("Cover generation failed", imgErr);
       }
 
+      const focusKeyword = topic.focus;
+      const titleSafe = post.title.slice(0, 120);
+      const excerptSafe = post.excerpt.slice(0, 200);
+
       const { error } = await supabase.from("blog_posts").insert({
-        title: post.title.slice(0, 120),
+        title: titleSafe,
         slug,
-        excerpt: post.excerpt.slice(0, 200),
+        excerpt: excerptSafe,
         content: post.content,
         cover_image_url: coverUrl,
         author_name: "The Heroes Agency",
         status: "published",
         published_at: now.toISOString(),
+        focus_keyword: focusKeyword,
+        meta_title: buildMetaTitle(titleSafe),
+        meta_description: buildMetaDescription(excerptSafe, focusKeyword),
+        keywords: deriveKeywords(titleSafe, focusKeyword),
       });
 
       if (error) {
