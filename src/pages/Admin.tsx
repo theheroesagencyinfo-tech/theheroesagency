@@ -518,11 +518,24 @@ export default function Admin() {
         const generated = await generateCoverImage();
         if (generated) coverUrl = generated;
       }
+      const focusKeyword = (postForm.focus_keyword || deriveFocusKeyword(postForm.title)).trim();
+      const metaTitle = (postForm.meta_title || buildMetaTitle({ title: postForm.title, focusKeyword })).trim();
+      const metaDescription = (postForm.meta_description || buildMetaDescription({
+        excerpt: postForm.excerpt,
+        content: postForm.content,
+        focusKeyword,
+      })).trim();
+      const keywords = deriveKeywords({ title: postForm.title, focusKeyword });
+
       const postData = {
         ...postForm,
         cover_image_url: coverUrl || null,
         slug: postForm.slug || createSlug(postForm.title),
         published_at: postForm.status === "published" ? new Date().toISOString() : null,
+        focus_keyword: focusKeyword || null,
+        meta_title: metaTitle || null,
+        meta_description: metaDescription || null,
+        keywords,
       };
 
       if (editingPost) {
