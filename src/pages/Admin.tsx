@@ -565,6 +565,9 @@ export default function Admin() {
       cover_image_url: post.cover_image_url || "",
       author_name: post.author_name,
       status: post.status,
+      focus_keyword: post.focus_keyword || "",
+      meta_title: post.meta_title || "",
+      meta_description: post.meta_description || "",
     });
   };
 
