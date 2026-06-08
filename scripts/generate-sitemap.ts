@@ -31,10 +31,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/blog", lastmod: today, changefreq: "weekly", priority: "0.8" },
   { path: "/privacy", lastmod: today, changefreq: "yearly", priority: "0.3" },
   { path: "/terms", lastmod: today, changefreq: "yearly", priority: "0.3" },
-  { path: "/llms.txt", lastmod: today, changefreq: "monthly", priority: "0.6" },
-  { path: "/llms-full.txt", lastmod: today, changefreq: "monthly", priority: "0.6" },
-  { path: "/faq.md", lastmod: today, changefreq: "monthly", priority: "0.6" },
-  { path: "/case-studies.md", lastmod: today, changefreq: "monthly", priority: "0.6" },
+
 ];
 
 async function fetchBlogEntries(): Promise<SitemapEntry[]> {

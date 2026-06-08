@@ -156,9 +156,12 @@ export default function Blog() {
                         {post.excerpt}
                       </p>
                     )}
-                    <Link to={`/blog/${post.slug}`}>
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      aria-label={`Read the full article: ${post.title}`}
+                    >
                       <Button variant="ghost" className="p-0 hover:bg-transparent group/btn">
-                        Read More
+                        Read the full article
                         <ArrowRight className="w-4 h-4 ml-1 group-hover/btn:translate-x-1 transition-transform" />
                       </Button>
                     </Link>
