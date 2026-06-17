@@ -69,7 +69,8 @@ export function LazyImage({
         alt={alt}
         loading={eager ? "eager" : "lazy"}
         decoding="async"
-        fetchPriority={eager ? "high" : "low"}
+        // React 18 requires lowercase `fetchpriority` for the HTML attribute.
+        {...({ fetchpriority: eager ? "high" : "low" } as Record<string, string>)}
         width={width}
         height={height}
         sizes={sizes}
@@ -81,6 +82,7 @@ export function LazyImage({
         )}
         {...rest}
       />
+
     </div>
   );
 }

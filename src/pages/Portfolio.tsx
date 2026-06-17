@@ -9,6 +9,8 @@ import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { ResponsiveImage, type PictureSource } from "@/components/ResponsiveImage";
 import { SEO } from "@/components/SEO";
+import { cn } from "@/lib/utils";
+
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp?responsive";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp?responsive";
@@ -308,10 +310,17 @@ function ProjectTile({
           />
         </div>
       ) : current ? (
-        <button
-          type="button"
+        <div
+          role="button"
+          tabIndex={0}
           onClick={() => onImageClick({ ...project, image: current })}
-          className={mediaClass}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onImageClick({ ...project, image: current });
+            }
+          }}
+          className={cn(mediaClass, "cursor-pointer")}
           style={containerStyle}
           aria-label={`Open larger preview of ${project.title}`}
         >
@@ -334,7 +343,7 @@ function ProjectTile({
             <>
               <button
                 type="button"
-                onClick={prev}
+                onClick={(e) => { e.stopPropagation(); prev(e); }}
                 aria-label="Previous image"
                 className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
               >
@@ -342,7 +351,7 @@ function ProjectTile({
               </button>
               <button
                 type="button"
-                onClick={next}
+                onClick={(e) => { e.stopPropagation(); next(e); }}
                 aria-label="Next image"
                 className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full glass border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors"
               >
@@ -358,7 +367,8 @@ function ProjectTile({
               </div>
             </>
           )}
-        </button>
+        </div>
+
       ) : (
         <div className="h-32 gradient-gold opacity-20" />
       )}
