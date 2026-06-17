@@ -213,7 +213,7 @@ export function Footer() {
   };
 
   return (
-    <footer id="contact" className="pt-24 pb-8 relative">
+    <footer id="contact" className="pt-24 pb-8 relative overflow-x-clip">
       <div className="absolute inset-0 bg-glow opacity-20" />
 
       <div ref={ref} className="container px-4 md:px-6 relative z-10">
