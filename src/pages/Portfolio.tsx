@@ -9,6 +9,8 @@ import { QuoteRequestDialog } from "@/components/QuoteRequestDialog";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { ResponsiveImage, type PictureSource } from "@/components/ResponsiveImage";
 import { SEO } from "@/components/SEO";
+import { cn } from "@/lib/utils";
+
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp?responsive";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp?responsive";
