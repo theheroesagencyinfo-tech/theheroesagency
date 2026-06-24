@@ -6,7 +6,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { LazyImage } from "@/components/LazyImage";
 import { ImagePreload } from "@/components/ImagePreload";
-import { BorderBeam } from "@/components/magicui/border-beam";
+
 
 import retrospecImg from "@/assets/portfolio/retrospec-com.webp";
 import darntoughImg from "@/assets/portfolio/darntough-com.webp";
@@ -258,10 +258,6 @@ function ProjectCard({
         </p>
       </div>
 
-      {/* Hover beam */}
-      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <BorderBeam size={200} duration={6} delay={index * 0.4} />
-      </div>
     </motion.a>
   );
 }
