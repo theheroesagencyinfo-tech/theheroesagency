@@ -113,10 +113,6 @@ export function HeroSection() {
 
       <div className="absolute inset-0 bg-glow-top z-[2]" />
 
-      {/* Layered particles + meteors (sky-blue) */}
-      <Particles className="z-[2]" quantity={70} color="#7dd3fc" />
-      <Meteors number={18} className="z-[2]" />
-
       <div className="container relative z-10 px-4 md:px-6">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
@@ -132,12 +128,12 @@ export function HeroSection() {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ delay: 0.3, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
           >
-            I Build <AuroraText>High-Converting</AuroraText>
+            I Build <span className="text-gradient">High-Converting</span>
             <br />
             Shopify Stores
           </motion.h1>
@@ -159,32 +155,30 @@ export function HeroSection() {
             transition={{ delay: 0.7, duration: 0.6 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <ShimmerButton
+            <Button
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg"
               onClick={() => {
                 trackConversionEvent("hero_cta_click", { label: "Book a Strategy Call" });
                 trackConversionEvent("calendly_click", { label: "Hero" });
                 void openCalendlyPopup();
               }}
-              className="px-8 py-5 text-lg"
             >
               Book a Strategy Call
               <ArrowRight className="ml-2 h-5 w-5" />
-            </ShimmerButton>
-            <div className="relative isolate overflow-hidden rounded-xl">
-              <Button
-                size="lg"
-                variant="outline"
-                className="glass glass-hover border-primary/30 px-8 py-6 text-lg group relative z-10"
-                onClick={() => {
-                  trackConversionEvent("hero_cta_click", { label: "View My Work" });
-                  scrollToSection("portfolio");
-                }}
-              >
-                <Play className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
-                View My Work
-              </Button>
-              <BorderBeam size={120} duration={5} />
-            </div>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="glass glass-hover border-primary/30 px-8 py-6 text-lg group"
+              onClick={() => {
+                trackConversionEvent("hero_cta_click", { label: "View My Work" });
+                scrollToSection("portfolio");
+              }}
+            >
+              <Play className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
+              View My Work
+            </Button>
           </motion.div>
         </div>
 
