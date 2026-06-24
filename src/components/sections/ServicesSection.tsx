@@ -3,7 +3,6 @@ import { Palette, TrendingUp, Zap, Clapperboard } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
 import { LiquidGlassCard } from "@/components/ui/liquid-glass-card";
-import { LiquidGlassCard } from "@/components/ui/liquid-glass-card";
 
 const services = [
   {
