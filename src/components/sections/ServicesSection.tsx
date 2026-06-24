@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Palette, TrendingUp, Zap, Clapperboard } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useMouseGlow } from "@/hooks/useMouseGlow";
-import { BorderBeam } from "@/components/magicui/border-beam";
+import { LiquidGlassCard } from "@/components/ui/liquid-glass-card";
 import { LiquidGlassCard } from "@/components/ui/liquid-glass-card";
 
 const services = [
