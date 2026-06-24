@@ -78,10 +78,6 @@ function ServiceCard({
           ))}
         </ul>
 
-        {/* Hover beam */}
-        <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <BorderBeam size={160} duration={5} delay={index * 0.6} />
-        </div>
       </LiquidGlassCard>
     </motion.div>
   );
