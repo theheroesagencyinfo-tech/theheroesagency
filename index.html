@@ -120,7 +120,7 @@
         root.classList.add(theme);
         root.style.colorScheme = theme;
         // Bg/fg tokens kept in sync with src/index.css :root and .dark blocks.
-        var bg = theme === 'light' ? 'hsl(210, 40%, 98%)' : 'hsl(222, 47%, 5%)';
+        var bg = theme === 'light' ? 'hsl(210, 40%, 98%)' : 'hsl(0, 0%, 8%)';
         var fg = theme === 'light' ? 'hsl(222, 47%, 11%)' : 'hsl(210, 40%, 98%)';
         root.style.setProperty('--initial-bg', bg);
         root.style.setProperty('--initial-fg', fg);
