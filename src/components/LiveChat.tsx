@@ -171,8 +171,9 @@ export function LiveChat() {
     if (!newMessage.trim() || !conversation || isSending) return;
 
     setIsSending(true);
-    const messageText = newMessage;
+    const messageText = newMessage.slice(0, 4000);
     setNewMessage("");
+
 
     const { error } = await supabase.from("chat_messages").insert({
       conversation_id: conversation.id,
@@ -351,11 +352,13 @@ export function LiveChat() {
                   <Input
                     placeholder="Type a message..."
                     value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
+                    onChange={(e) => setNewMessage(e.target.value.slice(0, 4000))}
                     onKeyPress={handleKeyPress}
+                    maxLength={4000}
                     className="glass border-white/10 flex-1"
                     disabled={isSending}
                   />
+
                   <Button
                     onClick={sendMessage}
                     disabled={!newMessage.trim() || isSending}
