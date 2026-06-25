@@ -13,12 +13,12 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 const STORAGE_KEY = "theme-preference";
 
 function getSystemTheme(): Theme {
-  if (typeof window === "undefined" || !window.matchMedia) return "dark";
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  if (typeof window === "undefined" || !window.matchMedia) return "light";
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
 function getInitialTheme(): { theme: Theme; userSet: boolean } {
-  if (typeof window === "undefined") return { theme: "dark", userSet: false };
+  if (typeof window === "undefined") return { theme: "light", userSet: false };
   const stored = window.localStorage.getItem(STORAGE_KEY);
   if (stored === "light" || stored === "dark") return { theme: stored, userSet: true };
   return { theme: getSystemTheme(), userSet: false };

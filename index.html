@@ -113,8 +113,8 @@
     (function () {
       try {
         var stored = localStorage.getItem('theme-preference');
-        var prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-        var theme = (stored === 'light' || stored === 'dark') ? stored : (prefersLight ? 'light' : 'dark');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = (stored === 'light' || stored === 'dark') ? stored : (prefersDark ? 'dark' : 'light');
         var root = document.documentElement;
         root.classList.remove('light', 'dark');
         root.classList.add(theme);
@@ -128,7 +128,7 @@
     })();
   </script>
   <style>
-    html { background-color: var(--initial-bg, hsl(222, 47%, 5%)); color: var(--initial-fg, hsl(210, 40%, 98%)); }
+    html { background-color: var(--initial-bg, hsl(210, 40%, 98%)); color: var(--initial-fg, hsl(222, 47%, 11%)); }
     body { margin: 0; background-color: inherit; color: inherit; }
   </style>
   <body>
