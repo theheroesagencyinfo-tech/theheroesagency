@@ -171,8 +171,9 @@ export function LiveChat() {
     if (!newMessage.trim() || !conversation || isSending) return;
 
     setIsSending(true);
-    const messageText = newMessage;
+    const messageText = newMessage.slice(0, 4000);
     setNewMessage("");
+
 
     const { error } = await supabase.from("chat_messages").insert({
       conversation_id: conversation.id,
