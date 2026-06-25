@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Premium Dark Luxury Design System with Gold/Amber Accents */
+/* Premium Dark Luxury Design System with Luminous Moss Accents */
 
 @layer base {
   :root {
-    /* Light mode — clean white with sky blue accent */
+    /* Light mode — clean white with luminous moss accent */
     --background: 210 40% 98%;
     --foreground: 222 47% 11%;
 
@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 199 89% 48%;            /* sky-500 */
+    --primary: 123 85% 45%;            /* luminous moss */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96%;
@@ -25,7 +25,7 @@
     --muted: 210 40% 94%;
     --muted-foreground: 215 16% 40%;
 
-    --accent: 199 89% 48%;
+    --accent: 123 85% 50%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -33,21 +33,21 @@
 
     --border: 214 32% 88%;
     --input: 214 32% 88%;
-    --ring: 199 89% 48%;
+    --ring: 123 85% 45%;
     --radius: 0.75rem;
 
-    --sky: 199 89% 48%;
-    --sky-deep: 201 96% 32%;
-    --sky-glow: 198 93% 60%;
+    --sky: 123 85% 50%;
+    --sky-deep: 123 85% 35%;
+    --sky-glow: 123 90% 60%;
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 199 89% 48%;
+    --sidebar-primary: 123 85% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 210 40% 96%;
     --sidebar-accent-foreground: 222 47% 11%;
     --sidebar-border: 214 32% 88%;
-    --sidebar-ring: 199 89% 48%;
+    --sidebar-ring: 123 85% 45%;
   }
 
   .dark {
