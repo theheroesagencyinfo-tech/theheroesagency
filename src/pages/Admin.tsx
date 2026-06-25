@@ -1276,7 +1276,7 @@ export default function Admin() {
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium">{contact.name}</span>
                         <span className={`px-2 py-0.5 rounded-full text-xs ${
-                          contact.status === "new" ? "bg-blue-500/20 text-blue-400" :
+                          contact.status === "new" ? "bg-primary/20 text-primary" :
                           contact.status === "read" ? "bg-yellow-500/20 text-yellow-400" :
                           contact.status === "responded" ? "bg-green-500/20 text-green-400" : "bg-gray-500/20 text-gray-400"
                         }`}>

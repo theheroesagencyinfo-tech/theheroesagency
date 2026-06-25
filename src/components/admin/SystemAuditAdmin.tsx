@@ -231,7 +231,7 @@ export function SystemAuditAdmin() {
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
                       lead.status === "new"
-                        ? "bg-blue-500/20 text-blue-400"
+                        ? "bg-primary/20 text-primary"
                         : lead.status === "responded"
                         ? "bg-green-500/20 text-green-400"
                         : lead.status === "archived"
