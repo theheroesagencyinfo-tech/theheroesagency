@@ -2,7 +2,7 @@ import { Sparkles } from "lucide-react";
 
 /**
  * Branded placeholder shown when a blog post has no cover image yet.
- * Dark sky-blue gradient with subtle pattern + title.
+ * Dark moss-green gradient with subtle pattern + title.
  */
 export function BlogCoverFallback({ title, className = "" }: { title: string; className?: string }) {
   return (
@@ -10,7 +10,7 @@ export function BlogCoverFallback({ title, className = "" }: { title: string; cl
       className={`relative w-full h-full flex items-center justify-center overflow-hidden ${className}`}
       style={{
         background:
-          "radial-gradient(120% 80% at 20% 0%, hsl(var(--primary) / 0.35), transparent 60%), radial-gradient(100% 80% at 100% 100%, hsl(var(--primary) / 0.25), transparent 60%), linear-gradient(135deg, hsl(220 30% 8%), hsl(220 40% 4%))",
+          "radial-gradient(120% 80% at 20% 0%, hsl(var(--primary) / 0.35), transparent 60%), radial-gradient(100% 80% at 100% 100%, hsl(var(--primary) / 0.25), transparent 60%), linear-gradient(135deg, hsl(0 0% 10%), hsl(0 0% 6%))",
       }}
     >
       <div
