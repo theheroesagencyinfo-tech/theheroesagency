@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Premium Dark Luxury Design System with Luminous Moss Accents */
+/* Premium Dark Luxury Design System with Gold/Amber Accents */
 
 @layer base {
   :root {
-    /* Light mode — clean white with luminous moss accent */
+    /* Light mode — clean white with sky blue accent */
     --background: 210 40% 98%;
     --foreground: 222 47% 11%;
 
@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 123 85% 45%;            /* luminous moss */
+    --primary: 199 89% 48%;            /* sky-500 */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96%;
@@ -25,7 +25,7 @@
     --muted: 210 40% 94%;
     --muted-foreground: 215 16% 40%;
 
-    --accent: 123 85% 50%;
+    --accent: 199 89% 48%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -33,65 +33,65 @@
 
     --border: 214 32% 88%;
     --input: 214 32% 88%;
-    --ring: 123 85% 45%;
+    --ring: 199 89% 48%;
     --radius: 0.75rem;
 
-    --sky: 123 85% 50%;
-    --sky-deep: 123 85% 35%;
-    --sky-glow: 123 90% 60%;
+    --sky: 199 89% 48%;
+    --sky-deep: 201 96% 32%;
+    --sky-glow: 198 93% 60%;
 
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 222 47% 11%;
-    --sidebar-primary: 123 85% 45%;
+    --sidebar-primary: 199 89% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 210 40% 96%;
     --sidebar-accent-foreground: 222 47% 11%;
     --sidebar-border: 214 32% 88%;
-    --sidebar-ring: 123 85% 45%;
+    --sidebar-ring: 199 89% 48%;
   }
 
   .dark {
-    /* Dark mode — charcoal silver with luminous moss accent */
-    --background: 0 0% 8%;
+    /* Dark mode — deep black with sky blue accent */
+    --background: 222 47% 5%;
     --foreground: 210 40% 98%;
 
-    --card: 0 0% 11%;
+    --card: 222 47% 7%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 0 0% 11%;
+    --popover: 222 47% 7%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 123 85% 55%;            /* luminous moss, brighter on dark */
-    --primary-foreground: 0 0% 8%;
+    --primary: 199 89% 55%;            /* sky-500-ish, brighter on dark */
+    --primary-foreground: 222 47% 5%;
 
-    --secondary: 0 0% 14%;
+    --secondary: 222 30% 12%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 0 0% 16%;
+    --muted: 222 25% 14%;
     --muted-foreground: 215 20% 70%;
 
-    --accent: 123 90% 60%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 198 93% 60%;
+    --accent-foreground: 222 47% 5%;
 
     --destructive: 0 62% 40%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 123 85% 55%;
+    --border: 222 30% 16%;
+    --input: 222 30% 16%;
+    --ring: 199 89% 55%;
 
-    --sky: 123 85% 55%;
-    --sky-deep: 123 85% 40%;
-    --sky-glow: 123 90% 65%;
+    --sky: 199 89% 55%;
+    --sky-deep: 201 96% 38%;
+    --sky-glow: 198 93% 65%;
 
-    --sidebar-background: 0 0% 11%;
+    --sidebar-background: 222 47% 7%;
     --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 123 85% 55%;
-    --sidebar-primary-foreground: 0 0% 8%;
-    --sidebar-accent: 0 0% 14%;
+    --sidebar-primary: 199 89% 55%;
+    --sidebar-primary-foreground: 222 47% 5%;
+    --sidebar-accent: 222 30% 12%;
     --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 123 85% 55%;
+    --sidebar-border: 222 30% 16%;
+    --sidebar-ring: 199 89% 55%;
   }
 }
 
