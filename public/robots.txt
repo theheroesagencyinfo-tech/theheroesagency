@@ -72,3 +72,8 @@ User-agent: *
 Allow: /
 
 Sitemap: https://theheroesagency.lovable.app/sitemap.xml
+
+# AI discovery manifests
+# https://www.theheroesagency.org/llms.txt
+# https://www.theheroesagency.org/llms-full.txt
+
