@@ -133,20 +133,19 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
           >
-            I Build <span className="text-gradient">High-Converting</span>
-            <br />
-            Shopify Stores
+            Shopify Stores That{" "}
+            <span className="text-gradient">Actually Convert</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
           >
-            Elite eCommerce consultant specializing in premium Shopify design,
-            conversion optimization, and growth strategies that drive
-            <span className="text-foreground font-medium"> real results</span>.
+            For DTC brands doing <span className="text-foreground font-medium">$20K–$1M/month</span> who
+            want a store engineered for revenue — not just a pretty theme. Design,
+            speed, and conversion rate, handled end-to-end.
           </motion.p>
 
           <motion.div
