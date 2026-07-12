@@ -80,6 +80,7 @@ const shopifyServiceLinks: FooterLink[] = [
 ];
 
 const resourceLinks: FooterLink[] = [
+  { label: "Free Store Audit", href: "/free-audit", type: "route" },
   { label: "Blog", href: "/blog", type: "route" },
   { label: "Privacy Policy", href: "/privacy", type: "route" },
   { label: "Terms of Service", href: "/terms", type: "route" },

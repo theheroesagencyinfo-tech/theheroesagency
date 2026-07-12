@@ -28,6 +28,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/shopify-marketing-agency", lastmod: today, changefreq: "monthly", priority: "0.95" },
   { path: "/about", lastmod: today, changefreq: "monthly", priority: "0.8" },
   { path: "/portfolio", lastmod: today, changefreq: "weekly", priority: "0.9" },
+  { path: "/free-audit", lastmod: today, changefreq: "weekly", priority: "0.95" },
   { path: "/blog", lastmod: today, changefreq: "weekly", priority: "0.8" },
   { path: "/privacy", lastmod: today, changefreq: "yearly", priority: "0.3" },
   { path: "/terms", lastmod: today, changefreq: "yearly", priority: "0.3" },

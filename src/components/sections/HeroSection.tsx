@@ -133,20 +133,19 @@ export function HeroSection() {
             transition={{ delay: 0.3, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.1]"
           >
-            I Build <span className="text-gradient">High-Converting</span>
-            <br />
-            Shopify Stores
+            Shopify Stores That{" "}
+            <span className="text-gradient">Actually Convert</span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.7 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed"
           >
-            Elite eCommerce consultant specializing in premium Shopify design,
-            conversion optimization, and growth strategies that drive
-            <span className="text-foreground font-medium"> real results</span>.
+            For DTC brands doing <span className="text-foreground font-medium">$20K–$1M/month</span> who
+            want a store engineered for revenue — not just a pretty theme. Design,
+            speed, and conversion rate, handled end-to-end.
           </motion.p>
 
           <motion.div
@@ -159,12 +158,12 @@ export function HeroSection() {
               size="lg"
               className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-lg"
               onClick={() => {
-                trackConversionEvent("hero_cta_click", { label: "Book a Strategy Call" });
+                trackConversionEvent("hero_cta_click", { label: "Get My Free Store Audit" });
                 trackConversionEvent("calendly_click", { label: "Hero" });
                 void openCalendlyPopup();
               }}
             >
-              Book a Strategy Call
+              Get My Free Store Audit
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button
@@ -177,8 +176,28 @@ export function HeroSection() {
               }}
             >
               <Play className="mr-2 h-5 w-5 group-hover:text-primary transition-colors" />
-              View My Work
+              See The Work
             </Button>
+          </motion.div>
+
+          {/* Trust row directly under CTAs — proof without a scroll */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.9, duration: 0.6 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground"
+          >
+            <span className="inline-flex items-center gap-1.5">
+              <span className="text-primary font-semibold">120+</span> Shopify stores shipped
+            </span>
+            <span className="hidden sm:inline text-muted-foreground/40">•</span>
+            <span className="inline-flex items-center gap-1.5">
+              <span className="text-primary font-semibold">★ 4.9/5</span> client rating
+            </span>
+            <span className="hidden sm:inline text-muted-foreground/40">•</span>
+            <span className="inline-flex items-center gap-1.5">
+              Reply within <span className="text-primary font-semibold">12 hours</span>
+            </span>
           </motion.div>
         </div>
 
