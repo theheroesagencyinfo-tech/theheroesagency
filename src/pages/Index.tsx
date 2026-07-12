@@ -48,6 +48,9 @@ const Footer = lazy(() =>
 const LiveChat = lazy(() =>
   import("@/components/LiveChat").then((m) => ({ default: m.LiveChat })),
 );
+const StickyMobileCTA = lazy(() =>
+  import("@/components/StickyMobileCTA").then((m) => ({ default: m.StickyMobileCTA })),
+);
 
 // Reserve vertical space so deferred sections don't cause layout shift.
 const SectionFallback = () => <div aria-hidden className="min-h-[400px]" />;
@@ -182,6 +185,7 @@ const Index = () => {
       {chatReady && (
         <Suspense fallback={null}>
           <LiveChat />
+          <StickyMobileCTA />
         </Suspense>
       )}
     </div>

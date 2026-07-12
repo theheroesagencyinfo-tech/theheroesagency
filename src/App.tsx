@@ -26,6 +26,8 @@ const ShopifyOptimization = lazy(() => import("./pages/ShopifyOptimization"));
 const ShopifyWebsiteFix = lazy(() => import("./pages/ShopifyWebsiteFix"));
 const ShopifyMarketingAgency = lazy(() => import("./pages/ShopifyMarketingAgency"));
 const Unsubscribe = lazy(() => import("./pages/Unsubscribe"));
+const FreeAudit = lazy(() => import("./pages/FreeAudit"));
+const AdminGrowth = lazy(() => import("./pages/AdminGrowth"));
 
 const queryClient = new QueryClient();
 
@@ -79,6 +81,8 @@ const App = () => (
             <Route path="/shopify-website-fix" element={<ShopifyWebsiteFix />} />
             <Route path="/shopify-marketing-agency" element={<ShopifyMarketingAgency />} />
             <Route path="/unsubscribe" element={<Unsubscribe />} />
+            <Route path="/free-audit" element={<FreeAudit />} />
+            <Route path="/admin/growth" element={<AdminGrowth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
