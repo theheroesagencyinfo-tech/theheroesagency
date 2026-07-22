@@ -20,6 +20,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const Refund = lazy(() => import("./pages/Refund"));
 const ShopifyExpert = lazy(() => import("./pages/ShopifyExpert"));
 const ShopifyStoreDesign = lazy(() => import("./pages/ShopifyStoreDesign"));
 const ShopifyOptimization = lazy(() => import("./pages/ShopifyOptimization"));
@@ -75,6 +76,7 @@ const App = () => (
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/refund" element={<Refund />} />
             <Route path="/shopify-expert" element={<ShopifyExpert />} />
             <Route path="/shopify-store-design" element={<ShopifyStoreDesign />} />
             <Route path="/shopify-optimization" element={<ShopifyOptimization />} />

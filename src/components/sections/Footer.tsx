@@ -84,6 +84,7 @@ const resourceLinks: FooterLink[] = [
   { label: "Blog", href: "/blog", type: "route" },
   { label: "Privacy Policy", href: "/privacy", type: "route" },
   { label: "Terms of Service", href: "/terms", type: "route" },
+  { label: "Refund Policy", href: "/refund", type: "route" },
   { label: "FAQ", href: "/about#faq", type: "route" },
   { label: "Admin", href: "/admin", type: "route" },
 ];
