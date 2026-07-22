@@ -74,6 +74,8 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         display: ["Inter", "system-ui", "sans-serif"],
+        "serif-display": ['"Instrument Serif"', "ui-serif", "Georgia", "serif"],
+        "sans-ui": ['"Work Sans"', "Inter", "system-ui", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
