@@ -455,21 +455,48 @@ const Portfolio = () => {
       <Navigation />
       <PortfolioPreload />
       <main>
-        {/* Hero */}
-        <section className="pt-32 pb-12 relative">
-          <div className="container px-4 md:px-6 text-center max-w-3xl mx-auto">
-            <span className="text-primary text-sm font-semibold uppercase tracking-wider mb-4 block">
-              Portfolio
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
-              Work that <span className="text-gradient">moves the numbers</span>
+        {/* Hero — editorial masthead */}
+        <section className="pt-32 pb-10 relative">
+          <div className="container px-4 md:px-6 max-w-5xl mx-auto">
+            <div className="flex items-center gap-4 font-sans-ui text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
+              <span className="text-primary">The Portfolio</span>
+              <span className="h-px w-10 bg-border" />
+              <span>Issue 001 · 2026</span>
+            </div>
+            <h1 className="mt-6 font-serif-display text-5xl md:text-6xl lg:text-7xl leading-[1.02] text-foreground max-w-4xl">
+              Work that moves the{" "}
+              <em className="text-gradient not-italic">numbers</em>, not just the mood board.
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Browse projects by service area. Found something close to what you need?
-              Request a custom quote in any section.
+            <p className="mt-6 font-sans-ui text-lg text-muted-foreground max-w-2xl leading-relaxed">
+              Shopify design, marketing systems and automation delivered for ambitious DTC brands.
+              Every project below is live, tracked and shipping revenue.
             </p>
           </div>
         </section>
+
+        {/* Signal strip — trust in numbers */}
+        <section className="pb-16">
+          <div className="container px-4 md:px-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 py-8 border-y border-border/50">
+              {[
+                { value: "19", label: "Shopify stores shipped" },
+                { value: "250K+", label: "Orders processed" },
+                { value: "$40M+", label: "Client revenue driven" },
+                { value: "4.9★", label: "Average client rating" },
+              ].map((m) => (
+                <div key={m.label} className="text-center md:text-left">
+                  <div className="font-serif-display text-4xl md:text-5xl leading-none text-foreground">
+                    {m.value}
+                  </div>
+                  <div className="mt-2 font-sans-ui text-[10.5px] uppercase tracking-[0.2em] text-muted-foreground">
+                    {m.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
 
         {/* Segments */}
         <div className="container px-4 md:px-6 pb-24 space-y-24">
