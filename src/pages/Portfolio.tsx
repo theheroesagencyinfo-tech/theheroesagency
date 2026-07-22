@@ -508,10 +508,10 @@ const Portfolio = () => {
             >
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
                 <div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-3">
+                  <h2 className="font-serif-display text-4xl md:text-5xl leading-[1.05] mb-3 text-foreground">
                     {segment.title}
                   </h2>
-                  <p className="text-muted-foreground max-w-2xl">{segment.blurb}</p>
+                  <p className="font-sans-ui text-muted-foreground max-w-2xl leading-relaxed">{segment.blurb}</p>
                   {segment.platforms && segment.platforms.length > 0 && (
                     <div className="mt-5 flex flex-wrap items-center gap-2 sm:gap-3">
                       <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground/80 mr-1">
