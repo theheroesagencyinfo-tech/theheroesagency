@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
-export function ParallaxNumeral({ numeral, index }: { numeral: string; index: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
+export function ParallaxBuildItem({ children, index }: { children: ReactNode; index: number }) {
+  const ref = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const element = ref.current;
@@ -16,11 +16,11 @@ export function ParallaxNumeral({ numeral, index }: { numeral: string; index: nu
         element.style.transform = "none";
         return;
       }
-      const row = element.closest("li");
-      if (!row) return;
-      const bounds = row.getBoundingClientRect();
-      const progress = Math.max(-1, Math.min(1, (window.innerHeight / 2 - bounds.top - bounds.height / 2) / (window.innerHeight / 2)));
-      element.style.transform = `translate3d(0, ${progress * (12 + index * 5)}px, 0)`;
+      const section = element.closest("section");
+      if (!section) return;
+      const bounds = section.getBoundingClientRect();
+      const progress = Math.max(-1, Math.min(1, (bounds.top + bounds.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2)));
+      element.style.transform = `translate3d(0, ${progress * (32 + index * 16)}px, 0)`;
     };
 
     const schedule = () => {
@@ -40,5 +40,5 @@ export function ParallaxNumeral({ numeral, index }: { numeral: string; index: nu
     };
   }, [index]);
 
-  return <span ref={ref} className="mr-4 inline-block w-8 shrink-0 text-base text-muted-foreground">{numeral}</span>;
+  return <li ref={ref} className="motion-safe:will-change-transform">{children}</li>;
 }
