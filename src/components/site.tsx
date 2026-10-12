@@ -3,6 +3,7 @@ import { useState, type ReactNode } from "react";
 
 export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
+export const BOOKING_LABEL = "Book a 15-minute call";
 
 const nav = [
   { to: "/services", label: "Services" },
