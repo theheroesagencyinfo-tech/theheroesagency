@@ -26,7 +26,7 @@ export function ParallaxBuildItem({ children, index }: { children: ReactNode; in
     const update = () => {
       frame = 0;
       const progress = (window.scrollY + stickyTop - sectionTop) / travel;
-      const visible = motionPreference.matches || index === 0 || progress >= (index === 1 ? 0.2 : 0.55);
+      const visible = motionPreference.matches || index === 0 || progress >= (index === 1 ? 0.3 : 0.7);
       if (visible === previousVisible) return;
       previousVisible = visible;
       element.style.visibility = visible ? "visible" : "hidden";
