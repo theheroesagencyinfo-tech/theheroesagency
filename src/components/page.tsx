@@ -17,8 +17,8 @@ export function ReviewCta() {
   </div></section>;
 }
 
-export function ImagePlaceholder({ label, portrait = false }: { label: string; portrait?: boolean }) {
-  return <div role="img" aria-label={label} className={`flex w-full items-center justify-center border bg-secondary p-6 text-center text-sm text-muted-foreground ${portrait ? "aspect-[4/5]" : "aspect-[16/10]"}`}>
+export function ImagePlaceholder({ label, portrait = false, className = "" }: { label: string; portrait?: boolean; className?: string }) {
+  return <div role="img" aria-label={label} className={`flex w-full items-center justify-center border bg-secondary p-6 text-center text-sm text-muted-foreground ${portrait ? "aspect-[4/5]" : "aspect-[16/10]"} ${className}`}>
     <span>{label}</span>
   </div>;
 }

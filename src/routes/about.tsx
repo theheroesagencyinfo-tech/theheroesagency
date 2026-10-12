@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PageIntro, ReviewCta } from "@/components/page";
-import { StudioImage } from "@/components/studio-image";
+import { PageIntro, ReviewCta, ImagePlaceholder } from "@/components/page";
 export const Route = createFileRoute("/about")({
   head: () => ({ meta: [
     { title: "About Hero — TheHeroes Author Studio" },
@@ -26,7 +25,7 @@ function About() {
     <PageIntro label="About Hero" title="I build the platform behind your book.">Your book can be the beginning of a relationship, not the end of a sale.</PageIntro>
     <section className="border-t"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1.4fr_1fr] md:items-start">
       <div className="max-w-[60ch] space-y-6 text-lg text-muted-foreground"><h2 className="text-3xl text-foreground">I'm Hero.</h2><p>I started working with authors because [my reason].</p><p>My background is in web design, email marketing automation, and AI-powered video ads. [Add the experience and projects you'd like readers to know about.]</p><p>I believe a book should start a client relationship, not just make a sale. The platform behind it should make that next conversation easier.</p><p>I work with one point of contact, clear timelines, and no jargon. We agree on what your book needs before we start building.</p></div>
-      <div className="w-full md:justify-self-end"><StudioImage image="workspace" className="aspect-[4/5]" eager /></div>
+      <div className="w-full md:justify-self-end"><ImagePlaceholder label="Headshot placeholder" portrait /></div>
     </div></section>
     <section className="border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">What I bring</h2><div className="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-2">{skills.map(([title, text]) => <div key={title} className="border-t pt-5"><h3 className="text-2xl">{title}</h3><p className="mt-3 max-w-[50ch] text-muted-foreground">{text}</p></div>)}</div></div></section>
     <section className="border-t"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">How I work with authors</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{principles.map(([title, text], i) => <li key={title} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-muted-foreground">{text}</p></li>)}</ol></div></section>
