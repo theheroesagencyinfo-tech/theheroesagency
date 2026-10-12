@@ -65,7 +65,7 @@ function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="build" className="relative border-t motion-safe:pb-[600px]">
+      <section aria-labelledby="build" className="relative border-t">
         <div className="mx-auto grid max-w-6xl gap-6 bg-background px-5 py-8 motion-safe:sticky motion-safe:top-20 md:grid-cols-[1fr_2fr] md:gap-10 md:py-12 md:motion-safe:top-24">
           <div>
             <SectionLabel>Contents</SectionLabel>
@@ -85,6 +85,7 @@ function Home() {
             ))}
           </ol>
         </div>
+        <div aria-hidden="true" className="motion-safe:h-[600px]" />
       </section>
 
       <section aria-labelledby="why" className="border-t bg-secondary">
