@@ -27,11 +27,11 @@ const steps = [
   { title: "Launch", text: "We check the finished work and get it ready to go live." },
 ];
 const faqs = [
-  ["How long will it take?", "[Add typical timelines for each service and what can affect the schedule.]"],
-  ["What do you need from me?", "[Confirm the copy, images, book files, account access, and approvals needed before we start.]"],
-  ["How do revisions work?", "[Add the number of revision rounds and how feedback will be collected.]"],
-  ["Which tools do you build on?", "[Add your website, email, design, and video tools.]"],
-  ["How does payment work?", "[Add your deposit, payment schedule, and accepted payment methods.]"],
+  ["How long will it take?", "Most projects take 2 to 5 days once I have everything I need from you."],
+  ["What do you need from me?", "Your book cover, description, bio, headshot, retailer links, and access to any accounts we're building on. I'll send a short checklist after our scoping call."],
+  ["How do revisions work?", "Revisions are unlimited. We keep refining until you're happy with it."],
+  ["Which tools do you build on?", "I can build on any major website hosting platform, so you can keep the tools you already use."],
+  ["How does payment work?", "You'll get an invoice, and you can pay by card or bank transfer."],
 ];
 function Services() {
   const [selected, setSelected] = useState<string>();

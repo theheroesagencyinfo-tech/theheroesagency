@@ -14,7 +14,7 @@ const result: { value: string; context: string } | undefined = undefined;
 const sections = [
   { heading: "Overview", body: "The Quiet Advantage is a sample project built for a fictional nonfiction author. It explores how a book, an author biography, and a reader signup can sit together on one clear website." },
   { heading: "The author's problem", body: "The sample brief: give a reader somewhere to discover the book, understand the author's expertise, and take a next step beyond a retailer link. This is a fictional scenario, not a client claim." },
-  { heading: "What I built", body: "[Add the completed sample website's build details, design decisions, and live link.]" },
+  { heading: "What I built", body: "A home page that leads with the book's promise, a book page with retailer links, a free chapter signup, and a speaker page. Calm typography and one accent color keep the focus on the author's ideas." },
 ];
 function Project() {
   return <><div className="mx-auto max-w-6xl px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
