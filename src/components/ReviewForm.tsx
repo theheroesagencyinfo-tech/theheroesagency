@@ -38,7 +38,7 @@ export function ReviewForm({ mode = "review", selectedService }: { mode?: "revie
   }
   if (status === "done") return <div role="status" className="border-y py-8">
     <h3 className="text-3xl">Request received.</h3>
-    <p className="mt-3 text-muted-foreground">{mode === "quote" ? "I'll email you to discuss the scope of your project." : "I'll send your review within [X] business days."}</p>
+    <p className="mt-3 text-muted-foreground">{mode === "quote" ? "I'll email you to discuss the scope of your project." : "I'll send your review within 24 hours."}</p>
   </div>;
   return <form onSubmit={onSubmit} noValidate className="grid gap-5">
     {fields.filter(f => mode === "review" || f.id !== "website").map(f => <div key={f.id} className="grid gap-2">

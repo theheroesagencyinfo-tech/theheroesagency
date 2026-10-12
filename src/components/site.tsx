@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 
-export const CONTACT_EMAIL = "[your email address]";
+export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
 
 const nav = [
   { to: "/services", label: "Services" },
