@@ -1,39 +1,32 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CONTACT_EMAIL } from "@/components/site";
+import { PageIntro } from "@/components/page";
 import { ReviewForm } from "@/components/ReviewForm";
-
+import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title: "Contact — TheHeroes Author Studio" },
-      { name: "description", content: "Request a free author site review or email Hero at TheHeroes Author Studio." },
-      { property: "og:title", content: "Contact — TheHeroes Author Studio" },
-      { property: "og:description", content: "Request a free author site review." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "/contact" }],
-  }),
-  component: Contact,
+  head: () => ({ meta: [
+    { title: "Free author site review — TheHeroes Author Studio" },
+    { name: "description", content: "Tell Hero about your nonfiction book and request a free short video review with quick wins for your author website." },
+    { property: "og:title", content: "Free author site review — TheHeroes Author Studio" },
+    { property: "og:description", content: "Tell me about your book and I'll send a short video review with quick wins for your site." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+  ] }), component: Contact,
 });
-
+const next = [
+  ["Send your details", "Tell me about your book, your website, and what you'd like help with."],
+  ["I review your site", "I look at your reader's journey and record a short video with quick wins."],
+  ["Choose your next step", "Use the suggestions yourself, or ask me about working together."],
+];
 function Contact() {
-  return (
-    <section className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-2">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">Contact</p>
-        <h1 className="mt-6 max-w-[16ch] text-5xl leading-[1.05]">Request your free author site review.</h1>
-        <p className="mt-6 max-w-[55ch] text-lg text-muted-foreground">
-          Tell me about your book. I'll review your site and email you practical notes, or answer whatever you'd like to ask.
-        </p>
-        <div className="mt-10 border-t pt-6">
-          <p className="text-sm text-muted-foreground">Prefer email?</p>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="mt-1 inline-block font-serif text-2xl underline underline-offset-4">
-            {CONTACT_EMAIL}
-          </a>
-        </div>
-      </div>
+  return <>
+    <PageIntro label="Contact" title="Get my free author site review.">Tell me about your book and I'll send a short video review with the quick wins for your site.</PageIntro>
+    <section id="review" className="scroll-mt-36 border-t"><div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr]">
       <ReviewForm />
-    </section>
-  );
+      <aside className="md:border-l md:pl-12"><h2 className="text-3xl">Let's talk about your book.</h2><dl className="mt-8 space-y-6"><div><dt className="text-sm text-muted-foreground">Email</dt><dd className="mt-2 break-words text-lg">{CONTACT_EMAIL}</dd></div><div><dt className="text-sm text-muted-foreground">Response time</dt><dd className="mt-2">[X] business days</dd></div></dl>
+        <div className="mt-8 border-t pt-6"><Button disabled variant="studioOutline" size="studio">Book a 15-minute call</Button><p className="mt-3 text-sm text-muted-foreground">[Add your booking URL]</p></div>
+        <div className="mt-8 border-t pt-6"><p className="text-sm text-muted-foreground">Find me online</p><ul className="mt-4 space-y-3"><li><a href="https://www.instagram.com/theheroes_authorstudio/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Instagram · @theheroes_authorstudio</a></li><li><a href="https://www.threads.net/@theheroes_authorstudio" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Threads · @theheroes_authorstudio</a></li></ul></div>
+      </aside>
+    </div></section>
+    <section className="border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">What happens next</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{next.map(([title, text], i) => <li key={title} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-muted-foreground">{text}</p></li>)}</ol></div></section>
+  </>;
 }
