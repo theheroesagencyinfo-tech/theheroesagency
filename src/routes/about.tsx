@@ -22,7 +22,7 @@ const principles = [
 ];
 function About() {
   return <>
-    <PageIntro label="About Mou Barrac" title="I build the platform behind your book.">Your book can be the beginning of a relationship, not the end of a sale.</PageIntro>
+    <PageIntro label="About Mou Barrac" title="I design websites for nonfiction authors.">Your book can be the beginning of a relationship, not the end of a sale.</PageIntro>
     <section className="border-t"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1.4fr_1fr] md:items-start">
       <div className="max-w-[60ch] space-y-6 text-lg text-muted-foreground"><h2 className="text-3xl text-foreground">I'm Mou Barrac.</h2><p>I started working with authors because so many great nonfiction books have no clear next step for the reader. Someone finishes the book, wants more, and there's nowhere to go.</p><p>My background is in web design, email marketing automation, and AI-powered video ads. I bring those skills together so your website, emails, and launch creative all work toward the same goal.</p><p>I believe a book should start a client relationship, not just make a sale. The platform behind it should make that next conversation easier.</p><p>I work with one point of contact, clear timelines, and no jargon. We agree on what your book needs before we start building.</p></div>
       <div className="w-full md:justify-self-end"><ImagePlaceholder label="Headshot placeholder" portrait /></div>
