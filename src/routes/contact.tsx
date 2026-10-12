@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { CONTACT_EMAIL } from "@/components/site";
 import { PageIntro } from "@/components/page";
 import { ReviewForm } from "@/components/ReviewForm";
+import { ReviewPreview } from "@/components/conversion";
 import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/contact")({
   head: () => ({ meta: [
@@ -27,6 +28,7 @@ function Contact() {
         <div className="mt-8 border-t pt-6"><p className="text-sm text-muted-foreground">Find me online</p><ul className="mt-4 space-y-3"><li><a href="https://www.instagram.com/theheroes_authorstudio/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Instagram · @theheroes_authorstudio</a></li><li><a href="https://www.threads.net/@theheroes_authorstudio" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Threads · @theheroes_authorstudio</a></li></ul></div>
       </aside>
     </div></section>
+    <ReviewPreview />
     <section className="border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">What happens next</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{next.map(([title, text], i) => <li key={title} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-muted-foreground">{text}</p></li>)}</ol></div></section>
   </>;
 }

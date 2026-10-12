@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageIntro } from "@/components/page";
 import { ReviewForm } from "@/components/ReviewForm";
+import { ReaderJourney } from "@/components/conversion";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
@@ -47,6 +48,7 @@ function Services() {
         </div>
       </div>
     </section>)}
+    <ReaderJourney />
     <section className="border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">How we work</h2><ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">{steps.map((step, i) => <li key={step.title} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{step.title}</h3><p className="mt-2 text-muted-foreground">{step.text}</p></li>)}</ol></div></section>
     <section className="border-t"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]"><h2 className="text-4xl">Before we start</h2><Accordion type="single" collapsible className="border-t">{faqs.map(([q, a], i) => <AccordionItem key={q} value={String(i)}><AccordionTrigger className="py-5 text-base">{q}</AccordionTrigger><AccordionContent className="text-base text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
     <section id="quote" className="scroll-mt-36 border-t bg-secondary"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]"><div><p className="text-sm text-muted-foreground">Your next chapter</p><h2 className="mt-4 text-4xl">Request a quote.</h2><p className="mt-4 max-w-[40ch] text-muted-foreground">Tell me about your book and what you'd like to build.</p></div><ReviewForm mode="quote" selectedService={selected} /></div></section>

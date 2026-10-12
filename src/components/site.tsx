@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 export const CONTACT_EMAIL = "[your email address]";
 
@@ -29,10 +29,11 @@ export function Btn({
 }
 
 export function Header() {
+  const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
-        <Link to="/" className="font-serif text-lg leading-tight sm:text-xl">
+        <Link to="/" className="font-serif text-lg leading-tight sm:text-xl" onClick={() => setOpen(false)}>
           TheHeroes <span className="italic">Author Studio</span>
         </Link>
         <nav aria-label="Main" className="hidden items-center gap-7 text-sm md:flex">
@@ -47,17 +48,42 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <Link to="/" hash="review" className="rounded-md">
-          <Btn className="px-4 py-2">Free review</Btn>
-        </Link>
-      </div>
-      <nav aria-label="Mobile" className="flex gap-5 overflow-x-auto px-5 pb-3 text-sm md:hidden">
-        {nav.map((n) => (
-          <Link key={n.to} to={n.to} className="text-muted-foreground">
-            {n.label}
+        <div className="flex items-center gap-2">
+          <Link to="/" hash="review" className="hidden rounded-md sm:inline-block">
+            <Btn className="px-4 py-2">Free review</Btn>
           </Link>
-        ))}
-      </nav>
+          <button
+            type="button"
+            className="rounded-md border border-foreground/25 px-3 py-2 text-sm font-semibold md:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? "Close" : "Menu"}
+          </button>
+        </div>
+      </div>
+      {open && (
+        <nav id="mobile-menu" aria-label="Mobile" className="border-t bg-background px-5 pb-8 pt-4 md:hidden">
+          <ul className="divide-y">
+            {nav.map((n) => (
+              <li key={n.to}>
+                <Link
+                  to={n.to}
+                  onClick={() => setOpen(false)}
+                  className="block py-4 font-serif text-2xl"
+                  activeProps={{ className: "text-ring" }}
+                >
+                  {n.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link to="/" hash="review" onClick={() => setOpen(false)} className="mt-6 block">
+            <Btn className="w-full">Get my free author site review</Btn>
+          </Link>
+        </nav>
+      )}
     </header>
   );
 }
