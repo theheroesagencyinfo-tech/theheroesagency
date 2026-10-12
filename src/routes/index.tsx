@@ -65,17 +65,17 @@ function Home() {
         </div>
       </section>
 
-      <section aria-labelledby="build" className="border-t">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1fr_2fr]">
+      <section aria-labelledby="build" className="relative border-t">
+        <div className="mx-auto grid max-w-6xl gap-6 bg-background px-5 py-8 motion-safe:sticky motion-safe:top-20 md:grid-cols-[1fr_2fr] md:gap-10 md:py-12 md:motion-safe:top-24">
           <div>
             <SectionLabel>Contents</SectionLabel>
             <h2 id="build" className="mt-4 text-4xl">What I build</h2>
           </div>
-          <ol className="grid gap-10">
+          <ol className="grid gap-6 md:gap-10">
             {toc.map((t, index) => (
               <ParallaxBuildItem key={t.n} index={index}>
                 <div className="flex items-baseline font-serif text-2xl sm:text-3xl">
-                  <span className="mr-4 inline-block w-8 shrink-0 text-base text-muted-foreground">{t.n}</span>
+                  <span className="mr-4 inline-block w-8 shrink-0 text-xl text-foreground">{t.n}</span>
                   <span>{t.title}</span>
                   <span className="leader" aria-hidden />
                   <span className="text-base italic text-muted-foreground sm:text-lg">{t.tag}</span>
@@ -85,6 +85,7 @@ function Home() {
             ))}
           </ol>
         </div>
+        <div aria-hidden="true" className="motion-safe:h-[600px]" />
       </section>
 
       <section aria-labelledby="why" className="border-t bg-secondary">
