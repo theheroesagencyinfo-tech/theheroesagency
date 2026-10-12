@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
           "Author websites, email funnels, and launch kits that turn readers into leads, subscribers, and speaking invitations. Get a free author site review.",
       },
       { property: "og:title", content: "TheHeroes Author Studio" },
-      { property: "og:description", content: "Your book should bring you clients, not just sales." },
+      { property: "og:description", content: "Websites for nonfiction authors that bring you clients, not just sales." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -50,12 +50,12 @@ function Home() {
     <>
       <section className="mx-auto max-w-6xl px-5 pb-24 pt-20 sm:pt-28">
         <div className="rise max-w-3xl">
-          <SectionLabel>For coaches, consultants, speakers, and experts</SectionLabel>
+          <SectionLabel>Nonfiction author website design</SectionLabel>
           <h1 className="mt-6 text-5xl leading-[1.05] sm:text-7xl">
-            Your book should bring you clients, <em className="text-ring">not just sales.</em>
+            Websites for nonfiction authors that bring you clients, <em className="text-ring">not just sales.</em>
           </h1>
           <p className="mt-8 max-w-[60ch] text-lg text-muted-foreground sm:text-xl">
-            I build websites and launch funnels for nonfiction authors, so readers turn into leads, subscribers, and speaking invitations.
+            I design and build author websites, email funnels, and launch kits for nonfiction authors, so readers turn into leads, subscribers, and speaking invitations.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a href="#review"><Btn>Get my free author site review</Btn></a>
