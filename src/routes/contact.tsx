@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CONTACT_EMAIL } from "@/components/site";
+import { BOOKING_URL, CONTACT_EMAIL } from "@/components/site";
 import { PageIntro } from "@/components/page";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ReviewPreview } from "@/components/conversion";
