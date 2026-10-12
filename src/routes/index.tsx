@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Btn } from "@/components/site";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ImagePlaceholder } from "@/components/page";
+import { ReaderJourney, ReviewPreview } from "@/components/conversion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -140,6 +141,9 @@ function Home() {
           </ol>
         </div>
       </section>
+
+      <ReaderJourney secondary />
+      <ReviewPreview />
 
       <section id="review" aria-labelledby="review-h" className="scroll-mt-24 border-t bg-secondary">
         <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-2">
