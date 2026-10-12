@@ -8,47 +8,54 @@ export function ParallaxBuildItem({ children, index }: { children: ReactNode; in
     if (!element) return;
 
     const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const section = element.closest("section");
+    const stickyPanel = section?.firstElementChild;
+    if (!section || !(stickyPanel instanceof HTMLElement)) return;
     let frame = 0;
+    let sectionTop = 0;
+    let stickyTop = 0;
+    let travel = 1;
+    let previousVisible: boolean | undefined;
+
+    const measure = () => {
+      sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      stickyTop = Number.parseFloat(getComputedStyle(stickyPanel).top) || 0;
+      travel = Math.max(1, section.offsetHeight - stickyPanel.offsetHeight);
+    };
 
     const update = () => {
       frame = 0;
-      if (motionPreference.matches) {
-        element.style.transform = "none";
-        element.style.opacity = "1";
-        element.style.visibility = "visible";
-        return;
-      }
-      const section = element.closest("section");
-      if (!section) return;
-      const bounds = section.getBoundingClientRect();
-      const stickyPanel = section.firstElementChild;
-      if (!(stickyPanel instanceof HTMLElement)) return;
-      const stickyTop = Number.parseFloat(getComputedStyle(stickyPanel).top) || 0;
-      const travel = Math.max(1, bounds.height - stickyPanel.offsetHeight);
-      const progress = Math.max(0, Math.min(1, (stickyTop - bounds.top) / travel));
-      const start = index === 1 ? 0.08 : 0.5;
-      const reveal = index === 0 ? 1 : Math.max(0, Math.min(1, (progress - start) / 0.32));
-      element.style.opacity = String(reveal);
-      element.style.visibility = reveal === 0 ? "hidden" : "visible";
-      element.style.transform = `translate3d(0, ${(1 - reveal) * 56}px, 0)`;
+      const progress = (window.scrollY + stickyTop - sectionTop) / travel;
+      const visible = motionPreference.matches || index === 0 || progress >= (index === 1 ? 0.2 : 0.55);
+      if (visible === previousVisible) return;
+      previousVisible = visible;
+      element.style.visibility = visible ? "visible" : "hidden";
     };
 
     const schedule = () => {
       if (!frame) frame = window.requestAnimationFrame(update);
     };
 
+    const resize = () => {
+      measure();
+      schedule();
+    };
+    const observer = new ResizeObserver(resize);
+    observer.observe(stickyPanel);
+    measure();
     update();
     window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("resize", schedule);
-    motionPreference.addEventListener("change", schedule);
+    window.addEventListener("resize", resize);
+    motionPreference.addEventListener("change", resize);
 
     return () => {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", schedule);
-      window.removeEventListener("resize", schedule);
-      motionPreference.removeEventListener("change", schedule);
+      observer.disconnect();
+      window.removeEventListener("resize", resize);
+      motionPreference.removeEventListener("change", resize);
     };
   }, [index]);
 
-  return <li ref={ref} className="motion-safe:will-change-[transform,opacity]">{children}</li>;
+  return <li ref={ref}>{children}</li>;
 }

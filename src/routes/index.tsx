@@ -85,7 +85,7 @@ function Home() {
             ))}
           </ol>
         </div>
-        <div aria-hidden="true" className="motion-safe:h-[600px]" />
+        <div aria-hidden="true" className="motion-safe:h-[360px]" />
       </section>
 
       <section aria-labelledby="why" className="border-t bg-secondary">
