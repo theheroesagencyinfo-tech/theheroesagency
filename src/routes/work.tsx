@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { PageIntro, ImagePlaceholder, ReviewCta } from "@/components/page";
+import { PageIntro, ReviewCta } from "@/components/page";
 import { StudioImage } from "@/components/studio-image";
 
 export const Route = createFileRoute("/work")({
@@ -23,7 +23,7 @@ function Work() {
         <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Lead capture</li><li>Book page</li></ul>
         <Link to="/projects/the-quiet-advantage" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
       </article>
-      {[1, 2].map(n => <article key={n}><Link to="/contact" hash="review" aria-label={`Request a free review for future project ${n}`}><ImagePlaceholder label="Future project — image placeholder" /></Link><p className="mt-6 text-sm text-muted-foreground">Future author project</p><h2 className="mt-3 text-3xl">Your project could be here</h2><p className="mt-3 text-muted-foreground">A space for the next author website or book launch.</p><Link to="/contact" hash="review" className="mt-6 inline-block font-semibold underline underline-offset-4">Get my free author site review <span aria-hidden="true">↗</span></Link></article>)}
+      {[1, 2].map(n => <article key={n}><Link to="/contact" hash="review" aria-label={`Request a free review for future project ${n}`}><StudioImage image={n === 1 ? "email" : "launch"} /></Link><p className="mt-6 text-sm text-muted-foreground">Future author project · illustrative image</p><h2 className="mt-3 text-3xl">Your project could be here</h2><p className="mt-3 text-muted-foreground">A space for the next author website or book launch.</p><Link to="/contact" hash="review" className="mt-6 inline-block font-semibold underline underline-offset-4">Get my free author site review <span aria-hidden="true">↗</span></Link></article>)}
     </div></section>
     <ReviewCta />
   </>;

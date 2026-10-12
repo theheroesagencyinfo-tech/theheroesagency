@@ -1,5 +1,5 @@
 # Page rebuild
-- [ ] Add relevant realistic imagery across the site and verify image rendering.
+- [x] Add relevant realistic imagery across the site and verify image rendering.
 - [x] Rebuild Services with three offers, process, FAQs, and quote form.
 - [x] Rebuild Work and the fictional sample project detail page.
 - [x] Rebuild About without banned platform mentions.
