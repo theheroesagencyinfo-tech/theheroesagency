@@ -29,7 +29,7 @@ export function ParallaxBuildItem({ children, index }: { children: ReactNode; in
       const visible = motionPreference.matches || index === 0 || progress >= (index === 1 ? 0.3 : 0.7);
       if (visible === previousVisible) return;
       previousVisible = visible;
-      element.style.visibility = visible ? "visible" : "hidden";
+      element.style.display = visible ? "" : "none";
     };
 
     const schedule = () => {
