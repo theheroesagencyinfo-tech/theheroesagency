@@ -12,3 +12,4 @@
 - Use shared PageIntro, ReviewCta, and studio Button variants for content pages to keep heading scale, spacing, and controls consistent.
 - Use the existing validated request server function for review and quote forms, storing service, message, and request_type separately so requests retain their intent.
 - Keep sample project details on their own content route; omit results until verified data exists.
+- Pre-optimize React and shared UI dependencies together in Vite so live previews do not mix dependency generations during incremental optimization.
