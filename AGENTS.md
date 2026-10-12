@@ -14,3 +14,4 @@
 - Keep sample project details on their own content route; omit results until verified data exists.
 - Pre-optimize React and shared UI dependencies together in Vite so live previews do not mix dependency generations during incremental optimization.
 - Use StudioImage for shared editorial imagery; generated project visuals are illustrative concepts, not evidence of a completed client site.
+- Keep scroll-driven numeral animation in the reusable ParallaxNumeral component, with bounded transforms and reduced-motion support to preserve readable, stable layouts.
