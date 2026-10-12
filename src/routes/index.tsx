@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Btn } from "@/components/site";
 import { ReviewForm } from "@/components/ReviewForm";
+import { StudioImage } from "@/components/studio-image";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -60,6 +61,7 @@ function Home() {
             <a href="#work"><Btn variant="ghost">See my work</Btn></a>
           </div>
         </div>
+        <StudioImage image="workspace" className="mt-14 max-h-96" eager />
       </section>
 
       <section aria-labelledby="build" className="border-t">
@@ -106,20 +108,13 @@ function Home() {
           <h2 id="work-h" className="mt-4 text-4xl">Recent pages</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             <article className="flex flex-col rounded-lg border bg-card p-8">
-              <div aria-hidden className="mb-8 aspect-[16/10] rounded-md border bg-background p-6">
-                <div className="h-2 w-16 rounded bg-accent" />
-                <div className="mt-6 h-5 w-3/4 rounded bg-foreground/80" />
-                <div className="mt-3 h-5 w-1/2 rounded bg-foreground/80" />
-                <div className="mt-6 h-2 w-2/3 rounded bg-muted-foreground/40" />
-                <div className="mt-2 h-2 w-1/2 rounded bg-muted-foreground/40" />
-                <div className="mt-6 h-8 w-32 rounded bg-primary" />
-              </div>
+              <StudioImage image="website" className="mb-8" />
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Sample project · fictional author</p>
               <h3 className="mt-2 text-2xl">A sample author website</h3>
               <p className="mt-2 max-w-[55ch] text-muted-foreground">
                 A portfolio piece built for a fictional nonfiction author: homepage, book page, reader magnet, and speaking enquiries.
               </p>
-              <a href="#" className="mt-6 self-start"><Btn variant="ghost">View sample site</Btn></a>
+               <Link to="/projects/the-quiet-advantage" className="mt-6 self-start"><Btn variant="ghost">View sample project</Btn></Link>
             </article>
             <article className="flex flex-col justify-center rounded-lg border-2 border-dashed p-8">
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Open slot</p>
