@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CONTACT_EMAIL } from "@/components/site";
+import { BOOKING_URL, CONTACT_EMAIL } from "@/components/site";
 import { PageIntro } from "@/components/page";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ReviewPreview } from "@/components/conversion";
@@ -24,7 +24,7 @@ function Contact() {
     <section id="review" className="scroll-mt-36 border-t"><div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr]">
       <ReviewForm />
       <aside className="md:border-l md:pl-12"><h2 className="text-3xl">Let's talk about your book.</h2><dl className="mt-8 space-y-6"><div><dt className="text-sm text-muted-foreground">Email</dt><dd className="mt-2 break-words text-lg">{CONTACT_EMAIL}</dd></div><div><dt className="text-sm text-muted-foreground">Response time</dt><dd className="mt-2">Under 12 hours</dd></div></dl>
-        <div className="mt-8 border-t pt-6"><Button asChild variant="studioOutline" size="studio"><a href={`mailto:${CONTACT_EMAIL}?subject=Book%20a%2015-minute%20call`}>Email me to book a 15-minute call</a></Button></div>
+        <div className="mt-8 border-t pt-6"><Button asChild variant="studioOutline" size="studio"><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book a 30-minute call</a></Button><p className="mt-4 text-sm text-muted-foreground">Pick a time that suits you. No preparation needed.</p></div>
         <div className="mt-8 border-t pt-6"><p className="text-sm text-muted-foreground">Find me online</p><ul className="mt-4 space-y-3"><li><a href="https://www.instagram.com/theheroes_authorstudio/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Instagram · @theheroes_authorstudio</a></li><li><a href="https://www.threads.net/@theheroes_authorstudio" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Threads · @theheroes_authorstudio</a></li></ul></div>
       </aside>
     </div></section>

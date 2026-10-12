@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 
 export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
+export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 
 const nav = [
   { to: "/services", label: "Services" },
