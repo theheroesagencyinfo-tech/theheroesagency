@@ -14,13 +14,23 @@ export function ParallaxBuildItem({ children, index }: { children: ReactNode; in
       frame = 0;
       if (motionPreference.matches) {
         element.style.transform = "none";
+        element.style.opacity = "1";
+        element.style.visibility = "visible";
         return;
       }
       const section = element.closest("section");
       if (!section) return;
       const bounds = section.getBoundingClientRect();
-      const progress = Math.max(-1, Math.min(1, (bounds.top + bounds.height / 2 - window.innerHeight / 2) / (window.innerHeight / 2)));
-      element.style.transform = `translate3d(0, ${progress * (32 + index * 16)}px, 0)`;
+      const stickyPanel = section.firstElementChild;
+      if (!(stickyPanel instanceof HTMLElement)) return;
+      const stickyTop = Number.parseFloat(getComputedStyle(stickyPanel).top) || 0;
+      const travel = Math.max(1, bounds.height - stickyPanel.offsetHeight);
+      const progress = Math.max(0, Math.min(1, (stickyTop - bounds.top) / travel));
+      const start = index === 1 ? 0.08 : 0.5;
+      const reveal = index === 0 ? 1 : Math.max(0, Math.min(1, (progress - start) / 0.32));
+      element.style.opacity = String(reveal);
+      element.style.visibility = reveal === 0 ? "hidden" : "visible";
+      element.style.transform = `translate3d(0, ${(1 - reveal) * 56}px, 0)`;
     };
 
     const schedule = () => {
@@ -40,5 +50,5 @@ export function ParallaxBuildItem({ children, index }: { children: ReactNode; in
     };
   }, [index]);
 
-  return <li ref={ref} className="motion-safe:will-change-transform">{children}</li>;
+  return <li ref={ref} className="motion-safe:will-change-[transform,opacity]">{children}</li>;
 }
