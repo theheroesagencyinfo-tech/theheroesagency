@@ -71,7 +71,7 @@ function Home() {
             <SectionLabel>Contents</SectionLabel>
             <h2 id="build" className="mt-4 text-4xl">What I build</h2>
           </div>
-          <ol className="grid gap-6 md:gap-10">
+          <ol className="grid gap-4 md:gap-6">
             {toc.map((t, index) => (
               <ParallaxBuildItem key={t.n} index={index}>
                 <div className="flex items-baseline font-serif text-2xl sm:text-3xl">
@@ -85,7 +85,7 @@ function Home() {
             ))}
           </ol>
         </div>
-        <div aria-hidden="true" className="motion-safe:h-[360px]" />
+        <div aria-hidden="true" className="motion-safe:h-[140px]" />
       </section>
 
       <section aria-labelledby="why" className="border-t bg-secondary">
