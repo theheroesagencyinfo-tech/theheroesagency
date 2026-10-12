@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageIntro } from "@/components/page";
 import { ReviewForm } from "@/components/ReviewForm";
+import { StudioImage } from "@/components/studio-image";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
@@ -41,6 +42,7 @@ function Services() {
         <div><p className="font-serif text-lg text-muted-foreground">0{index + 1}</p><h2 className="mt-3 text-4xl">{offer.title}</h2><p className="mt-4 max-w-[45ch] text-lg text-muted-foreground">{offer.outcome}</p>
           <h3 className="mt-8 font-sans text-sm font-semibold">Who it's for</h3><p className="mt-2 max-w-[45ch] text-muted-foreground">{offer.who}</p>
           <Button asChild variant="studio" size="studio" className="mt-8"><a href="#quote" onClick={() => setSelected(offer.title.toLowerCase())}>Request a quote</a></Button>
+          <StudioImage image={index === 0 ? "website" : index === 1 ? "email" : "launch"} className="mt-8" />
         </div>
         <div><h3 className="font-sans text-sm font-semibold">What's included</h3><ul className="mt-4 divide-y border-y">{offer.included.map(item => <li key={item} className="flex gap-4 py-3"><span aria-hidden="true" className="text-ring">—</span>{item}</li>)}</ul>
           <h3 className="mt-8 font-sans text-sm font-semibold">What you'll need to give me</h3><ul className="mt-3 list-disc space-y-2 pl-5 text-muted-foreground">{offer.needs.map(item => <li key={item}>{item}</li>)}</ul>
