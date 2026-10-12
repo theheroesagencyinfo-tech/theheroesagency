@@ -5,3 +5,4 @@
 - [x] Rebuild About without banned platform mentions.
 - [x] Rebuild Contact with required fields, details, and next steps.
 - [x] Verify submissions, page navigation, and mobile layouts.
+- [x] Remove the scroll animation from Home's "What I build" list; all three rows show at once.
