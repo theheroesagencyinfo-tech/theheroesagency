@@ -5,7 +5,7 @@ export const Route = createFileRoute("/about")({
     { title: "About Mou Barrac — TheHeroes Author Studio" },
     { name: "description", content: "Meet Mou Barrac: author websites, email marketing automation, and AI-powered launch creative, with one point of contact and a clear process." },
     { property: "og:title", content: "About Mou Barrac — TheHeroes Author Studio" },
-    { property: "og:description", content: "I build the platform behind your book. Learn about my approach to working with nonfiction authors." },
+    { property: "og:description", content: "I design websites for nonfiction authors. Learn about my approach to author websites, email funnels, and launches." },
     { property: "og:type", content: "profile" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: About,
 });

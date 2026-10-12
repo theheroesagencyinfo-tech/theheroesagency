@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
           "Author websites, email funnels, and launch kits that turn readers into leads, subscribers, and speaking invitations. Get a free author site review.",
       },
       { property: "og:title", content: "TheHeroes Author Studio" },
-      { property: "og:description", content: "Your book should bring you clients, not just sales." },
+      { property: "og:description", content: "Websites for nonfiction authors that bring you clients, not just sales." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
