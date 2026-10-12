@@ -20,7 +20,10 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          message: string
           name: string
+          request_type: string
+          service: string
           website: string | null
         }
         Insert: {
@@ -28,7 +31,10 @@ export type Database = {
           created_at?: string
           email: string
           id?: string
+          message?: string
           name: string
+          request_type?: string
+          service?: string
           website?: string | null
         }
         Update: {
@@ -36,7 +42,10 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+          message?: string
           name?: string
+          request_type?: string
+          service?: string
           website?: string | null
         }
         Relationships: []

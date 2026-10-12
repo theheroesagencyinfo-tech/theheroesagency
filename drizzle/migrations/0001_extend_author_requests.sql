@@ -1,0 +1,3 @@
+ALTER TABLE public.review_requests ADD COLUMN service text NOT NULL DEFAULT 'not sure yet', ADD COLUMN message text NOT NULL DEFAULT '', ADD COLUMN request_type text NOT NULL DEFAULT 'review';
+ALTER TABLE public.review_requests ADD CONSTRAINT review_requests_service_valid CHECK (service IN ('author website', 'email funnel', 'launch kit', 'not sure yet')), ADD CONSTRAINT review_requests_type_valid CHECK (request_type IN ('review', 'quote'));
+GRANT ALL ON public.review_requests TO service_role;

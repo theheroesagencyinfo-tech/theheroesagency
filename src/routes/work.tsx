@@ -1,68 +1,28 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Btn } from "@/components/site";
+import { PageIntro, ImagePlaceholder, ReviewCta } from "@/components/page";
 
 export const Route = createFileRoute("/work")({
-  head: () => ({
-    meta: [
-      { title: "Work — TheHeroes Author Studio" },
-      { name: "description", content: "Author websites and funnels built by TheHeroes Author Studio, including a sample site for a fictional nonfiction author." },
-      { property: "og:title", content: "Work — TheHeroes Author Studio" },
-      { property: "og:description", content: "Author websites and funnels for nonfiction authors." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "/work" }],
-  }),
-  component: Work,
+  head: () => ({ meta: [
+    { title: "Selected work — TheHeroes Author Studio" },
+    { name: "description", content: "Explore The Quiet Advantage, a sample author website for a fictional author, and space for future author projects." },
+    { property: "og:title", content: "Selected work — TheHeroes Author Studio" },
+    { property: "og:description", content: "Websites and launch assets for authors, starting with a clearly labelled fictional sample project." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+  ] }), component: Work,
 });
-
-function Mock() {
-  return (
-    <div aria-hidden className="mb-6 aspect-[16/10] rounded-md border bg-background p-6">
-      <div className="h-2 w-16 rounded bg-accent" />
-      <div className="mt-6 h-5 w-3/4 rounded bg-foreground/80" />
-      <div className="mt-3 h-5 w-1/2 rounded bg-foreground/80" />
-      <div className="mt-6 h-2 w-2/3 rounded bg-muted-foreground/40" />
-      <div className="mt-2 h-2 w-1/2 rounded bg-muted-foreground/40" />
-      <div className="mt-6 h-8 w-32 rounded bg-primary" />
-    </div>
-  );
-}
-
 function Work() {
-  return (
-    <>
-      <section className="mx-auto max-w-6xl px-5 pb-12 pt-20">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">Work</p>
-        <h1 className="mt-6 max-w-[20ch] text-5xl leading-[1.05] sm:text-6xl">Sites built for authors.</h1>
-        <p className="mt-6 max-w-[60ch] text-lg text-muted-foreground">
-          The studio is new, so this page starts honest: one sample project, with room for the authors who come next.
-        </p>
-      </section>
-      <section className="border-t">
-        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-16 md:grid-cols-2 lg:grid-cols-3">
-          <article className="flex flex-col rounded-lg border bg-card p-6">
-            <Mock />
-            <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Sample project · fictional author</p>
-            <h2 className="mt-2 text-2xl">A sample author website</h2>
-            <p className="mt-2 text-muted-foreground">Homepage, book page, reader magnet, and speaking enquiries for a fictional nonfiction author.</p>
-            <a href="#" className="mt-6 self-start"><Btn variant="ghost">View sample site</Btn></a>
-          </article>
-          {[1, 2].map((i) => (
-            <article key={i} className="flex flex-col justify-center rounded-lg border-2 border-dashed p-6">
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Open slot</p>
-              <h2 className="mt-2 text-2xl">Your book could be here</h2>
-              <p className="mt-2 text-muted-foreground">Reserved for future client work.</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="border-t bg-secondary">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="max-w-[24ch] text-3xl">Want to see what I'd change on your site?</h2>
-          <Link to="/contact" className="mt-6 inline-block"><Btn>Get my free author site review</Btn></Link>
-        </div>
-      </section>
-    </>
-  );
+  return <>
+    <PageIntro label="Work" title="Selected work.">Websites and launch assets I've built for authors.</PageIntro>
+    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-x-8 gap-y-14 px-5 py-16 md:grid-cols-2">
+      <article><Link to="/projects/the-quiet-advantage" aria-label="View The Quiet Advantage sample project"><ImagePlaceholder label="The Quiet Advantage — website screenshot placeholder" /></Link>
+        <p className="mt-6 text-sm text-muted-foreground">Sample project built for a fictional author.</p>
+        <h2 className="mt-3 text-3xl">The Quiet Advantage: sample author website</h2>
+        <p className="mt-3 text-muted-foreground">A sample platform connecting a nonfiction book with readers and speaking enquiries.</p>
+        <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Lead capture</li><li>Book page</li></ul>
+        <Link to="/projects/the-quiet-advantage" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
+      </article>
+      {[1, 2].map(n => <article key={n}><Link to="/contact" hash="review" aria-label={`Request a free review for future project ${n}`}><ImagePlaceholder label="Future project — image placeholder" /></Link><p className="mt-6 text-sm text-muted-foreground">Future author project</p><h2 className="mt-3 text-3xl">Your project could be here</h2><p className="mt-3 text-muted-foreground">A space for the next author website or book launch.</p><Link to="/contact" hash="review" className="mt-6 inline-block font-semibold underline underline-offset-4">Get my free author site review <span aria-hidden="true">↗</span></Link></article>)}
+    </div></section>
+    <ReviewCta />
+  </>;
 }

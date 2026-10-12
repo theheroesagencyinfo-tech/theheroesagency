@@ -10,6 +10,9 @@ export const submitReview = createServerFn({ method: "POST" })
       email: data.email,
       book: data.book,
       website: data.website || null,
+      service: data.service,
+      message: data.message,
+      request_type: data.request_type,
     });
     if (error) {
       console.error("review insert failed", error.message);

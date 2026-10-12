@@ -1,71 +1,34 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { Btn } from "@/components/site";
-
+import { createFileRoute } from "@tanstack/react-router";
+import { PageIntro, ImagePlaceholder, ReviewCta } from "@/components/page";
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      { title: "About Hero — TheHeroes Author Studio" },
-      { name: "description", content: "Hero runs TheHeroes Author Studio, building websites, email funnels, and launch campaigns for nonfiction authors." },
-      { property: "og:title", content: "About Hero — TheHeroes Author Studio" },
-      { property: "og:description", content: "Who Hero is and why he works with nonfiction authors." },
-      { property: "og:type", content: "profile" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-    links: [{ rel: "canonical", href: "/about" }],
-  }),
-  component: About,
+  head: () => ({ meta: [
+    { title: "About Hero — TheHeroes Author Studio" },
+    { name: "description", content: "Meet Hero: author websites, email marketing automation, and AI-powered launch creative, with one point of contact and a clear process." },
+    { property: "og:title", content: "About Hero — TheHeroes Author Studio" },
+    { property: "og:description", content: "I build the platform behind your book. Learn about my approach to working with nonfiction authors." },
+    { property: "og:type", content: "profile" }, { name: "twitter:card", content: "summary_large_image" },
+  ] }), component: About,
 });
-
 const skills = [
-  { h: "Web design", p: "Clean, fast sites built around one goal: getting the right visitor to take the next step." },
-  { h: "Shopify", p: "Stores for selling books, workbooks, courses, and merch directly to readers." },
-  { h: "Email automation", p: "Sign-up flows and sequences that keep working after you've moved on to the next thing." },
-  { h: "AI video ads", p: "Short video ads for launches, made quickly and without a film crew." },
+  ["Web design", "Author websites with a clear path from discovering your book to taking the next step."],
+  ["Book launch pages", "A focused place for your book, retailer links, and launch message."],
+  ["Email marketing automation", "Reader signup flows and welcome sequences in your email tool."],
+  ["AI-powered video ads", "Book trailers and short ad clips to support your launch."],
 ];
-
+const principles = [
+  ["One point of contact", "You work directly with me, from the first conversation to launch."],
+  ["Clear timelines", "We agree on the scope, review points, and timeline before work begins."],
+  ["No jargon", "I explain decisions in plain language, so you know what we're building and why."],
+];
 function About() {
-  return (
-    <>
-      <section className="mx-auto grid max-w-6xl gap-12 px-5 pb-16 pt-20 md:grid-cols-[1.4fr_1fr] md:items-end">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">About</p>
-          <h1 className="mt-6 max-w-[18ch] text-5xl leading-[1.05] sm:text-6xl">Hi, I'm Hero.</h1>
-          <p className="mt-6 max-w-[60ch] text-lg text-muted-foreground">
-            I run TheHeroes Author Studio on my own. When you work with me, you talk to the person who builds your site, writes your emails, and answers your questions.
-          </p>
-        </div>
-        <div role="img" aria-label="Headshot of Hero (placeholder)" className="flex aspect-[4/5] w-full max-w-xs items-center justify-center rounded-lg border-2 border-dashed bg-secondary text-sm text-muted-foreground">
-          Headshot coming soon
-        </div>
-      </section>
-      <section className="border-t">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_2fr]">
-          <h2 className="text-4xl">Why authors</h2>
-          <div className="max-w-[62ch] space-y-5 text-muted-foreground">
-            <p>Nonfiction authors have already done the hardest part: they've turned what they know into a book. But most author sites stop at "buy the book", and the reader who wanted more has nowhere to go.</p>
-            <p>I like fixing that. A good author site and a simple email funnel can turn one book into a steady stream of clients, subscribers, and speaking invitations.</p>
-          </div>
-        </div>
-      </section>
-      <section className="border-t bg-secondary">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="text-4xl">What I bring</h2>
-          <div className="mt-10 grid gap-10 md:grid-cols-2">
-            {skills.map((s) => (
-              <div key={s.h} className="border-t border-foreground/20 pt-5">
-                <h3 className="text-2xl">{s.h}</h3>
-                <p className="mt-2 max-w-[50ch] text-muted-foreground">{s.p}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="border-t">
-        <div className="mx-auto max-w-6xl px-5 py-16">
-          <h2 className="max-w-[24ch] text-3xl">Let's start with a look at your current site.</h2>
-          <Link to="/contact" className="mt-6 inline-block"><Btn>Get my free author site review</Btn></Link>
-        </div>
-      </section>
-    </>
-  );
+  return <>
+    <PageIntro label="About Hero" title="I build the platform behind your book.">Your book can be the beginning of a relationship, not the end of a sale.</PageIntro>
+    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1.4fr_1fr] md:items-start">
+      <div className="max-w-[60ch] space-y-6 text-lg text-muted-foreground"><h2 className="text-3xl text-foreground">I'm Hero.</h2><p>I started working with authors because [my reason].</p><p>My background is in web design, email marketing automation, and AI-powered video ads. [Add the experience and projects you'd like readers to know about.]</p><p>I believe a book should start a client relationship, not just make a sale. The platform behind it should make that next conversation easier.</p><p>I work with one point of contact, clear timelines, and no jargon. We agree on what your book needs before we start building.</p></div>
+      <div className="w-full max-w-sm md:justify-self-end"><ImagePlaceholder label="Hero's headshot — placeholder" portrait /></div>
+    </div></section>
+    <section className="border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">What I bring</h2><div className="mt-10 grid gap-x-12 gap-y-8 md:grid-cols-2">{skills.map(([title, text]) => <div key={title} className="border-t pt-5"><h3 className="text-2xl">{title}</h3><p className="mt-3 max-w-[50ch] text-muted-foreground">{text}</p></div>)}</div></div></section>
+    <section className="border-t"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">How I work with authors</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{principles.map(([title, text], i) => <li key={title} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-muted-foreground">{text}</p></li>)}</ol></div></section>
+    <ReviewCta />
+  </>;
 }

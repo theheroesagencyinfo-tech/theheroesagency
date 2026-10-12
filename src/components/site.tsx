@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
-export const CONTACT_EMAIL = "hello@theheroesauthorstudio.com";
+export const CONTACT_EMAIL = "[your email address]";
 
 const nav = [
   { to: "/services", label: "Services" },
@@ -69,9 +69,9 @@ export function Footer() {
         <div>
           <p className="font-serif text-lg text-foreground">TheHeroes Author Studio</p>
           <p className="mt-1">Websites and launch funnels for nonfiction authors.</p>
-          <a href={`mailto:${CONTACT_EMAIL}`} className="mt-3 inline-block underline underline-offset-4">
+          <p className="mt-3">
             {CONTACT_EMAIL}
-          </a>
+          </p>
         </div>
         <nav aria-label="Footer" className="flex flex-wrap gap-6">
           {nav.map((n) => (
