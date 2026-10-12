@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Btn } from "@/components/site";
 import { ReviewForm } from "@/components/ReviewForm";
-import { StudioImage } from "@/components/studio-image";
+import { ImagePlaceholder } from "@/components/page";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -61,7 +61,6 @@ function Home() {
             <a href="#work"><Btn variant="ghost">See my work</Btn></a>
           </div>
         </div>
-        <StudioImage image="workspace" className="mt-14 max-h-96" eager />
       </section>
 
       <section aria-labelledby="build" className="border-t">
@@ -108,7 +107,7 @@ function Home() {
           <h2 id="work-h" className="mt-4 text-4xl">Recent pages</h2>
           <div className="mt-12 grid gap-6 md:grid-cols-2">
             <article className="flex flex-col rounded-lg border bg-card p-8">
-              <StudioImage image="website" className="mb-8" />
+              <ImagePlaceholder label="Sample website screenshot" className="mb-8" />
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Sample project · fictional author</p>
               <h3 className="mt-2 text-2xl">A sample author website</h3>
               <p className="mt-2 max-w-[55ch] text-muted-foreground">
