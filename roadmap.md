@@ -6,5 +6,5 @@
 - [x] Rebuild Contact with required fields, details, and next steps.
 - [x] Verify submissions, page navigation, and mobile layouts.
 - [x] Remove the scroll animation from Home's "What I build" list; all three rows show at once.
-- [x] Connect the real booking link to the "Book a 30-minute call" button on Contact.
+- [x] Connect the real booking link to the "Book a 15-minute call" button on Contact.
 - [ ] Add Mou's headshot to the About page and real screenshots to the sample project page when supplied.
