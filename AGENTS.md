@@ -13,5 +13,5 @@
 - Use the existing validated request server function for review and quote forms, storing service, message, and request_type separately so requests retain their intent.
 - Keep sample project details on their own content route; omit results until verified data exists.
 - Pre-optimize React and shared UI dependencies together in Vite so live previews do not mix dependency generations during incremental optimization.
-- Use StudioImage for shared editorial imagery; generated project visuals are illustrative concepts, not evidence of a completed client site.
-- Keep Home's sequential service reveal in ParallaxBuildItem, deriving reversible progress from the enclosing sticky section; reduced motion shows every row without sticky scroll space.
+- Use the shared ImagePlaceholder where a visual belongs so pages keep their structure until real assets arrive; never ship generated or stock imagery as a stand-in.
+- Keep the "What I build" list a plain static list with no scroll-driven animation or sticky reveal; the user asked for that motion removed.
