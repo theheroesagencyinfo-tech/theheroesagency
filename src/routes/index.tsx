@@ -3,7 +3,7 @@ import { Btn } from "@/components/site";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ImagePlaceholder } from "@/components/page";
 import { ReaderJourney, ReviewPreview } from "@/components/conversion";
-import { ParallaxNumeral } from "@/components/parallax-numeral";
+import { ParallaxBuildItem } from "@/components/parallax-numeral";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -73,15 +73,15 @@ function Home() {
           </div>
           <ol className="grid gap-10">
             {toc.map((t, index) => (
-              <li key={t.n}>
+              <ParallaxBuildItem key={t.n} index={index}>
                 <div className="flex items-baseline font-serif text-2xl sm:text-3xl">
-                  <ParallaxNumeral numeral={t.n} index={index} />
+                  <span className="mr-4 inline-block w-8 shrink-0 text-base text-muted-foreground">{t.n}</span>
                   <span>{t.title}</span>
                   <span className="leader" aria-hidden />
                   <span className="text-base italic text-muted-foreground sm:text-lg">{t.tag}</span>
                 </div>
                 <p className="ml-12 mt-2 max-w-[60ch] text-muted-foreground">{t.line}</p>
-              </li>
+              </ParallaxBuildItem>
             ))}
           </ol>
         </div>
