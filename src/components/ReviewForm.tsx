@@ -13,7 +13,7 @@ const fields: { id: Field; label: string; type: string; optional?: boolean; auto
 ];
 const inputClass = "w-full rounded-md border border-input bg-background px-4 py-3 text-base focus-visible:border-ring";
 
-export function ReviewForm({ mode = "review", selectedService }: { mode?: "review" | "quote"; selectedService?: string }) {
+export function ReviewForm({ mode = "review", selectedService }: { mode?: "review" | "quote"; selectedService?: string | undefined }) {
   const prefix = useId();
   const send = useServerFn(submitReview);
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
