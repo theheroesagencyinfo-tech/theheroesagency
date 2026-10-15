@@ -5,6 +5,7 @@ import { ImagePlaceholder } from "@/components/page";
 import { ReaderJourney, ReviewPreview } from "@/components/conversion";
 import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
+import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -127,11 +128,11 @@ function Home() {
               <h3 className="mt-2 text-2xl">The Quiet Advantage: sample author website</h3>
               <Link to="/projects/the-quiet-advantage" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
-            <article className="flex flex-col justify-center border-2 border-dashed p-8">
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Open slot</p>
-              <h3 className="mt-2 text-2xl">Your book could be here</h3>
-              <p className="mt-2 max-w-[50ch] text-muted-foreground">Reserved for the next author I work with.</p>
-              <Link to="/work" className="mt-6 self-start text-sm underline underline-offset-4">All work</Link>
+            <article>
+              <Link to="/projects/jonathan-reed" aria-label="View the Jonathan Reed author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={jonathanHome.url} alt="Jonathan Reed literary author website homepage" width={1024} height={1536} className="h-full w-full object-cover object-top" /></div></Link>
+              <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Literary author website · 6 pages</p>
+              <h3 className="mt-2 text-2xl">Jonathan Reed: author website</h3>
+              <Link to="/projects/jonathan-reed" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
           </div>
         </div>
