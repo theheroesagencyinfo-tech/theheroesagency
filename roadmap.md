@@ -10,4 +10,5 @@
 - [x] Add Daniel Carter's eight-page website to Work as a scrollable project preview; no "Open full image" link.
 - [x] Add Eleanor Whitmore's seven supplied pages to Work with a scrollable preview and verify all page selections on phone and desktop.
 - [x] Add Jonathan Reed to both portfolios with six supplied pages and verify his scrolling showcase on phone and desktop.
+- [x] Remove The Quiet Advantage sample project card from the Home and Work listings; its detail page is no longer linked.
 - [ ] Add Mou's headshot to the About page and real screenshots to the sample project page when supplied.
