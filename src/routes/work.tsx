@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro, ReviewCta } from "@/components/page";
+import { ImagePlaceholder } from "@/components/page";
 import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
@@ -37,6 +38,13 @@ function Work() {
         <p className="mt-3 text-muted-foreground">A literary author website bringing together books, journal essays, speaking events, and resources for readers.</p>
         <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Books</li><li>Reader resources</li></ul>
         <Link to="/projects/jonathan-reed" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
+      </article>
+      <article>
+        <Link to="/contact" hash="review" aria-label="Request a free review for your author website"><ImagePlaceholder label="Your project screenshot" /></Link>
+        <p className="mt-6 text-sm text-muted-foreground">Future author project</p>
+        <h2 className="mt-3 text-3xl">Your project could be here</h2>
+        <p className="mt-3 text-muted-foreground">A space for the next author website or book launch.</p>
+        <Link to="/contact" hash="review" className="mt-6 inline-block font-semibold underline underline-offset-4">Get my free author site review <span aria-hidden="true">↗</span></Link>
       </article>
     </div></section>
     <ReviewCta />

@@ -127,6 +127,12 @@ function Home() {
               <h3 className="mt-2 text-2xl">Jonathan Reed: author website</h3>
               <Link to="/projects/jonathan-reed" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
+            <article className="flex flex-col justify-center border-2 border-dashed p-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Open slot</p>
+              <h3 className="mt-2 text-2xl">Your book could be here</h3>
+              <p className="mt-2 max-w-[50ch] text-muted-foreground">Reserved for the next author I work with.</p>
+              <Link to="/work" className="mt-6 self-start text-sm underline underline-offset-4">All work <span aria-hidden="true">↗</span></Link>
+            </article>
           </div>
         </div>
       </section>
