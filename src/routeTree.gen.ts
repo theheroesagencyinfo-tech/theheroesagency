@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WorkRouteImport } from './routes/work'
+import { Route as ProjectsDanielCarterRouteImport } from './routes/projects.daniel-carter'
 import { Route as ProjectsTheQuietAdvantageRouteImport } from './routes/projects.the-quiet-advantage'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const WorkRoute = WorkRouteImport.update({
   path: '/work',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsDanielCarterRoute = ProjectsDanielCarterRouteImport.update({
+  id: '/projects/daniel-carter',
+  path: '/projects/daniel-carter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsTheQuietAdvantageRoute =
   ProjectsTheQuietAdvantageRouteImport.update({
     id: '/projects/the-quiet-advantage',
@@ -54,6 +60,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
 }
 export interface FileRoutesByTo {
@@ -62,6 +69,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
 }
 export interface FileRoutesById {
@@ -71,6 +79,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
 }
 export interface FileRouteTypes {
@@ -81,6 +90,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/work'
+    | '/projects/daniel-carter'
     | '/projects/the-quiet-advantage'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -89,6 +99,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/work'
+    | '/projects/daniel-carter'
     | '/projects/the-quiet-advantage'
   id:
     | '__root__'
@@ -97,6 +108,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/work'
+    | '/projects/daniel-carter'
     | '/projects/the-quiet-advantage'
   fileRoutesById: FileRoutesById
 }
@@ -106,6 +118,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRoute
   WorkRoute: typeof WorkRoute
+  ProjectsDanielCarterRoute: typeof ProjectsDanielCarterRoute
   ProjectsTheQuietAdvantageRoute: typeof ProjectsTheQuietAdvantageRoute
 }
 
@@ -146,6 +159,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects/daniel-carter': {
+      id: '/projects/daniel-carter'
+      path: '/projects/daniel-carter'
+      fullPath: '/projects/daniel-carter'
+      preLoaderRoute: typeof ProjectsDanielCarterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/the-quiet-advantage': {
       id: '/projects/the-quiet-advantage'
       path: '/projects/the-quiet-advantage'
@@ -162,6 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRoute,
   WorkRoute: WorkRoute,
+  ProjectsDanielCarterRoute: ProjectsDanielCarterRoute,
   ProjectsTheQuietAdvantageRoute: ProjectsTheQuietAdvantageRoute,
 }
 export const routeTree = rootRouteImport
