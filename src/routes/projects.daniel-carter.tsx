@@ -10,7 +10,6 @@ import speaking from "@/assets/daniel-carter/speaking.png.asset.json";
 import resources from "@/assets/daniel-carter/resources.png.asset.json";
 import contact from "@/assets/daniel-carter/contact.png.asset.json";
 
-export const danielCarterCover = home.url;
 
 const pages = [
   { label: "Homepage", src: home.url },
