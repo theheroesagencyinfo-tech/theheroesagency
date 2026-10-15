@@ -16,6 +16,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as ProjectsDanielCarterRouteImport } from './routes/projects.daniel-carter'
 import { Route as ProjectsEleanorWhitmoreRouteImport } from './routes/projects.eleanor-whitmore'
+import { Route as ProjectsJonathanReedRouteImport } from './routes/projects.jonathan-reed'
 import { Route as ProjectsTheQuietAdvantageRouteImport } from './routes/projects.the-quiet-advantage'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const ProjectsEleanorWhitmoreRoute = ProjectsEleanorWhitmoreRouteImport.update({
   path: '/projects/eleanor-whitmore',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsJonathanReedRoute = ProjectsJonathanReedRouteImport.update({
+  id: '/projects/jonathan-reed',
+  path: '/projects/jonathan-reed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsTheQuietAdvantageRoute =
   ProjectsTheQuietAdvantageRouteImport.update({
     id: '/projects/the-quiet-advantage',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/work': typeof WorkRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
+  '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
 }
 export interface FileRoutesByTo {
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/work': typeof WorkRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
+  '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
 }
 export interface FileRoutesById {
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/work': typeof WorkRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
+  '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
 }
 export interface FileRouteTypes {
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/work'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
+    | '/projects/jonathan-reed'
     | '/projects/the-quiet-advantage'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/work'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
+    | '/projects/jonathan-reed'
     | '/projects/the-quiet-advantage'
   id:
     | '__root__'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/work'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
+    | '/projects/jonathan-reed'
     | '/projects/the-quiet-advantage'
   fileRoutesById: FileRoutesById
 }
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   WorkRoute: typeof WorkRoute
   ProjectsDanielCarterRoute: typeof ProjectsDanielCarterRoute
   ProjectsEleanorWhitmoreRoute: typeof ProjectsEleanorWhitmoreRoute
+  ProjectsJonathanReedRoute: typeof ProjectsJonathanReedRoute
   ProjectsTheQuietAdvantageRoute: typeof ProjectsTheQuietAdvantageRoute
 }
 
@@ -186,6 +199,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsEleanorWhitmoreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projects/jonathan-reed': {
+      id: '/projects/jonathan-reed'
+      path: '/projects/jonathan-reed'
+      fullPath: '/projects/jonathan-reed'
+      preLoaderRoute: typeof ProjectsJonathanReedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projects/the-quiet-advantage': {
       id: '/projects/the-quiet-advantage'
       path: '/projects/the-quiet-advantage'
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   WorkRoute: WorkRoute,
   ProjectsDanielCarterRoute: ProjectsDanielCarterRoute,
   ProjectsEleanorWhitmoreRoute: ProjectsEleanorWhitmoreRoute,
+  ProjectsJonathanReedRoute: ProjectsJonathanReedRoute,
   ProjectsTheQuietAdvantageRoute: ProjectsTheQuietAdvantageRoute,
 }
 export const routeTree = rootRouteImport
