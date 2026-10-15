@@ -47,9 +47,8 @@ function Project() {
           <span className="mr-2 text-xs tabular-nums">{String(i + 1).padStart(2, "0")}</span>{p.label}</button>)}
       </div>
       <div>
-        <div className="flex items-baseline justify-between gap-4 border-b pb-3">
+        <div className="border-b pb-3">
           <h2 className="text-2xl">{page.label}</h2>
-          <a href={page.src} target="_blank" rel="noreferrer" className="text-sm underline underline-offset-4">Open full image ↗</a>
         </div>
         <div id="dc-viewer" ref={viewer} role="tabpanel" tabIndex={0} aria-label={`${page.label} screenshot, scrollable`}
           className="mt-4 h-[70vh] overflow-y-auto overscroll-contain border bg-muted focus-visible:outline-2 focus-visible:outline-ring">
