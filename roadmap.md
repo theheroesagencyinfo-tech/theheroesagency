@@ -8,4 +8,5 @@
 - [x] Remove the scroll animation from Home's "What I build" list; all three rows show at once.
 - [x] Connect the real booking link to the "Book a 15-minute call" button on Contact.
 - [x] Add Daniel Carter's eight-page website to Work as a scrollable project preview; no "Open full image" link.
+- [ ] Add Eleanor Whitmore's seven supplied pages to Work with a scrollable preview and verify all page selections on phone and desktop.
 - [ ] Add Mou's headshot to the About page and real screenshots to the sample project page when supplied.
