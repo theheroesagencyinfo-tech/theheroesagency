@@ -7,13 +7,13 @@ import { ReaderJourney, ReviewPreview } from "@/components/conversion";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TheHeroes Author Studio — Websites and funnels for nonfiction authors" },
+      { title: "TheHeroes Agency · Author Studio — Websites and funnels for nonfiction authors" },
       {
         name: "description",
         content:
           "Author websites, email funnels, and launch kits that turn readers into leads, subscribers, and speaking invitations. Get a free author site review.",
       },
-      { property: "og:title", content: "TheHeroes Author Studio" },
+      { property: "og:title", content: "TheHeroes Agency · Author Studio" },
       { property: "og:description", content: "Websites for nonfiction authors that bring you clients, not just sales." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

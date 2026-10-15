@@ -4,9 +4,9 @@ import { ImagePlaceholder } from "@/components/page";
 
 export const Route = createFileRoute("/work")({
   head: () => ({ meta: [
-    { title: "Selected work — TheHeroes Author Studio" },
+    { title: "Selected work — TheHeroes Agency · Author Studio" },
     { name: "description", content: "Explore The Quiet Advantage, a sample author website for a fictional author, and space for future author projects." },
-    { property: "og:title", content: "Selected work — TheHeroes Author Studio" },
+    { property: "og:title", content: "Selected work — TheHeroes Agency · Author Studio" },
     { property: "og:description", content: "Websites and launch assets for authors, starting with a clearly labelled fictional sample project." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: Work,
