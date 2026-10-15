@@ -3,6 +3,8 @@ import { Btn } from "@/components/site";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ImagePlaceholder } from "@/components/page";
 import { ReaderJourney, ReviewPreview } from "@/components/conversion";
+import danielHome from "@/assets/daniel-carter/home.png.asset.json";
+import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -106,17 +108,26 @@ function Home() {
         <div className="mx-auto max-w-6xl px-5 py-20">
           <SectionLabel>Selected work</SectionLabel>
           <h2 id="work-h" className="mt-4 text-4xl">Recent pages</h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-2">
-            <article className="flex flex-col rounded-lg border bg-card p-8">
-              <ImagePlaceholder label="Sample website screenshot" className="mb-8" />
-              <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Sample project · fictional author</p>
-              <h3 className="mt-2 text-2xl">A sample author website</h3>
-              <p className="mt-2 max-w-[55ch] text-muted-foreground">
-                A portfolio piece built for a fictional nonfiction author: homepage, book page, reader magnet, and speaking enquiries.
-              </p>
-               <Link to="/projects/the-quiet-advantage" className="mt-6 self-start"><Btn variant="ghost">View sample project</Btn></Link>
+          <div className="mt-12 grid gap-14 md:grid-cols-2 md:gap-x-8">
+            <article>
+              <Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={danielHome.url} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
+              <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Author website · 8 pages</p>
+              <h3 className="mt-2 text-2xl">Daniel Carter: author website</h3>
+              <Link to="/projects/daniel-carter" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
-            <article className="flex flex-col justify-center rounded-lg border-2 border-dashed p-8">
+            <article>
+              <Link to="/projects/eleanor-whitmore" aria-label="View the Eleanor Whitmore author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={eleanorHome.url} alt="Eleanor Whitmore author website homepage" width={830} height={1895} className="h-full w-full object-cover object-top" /></div></Link>
+              <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Author website · 7 pages</p>
+              <h3 className="mt-2 text-2xl">Eleanor Whitmore: author website</h3>
+              <Link to="/projects/eleanor-whitmore" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
+            </article>
+            <article>
+              <Link to="/projects/the-quiet-advantage" aria-label="View The Quiet Advantage sample project"><ImagePlaceholder label="Sample website screenshot" /></Link>
+              <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Sample project · fictional author</p>
+              <h3 className="mt-2 text-2xl">The Quiet Advantage: sample author website</h3>
+              <Link to="/projects/the-quiet-advantage" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
+            </article>
+            <article className="flex flex-col justify-center border-2 border-dashed p-8">
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Open slot</p>
               <h3 className="mt-2 text-2xl">Your book could be here</h3>
               <p className="mt-2 max-w-[50ch] text-muted-foreground">Reserved for the next author I work with.</p>
