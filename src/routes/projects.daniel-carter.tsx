@@ -36,7 +36,7 @@ function Project() {
   const [active, setActive] = useState(0);
   const viewer = useRef<HTMLDivElement>(null);
   useEffect(() => { viewer.current?.scrollTo({ top: 0 }); }, [active]);
-  const page = pages[active];
+  const page = pages[active] ?? pages[0]!;
   return <>
     <div className="mx-auto max-w-6xl px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
     <PageIntro label="Author website · 8 pages" title="Daniel Carter.">An eight-page author website design. Pick a page, then scroll up and down to see all of it.</PageIntro>
