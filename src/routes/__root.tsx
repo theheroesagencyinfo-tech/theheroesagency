@@ -79,9 +79,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TheHeroes Author Studio" },
+      { title: "TheHeroes Agency · Author Studio" },
       { name: "description", content: "Websites and launch funnels for nonfiction authors." },
-      { property: "og:site_name", content: "TheHeroes Author Studio" },
+      { property: "og:site_name", content: "TheHeroes Agency" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
