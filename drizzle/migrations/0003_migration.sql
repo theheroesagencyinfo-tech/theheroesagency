@@ -1,0 +1,1 @@
+DELETE FROM public.project_reviews WHERE name = 'Test' AND comment = 'Lovely site';

@@ -22,6 +22,13 @@
       "when": 1792174493260,
       "tag": "0002_project_reviews",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1792174583974,
+      "tag": "0003_migration",
+      "breakpoints": true
     }
   ]
 }
