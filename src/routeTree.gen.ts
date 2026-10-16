@@ -15,6 +15,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContrastCheckRouteImport } from './routes/contrast-check'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -50,6 +51,11 @@ const ContactRoute = ContactRouteImport.update({
 const ContrastCheckRoute = ContrastCheckRouteImport.update({
   id: '/contrast-check',
   path: '/contrast-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -125,6 +133,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -141,6 +150,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/contrast-check'
+    | '/pricing'
     | '/services'
     | '/work'
     | '/admin'
@@ -155,6 +165,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/contrast-check'
+    | '/pricing'
     | '/services'
     | '/work'
     | '/admin'
@@ -170,6 +181,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/contrast-check'
+    | '/pricing'
     | '/services'
     | '/work'
     | '/_authenticated/admin'
@@ -186,6 +198,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   ContrastCheckRoute: typeof ContrastCheckRoute
+  PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRoute
   WorkRoute: typeof WorkRoute
   ProjectsDanielCarterRoute: typeof ProjectsDanielCarterRoute
@@ -236,6 +249,13 @@ declare module '@tanstack/react-router' {
       path: '/contrast-check'
       fullPath: '/contrast-check'
       preLoaderRoute: typeof ContrastCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -308,6 +328,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   ContrastCheckRoute: ContrastCheckRoute,
+  PricingRoute: PricingRoute,
   ServicesRoute: ServicesRoute,
   WorkRoute: WorkRoute,
   ProjectsDanielCarterRoute: ProjectsDanielCarterRoute,
