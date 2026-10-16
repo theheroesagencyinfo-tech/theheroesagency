@@ -36,7 +36,7 @@ export function invoiceLines(pkg: PackageSlug, addonList: string[], rush: boolea
   const oneOff = lines.filter(l => !l.monthly).reduce((t, l) => t + l.amount, 0);
   const monthly = lines.filter(l => l.monthly).reduce((t, l) => t + l.amount, 0);
   const schedule = pkg === "book-launch"
-    ? [{ label: "Payment 1 of 3", amount: Math.round(oneOff / 3) }, { label: "Payment 2 of 3", amount: Math.round(oneOff / 3) }, { label: "Payment 3 of 3", amount: oneOff - 2 * Math.round(oneOff / 3) }]
+    ? [{ label: "50% deposit to reserve your project", amount: Math.round(oneOff * 0.5) }, { label: "50% before launch", amount: oneOff - Math.round(oneOff * 0.5) }]
     : [{ label: "40% deposit to reserve your project", amount: Math.round(oneOff * 0.4) }, { label: "30% at design and content approval", amount: Math.round(oneOff * 0.3) }, { label: "30% before launch or handover", amount: oneOff - Math.round(oneOff * 0.4) - Math.round(oneOff * 0.3) }];
   return { lines, oneOff, monthly, schedule };
 }
