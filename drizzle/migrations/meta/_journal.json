@@ -29,6 +29,13 @@
       "when": 1792174583974,
       "tag": "0003_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792175612137,
+      "tag": "0004_admin_roles",
+      "breakpoints": true
     }
   ]
 }
