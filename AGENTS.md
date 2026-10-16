@@ -17,3 +17,4 @@
 - Use the shared ImagePlaceholder where a visual belongs so pages keep their structure until real assets arrive; never ship generated or stock imagery as a stand-in.
 - Keep the "What I build" list a plain static list with no scroll-driven animation or sticky reveal; the user asked for that motion removed.
 - Keep legal documents in a shared browser-safe policy module and render dedicated policy routes with LegalPage; reuse its revision wording in package and service copy to prevent contradictory promises.
+- Enforce country access in the server entry before dispatch using trusted request.cf country metadata, never caller headers; disable page prerendering and keep blocked responses uncached so delivery cannot bypass the gate or leak restrictions to other visitors.
