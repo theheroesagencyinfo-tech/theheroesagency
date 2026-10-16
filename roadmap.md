@@ -13,7 +13,8 @@
 - [x] Remove The Quiet Advantage sample project card from the Home and Work listings; its detail page is no longer linked.
 - [x] Restore the open-slot panel on Home ("Your book could be here" → All work) and on Work ("Your project could be here" → free review form) so both grids stay full.
 - [x] Swap the accent colour from periwinkle to deep green across light and dark mode tokens.
-- [ ] Add Mou's headshot to the About page and real screenshots to the sample project page when supplied.
+- [x] Mou photo stack on About (burgundy first, tap to swap).
+- [x] Case studies, author 5-star reviews, and visitor review form (shown after approval) on Daniel, Eleanor, Jonathan.
 - [x] AI contrast checker page (/contrast-check)
 - [x] Faded (~25%) banner image behind homepage first section, text overlaid
 - [x] Site-wide announcement bar in the button green, sliding right to left at a slow speed, with the 30%-off-until-12-December offer.
