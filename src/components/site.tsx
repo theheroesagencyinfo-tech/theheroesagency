@@ -106,7 +106,28 @@ export function Header() {
   );
 }
 
+export function AnnouncementBar() {
+  return (
+    <div className="bg-primary text-primary-foreground overflow-hidden">
+      <p className="sr-only">{ANNOUNCEMENT_ITEMS.join(". ")}</p>
+      <div aria-hidden="true" className="announce-track py-2 text-sm font-medium tracking-wide">
+        {[0, 1].map((half) => (
+          <span key={half} className="flex shrink-0 items-center">
+            {ANNOUNCEMENT_ITEMS.map((item) => (
+              <span key={item} className="flex items-center whitespace-nowrap">
+                <span className="px-6">{item}</span>
+                <span className="opacity-60">/</span>
+              </span>
+            ))}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Footer() {
+
   return (
     <footer className="border-t">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 text-sm text-muted-foreground md:flex-row md:justify-between">
