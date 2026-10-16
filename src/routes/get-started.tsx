@@ -5,7 +5,8 @@ import { Check } from "lucide-react";
 import { z } from "zod";
 import { BOOKING_URL } from "@/components/site";
 import { Button } from "@/components/ui/button";
-import { packages, addons, RUSH, packageSlugs, orderSchema } from "@/lib/packages";
+import { packages, addons, RUSH, packageSlugs, orderSchema, invoiceLines, type OrderInput } from "@/lib/packages";
+import { money } from "@/lib/client-projects";
 import { submitOrder } from "@/lib/orders.functions";
 
 export const Route = createFileRoute("/get-started")({
@@ -30,18 +31,18 @@ function GetStarted() {
   const [slug, setSlug] = useState(search.package);
   const [chosen, setChosen] = useState<string[]>([]);
   const [rush, setRush] = useState(false);
-  const [step, setStep] = useState<"choose" | "method" | "details" | "done">("choose");
+  const [step, setStep] = useState<"choose" | "method" | "done">("choose");
   const [wantsCall, setWantsCall] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "failed">("idle");
+  const [contact, setContact] = useState<Pick<OrderInput, "name" | "email" | "book" | "message"> | null>(null);
   const pkg = packages.find(p => p.slug === slug)!;
   const toggle = (id: string) => setChosen(c => c.includes(id) ? c.filter(x => x !== id) : [...c, id]);
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  function onConfirm(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (status === "sending") return;
     const form = e.currentTarget;
-    const parsed = orderSchema.safeParse({ ...Object.fromEntries(new FormData(form)), package: slug, addons: chosen, rush, wants_call: wantsCall });
+    const parsed = orderSchema.safeParse({ ...Object.fromEntries(new FormData(form)), package: slug, addons: chosen, rush });
     if (!parsed.success) {
       const errs: Partial<Record<Field, string>> = {};
       for (const i of parsed.error.issues) errs[i.path[0] as Field] ??= i.message;
@@ -50,19 +51,32 @@ function GetStarted() {
       if (first) (form.elements.namedItem(String(first)) as HTMLElement | null)?.focus();
       return;
     }
-    setErrors({}); setStatus("sending");
-    try { const r = await send({ data: parsed.data }); if (r.ok) { setStatus("idle"); setStep("done"); window.scrollTo({ top: 0 }); } else setStatus("failed"); }
-    catch { setStatus("failed"); }
+    setErrors({});
+    const { name, email, book, message } = parsed.data;
+    setContact({ name, email, book, message }); setStep("method"); window.scrollTo({ top: 0 });
   }
 
+  async function sendWith(call: boolean) {
+    if (!contact || status === "sending") return;
+    setWantsCall(call); setStatus("sending");
+    try {
+      const r = await send({ data: { ...contact, package: slug, addons: chosen, rush, wants_call: call } });
+      if (r.ok) { setStatus("idle"); setStep("done"); window.scrollTo({ top: 0 }); } else setStatus("failed");
+    } catch { setStatus("failed"); }
+  }
+
+  const inv = invoiceLines(slug, chosen, rush);
   const summary = <aside className="h-fit border-t pt-6 md:sticky md:top-28">
     <p className="text-sm text-muted-foreground">Your selection</p>
     <h2 className="mt-2 text-3xl">{pkg.name}</h2>
     <p className="mt-2"><span className="text-sm text-muted-foreground">From </span><span className="font-serif text-3xl">{pkg.price}</span> <span className="text-sm text-muted-foreground">· {pkg.time}</span></p>
     {(chosen.length > 0 || rush) && <ul className="mt-5 space-y-2 border-t pt-5 text-sm">
-      {addons.filter(a => chosen.includes(a.id)).map(a => <li key={a.id} className="flex justify-between gap-4"><span>{a.name}</span><span className="shrink-0 font-semibold">{a.price}</span></li>)}
-      {rush && <li className="flex justify-between gap-4"><span>{RUSH.name}</span><span className="shrink-0 font-semibold">{RUSH.price}</span></li>}
+      {inv.lines.slice(1).map(l => <li key={l.label} className="flex justify-between gap-4"><span>{l.label}</span><span className="shrink-0 font-semibold">+{money(l.amount)}{l.monthly ? "/month" : ""}</span></li>)}
     </ul>}
+    <div className="mt-5 flex items-baseline justify-between gap-4 border-t pt-5" aria-live="polite">
+      <span className="font-semibold">Estimated total</span><span className="font-serif text-4xl">{money(inv.oneOff)}</span>
+    </div>
+    {inv.monthly > 0 && <p className="mt-1 text-right text-sm">+ {money(inv.monthly)}/month for ongoing services</p>}
     <p className="mt-5 text-sm text-muted-foreground">Final price is confirmed in a written scope before any payment.</p>
   </aside>;
 
@@ -83,8 +97,8 @@ function GetStarted() {
   return <>
     <section className="mx-auto max-w-6xl px-5 pb-10 pt-16 sm:pt-20">
       <Link to="/pricing" hash="packages" className="text-sm underline underline-offset-4">← Back to pricing</Link>
-      <h1 className="mt-6 max-w-[22ch] text-4xl leading-[1.08] sm:text-6xl">{step === "choose" ? "Confirm your package." : step === "method" ? "How would you like to continue?" : "Send your project details."}</h1>
-      <ol className="mt-6 flex gap-6 text-sm text-muted-foreground">{["Package", "Next step", "Details"].map((l, i) => <li key={l} className={i === ["choose", "method", "details"].indexOf(step) ? "font-semibold text-foreground" : ""}>0{i + 1} {l}</li>)}</ol>
+      <h1 className="mt-6 max-w-[22ch] text-4xl leading-[1.08] sm:text-6xl">{step === "choose" ? "Confirm your package." : "How would you like to move forward?"}</h1>
+      <ol className="mt-6 flex gap-6 text-sm text-muted-foreground">{["Package", "Next step"].map((l, i) => <li key={l} className={i === ["choose", "method"].indexOf(step) ? "font-semibold text-foreground" : ""}>0{i + 1} {l}</li>)}</ol>
     </section>
     <section className="border-t"><div className="mx-auto grid max-w-6xl gap-12 px-5 py-14 md:grid-cols-[1.4fr_1fr]">
       <div>
