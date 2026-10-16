@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { BOOKING_URL } from "@/components/site";
+import { packages, addons, RUSH } from "@/lib/packages";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
@@ -28,11 +30,6 @@ const audience = [
   "Want a strategic partner, not a freelancer who builds one piece",
 ];
 
-const packages = [
-  { name: "Book presence", price: "$1,500", time: "2 weeks", best: "Authors who need a professional home for their book and a way to capture readers.", outcome: "Give readers a clear place to learn about the book, buy it, and join your email list.", cta: "Start with book presence", items: ["Strategy call to define audience, reader journey, and primary next step", "One-page author and book landing page", "Book description, author bio, and testimonials section", "Retailer or preorder links", "Email signup form", "Connection to your email platform", "Mobile optimization", "One round of revisions", "Handover walkthrough"] },
-  { name: "Reader-to-client system", price: "$3,000", time: "3 weeks", popular: true, best: "Authors who want to build an email list and create inquiries beyond book sales.", outcome: "Turn readers into subscribers, and subscribers into conversations, clients, or speaking opportunities.", cta: "Build my reader-to-client system", items: ["Everything in book presence", "Up to 5-page author website", "Reader-magnet strategy: checklist, workbook, template, excerpt, or short guide", "Reader-magnet landing page", "Email platform setup and tagging structure", "Automated 5-email welcome sequence", "3–5 email post-book nurture sequence", "Clear “work with me,” booking, or speaking inquiry path", "Basic analytics setup", "Two rounds of revisions", "Handover documentation and training"] },
-  { name: "Book launch platform", price: "$5,500", time: "4 weeks", best: "Authors preparing for a major launch or building long-term authority.", outcome: "Launch your book with a coordinated website, email, and video campaign.", cta: "Plan my book launch", items: ["Everything in reader-to-client system", "Launch strategy session and roadmap", "Pre-launch page with waitlist or preorder capture", "5–7 email launch sequence", "3 post-launch follow-up emails", "ARC and reviewer outreach page or form", "8–12 social launch graphics", "2–3 AI-powered short vertical video ads", "Ad-ready copy for Meta, Instagram, YouTube, or LinkedIn", "Launch-week support", "Post-launch review call with recommendations"] },
-];
 
 const journeys = [
   ["Book presence", "A reader discovers the book and joins your list."],
@@ -40,17 +37,6 @@ const journeys = [
   ["Book launch platform", "A reader preorders, buys during launch week, joins your list, or asks about working with you."],
 ];
 
-const addons = [
-  ["Additional book or program page", "from $350"],
-  ["Additional 5-email sequence", "from $500"],
-  ["Extra AI video ad", "from $250"],
-  ["Speaker page or media kit", "from $400"],
-  ["Lead-magnet copywriting only", "from $400"],
-  ["Monthly email management, 2 emails a month", "from $500/month"],
-  ["Website maintenance", "from $150/month"],
-  ["Paid ads management, excluding ad spend", "from $750/month"],
-  ["Rush delivery, subject to availability", "+$150"],
-];
 
 const steps = [
   ["Discovery call", "We clarify your book, audience, goals, and the best next step for readers."],
@@ -104,7 +90,7 @@ function Pricing() {
           <p className="mt-5 text-sm"><span className="font-semibold">Best for: </span>{p.best}</p>
           <p className="mt-3 text-sm"><span className="font-semibold">Outcome: </span>{p.outcome}</p>
           <ul className="mt-6 space-y-3 border-t pt-6 text-sm">{p.items.map(i => <li key={i} className="flex gap-3"><Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-primary" />{i}</li>)}</ul>
-          <div className="mt-auto pt-8"><CallButton variant={p.popular ? "studio" : "studioOutline"} className="w-full">{p.cta}</CallButton></div>
+          <div className="mt-auto pt-8"><Button asChild variant={p.popular ? "studio" : "studioOutline"} size="studio" className="w-full"><Link to="/get-started" search={{ package: p.slug }}>{p.cta}</Link></Button></div>
         </article>)}
       </div>
       <p className="mt-10 border-l-2 border-primary pl-4 text-sm">Need it faster? Rush delivery is available for an additional $150, subject to availability.</p>
@@ -119,7 +105,7 @@ function Pricing() {
 
     <section className="border-t bg-secondary"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]">
       <h2 className="text-4xl">Need something specific?</h2>
-      <dl className="divide-y border-y">{addons.map(([n, p]) => <div key={n} className="flex justify-between gap-6 py-4"><dt>{n}</dt><dd className="shrink-0 font-semibold">{p}</dd></div>)}</dl>
+      <dl className="divide-y border-y">{[...addons.map(a => [a.name, a.price]), [RUSH.name, RUSH.price]].map(([n, p]) => <div key={n} className="flex justify-between gap-6 py-4"><dt>{n}</dt><dd className="shrink-0 font-semibold">{p}</dd></div>)}</dl>
     </div></section>
 
     <section className="border-t"><div className="mx-auto max-w-6xl px-5 py-16">

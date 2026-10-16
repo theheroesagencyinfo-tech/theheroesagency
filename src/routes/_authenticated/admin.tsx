@@ -2,10 +2,12 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { packages, addons, orderStatuses } from "@/lib/packages";
 import type { Database } from "@/integrations/supabase/types";
 
 type Review = Database["public"]["Tables"]["project_reviews"]["Row"];
 type Request = Database["public"]["Tables"]["review_requests"]["Row"];
+type Order = Database["public"]["Tables"]["package_orders"]["Row"];
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [
@@ -24,15 +26,18 @@ const fmt = (d: string) => new Date(d).toLocaleString();
 function Admin() {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [tab, setTab] = useState<"reviews" | "messages">("reviews");
+  const [tab, setTab] = useState<"orders" | "reviews" | "messages">("orders");
   const [reviews, setReviews] = useState<Review[]>([]);
   const [requests, setRequests] = useState<Request[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   async function load() {
-    const [r, m] = await Promise.all([
+    const [r, m, o] = await Promise.all([
       supabase.from("project_reviews").select("*").order("approved").order("created_at", { ascending: false }),
       supabase.from("review_requests").select("*").order("created_at", { ascending: false }),
+      supabase.from("package_orders").select("*").order("created_at", { ascending: false }),
     ]);
+    setOrders(o.data ?? []);
     setReviews(r.data ?? []); setRequests(m.data ?? []);
   }
   useEffect(() => {
@@ -56,6 +61,13 @@ function Admin() {
     if (!confirm("Delete this message?")) return;
     await supabase.from("review_requests").delete().eq("id", id); load();
   }
+  async function setStatus(id: string, status: string) {
+    await supabase.from("package_orders").update({ status }).eq("id", id); load();
+  }
+  async function removeOrder(id: string) {
+    if (!confirm("Delete this order?")) return;
+    await supabase.from("package_orders").delete().eq("id", id); load();
+  }
   async function signOut() { await supabase.auth.signOut(); navigate({ to: "/auth", replace: true }); }
 
   if (isAdmin === null) return <p className="mx-auto max-w-6xl px-5 py-20 text-muted-foreground">Loading…</p>;
@@ -68,10 +80,27 @@ function Admin() {
       <Button onClick={signOut} variant="studioOutline" size="studio">Sign out</Button>
     </div>
     <div role="tablist" className="mt-10 flex gap-6 border-b">
-      {([["reviews", `Reviews (${pending} pending)`], ["messages", `Messages (${requests.length})`]] as const).map(([k, l]) =>
+      {([["orders", `Orders (${orders.filter(o => o.status === "new").length} new)`], ["reviews", `Reviews (${pending} pending)`], ["messages", `Messages (${requests.length})`]] as const).map(([k, l]) =>
         <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`-mb-px border-b-2 pb-3 text-sm font-semibold ${tab === k ? "border-primary text-foreground" : "border-transparent text-muted-foreground"}`}>{l}</button>)}
     </div>
-    {tab === "reviews" ? <ul className="divide-y">
+    {tab === "orders" ? <ul className="divide-y">
+      {orders.length === 0 && <li className="py-8 text-muted-foreground">No orders yet.</li>}
+      {orders.map(o => <li key={o.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
+        <div>
+          <p className="text-sm text-muted-foreground">{fmt(o.created_at)} · {o.wants_call ? <span className="font-semibold text-primary">Wants a call first</span> : "Ready for invoice"}</p>
+          <p className="mt-2 text-xl">{packages.find(p => p.slug === o.package)?.name}</p>
+          <p className="mt-1 font-semibold">{o.name} · <a href={`mailto:${o.email}`} className="underline underline-offset-4">{o.email}</a></p>
+          <p className="mt-1">Book: {o.book}</p>
+          {(o.addons.length > 0 || o.rush) && <p className="mt-1 text-sm">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
+          {o.message && <p className="mt-3 max-w-[70ch] whitespace-pre-wrap">{o.message}</p>}
+        </div>
+        <div className="flex flex-wrap gap-3 md:flex-col">
+          <label className="text-sm">Status <select value={o.status} onChange={e => setStatus(o.id, e.target.value)} className="ml-2 rounded-md border border-input bg-background px-2 py-1">{orderStatuses.map(s => <option key={s} value={s}>{s}</option>)}</select></label>
+          <Button asChild variant="studio" size="sm"><a href={`mailto:${o.email}?subject=${encodeURIComponent(`Your ${packages.find(p => p.slug === o.package)?.name} project`)}`}>Email client</a></Button>
+          <Button onClick={() => removeOrder(o.id)} variant="ghost" size="sm">Delete</Button>
+        </div>
+      </li>)}
+    </ul> : tab === "reviews" ? <ul className="divide-y">
       {reviews.length === 0 && <li className="py-8 text-muted-foreground">No reviews yet.</li>}
       {reviews.map(r => <li key={r.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
