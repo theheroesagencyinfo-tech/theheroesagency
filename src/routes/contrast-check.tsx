@@ -119,7 +119,7 @@ function ContrastCheck() {
             </div>
           : <div className="flex h-64 items-center justify-center border border-dashed text-sm text-muted-foreground">Your page preview appears here</div>}
 
-        {status === "loading" && <p className="text-sm text-muted-foreground" aria-live="polite">Reading the page — this usually takes 20–60 seconds.</p>}
+        {status === "loading" && <p className="text-sm text-muted-foreground" aria-live="polite">Reading the page. This usually takes 20 to 60 seconds.</p>}
 
         {report && <div aria-live="polite">
           <h2 className="text-2xl">{report.issues.length ? `${report.issues.length} hard-to-read ${report.issues.length === 1 ? "spot" : "spots"}` : "No contrast problems found"}</h2>
