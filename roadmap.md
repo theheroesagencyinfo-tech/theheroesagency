@@ -18,4 +18,7 @@
 - [x] AI contrast checker page (/contrast-check)
 - [x] Faded (~25%) banner image behind homepage first section, text overlaid
 - [x] Site-wide announcement bar in the button green, sliding right to left at a slow speed, with the 30%-off-until-12-December offer.
+- [x] Add Terms of service, Privacy policy and Refund policy pages and footer links.
+- [x] Align revision promises with unlimited revisions within scope and test confirmed policy values.
+- [x] Verify legal pages and navigation on desktop and phone layouts.
 

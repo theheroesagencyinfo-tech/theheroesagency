@@ -17,7 +17,10 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContrastCheckRouteImport } from './routes/contrast-check'
 import { Route as GetStartedRouteImport } from './routes/get-started'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
@@ -68,9 +71,24 @@ const PricingRoute = PricingRouteImport.update({
   path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RefundPolicyRoute = RefundPolicyRouteImport.update({
+  id: '/refund-policy',
+  path: '/refund-policy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkRoute = WorkRouteImport.update({
@@ -135,7 +153,10 @@ export interface FileRoutesByFullPath {
   '/contrast-check': typeof ContrastCheckRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
+  '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -155,7 +176,10 @@ export interface FileRoutesByTo {
   '/contrast-check': typeof ContrastCheckRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
+  '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
@@ -177,7 +201,10 @@ export interface FileRoutesById {
   '/contrast-check': typeof ContrastCheckRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
+  '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
+  '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
@@ -199,7 +226,10 @@ export interface FileRouteTypes {
     | '/contrast-check'
     | '/get-started'
     | '/pricing'
+    | '/privacy'
+    | '/refund-policy'
     | '/services'
+    | '/terms'
     | '/work'
     | '/account'
     | '/admin'
@@ -219,7 +249,10 @@ export interface FileRouteTypes {
     | '/contrast-check'
     | '/get-started'
     | '/pricing'
+    | '/privacy'
+    | '/refund-policy'
     | '/services'
+    | '/terms'
     | '/work'
     | '/account'
     | '/admin'
@@ -240,7 +273,10 @@ export interface FileRouteTypes {
     | '/contrast-check'
     | '/get-started'
     | '/pricing'
+    | '/privacy'
+    | '/refund-policy'
     | '/services'
+    | '/terms'
     | '/work'
     | '/_authenticated/account'
     | '/_authenticated/admin'
@@ -262,7 +298,10 @@ export interface RootRouteChildren {
   ContrastCheckRoute: typeof ContrastCheckRoute
   GetStartedRoute: typeof GetStartedRoute
   PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
+  RefundPolicyRoute: typeof RefundPolicyRoute
   ServicesRoute: typeof ServicesRoute
+  TermsRoute: typeof TermsRoute
   WorkRoute: typeof WorkRoute
   ProjectsDanielCarterRoute: typeof ProjectsDanielCarterRoute
   ProjectsEleanorWhitmoreRoute: typeof ProjectsEleanorWhitmoreRoute
@@ -328,11 +367,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/refund-policy': {
+      id: '/refund-policy'
+      path: '/refund-policy'
+      fullPath: '/refund-policy'
+      preLoaderRoute: typeof RefundPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/work': {
@@ -436,7 +496,10 @@ const rootRouteChildren: RootRouteChildren = {
   ContrastCheckRoute: ContrastCheckRoute,
   GetStartedRoute: GetStartedRoute,
   PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
+  RefundPolicyRoute: RefundPolicyRoute,
   ServicesRoute: ServicesRoute,
+  TermsRoute: TermsRoute,
   WorkRoute: WorkRoute,
   ProjectsDanielCarterRoute: ProjectsDanielCarterRoute,
   ProjectsEleanorWhitmoreRoute: ProjectsEleanorWhitmoreRoute,

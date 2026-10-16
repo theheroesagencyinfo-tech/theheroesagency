@@ -16,3 +16,4 @@
 - Pre-optimize React and shared UI dependencies together in Vite so live previews do not mix dependency generations during incremental optimization.
 - Use the shared ImagePlaceholder where a visual belongs so pages keep their structure until real assets arrive; never ship generated or stock imagery as a stand-in.
 - Keep the "What I build" list a plain static list with no scroll-driven animation or sticky reveal; the user asked for that motion removed.
+- Keep legal documents in a shared browser-safe policy module and render dedicated policy routes with LegalPage; reuse its revision wording in package and service copy to prevent contradictory promises.
