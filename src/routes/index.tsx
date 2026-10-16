@@ -6,6 +6,7 @@ import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
 import banner from "@/assets/banner-writers-desk.png.asset.json";
+import { ProjectRating } from "@/components/project-rating";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -117,18 +118,21 @@ function Home() {
               <Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={danielHome.url} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Author website · 8 pages</p>
               <h3 className="mt-2 text-2xl">Daniel Carter: author website</h3>
+              <ProjectRating project="daniel-carter" />
               <Link to="/projects/daniel-carter" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
             <article>
               <Link to="/projects/eleanor-whitmore" aria-label="View the Eleanor Whitmore author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={eleanorHome.url} alt="Eleanor Whitmore author website homepage" width={830} height={1895} className="h-full w-full object-cover object-top" /></div></Link>
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Author website · 7 pages</p>
               <h3 className="mt-2 text-2xl">Eleanor Whitmore: author website</h3>
+              <ProjectRating project="eleanor-whitmore" />
               <Link to="/projects/eleanor-whitmore" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
             <article>
               <Link to="/projects/jonathan-reed" aria-label="View the Jonathan Reed author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={jonathanHome.url} alt="Jonathan Reed literary author website homepage" width={1024} height={1536} className="h-full w-full object-cover object-top" /></div></Link>
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Literary author website · 6 pages</p>
               <h3 className="mt-2 text-2xl">Jonathan Reed: author website</h3>
+              <ProjectRating project="jonathan-reed" />
               <Link to="/projects/jonathan-reed" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
             <article className="flex flex-col justify-center border-2 border-dashed p-8">

@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ProjectRating } from "@/components/project-rating";
 import { PageIntro, ReviewCta } from "@/components/page";
 import { ImagePlaceholder } from "@/components/page";
 import danielHome from "@/assets/daniel-carter/home.png.asset.json";
@@ -21,6 +22,7 @@ function Work() {
       <article><Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={danielHome.url} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
         <p className="mt-6 text-sm text-muted-foreground">Author website · 8 pages</p>
         <h2 className="mt-3 text-3xl">Daniel Carter: author website</h2>
+        <ProjectRating project="daniel-carter" />
         <p className="mt-3 text-muted-foreground">A full website for a nonfiction author, from homepage and books to speaking and newsletter.</p>
         <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Book page</li><li>Newsletter</li></ul>
         <Link to="/projects/daniel-carter" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
@@ -28,6 +30,7 @@ function Work() {
       <article><Link to="/projects/eleanor-whitmore" aria-label="View the Eleanor Whitmore author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={eleanorHome.url} alt="Eleanor Whitmore author website homepage" width={830} height={1895} className="h-full w-full object-cover object-top" /></div></Link>
         <p className="mt-6 text-sm text-muted-foreground">Author website · 7 pages</p>
         <h2 className="mt-3 text-3xl">Eleanor Whitmore: author website</h2>
+        <ProjectRating project="eleanor-whitmore" />
         <p className="mt-3 text-muted-foreground">An author website bringing together The Kindness Effect, journal, events, and reader resources.</p>
         <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Book page</li><li>Reader resources</li></ul>
         <Link to="/projects/eleanor-whitmore" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
@@ -35,6 +38,7 @@ function Work() {
       <article><Link to="/projects/jonathan-reed" aria-label="View the Jonathan Reed author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={jonathanHome.url} alt="Jonathan Reed literary author website homepage" width={1024} height={1536} className="h-full w-full object-cover object-top" /></div></Link>
         <p className="mt-6 text-sm text-muted-foreground">Literary author website · 6 pages</p>
         <h2 className="mt-3 text-3xl">Jonathan Reed: author website</h2>
+        <ProjectRating project="jonathan-reed" />
         <p className="mt-3 text-muted-foreground">A literary author website bringing together books, journal essays, speaking events, and resources for readers.</p>
         <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Books</li><li>Reader resources</li></ul>
         <Link to="/projects/jonathan-reed" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
