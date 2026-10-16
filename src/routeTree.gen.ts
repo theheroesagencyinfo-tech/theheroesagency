@@ -15,9 +15,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContrastCheckRouteImport } from './routes/contrast-check'
+import { Route as GetStartedRouteImport } from './routes/get-started'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WorkRouteImport } from './routes/work'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ProjectsDanielCarterRouteImport } from './routes/projects.daniel-carter'
 import { Route as ProjectsEleanorWhitmoreRouteImport } from './routes/projects.eleanor-whitmore'
@@ -53,6 +55,11 @@ const ContrastCheckRoute = ContrastCheckRouteImport.update({
   path: '/contrast-check',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GetStartedRoute = GetStartedRouteImport.update({
+  id: '/get-started',
+  path: '/get-started',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
@@ -67,6 +74,11 @@ const WorkRoute = WorkRouteImport.update({
   id: '/work',
   path: '/work',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
@@ -101,9 +113,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
@@ -116,9 +130,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
@@ -133,9 +149,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
@@ -150,9 +168,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/contrast-check'
+    | '/get-started'
     | '/pricing'
     | '/services'
     | '/work'
+    | '/account'
     | '/admin'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
@@ -165,9 +185,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/contrast-check'
+    | '/get-started'
     | '/pricing'
     | '/services'
     | '/work'
+    | '/account'
     | '/admin'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
@@ -181,9 +203,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/contact'
     | '/contrast-check'
+    | '/get-started'
     | '/pricing'
     | '/services'
     | '/work'
+    | '/_authenticated/account'
     | '/_authenticated/admin'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
@@ -198,6 +222,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   ContrastCheckRoute: typeof ContrastCheckRoute
+  GetStartedRoute: typeof GetStartedRoute
   PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRoute
   WorkRoute: typeof WorkRoute
@@ -251,6 +276,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContrastCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/get-started': {
+      id: '/get-started'
+      path: '/get-started'
+      fullPath: '/get-started'
+      preLoaderRoute: typeof GetStartedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pricing': {
       id: '/pricing'
       path: '/pricing'
@@ -271,6 +303,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/work'
       preLoaderRoute: typeof WorkRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/admin': {
       id: '/_authenticated/admin'
@@ -311,10 +350,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
 }
 
@@ -328,6 +369,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   ContrastCheckRoute: ContrastCheckRoute,
+  GetStartedRoute: GetStartedRoute,
   PricingRoute: PricingRoute,
   ServicesRoute: ServicesRoute,
   WorkRoute: WorkRoute,
