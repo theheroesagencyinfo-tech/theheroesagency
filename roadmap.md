@@ -12,4 +12,5 @@
 - [x] Add Jonathan Reed to both portfolios with six supplied pages and verify his scrolling showcase on phone and desktop.
 - [x] Remove The Quiet Advantage sample project card from the Home and Work listings; its detail page is no longer linked.
 - [x] Restore the open-slot panel on Home ("Your book could be here" → All work) and on Work ("Your project could be here" → free review form) so both grids stay full.
+- [x] Swap the accent colour from periwinkle to deep green across light and dark mode tokens.
 - [ ] Add Mou's headshot to the About page and real screenshots to the sample project page when supplied.
