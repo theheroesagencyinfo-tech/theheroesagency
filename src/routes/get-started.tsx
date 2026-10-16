@@ -102,7 +102,7 @@ function GetStarted() {
     </section>
     <section className="border-t"><div className="mx-auto grid max-w-6xl gap-12 px-5 py-14 md:grid-cols-[1.4fr_1fr]">
       <div>
-        {step === "choose" && <>
+        {step === "choose" && <form onSubmit={onConfirm} noValidate>
           <fieldset><legend className="text-xl">Package</legend>
             <div className="mt-4 grid gap-3">{packages.map(p => <label key={p.slug} className={`flex cursor-pointer items-start gap-4 rounded-md border p-4 ${p.slug === slug ? "border-primary ring-1 ring-primary" : ""}`}>
               <input type="radio" name="pkg" checked={p.slug === slug} onChange={() => setSlug(p.slug)} className="mt-1.5 accent-primary" />
@@ -118,31 +118,24 @@ function GetStarted() {
               <label className="flex cursor-pointer items-center gap-4 py-3"><input type="checkbox" checked={rush} onChange={() => setRush(!rush)} className="h-4 w-4 accent-primary" /><span className="flex-1">{RUSH.name}</span><span className="shrink-0 text-sm font-semibold">{RUSH.price}</span></label>
             </div>
           </fieldset>
-          <Button onClick={() => setStep("method")} variant="studio" size="studio" className="mt-8">Confirm this package</Button>
-        </>}
+          <fieldset className="mt-10"><legend className="text-xl">Your details</legend>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">{([["name", "Name", "text", "name", 100], ["email", "Email", "email", "email", 255], ["book", "Book title or topic", "text", "off", 200]] as const).map(([id, label, type, auto, max]) => <div key={id} className={`grid gap-2 ${id === "book" ? "sm:col-span-2" : ""}`}>
+              <label htmlFor={`${prefix}-${id}`} className="text-sm font-medium">{label}</label>
+              <input id={`${prefix}-${id}`} name={id} type={type} autoComplete={auto} maxLength={max} required defaultValue={contact?.[id] ?? ""} aria-invalid={!!errors[id]} aria-describedby={errors[id] ? `${prefix}-${id}-err` : undefined} className={inputClass} />
+              {errors[id] && <p role="alert" id={`${prefix}-${id}-err`} className="text-sm text-destructive">{errors[id]}</p>}
+            </div>)}</div>
+          </fieldset>
+          <Button type="submit" variant="studio" size="studio" className="mt-8">Confirm this package</Button>
+        </form>}
 
         {step === "method" && <div className="grid gap-4">
-          {[[false, "Send my details by email", "Share your book and goals in a short form. I'll reply and email your invoice to get started."], [true, "Discuss it on a call first", "Share your details, then book a 15-minute call to talk it through before anything is invoiced."]].map(([call, t, d]) =>
-            <button key={String(call)} type="button" onClick={() => { setWantsCall(call as boolean); setStep("details"); }} className="rounded-md border p-6 text-left transition-colors hover:border-primary focus-visible:border-primary">
-              <span className="block text-2xl">{t as string}</span><span className="mt-2 block text-muted-foreground">{d as string}</span></button>)}
-          <button type="button" onClick={() => setStep("choose")} className="justify-self-start text-sm underline underline-offset-4">Change package or add-ons</button>
-        </div>}
-
-        {step === "details" && <form onSubmit={onSubmit} noValidate className="grid gap-5">
-          {wantsCall && <p className="border-l-2 border-primary pl-4 text-sm">You've asked to discuss this on a call. After sending, you'll be able to pick a time.</p>}
-          {([["name", "Name", "text", "name", 100], ["email", "Email", "email", "email", 255], ["book", "Book title or topic", "text", "off", 200]] as const).map(([id, label, type, auto, max]) => <div key={id} className="grid gap-2">
-            <label htmlFor={`${prefix}-${id}`} className="text-sm font-medium">{label}</label>
-            <input id={`${prefix}-${id}`} name={id} type={type} autoComplete={auto} maxLength={max} required aria-invalid={!!errors[id]} aria-describedby={errors[id] ? `${prefix}-${id}-err` : undefined} className={inputClass} />
-            {errors[id] && <p role="alert" id={`${prefix}-${id}-err`} className="text-sm text-destructive">{errors[id]}</p>}
-          </div>)}
-          <div className="grid gap-2"><label htmlFor={`${prefix}-message`} className="text-sm font-medium">Anything I should know? <span className="text-muted-foreground">(optional)</span></label>
-            <textarea id={`${prefix}-message`} name="message" rows={4} maxLength={3000} className={inputClass} /></div>
+          <p className="text-muted-foreground">Your {pkg.name.toLowerCase()} package comes to an estimated {money(inv.oneOff)}{inv.monthly ? ` plus ${money(inv.monthly)}/month` : ""}. Choose one and it's sent straight away.</p>
+          {([[false, "I'm ready — email me the invoice", "I'll confirm the details and email your invoice so we can get started."], [true, "I'd like a call first", "We'll talk it through on a 15-minute call before anything is invoiced."]] as const).map(([call, t, d]) =>
+            <button key={String(call)} type="button" disabled={status === "sending"} onClick={() => sendWith(call)} className="rounded-md border p-6 text-left transition-colors hover:border-primary focus-visible:border-primary disabled:opacity-60">
+              <span className="block text-2xl">{status === "sending" && wantsCall === call ? "Sending…" : t}</span><span className="mt-2 block text-muted-foreground">{d}</span></button>)}
           {status === "failed" && <p role="alert" className="text-sm text-destructive">Something went wrong sending your request. Please try again.</p>}
-          <div className="flex flex-wrap items-center gap-5">
-            <Button type="submit" disabled={status === "sending"} variant="studio" size="studio">{status === "sending" ? "Sending…" : wantsCall ? "Send details and book a call" : "Send my project details"}</Button>
-            <button type="button" onClick={() => setStep("method")} className="text-sm underline underline-offset-4">Back</button>
-          </div>
-        </form>}
+          <button type="button" onClick={() => setStep("choose")} className="justify-self-start text-sm underline underline-offset-4">Change package, add-ons, or details</button>
+        </div>}
       </div>
       {summary}
     </div></section>
