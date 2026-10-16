@@ -5,6 +5,15 @@ export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 
+const PROMO_DISCOUNT = "30% off every author website project";
+const PROMO_UNTIL = "12 December";
+
+export const ANNOUNCEMENT_ITEMS = [
+  `${PROMO_DISCOUNT} until ${PROMO_UNTIL}`,
+  "Start with a free author site review",
+] as const;
+
+
 const nav = [
   { to: "/", label: "Home" },
   { to: "/services", label: "Services" },
