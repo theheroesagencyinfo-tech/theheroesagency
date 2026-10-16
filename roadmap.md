@@ -16,3 +16,5 @@
 - [ ] Add Mou's headshot to the About page and real screenshots to the sample project page when supplied.
 - [x] AI contrast checker page (/contrast-check)
 - [x] Faded (~25%) banner image behind homepage first section, text overlaid
+- [x] Site-wide announcement bar in the button green, sliding right to left at a slow speed, with the 30%-off-until-12-December offer.
+
