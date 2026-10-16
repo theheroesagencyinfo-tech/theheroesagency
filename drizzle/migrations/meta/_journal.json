@@ -15,6 +15,13 @@
       "when": 1791819254648,
       "tag": "0001_extend_author_requests",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792174493260,
+      "tag": "0002_project_reviews",
+      "breakpoints": true
     }
   ]
 }
