@@ -124,13 +124,13 @@ function RootComponent() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to content
       </a>
-      <AnnouncementBar />
-      <Header />
+      <div className="print:hidden"><AnnouncementBar /></div>
+      <div className="contents print:hidden"><Header /></div>
 
       <main id="main">
         <Outlet />
       </main>
-      <Footer />
+      <div className="print:hidden"><Footer /></div>
     </QueryClientProvider>
   );
 }

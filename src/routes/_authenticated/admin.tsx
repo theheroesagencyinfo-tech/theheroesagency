@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -96,7 +96,8 @@ function Admin() {
         </div>
         <div className="flex flex-wrap gap-3 md:flex-col">
           <label className="text-sm">Status <select value={o.status} onChange={e => setStatus(o.id, e.target.value)} className="ml-2 rounded-md border border-input bg-background px-2 py-1">{orderStatuses.map(s => <option key={s} value={s}>{s}</option>)}</select></label>
-          <Button asChild variant="studio" size="sm"><a href={`mailto:${o.email}?subject=${encodeURIComponent(`Your ${packages.find(p => p.slug === o.package)?.name} project`)}`}>Email client</a></Button>
+          <Button asChild variant="studio" size="sm"><Link to="/admin/orders/$id" params={{ id: o.id }}>Manage project</Link></Button>
+          <Button asChild variant="studioOutline" size="sm"><a href={`mailto:${o.email}?subject=${encodeURIComponent(`Your ${packages.find(p => p.slug === o.package)?.name} project`)}`}>Email client</a></Button>
           <Button onClick={() => removeOrder(o.id)} variant="ghost" size="sm">Delete</Button>
         </div>
       </li>)}

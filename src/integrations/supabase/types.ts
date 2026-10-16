@@ -21,6 +21,7 @@ export type Database = {
           created_at: string
           email: string
           id: string
+          invoice_number: number
           message: string
           name: string
           package: string
@@ -34,6 +35,7 @@ export type Database = {
           created_at?: string
           email: string
           id?: string
+          invoice_number?: number
           message?: string
           name: string
           package: string
@@ -47,6 +49,7 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
+          invoice_number?: number
           message?: string
           name?: string
           package?: string
@@ -55,6 +58,44 @@ export type Database = {
           wants_call?: boolean
         }
         Relationships: []
+      }
+      project_items: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          kind: string
+          order_id: string
+          title: string
+          url: string | null
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          id?: string
+          kind: string
+          order_id: string
+          title: string
+          url?: string | null
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          order_id?: string
+          title?: string
+          url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "package_orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       project_reviews: {
         Row: {
@@ -85,6 +126,38 @@ export type Database = {
           rating?: number
         }
         Relationships: []
+      }
+      project_tasks: {
+        Row: {
+          created_at: string
+          done: boolean
+          id: string
+          order_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          done?: boolean
+          id?: string
+          order_id: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          done?: boolean
+          id?: string
+          order_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_tasks_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "package_orders"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       review_requests: {
         Row: {
@@ -152,6 +225,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      owns_order: { Args: { _order_id: string }; Returns: boolean }
     }
     Enums: {
       app_role: "admin"
