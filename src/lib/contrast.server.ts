@@ -20,7 +20,7 @@ function failure(status: number | undefined, fallback: string): ContrastResult {
 }
 
 export async function analyzeContrast(imageDataUrl: string): Promise<ContrastResult> {
-  const apiKey = process.env.LOVABLE_API_KEY;
+  const apiKey = process.env['LOVABLE_API_KEY'];
   if (!apiKey) return { ok: false, message: "The checker isn't set up yet." };
 
   const provider = createOpenAI({
