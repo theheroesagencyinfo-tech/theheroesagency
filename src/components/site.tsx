@@ -113,6 +113,7 @@ export function Footer() {
               {n.label}
             </Link>
           ))}
+          <Link to="/contrast-check" className="hover:text-foreground">Contrast check</Link>
         </nav>
       </div>
     </footer>
