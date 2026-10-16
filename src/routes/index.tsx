@@ -5,6 +5,7 @@ import { ReaderJourney, ReviewPreview } from "@/components/conversion";
 import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
+import banner from "@/assets/banner-writers-desk.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,7 +51,9 @@ function SectionLabel({ children }: { children: string }) {
 function Home() {
   return (
     <>
-      <section className="mx-auto max-w-6xl px-5 pb-24 pt-20 sm:pt-28">
+      <section className="relative overflow-hidden">
+        <img src={banner.url} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25" />
+        <div className="relative mx-auto max-w-6xl px-5 pb-24 pt-20 sm:pt-28">
         <div className="rise max-w-3xl">
           <SectionLabel>Nonfiction author website design</SectionLabel>
           <h1 className="mt-6 text-5xl leading-[1.05] sm:text-7xl">
@@ -63,6 +66,7 @@ function Home() {
             <a href="#review"><Btn>Get my free author site review</Btn></a>
             <a href="#work"><Btn variant="ghost">See my work</Btn></a>
           </div>
+        </div>
         </div>
       </section>
 
