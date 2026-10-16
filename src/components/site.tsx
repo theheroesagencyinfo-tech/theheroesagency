@@ -6,6 +6,7 @@ export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 
 const nav = [
+  { to: "/", label: "Home" },
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About" },
@@ -44,8 +45,10 @@ export function Header() {
             <Link
               key={n.to}
               to={n.to}
-              className="text-muted-foreground hover:text-foreground"
+              activeOptions={{ exact: true }}
+              className="hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
+              inactiveProps={{ className: "text-muted-foreground" }}
             >
               {n.label}
             </Link>
@@ -74,6 +77,7 @@ export function Header() {
                 <Link
                   to={n.to}
                   onClick={() => setOpen(false)}
+                  activeOptions={{ exact: true }}
                   className="block py-4 font-serif text-2xl"
                   activeProps={{ className: "text-ring" }}
                 >
