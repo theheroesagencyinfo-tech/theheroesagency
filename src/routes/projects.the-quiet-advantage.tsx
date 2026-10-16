@@ -4,7 +4,7 @@ export const Route = createFileRoute("/projects/the-quiet-advantage")({
   head: () => ({ meta: [
     { title: "The Quiet Advantage — Sample project | TheHeroes Agency · Author Studio" },
     { name: "description", content: "A fictional author website sample: project overview, reader journey, planned pages and features, and illustrative creative concepts." },
-    { property: "og:title", content: "The Quiet Advantage — TheHeroes Agency · Author Studio" },
+    { property: "og:title", content: "The Quiet Advantage · TheHeroes Agency · Author Studio" },
     { property: "og:description", content: "A sample author website for a fictional author, with no invented client results." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: Project,

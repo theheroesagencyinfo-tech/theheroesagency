@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [
-    { title: "Sign in — TheHeroes Agency" },
+    { title: "Sign in · TheHeroes Agency" },
     { name: "description", content: "Sign in to follow your project with TheHeroes Agency." },
-    { property: "og:title", content: "Sign in — TheHeroes Agency" },
+    { property: "og:title", content: "Sign in · TheHeroes Agency" },
     { property: "og:description", content: "Admin area for TheHeroes Agency · Author Studio." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     { name: "robots", content: "noindex" },

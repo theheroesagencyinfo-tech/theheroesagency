@@ -11,9 +11,9 @@ type Order = Database["public"]["Tables"]["package_orders"]["Row"];
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [
-    { title: "Admin — TheHeroes Agency" },
+    { title: "Admin · TheHeroes Agency" },
     { name: "description", content: "Approve project reviews and read contact messages." },
-    { property: "og:title", content: "Admin — TheHeroes Agency" },
+    { property: "og:title", content: "Admin · TheHeroes Agency" },
     { property: "og:description", content: "Admin area for TheHeroes Agency · Author Studio." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     { name: "robots", content: "noindex" },

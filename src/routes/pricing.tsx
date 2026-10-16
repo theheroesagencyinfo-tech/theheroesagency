@@ -8,9 +8,9 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 
 export const Route = createFileRoute("/pricing")({
   head: () => ({ meta: [
-    { title: "Pricing — TheHeroes Agency · Author Studio" },
+    { title: "Pricing · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Author website, email system, and book launch packages for nonfiction authors, from $1,500. Delivered in 2–4 weeks." },
-    { property: "og:title", content: "Pricing — TheHeroes Agency · Author Studio" },
+    { property: "og:title", content: "Pricing · TheHeroes Agency · Author Studio" },
     { property: "og:description", content: "Three packages that turn your nonfiction book into a platform for subscribers, clients, and speaking opportunities." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }),

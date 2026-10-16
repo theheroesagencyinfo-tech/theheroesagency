@@ -22,7 +22,7 @@ const samples = [
 
 export const Route = createFileRoute("/contrast-check")({
   head: () => ({ meta: [
-    { title: "Free colour contrast check — TheHeroes Agency · Author Studio" },
+    { title: "Free colour contrast check · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Upload a screenshot of your author website and get an AI-powered list of hard-to-read text with accessible colour suggestions." },
     { property: "og:title", content: "Free colour contrast check for author websites" },
     { property: "og:description", content: "Find hard-to-read text on your author website and get accessible colour fixes in seconds." },

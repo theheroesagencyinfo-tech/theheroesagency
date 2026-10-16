@@ -8,9 +8,9 @@ import { invoiceNo, invoiceReady, money, type Order } from "@/lib/client-project
 
 export const Route = createFileRoute("/_authenticated/invoice/$id")({
   head: () => ({ meta: [
-    { title: "Invoice — TheHeroes Agency" },
+    { title: "Invoice · TheHeroes Agency" },
     { name: "description", content: "Your project invoice from TheHeroes Agency." },
-    { property: "og:title", content: "Invoice — TheHeroes Agency" },
+    { property: "og:title", content: "Invoice · TheHeroes Agency" },
     { property: "og:description", content: "Project invoice for TheHeroes Agency clients." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     { name: "robots", content: "noindex" },
