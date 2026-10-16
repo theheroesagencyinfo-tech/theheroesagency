@@ -10,11 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContrastCheckRouteImport } from './routes/contrast-check'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WorkRouteImport } from './routes/work'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ProjectsDanielCarterRouteImport } from './routes/projects.daniel-carter'
 import { Route as ProjectsEleanorWhitmoreRouteImport } from './routes/projects.eleanor-whitmore'
 import { Route as ProjectsJonathanReedRouteImport } from './routes/projects.jonathan-reed'
@@ -25,9 +28,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -49,6 +61,11 @@ const WorkRoute = WorkRouteImport.update({
   id: '/work',
   path: '/work',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ProjectsDanielCarterRoute = ProjectsDanielCarterRouteImport.update({
   id: '/projects/daniel-carter',
@@ -75,10 +92,12 @@ const ProjectsTheQuietAdvantageRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
   '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
@@ -87,10 +106,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
   '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
@@ -99,11 +120,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
   '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
@@ -114,10 +138,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/auth'
     | '/contact'
     | '/contrast-check'
     | '/services'
     | '/work'
+    | '/admin'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
     | '/projects/jonathan-reed'
@@ -126,10 +152,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/auth'
     | '/contact'
     | '/contrast-check'
     | '/services'
     | '/work'
+    | '/admin'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
     | '/projects/jonathan-reed'
@@ -137,11 +165,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
+    | '/auth'
     | '/contact'
     | '/contrast-check'
     | '/services'
     | '/work'
+    | '/_authenticated/admin'
     | '/projects/daniel-carter'
     | '/projects/eleanor-whitmore'
     | '/projects/jonathan-reed'
@@ -150,7 +181,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   ContrastCheckRoute: typeof ContrastCheckRoute
   ServicesRoute: typeof ServicesRoute
@@ -170,11 +203,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -204,6 +251,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/work'
       preLoaderRoute: typeof WorkRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/projects/daniel-carter': {
       id: '/projects/daniel-carter'
@@ -236,9 +290,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   ContrastCheckRoute: ContrastCheckRoute,
   ServicesRoute: ServicesRoute,
