@@ -44,27 +44,27 @@ const steps = [
   { h: "You decide what's next", p: "You get my notes by email. Use them yourself, or ask me to help." },
 ];
 
-function SectionLabel({ children }: { children: string }) {
-  return <p className="text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">{children}</p>;
+function SectionLabel({ children, className = "" }: { children: string; className?: string }) {
+  return <p className={`text-xs font-semibold uppercase tracking-[0.22em] ${className || "text-muted-foreground"}`}>{children}</p>;
 }
 
 function Home() {
   return (
     <>
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-pitch text-pitch-foreground">
         <img src={banner.url} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25" />
         <div className="relative mx-auto max-w-6xl px-5 pb-24 pt-20 sm:pt-28">
         <div className="rise max-w-3xl">
-          <SectionLabel>Nonfiction author website design</SectionLabel>
+          <SectionLabel className="text-pitch-muted">Nonfiction author website design</SectionLabel>
           <h1 className="mt-6 text-5xl leading-[1.05] sm:text-7xl">
-            Websites for nonfiction authors that bring you clients, <em className="text-ring">not just sales.</em>
+            Websites for nonfiction authors that bring you clients, <em className="text-pitch-accent">not just sales.</em>
           </h1>
-          <p className="mt-8 max-w-[60ch] text-lg text-muted-foreground sm:text-xl">
+          <p className="mt-8 max-w-[60ch] text-lg text-pitch-muted sm:text-xl">
             I design and build author websites, email funnels, and launch kits for nonfiction authors, so readers turn into leads, subscribers, and speaking invitations.
           </p>
           <div className="mt-10 flex flex-wrap gap-3">
             <a href="#review"><Btn>Get my free author site review</Btn></a>
-            <a href="#work"><Btn variant="ghost">See my work</Btn></a>
+            <a href="#work"><Btn variant="ghostDark">See my work</Btn></a>
           </div>
         </div>
         </div>

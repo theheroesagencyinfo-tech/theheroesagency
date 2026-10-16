@@ -30,6 +30,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-pitch: var(--pitch);
+  --color-pitch-foreground: var(--pitch-foreground);
+  --color-pitch-muted: var(--pitch-muted);
+  --color-pitch-accent: var(--pitch-accent);
 }
 
 /* ink #151832 text, deep green buttons + accent, clean paper white */
@@ -54,6 +58,11 @@
   --border: oklch(0.87 0.03 85);
   --input: oklch(0.83 0.035 85);
   --ring: oklch(0.38 0.085 155);
+  /* Pitch hero band: near-black base, light text, sage accent */
+  --pitch: oklch(0.14 0.012 278);
+  --pitch-foreground: oklch(0.97 0.006 85);
+  --pitch-muted: oklch(0.78 0.015 85);
+  --pitch-accent: oklch(0.82 0.09 155);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -19,7 +19,7 @@ export function Btn({
   className = "",
 }: {
   children: ReactNode;
-  variant?: "primary" | "ghost";
+  variant?: "primary" | "ghost" | "ghostDark";
   className?: string;
 }) {
   const base =
@@ -27,7 +27,9 @@ export function Btn({
   const v =
     variant === "primary"
       ? "bg-primary text-primary-foreground hover:shadow-[0_8px_24px_-8px_var(--color-ring)]"
-      : "border border-foreground/25 text-foreground hover:border-foreground hover:bg-secondary";
+      : variant === "ghostDark"
+        ? "border border-pitch-foreground/30 text-pitch-foreground hover:border-pitch-foreground hover:bg-white/10"
+        : "border border-foreground/25 text-foreground hover:border-foreground hover:bg-secondary";
   return <span className={`${base} ${v} ${className}`}>{children}</span>;
 }
 
