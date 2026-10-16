@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { PageIntro, ReviewCta } from "@/components/page";
+import { CaseStudy, ProjectReviews } from "@/components/project-story";
 import home from "@/assets/daniel-carter/home.png.asset.json";
 import about from "@/assets/daniel-carter/about.png.asset.json";
 import books from "@/assets/daniel-carter/books.png.asset.json";
@@ -57,6 +58,8 @@ function Project() {
         <p className="mt-3 text-sm text-muted-foreground">Page {active + 1} of {pages.length}. Scroll inside the frame to move through the page.</p>
       </div>
     </div></section>
+    <CaseStudy sections={[{"heading": "Overview", "body": "An eight-page author website for Daniel Carter, built to bring his books, ideas, speaking work, and reader resources together in one place."}, {"heading": "The author's goal", "body": "Daniel needed a site that introduced him clearly, gave each book room to be explored, and offered readers, event organisers, and media a direct next step."}, {"heading": "What I built", "body": "A homepage leading with his work, an About the Author page, a Books collection, a dedicated page for The Better Choice, a Journal for his writing, a Speaking / Media page for bookings, a Resources page with newsletter signup, and a Contact page."}]} />
+    <ProjectReviews project="daniel-carter" author="Daniel Carter" quote="They did a great job with my author website, and I’m really happy with the result. I’d happily recommend their services to other authors and would definitely work with them again." />
     <ReviewCta />
   </>;
 }

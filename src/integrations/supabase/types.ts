@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      project_reviews: {
+        Row: {
+          approved: boolean
+          comment: string
+          created_at: string
+          id: string
+          name: string
+          project: string
+          rating: number
+        }
+        Insert: {
+          approved?: boolean
+          comment: string
+          created_at?: string
+          id?: string
+          name: string
+          project: string
+          rating: number
+        }
+        Update: {
+          approved?: boolean
+          comment?: string
+          created_at?: string
+          id?: string
+          name?: string
+          project?: string
+          rating?: number
+        }
+        Relationships: []
+      }
       review_requests: {
         Row: {
           book: string

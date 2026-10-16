@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { PageIntro, ReviewCta } from "@/components/page";
+import { CaseStudy, ProjectReviews } from "@/components/project-story";
 import { Button } from "@/components/ui/button";
 import home from "@/assets/jonathan-reed/home.png.asset.json";
 import books from "@/assets/jonathan-reed/books.png.asset.json";
@@ -81,6 +82,8 @@ function Project() {
         <p className="mt-3 text-sm text-muted-foreground">Page {active + 1} of {pages.length}</p>
       </div>
     </div></section>
+    <CaseStudy sections={[{"heading": "Overview", "body": "A six-page literary author website for Jonathan Reed, designed in rich burgundy and cream to suit the reflective character of his books."}, {"heading": "The author's goal", "body": "Jonathan needed a professional site that presented his growing list of books, shared his essays, and made it easy to find his events and get in touch."}, {"heading": "What I built", "body": "A homepage, a Books page presenting his titles, a Journal for essays, an Events / Speaking page, a Resources page for readers, and a Contact page."}]} />
+    <ProjectReviews project="jonathan-reed" author="Jonathan Reed" quote="I’m really pleased with how my website turned out. It feels professional, fits my work as an author, and presents my books exactly how I wanted." />
     <ReviewCta />
   </>;
 }

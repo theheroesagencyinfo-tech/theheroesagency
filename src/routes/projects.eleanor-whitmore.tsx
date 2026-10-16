@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { PageIntro, ReviewCta } from "@/components/page";
+import { CaseStudy, ProjectReviews } from "@/components/project-story";
 import { Button } from "@/components/ui/button";
 import home from "@/assets/eleanor-whitmore/home.png.asset.json";
 import about from "@/assets/eleanor-whitmore/about.png.asset.json";
@@ -83,6 +84,8 @@ function Project() {
         <p className="mt-3 text-sm text-muted-foreground">Page {active + 1} of {pages.length}</p>
       </div>
     </div></section>
+    <CaseStudy sections={[{"heading": "Overview", "body": "A seven-page author website for Eleanor Whitmore with a warm cream palette, olive accents, and botanical line art that reflects the calm tone of her writing."}, {"heading": "The author's goal", "body": "Eleanor wanted a gentle, welcoming home for her book The Kindness Effect, with clear ways for readers to attend events, read her journal, and stay in touch."}, {"heading": "What I built", "body": "A homepage, an author bio, a book page for The Kindness Effect, an Events page, a Journal, a Resources page for readers, and a Contact page."}]} />
+    <ProjectReviews project="eleanor-whitmore" author="Eleanor Whitmore" quote="The whole process was straightforward, and communication was great throughout. Everything was delivered on time, and I’m very happy with how the website turned out." />
     <ReviewCta />
   </>;
 }
