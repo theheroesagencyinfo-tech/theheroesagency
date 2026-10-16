@@ -14,6 +14,48 @@ export type Database = {
   }
   public: {
     Tables: {
+      package_orders: {
+        Row: {
+          addons: string[]
+          book: string
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          package: string
+          rush: boolean
+          status: string
+          wants_call: boolean
+        }
+        Insert: {
+          addons?: string[]
+          book: string
+          created_at?: string
+          email: string
+          id?: string
+          message?: string
+          name: string
+          package: string
+          rush?: boolean
+          status?: string
+          wants_call?: boolean
+        }
+        Update: {
+          addons?: string[]
+          book?: string
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          package?: string
+          rush?: boolean
+          status?: string
+          wants_call?: boolean
+        }
+        Relationships: []
+      }
       project_reviews: {
         Row: {
           approved: boolean

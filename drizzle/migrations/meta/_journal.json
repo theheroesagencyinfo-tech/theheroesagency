@@ -36,6 +36,13 @@
       "when": 1792175612137,
       "tag": "0004_admin_roles",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1792176596267,
+      "tag": "0005_package_orders",
+      "breakpoints": true
     }
   ]
 }
