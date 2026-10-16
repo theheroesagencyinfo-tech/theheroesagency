@@ -134,5 +134,4 @@
   .announce-track { animation: none; }
 }
 
-.announce-track:hover { animation-play-state: paused; }
 
