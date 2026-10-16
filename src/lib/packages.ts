@@ -9,6 +9,10 @@ export const packages: { slug: PackageSlug; name: string; price: string; time: s
   { slug: "book-launch", name: "Book launch platform", price: "$5,500", time: "4 weeks", best: "Authors preparing for a major launch or building long-term authority.", outcome: "Launch your book with a coordinated website, email, and video campaign.", cta: "Plan my book launch", items: ["Everything in reader-to-client system", "Launch strategy session and roadmap", "Pre-launch page with waitlist or preorder capture", "5–7 email launch sequence", "3 post-launch follow-up emails", "ARC and reviewer outreach page or form", "8–12 social launch graphics", "2–3 AI-powered short vertical video ads", "Ad-ready copy for Meta, Instagram, YouTube, or LinkedIn", "Launch-week support", "Post-launch review call with recommendations"] },
 ];
 
+// Delivery times are stated once here so the Services and Pricing pages can never disagree.
+export const timelineAnswer = `Most projects take 2 to 4 weeks. ${packages.map(p => `${p.name} takes about ${p.time}`).join(", ")}. Timelines depend on timely feedback, content, and approvals from you.`;
+
+
 export const addons = [
   { id: "extra-page", name: "Additional book or program page", price: "from $350" },
   { id: "email-sequence", name: "Additional 5-email sequence", price: "from $500" },
