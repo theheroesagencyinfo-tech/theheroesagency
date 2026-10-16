@@ -28,3 +28,25 @@ export const listProjectReviews = createServerFn({ method: "GET" })
       .order("created_at", { ascending: false }).limit(20);
     return rows ?? [];
   });
+
+export type ProjectRatingSummary = { avg: number; count: number };
+
+export const getProjectRatings = createServerFn({ method: "GET" })
+  .handler(async () => {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data } = await supabaseAdmin.from("project_reviews")
+      .select("project,rating").eq("approved", true);
+    const totals = new Map<string, { total: number; count: number }>();
+    for (const row of data ?? []) {
+      const t = totals.get(row.project) ?? { total: 0, count: 0 };
+      t.total += row.rating;
+      t.count += 1;
+      totals.set(row.project, t);
+    }
+    const ratings: Record<string, ProjectRatingSummary> = {};
+    for (const [project, t] of totals) {
+      ratings[project] = { avg: t.total / t.count, count: t.count };
+    }
+    return ratings;
+  });
+
