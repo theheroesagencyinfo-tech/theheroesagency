@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { packages, progressOf } from "@/lib/packages";
 import { invoiceReady, loadProject } from "@/lib/client-projects";
-import { ProgressBar } from "./account";
+import { ProgressBar } from "@/components/progress-bar";
 
 export const Route = createFileRoute("/_authenticated/my-projects/$id")({
   head: () => ({ meta: [

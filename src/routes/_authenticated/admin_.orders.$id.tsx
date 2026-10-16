@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { packages, progressOf } from "@/lib/packages";
 import { loadProject } from "@/lib/client-projects";
-import { ProgressBar } from "./account";
+import { ProgressBar } from "@/components/progress-bar";
 
 export const Route = createFileRoute("/_authenticated/admin_/orders/$id")({
   head: () => ({ meta: [

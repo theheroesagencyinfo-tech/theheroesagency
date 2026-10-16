@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { ProgressBar } from "@/components/progress-bar";
 import { packages, addons, progressOf } from "@/lib/packages";
 import { invoiceReady, type Order, type Task } from "@/lib/client-projects";
 
@@ -16,15 +17,6 @@ export const Route = createFileRoute("/_authenticated/account")({
   ] }),
   component: Account,
 });
-
-export function ProgressBar({ value }: { value: number }) {
-  return <div>
-    <div className="flex justify-between text-sm"><span className="text-muted-foreground">Progress</span><span className="font-semibold">{value}%</span></div>
-    <div role="progressbar" aria-valuenow={value} aria-valuemin={0} aria-valuemax={100} aria-label="Project progress" className="mt-2 h-2 overflow-hidden rounded-full bg-secondary">
-      <div className="h-full rounded-full bg-primary transition-[width]" style={{ width: `${value}%` }} />
-    </div>
-  </div>;
-}
 
 function Account() {
   const navigate = useNavigate();

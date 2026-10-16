@@ -25,6 +25,9 @@ import { Route as ProjectsDanielCarterRouteImport } from './routes/projects.dani
 import { Route as ProjectsEleanorWhitmoreRouteImport } from './routes/projects.eleanor-whitmore'
 import { Route as ProjectsJonathanReedRouteImport } from './routes/projects.jonathan-reed'
 import { Route as ProjectsTheQuietAdvantageRouteImport } from './routes/projects.the-quiet-advantage'
+import { Route as AuthenticatedInvoiceIdRouteImport } from './routes/_authenticated/invoice.$id'
+import { Route as AuthenticatedMyProjectsIdRouteImport } from './routes/_authenticated/my-projects.$id'
+import { Route as AuthenticatedAdminOrdersIdRouteImport } from './routes/_authenticated/admin_.orders.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -106,6 +109,23 @@ const ProjectsTheQuietAdvantageRoute =
     path: '/projects/the-quiet-advantage',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AuthenticatedInvoiceIdRoute = AuthenticatedInvoiceIdRouteImport.update({
+  id: '/invoice/$id',
+  path: '/invoice/$id',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyProjectsIdRoute =
+  AuthenticatedMyProjectsIdRouteImport.update({
+    id: '/my-projects/$id',
+    path: '/my-projects/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminOrdersIdRoute =
+  AuthenticatedAdminOrdersIdRouteImport.update({
+    id: '/admin_/orders/$id',
+    path: '/admin/orders/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -123,6 +143,9 @@ export interface FileRoutesByFullPath {
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
   '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
+  '/invoice/$id': typeof AuthenticatedInvoiceIdRoute
+  '/my-projects/$id': typeof AuthenticatedMyProjectsIdRoute
+  '/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -140,6 +163,9 @@ export interface FileRoutesByTo {
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
   '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
+  '/invoice/$id': typeof AuthenticatedInvoiceIdRoute
+  '/my-projects/$id': typeof AuthenticatedMyProjectsIdRoute
+  '/admin/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -159,6 +185,9 @@ export interface FileRoutesById {
   '/projects/eleanor-whitmore': typeof ProjectsEleanorWhitmoreRoute
   '/projects/jonathan-reed': typeof ProjectsJonathanReedRoute
   '/projects/the-quiet-advantage': typeof ProjectsTheQuietAdvantageRoute
+  '/_authenticated/invoice/$id': typeof AuthenticatedInvoiceIdRoute
+  '/_authenticated/my-projects/$id': typeof AuthenticatedMyProjectsIdRoute
+  '/_authenticated/admin_/orders/$id': typeof AuthenticatedAdminOrdersIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -178,6 +207,9 @@ export interface FileRouteTypes {
     | '/projects/eleanor-whitmore'
     | '/projects/jonathan-reed'
     | '/projects/the-quiet-advantage'
+    | '/invoice/$id'
+    | '/my-projects/$id'
+    | '/admin/orders/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -195,6 +227,9 @@ export interface FileRouteTypes {
     | '/projects/eleanor-whitmore'
     | '/projects/jonathan-reed'
     | '/projects/the-quiet-advantage'
+    | '/invoice/$id'
+    | '/my-projects/$id'
+    | '/admin/orders/$id'
   id:
     | '__root__'
     | '/'
@@ -213,6 +248,9 @@ export interface FileRouteTypes {
     | '/projects/eleanor-whitmore'
     | '/projects/jonathan-reed'
     | '/projects/the-quiet-advantage'
+    | '/_authenticated/invoice/$id'
+    | '/_authenticated/my-projects/$id'
+    | '/_authenticated/admin_/orders/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -346,17 +384,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsTheQuietAdvantageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/invoice/$id': {
+      id: '/_authenticated/invoice/$id'
+      path: '/invoice/$id'
+      fullPath: '/invoice/$id'
+      preLoaderRoute: typeof AuthenticatedInvoiceIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-projects/$id': {
+      id: '/_authenticated/my-projects/$id'
+      path: '/my-projects/$id'
+      fullPath: '/my-projects/$id'
+      preLoaderRoute: typeof AuthenticatedMyProjectsIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin_/orders/$id': {
+      id: '/_authenticated/admin_/orders/$id'
+      path: '/admin/orders/$id'
+      fullPath: '/admin/orders/$id'
+      preLoaderRoute: typeof AuthenticatedAdminOrdersIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedInvoiceIdRoute: typeof AuthenticatedInvoiceIdRoute
+  AuthenticatedMyProjectsIdRoute: typeof AuthenticatedMyProjectsIdRoute
+  AuthenticatedAdminOrdersIdRoute: typeof AuthenticatedAdminOrdersIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedInvoiceIdRoute: AuthenticatedInvoiceIdRoute,
+  AuthenticatedMyProjectsIdRoute: AuthenticatedMyProjectsIdRoute,
+  AuthenticatedAdminOrdersIdRoute: AuthenticatedAdminOrdersIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
