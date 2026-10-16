@@ -6,6 +6,7 @@ import { ReaderJourney } from "@/components/conversion";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { timelineAnswer } from "@/lib/packages";
+import { revisionAnswer } from "@/lib/legal-policy";
 
 export const Route = createFileRoute("/services")({
   head: () => ({ meta: [
@@ -30,7 +31,7 @@ const steps = [
 const faqs = [
   ["How long will it take?", timelineAnswer],
   ["What do you need from me?", "Your book cover, description, bio, headshot, retailer links, and access to any accounts we're building on. I'll send a short checklist after our scoping call."],
-  ["How do revisions work?", "Revisions are unlimited. We keep refining until you're happy with it."],
+  ["How do revisions work?", revisionAnswer],
   ["Which tools do you build on?", "I can build on any major website hosting platform, so you can keep the tools you already use."],
   ["How does payment work?", "You'll get an invoice, and you can pay by card or bank transfer."],
 ];

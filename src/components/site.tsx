@@ -144,13 +144,16 @@ export function Footer() {
             {CONTACT_EMAIL}
           </p>
         </div>
-        <nav aria-label="Footer" className="flex flex-wrap gap-6">
+        <nav aria-label="Footer" className="flex max-w-xl flex-wrap gap-x-6 gap-y-4">
           {nav.map((n) => (
             <Link key={n.to} to={n.to} className="hover:text-foreground">
               {n.label}
             </Link>
           ))}
           <Link to="/account" className="hover:text-foreground">My account</Link>
+          <Link to="/terms" className="hover:text-foreground">Terms of service</Link>
+          <Link to="/privacy" className="hover:text-foreground">Privacy policy</Link>
+          <Link to="/refund-policy" className="hover:text-foreground">Refund policy</Link>
         </nav>
       </div>
     </footer>
