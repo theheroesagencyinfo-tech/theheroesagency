@@ -117,7 +117,21 @@
   to { opacity: 1; transform: none; }
 }
 
+@utility announce-track {
+  display: flex;
+  width: max-content;
+  animation: announce-slide 50s linear infinite;
+}
+
+@keyframes announce-slide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rise { animation: none; }
+  .announce-track { animation: none; }
 }
+
+

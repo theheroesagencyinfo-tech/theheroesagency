@@ -5,6 +5,15 @@ export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 
+const PROMO_DISCOUNT = "30% off every author website project";
+const PROMO_UNTIL = "12 December";
+
+export const ANNOUNCEMENT_ITEMS = [
+  `${PROMO_DISCOUNT} until ${PROMO_UNTIL}`,
+  "Start with a free author site review",
+] as const;
+
+
 const nav = [
   { to: "/", label: "Home" },
   { to: "/services", label: "Services" },
@@ -97,7 +106,28 @@ export function Header() {
   );
 }
 
+export function AnnouncementBar() {
+  return (
+    <div className="bg-primary text-primary-foreground overflow-hidden">
+      <p className="sr-only">{ANNOUNCEMENT_ITEMS.join(". ")}</p>
+      <div aria-hidden="true" className="announce-track py-2 text-sm font-medium tracking-wide">
+        {[0, 1].map((half) => (
+          <span key={half} className="flex shrink-0 items-center">
+            {ANNOUNCEMENT_ITEMS.map((item) => (
+              <span key={item} className="flex items-center whitespace-nowrap">
+                <span className="px-6">{item}</span>
+                <span className="opacity-60">/</span>
+              </span>
+            ))}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function Footer() {
+
   return (
     <footer className="border-t">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 text-sm text-muted-foreground md:flex-row md:justify-between">

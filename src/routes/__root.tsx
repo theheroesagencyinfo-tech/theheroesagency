@@ -12,7 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { Header, Footer } from "@/components/site";
+import { AnnouncementBar, Header, Footer } from "@/components/site";
 
 function NotFoundComponent() {
   return (
@@ -124,7 +124,9 @@ function RootComponent() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to content
       </a>
+      <AnnouncementBar />
       <Header />
+
       <main id="main">
         <Outlet />
       </main>
