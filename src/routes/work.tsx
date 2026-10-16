@@ -8,9 +8,9 @@ import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
 
 export const Route = createFileRoute("/work")({
   head: () => ({ meta: [
-    { title: "Selected work — TheHeroes Agency · Author Studio" },
+    { title: "Selected work · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Explore author website designs for Daniel Carter, Eleanor Whitmore, and Jonathan Reed." },
-    { property: "og:title", content: "Selected work — TheHeroes Agency · Author Studio" },
+    { property: "og:title", content: "Selected work · TheHeroes Agency · Author Studio" },
     { property: "og:description", content: "Author website showcases for Daniel Carter, Eleanor Whitmore, and Jonathan Reed." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: Work,

@@ -12,9 +12,9 @@ import { submitOrder } from "@/lib/orders.functions";
 export const Route = createFileRoute("/get-started")({
   validateSearch: (s) => z.object({ package: z.enum(packageSlugs).catch("reader-to-client") }).parse(s),
   head: () => ({ meta: [
-    { title: "Confirm your package — TheHeroes Agency · Author Studio" },
+    { title: "Confirm your package · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Review your author platform package, choose add-ons, and send your project details." },
-    { property: "og:title", content: "Confirm your package — TheHeroes Agency" },
+    { property: "og:title", content: "Confirm your package · TheHeroes Agency" },
     { property: "og:description", content: "Choose your package and add-ons, then send your details or book a call." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }),
@@ -82,7 +82,7 @@ function GetStarted() {
 
   if (step === "done") return <section className="mx-auto max-w-3xl px-5 py-20" role="status">
     <p className="text-sm font-semibold text-muted-foreground">Request received</p>
-    <h1 className="mt-6 text-4xl leading-[1.08] sm:text-5xl">Thank you — your {pkg.name.toLowerCase()} request is in.</h1>
+    <h1 className="mt-6 text-4xl leading-[1.08] sm:text-5xl">Thank you, your {pkg.name.toLowerCase()} request is in.</h1>
     {wantsCall ? <>
       <p className="mt-6 text-lg text-muted-foreground">I've noted that you'd like to talk first. Pick a time below and we'll go through your package and add-ons together.</p>
       <Button asChild variant="studio" size="studio" className="mt-8"><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book my 15-minute call</a></Button>
@@ -130,7 +130,7 @@ function GetStarted() {
 
         {step === "method" && <div className="grid gap-4">
           <p className="text-muted-foreground">Your {pkg.name.toLowerCase()} package comes to an estimated {money(inv.oneOff)}{inv.monthly ? ` plus ${money(inv.monthly)}/month` : ""}. Choose one and it's sent straight away.</p>
-          {([[false, "I'm ready — email me the invoice", "I'll confirm the details and email your invoice so we can get started."], [true, "I'd like a call first", "We'll talk it through on a 15-minute call before anything is invoiced."]] as const).map(([call, t, d]) =>
+          {([[false, "I'm ready. Email me the invoice", "I'll confirm the details and email your invoice so we can get started."], [true, "I'd like a call first", "We'll talk it through on a 15-minute call before anything is invoiced."]] as const).map(([call, t, d]) =>
             <button key={String(call)} type="button" disabled={status === "sending"} onClick={() => sendWith(call)} className="rounded-md border p-6 text-left transition-colors hover:border-primary focus-visible:border-primary disabled:opacity-60">
               <span className="block text-2xl">{status === "sending" && wantsCall === call ? "Sending…" : t}</span><span className="mt-2 block text-muted-foreground">{d}</span></button>)}
           {status === "failed" && <p role="alert" className="text-sm text-destructive">Something went wrong sending your request. Please try again.</p>}

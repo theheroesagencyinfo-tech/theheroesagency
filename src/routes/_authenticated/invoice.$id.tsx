@@ -8,9 +8,9 @@ import { invoiceNo, invoiceReady, money, type Order } from "@/lib/client-project
 
 export const Route = createFileRoute("/_authenticated/invoice/$id")({
   head: () => ({ meta: [
-    { title: "Invoice — TheHeroes Agency" },
+    { title: "Invoice · TheHeroes Agency" },
     { name: "description", content: "Your project invoice from TheHeroes Agency." },
-    { property: "og:title", content: "Invoice — TheHeroes Agency" },
+    { property: "og:title", content: "Invoice · TheHeroes Agency" },
     { property: "og:description", content: "Project invoice for TheHeroes Agency clients." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     { name: "robots", content: "noindex" },
@@ -55,9 +55,9 @@ function Invoice() {
       <div className="mt-10 border-t pt-6">
         <h2 className="text-xl">Payment schedule</h2>
         <ul className="mt-4 divide-y border-y">{inv.schedule.map(s => <li key={s.label} className="flex justify-between gap-4 py-3"><span>{s.label}</span><span className="font-semibold">{money(s.amount)}</span></li>)}</ul>
-        {order.package === "book-launch" && <p className="mt-3 text-sm text-muted-foreground">Prefer three payments? The package is also available as 3 payments of $1,900 — just reply to let me know.</p>}
+        {order.package === "book-launch" && <p className="mt-3 text-sm text-muted-foreground">Prefer three payments? The package is also available as 3 payments of $1,900. Just reply to let me know.</p>}
       </div>
-      <p className="mt-8 text-sm text-muted-foreground">Pay by invoice, card, or bank transfer — payment details are sent with your confirmation email. Prices are starting prices; the final scope is agreed in writing before work begins. Questions? Email {CONTACT_EMAIL} and quote {invoiceNo(order)}.</p>
+      <p className="mt-8 text-sm text-muted-foreground">Pay by invoice, card, or bank transfer. Payment details are sent with your confirmation email. Prices are starting prices; the final scope is agreed in writing before work begins. Questions? Email {CONTACT_EMAIL} and quote {invoiceNo(order)}.</p>
     </article>
   </section>;
 }

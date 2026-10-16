@@ -23,9 +23,9 @@ const pages = [
 
 export const Route = createFileRoute("/projects/eleanor-whitmore")({
   head: () => ({ meta: [
-    { title: "Eleanor Whitmore author website — TheHeroes Agency · Author Studio" },
+    { title: "Eleanor Whitmore author website · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Explore seven pages of Eleanor Whitmore’s author website design, including The Kindness Effect, events, journal, resources, and contact." },
-    { property: "og:title", content: "Eleanor Whitmore author website — TheHeroes Agency" },
+    { property: "og:title", content: "Eleanor Whitmore author website · TheHeroes Agency" },
     { property: "og:description", content: "A seven-page author website showcase featuring Eleanor Whitmore’s books, writing, events, and reader resources." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },

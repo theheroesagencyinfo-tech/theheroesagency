@@ -3,9 +3,9 @@ import { PageIntro, ReviewCta } from "@/components/page";
 import { PhotoStack } from "@/components/photo-stack";
 export const Route = createFileRoute("/about")({
   head: () => ({ meta: [
-    { title: "About Mou Barrac — TheHeroes Agency · Author Studio" },
+    { title: "About Mou Barrac · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Meet Mou Barrac: author websites, email marketing automation, and AI-powered launch creative, with one point of contact and a clear process." },
-    { property: "og:title", content: "About Mou Barrac — TheHeroes Agency · Author Studio" },
+    { property: "og:title", content: "About Mou Barrac · TheHeroes Agency · Author Studio" },
     { property: "og:description", content: "I design websites for nonfiction authors. Learn about my approach to author websites, email funnels, and launches." },
     { property: "og:type", content: "profile" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: About,

@@ -11,7 +11,7 @@ import { ProjectRating } from "@/components/project-rating";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "TheHeroes Agency · Author Studio — Websites and funnels for nonfiction authors" },
+      { title: "TheHeroes Agency · Author Studio: websites and funnels for nonfiction authors" },
       {
         name: "description",
         content:

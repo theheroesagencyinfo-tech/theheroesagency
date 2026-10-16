@@ -21,9 +21,9 @@ const pages = [
 
 export const Route = createFileRoute("/projects/jonathan-reed")({
   head: () => ({ meta: [
-    { title: "Jonathan Reed author website — TheHeroes Agency · Author Studio" },
+    { title: "Jonathan Reed author website · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Explore six pages of Jonathan Reed’s literary author website design, including books, journal essays, events, reader resources, and contact." },
-    { property: "og:title", content: "Jonathan Reed author website — TheHeroes Agency" },
+    { property: "og:title", content: "Jonathan Reed author website · TheHeroes Agency" },
     { property: "og:description", content: "A six-page literary author website showcase featuring Jonathan Reed’s books, essays, events, and reader resources." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },

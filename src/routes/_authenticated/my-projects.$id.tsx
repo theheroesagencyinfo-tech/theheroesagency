@@ -8,9 +8,9 @@ import { ProgressBar } from "@/components/progress-bar";
 
 export const Route = createFileRoute("/_authenticated/my-projects/$id")({
   head: () => ({ meta: [
-    { title: "Project dashboard — TheHeroes Agency" },
+    { title: "Project dashboard · TheHeroes Agency" },
     { name: "description", content: "Live pages, wireframes, and updates for your author platform project." },
-    { property: "og:title", content: "Project dashboard — TheHeroes Agency" },
+    { property: "og:title", content: "Project dashboard · TheHeroes Agency" },
     { property: "og:description", content: "Client project dashboard for TheHeroes Agency." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     { name: "robots", content: "noindex" },

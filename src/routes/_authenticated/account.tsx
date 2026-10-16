@@ -8,9 +8,9 @@ import { invoiceReady, type Order, type Task } from "@/lib/client-projects";
 
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({ meta: [
-    { title: "My projects — TheHeroes Agency" },
+    { title: "My projects · TheHeroes Agency" },
     { name: "description", content: "Follow the progress of your author platform project." },
-    { property: "og:title", content: "My projects — TheHeroes Agency" },
+    { property: "og:title", content: "My projects · TheHeroes Agency" },
     { property: "og:description", content: "Client area for TheHeroes Agency · Author Studio." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     { name: "robots", content: "noindex" },

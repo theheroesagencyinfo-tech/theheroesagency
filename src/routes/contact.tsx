@@ -6,9 +6,9 @@ import { ReviewPreview } from "@/components/conversion";
 import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/contact")({
   head: () => ({ meta: [
-    { title: "Free author site review — TheHeroes Agency · Author Studio" },
+    { title: "Free author site review · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Tell Mou Barrac about your nonfiction book and request a free short video review with quick wins for your author website." },
-    { property: "og:title", content: "Free author site review — TheHeroes Agency · Author Studio" },
+    { property: "og:title", content: "Free author site review · TheHeroes Agency · Author Studio" },
     { property: "og:description", content: "Tell me about your book and I'll send a short video review with quick wins for your site." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: Contact,

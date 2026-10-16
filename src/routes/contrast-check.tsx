@@ -22,7 +22,7 @@ const samples = [
 
 export const Route = createFileRoute("/contrast-check")({
   head: () => ({ meta: [
-    { title: "Free colour contrast check — TheHeroes Agency · Author Studio" },
+    { title: "Free colour contrast check · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Upload a screenshot of your author website and get an AI-powered list of hard-to-read text with accessible colour suggestions." },
     { property: "og:title", content: "Free colour contrast check for author websites" },
     { property: "og:description", content: "Find hard-to-read text on your author website and get accessible colour fixes in seconds." },
@@ -119,7 +119,7 @@ function ContrastCheck() {
             </div>
           : <div className="flex h-64 items-center justify-center border border-dashed text-sm text-muted-foreground">Your page preview appears here</div>}
 
-        {status === "loading" && <p className="text-sm text-muted-foreground" aria-live="polite">Reading the page — this usually takes 20–60 seconds.</p>}
+        {status === "loading" && <p className="text-sm text-muted-foreground" aria-live="polite">Reading the page. This usually takes 20 to 60 seconds.</p>}
 
         {report && <div aria-live="polite">
           <h2 className="text-2xl">{report.issues.length ? `${report.issues.length} hard-to-read ${report.issues.length === 1 ? "spot" : "spots"}` : "No contrast problems found"}</h2>

@@ -25,9 +25,9 @@ const pages = [
 
 export const Route = createFileRoute("/projects/daniel-carter")({
   head: () => ({ meta: [
-    { title: "Daniel Carter author website — TheHeroes Agency · Author Studio" },
+    { title: "Daniel Carter author website · TheHeroes Agency · Author Studio" },
     { name: "description", content: "An eight-page author website design for nonfiction author Daniel Carter: home, about, books, book page, journal, speaking, resources, and contact." },
-    { property: "og:title", content: "Daniel Carter author website — TheHeroes Agency" },
+    { property: "og:title", content: "Daniel Carter author website · TheHeroes Agency" },
     { property: "og:description", content: "Scroll through all eight pages of the Daniel Carter author website design." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: Project,

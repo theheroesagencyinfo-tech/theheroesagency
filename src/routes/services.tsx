@@ -8,9 +8,9 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 
 export const Route = createFileRoute("/services")({
   head: () => ({ meta: [
-    { title: "Services — TheHeroes Agency · Author Studio" },
+    { title: "Services · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Author websites, five-email welcome funnels, and book launch kits for nonfiction authors. Explore the scope and request a quote." },
-    { property: "og:title", content: "Services — TheHeroes Agency · Author Studio" },
+    { property: "og:title", content: "Services · TheHeroes Agency · Author Studio" },
     { property: "og:description", content: "Three ways I help nonfiction authors: websites, email funnels, and launch kits." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
   ] }), component: Services,
@@ -43,7 +43,7 @@ function Services() {
           <h3 className="mt-8 font-sans text-sm font-semibold">Who it's for</h3><p className="mt-2 max-w-[45ch] text-muted-foreground">{offer.who}</p>
           <Button asChild variant="studio" size="studio" className="mt-8"><a href="#quote" onClick={() => setSelected(offer.title.toLowerCase())}>Request a quote</a></Button>
         </div>
-        <div><h3 className="font-sans text-sm font-semibold">What's included</h3><ul className="mt-4 divide-y border-y">{offer.included.map(item => <li key={item} className="flex gap-4 py-3"><span aria-hidden="true" className="text-ring">—</span>{item}</li>)}</ul>
+        <div><h3 className="font-sans text-sm font-semibold">What's included</h3><ul className="mt-4 divide-y border-y">{offer.included.map(item => <li key={item} className="flex gap-4 py-3"><span aria-hidden="true" className="text-ring">·</span>{item}</li>)}</ul>
           <h3 className="mt-8 font-sans text-sm font-semibold">What you'll need to give me</h3><ul className="mt-3 list-disc space-y-2 pl-5 text-muted-foreground">{offer.needs.map(item => <li key={item}>{item}</li>)}</ul>
         </div>
       </div>

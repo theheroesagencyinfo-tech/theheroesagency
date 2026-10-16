@@ -8,9 +8,9 @@ import { ProgressBar } from "@/components/progress-bar";
 
 export const Route = createFileRoute("/_authenticated/admin_/orders/$id")({
   head: () => ({ meta: [
-    { title: "Manage project — TheHeroes Agency admin" },
+    { title: "Manage project · TheHeroes Agency admin" },
     { name: "description", content: "Manage tasks, pages, wireframes, and updates for a client project." },
-    { property: "og:title", content: "Manage project — TheHeroes Agency" },
+    { property: "og:title", content: "Manage project · TheHeroes Agency" },
     { property: "og:description", content: "Admin project tools." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
     { name: "robots", content: "noindex" },
@@ -59,7 +59,7 @@ function Manage() {
     <div className="mt-6 max-w-xl"><ProgressBar value={progressOf(tasks)} /></div>
     {err && <p role="alert" className="mt-4 text-sm text-destructive">{err}</p>}
 
-    <div className="mt-12 border-t pt-8"><h2 className="text-2xl">Tasks</h2><p className="mt-1 text-sm text-muted-foreground">Tick a task when it's done — the client's progress bar updates straight away.</p>
+    <div className="mt-12 border-t pt-8"><h2 className="text-2xl">Tasks</h2><p className="mt-1 text-sm text-muted-foreground">Tick a task when it's done. The client's progress bar updates straight away.</p>
       <ul className="mt-4 divide-y border-y">{tasks.map(t => <li key={t.id} className="flex items-center gap-3 py-3">
         <input type="checkbox" checked={t.done} aria-label={`Mark "${t.title}" done`} onChange={async () => { await supabase.from("project_tasks").update({ done: !t.done }).eq("id", t.id); reload(); }} className="h-4 w-4 accent-primary" />
         <span className="flex-1">{t.title}</span>
