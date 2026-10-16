@@ -6,6 +6,7 @@ export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 
 const nav = [
+  { to: "/", label: "Home" },
   { to: "/services", label: "Services" },
   { to: "/work", label: "Work" },
   { to: "/about", label: "About" },
