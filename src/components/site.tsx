@@ -45,6 +45,7 @@ export function Header() {
             <Link
               key={n.to}
               to={n.to}
+              activeOptions={{ exact: true }}
               className="text-muted-foreground hover:text-foreground"
               activeProps={{ className: "text-foreground" }}
             >
@@ -75,6 +76,7 @@ export function Header() {
                 <Link
                   to={n.to}
                   onClick={() => setOpen(false)}
+                  activeOptions={{ exact: true }}
                   className="block py-4 font-serif text-2xl"
                   activeProps={{ className: "text-ring" }}
                 >
