@@ -1,3 +1,4 @@
+import { UserRound } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 
@@ -67,6 +68,9 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          <Link to="/account" aria-label="My account" title="My account" className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-foreground/25 text-foreground hover:bg-secondary">
+            <UserRound aria-hidden className="h-5 w-5" />
+          </Link>
           <Link to="/" hash="review" className="hidden rounded-md sm:inline-block">
             <Btn className="px-4 py-2">Free review</Btn>
           </Link>
@@ -146,7 +150,7 @@ export function Footer() {
               {n.label}
             </Link>
           ))}
-          <Link to="/contrast-check" className="hover:text-foreground">Contrast check</Link>
+          <Link to="/account" className="hover:text-foreground">My account</Link>
         </nav>
       </div>
     </footer>

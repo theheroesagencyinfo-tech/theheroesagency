@@ -20,6 +20,32 @@ export const addons = [
   { id: "ads-management", name: "Paid ads management, excluding ad spend", price: "from $750/month" },
 ] as const;
 export const addonIds = addons.map(a => a.id) as [string, ...string[]];
+export const packageAmounts: Record<PackageSlug, number> = { "book-presence": 1500, "reader-to-client": 3000, "book-launch": 5500 };
+export const addonAmounts: Record<string, { amount: number; monthly?: boolean }> = {
+  "extra-page": { amount: 350 }, "email-sequence": { amount: 500 }, "video-ad": { amount: 250 }, "speaker-page": { amount: 400 },
+  "magnet-copy": { amount: 400 }, "email-management": { amount: 500, monthly: true }, maintenance: { amount: 150, monthly: true }, "ads-management": { amount: 750, monthly: true },
+};
+export const RUSH_AMOUNT = 150;
+
+export function invoiceLines(pkg: PackageSlug, addonList: string[], rush: boolean) {
+  const lines: { label: string; amount: number; monthly?: boolean }[] = [
+    { label: packages.find(p => p.slug === pkg)!.name, amount: packageAmounts[pkg] },
+    ...addonList.map(id => ({ label: addons.find(a => a.id === id)?.name ?? id, ...(addonAmounts[id] ?? { amount: 0 }) })),
+    ...(rush ? [{ label: "Rush delivery", amount: RUSH_AMOUNT }] : []),
+  ];
+  const oneOff = lines.filter(l => !l.monthly).reduce((t, l) => t + l.amount, 0);
+  const monthly = lines.filter(l => l.monthly).reduce((t, l) => t + l.amount, 0);
+  const schedule = pkg === "book-launch"
+    ? [{ label: "Payment 1 of 3", amount: Math.round(oneOff / 3) }, { label: "Payment 2 of 3", amount: Math.round(oneOff / 3) }, { label: "Payment 3 of 3", amount: oneOff - 2 * Math.round(oneOff / 3) }]
+    : [{ label: "40% deposit to reserve your project", amount: Math.round(oneOff * 0.4) }, { label: "30% at design and content approval", amount: Math.round(oneOff * 0.3) }, { label: "30% before launch or handover", amount: oneOff - Math.round(oneOff * 0.4) - Math.round(oneOff * 0.3) }];
+  return { lines, oneOff, monthly, schedule };
+}
+
+export function progressOf(tasks: { done: boolean }[]) {
+  if (tasks.length === 0) return 0;
+  return Math.round((tasks.filter(t => t.done).length / tasks.length) * 100);
+}
+
 export const RUSH = { name: "Rush delivery, subject to availability", price: "+$150" };
 
 export const orderStatuses = ["new", "invoice sent", "in progress", "in review", "launched"] as const;
