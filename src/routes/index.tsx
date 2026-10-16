@@ -67,6 +67,7 @@ function Home() {
             <a href="#work"><Btn variant="ghost">See my work</Btn></a>
           </div>
         </div>
+        </div>
       </section>
 
       <section aria-labelledby="build" className="border-t">
