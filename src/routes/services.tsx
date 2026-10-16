@@ -5,6 +5,7 @@ import { ReviewForm } from "@/components/ReviewForm";
 import { ReaderJourney } from "@/components/conversion";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+import { timelineAnswer } from "@/lib/packages";
 
 export const Route = createFileRoute("/services")({
   head: () => ({ meta: [
@@ -27,7 +28,7 @@ const steps = [
   { title: "Launch", text: "We check the finished work and get it ready to go live." },
 ];
 const faqs = [
-  ["How long will it take?", "Most projects take 2 to 5 days once I have everything I need from you."],
+  ["How long will it take?", timelineAnswer],
   ["What do you need from me?", "Your book cover, description, bio, headshot, retailer links, and access to any accounts we're building on. I'll send a short checklist after our scoping call."],
   ["How do revisions work?", "Revisions are unlimited. We keep refining until you're happy with it."],
   ["Which tools do you build on?", "I can build on any major website hosting platform, so you can keep the tools you already use."],

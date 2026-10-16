@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { BOOKING_URL } from "@/components/site";
-import { packages, addons, RUSH } from "@/lib/packages";
+import { packages, addons, RUSH, timelineAnswer } from "@/lib/packages";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
@@ -52,7 +52,7 @@ const faqs = [
   ["Do you write the emails and website copy?", "Yes. Each package includes strategic copy for its pages and emails, built on your book, expertise, voice, and goals. If you already have copy, I can refine and structure it."],
   ["What is a reader magnet?", "A useful free resource that encourages someone to join your email list, such as a checklist, workbook, template, short guide, chapter excerpt, quiz, or mini email course connected to your book's main idea."],
   ["Do you handle paid ads?", "I create AI-powered video ads, static graphics, and ad-ready copy, and can set up and manage campaigns as an add-on. Ad spend is paid directly by you and isn't included in package pricing."],
-  ["How long does each package take?", "Book presence takes about 2 weeks, reader-to-client system about 3 weeks, and book launch platform about 4 weeks. Timelines depend on timely feedback, content, and approvals from you."],
+  ["How long does each package take?", timelineAnswer],
   ["Can you deliver faster if I have a launch deadline?", "Yes. Rush delivery is available for an additional $150, subject to availability. We'll confirm the exact delivery date before you pay the deposit."],
   ["What happens after the project ends?", "You receive the completed website, email sequences, creative assets, documentation, and a handover walkthrough. You own your website, email list, and accounts. I can also support you after launch with email management, maintenance, or new campaigns."],
   ["Do I own everything you create?", "Yes. Once final payment is received, you own the deliverables created for your project, subject to the terms of any third-party tools or licensed assets used."],
