@@ -15,4 +15,4 @@
 - [x] Swap the accent colour from periwinkle to deep green across light and dark mode tokens.
 - [ ] Add Mou's headshot to the About page and real screenshots to the sample project page when supplied.
 - [x] AI contrast checker page (/contrast-check)
-- [ ] Faded (~25%) banner image behind homepage first section, text overlaid — waiting on photo from user
+- [x] Faded (~25%) banner image behind homepage first section, text overlaid
