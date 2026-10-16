@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ContrastCheckRouteImport } from './routes/contrast-check'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as ProjectsDanielCarterRouteImport } from './routes/projects.daniel-carter'
@@ -32,6 +33,11 @@ const AboutRoute = AboutRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContrastCheckRoute = ContrastCheckRouteImport.update({
+  id: '/contrast-check',
+  path: '/contrast-check',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/contrast-check': typeof ContrastCheckRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
@@ -81,6 +88,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/contrast-check': typeof ContrastCheckRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
@@ -93,6 +101,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/contrast-check': typeof ContrastCheckRoute
   '/services': typeof ServicesRoute
   '/work': typeof WorkRoute
   '/projects/daniel-carter': typeof ProjectsDanielCarterRoute
@@ -106,6 +115,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/contrast-check'
     | '/services'
     | '/work'
     | '/projects/daniel-carter'
@@ -117,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/contrast-check'
     | '/services'
     | '/work'
     | '/projects/daniel-carter'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/contrast-check'
     | '/services'
     | '/work'
     | '/projects/daniel-carter'
@@ -140,6 +152,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  ContrastCheckRoute: typeof ContrastCheckRoute
   ServicesRoute: typeof ServicesRoute
   WorkRoute: typeof WorkRoute
   ProjectsDanielCarterRoute: typeof ProjectsDanielCarterRoute
@@ -169,6 +182,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contrast-check': {
+      id: '/contrast-check'
+      path: '/contrast-check'
+      fullPath: '/contrast-check'
+      preLoaderRoute: typeof ContrastCheckRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -220,6 +240,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  ContrastCheckRoute: ContrastCheckRoute,
   ServicesRoute: ServicesRoute,
   WorkRoute: WorkRoute,
   ProjectsDanielCarterRoute: ProjectsDanielCarterRoute,
