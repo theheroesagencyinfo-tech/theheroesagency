@@ -1,16 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { ANNOUNCEMENT_ITEMS } from "@/components/site";
+import { ANNOUNCEMENT_ITEMS, BOOKING_URL } from "@/components/site";
 
-const text = ANNOUNCEMENT_ITEMS.join(" ");
-
-describe("Announcement bar offer", () => {
-  it("states the discount", () => {
-    expect(text).toContain("30% off");
+describe("Announcement bar", () => {
+  it("links the first message to the booking call", () => {
+    expect(ANNOUNCEMENT_ITEMS[0].href).toBe(BOOKING_URL);
   });
-  it("states the closing date", () => {
-    expect(text).toContain("12 December");
-  });
-  it("names the work the discount applies to", () => {
-    expect(text).toContain("author website project");
+  it("links the second message to the packages page", () => {
+    expect(ANNOUNCEMENT_ITEMS[1].href).toBe("/pricing");
   });
 });

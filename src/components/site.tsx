@@ -6,12 +6,17 @@ export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 
-const PROMO_DISCOUNT = "30% off every author website project";
-const PROMO_UNTIL = "12 December";
-
 export const ANNOUNCEMENT_ITEMS = [
-  `${PROMO_DISCOUNT} until ${PROMO_UNTIL}`,
-  "Start with a free author site review",
+  {
+    text: "Built for nonfiction authors: turn readers into opportunities.",
+    cta: "Book a call",
+    href: BOOKING_URL,
+  },
+  {
+    text: "Websites, email automation, and launch creative, built as one system.",
+    cta: "View packages",
+    href: "/pricing",
+  },
 ] as const;
 
 
@@ -114,13 +119,27 @@ export function Header() {
 export function AnnouncementBar() {
   return (
     <div className="bg-primary text-primary-foreground overflow-hidden">
-      <p className="sr-only">{ANNOUNCEMENT_ITEMS.join(". ")}</p>
+      <ul className="sr-only">
+        {ANNOUNCEMENT_ITEMS.map((item) => (
+          <li key={item.text}>
+            {item.text} <a href={item.href}>{item.cta}</a>
+          </li>
+        ))}
+      </ul>
       <div aria-hidden="true" className="announce-track py-2 text-sm font-medium tracking-wide">
         {[0, 1].map((half) => (
           <span key={half} className="flex shrink-0 items-center">
             {ANNOUNCEMENT_ITEMS.map((item) => (
-              <span key={item} className="flex items-center whitespace-nowrap">
-                <span className="px-6">{item}</span>
+              <span key={item.text} className="flex items-center whitespace-nowrap">
+                <span className="pl-6 pr-2">{item.text}</span>
+                <a
+                  href={item.href}
+                  tabIndex={-1}
+                  {...(item.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                  className="pr-6 font-semibold underline underline-offset-4"
+                >
+                  → {item.cta}
+                </a>
                 <span className="opacity-60">/</span>
               </span>
             ))}
