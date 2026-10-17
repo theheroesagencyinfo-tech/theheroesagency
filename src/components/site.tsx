@@ -1,6 +1,7 @@
 import { UserRound } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
+import logo from "@/assets/theheroes-logo.png.asset.json";
 
 export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
@@ -54,9 +55,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-5 py-4">
-        <Link to="/" className="flex flex-col leading-tight" onClick={() => setOpen(false)}>
-          <span className="font-serif text-lg sm:text-xl">TheHeroes Agency</span>
-          <span className="text-[0.65rem] uppercase tracking-[0.22em] text-muted-foreground">Author Studio</span>
+        <Link to="/" className="flex items-center" onClick={() => setOpen(false)}>
+          <img src={logo.url} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className="h-8 w-auto sm:h-10" />
         </Link>
         <nav aria-label="Main" className="hidden items-center gap-7 text-sm md:flex">
           {nav.map((n) => (
@@ -156,8 +156,7 @@ export function Footer() {
     <footer className="border-t">
       <div className="mx-auto flex max-w-[1500px] flex-col gap-6 px-5 py-12 text-sm text-muted-foreground md:flex-row md:justify-between">
         <div>
-          <p className="font-serif text-lg text-foreground">TheHeroes Agency</p>
-          <p className="text-xs uppercase tracking-[0.22em]">Author Studio</p>
+          <img src={logo.url} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className="h-10 w-auto" />
           <p className="mt-1">Websites and launch funnels for nonfiction authors.</p>
           <p className="mt-3">
             {CONTACT_EMAIL}
