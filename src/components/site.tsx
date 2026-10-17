@@ -1,6 +1,7 @@
-import { UserRound } from "lucide-react";
+import { Facebook, Instagram, Linkedin, UserRound } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useState, type FormEvent, type ReactNode } from "react";
+import { subscribeNewsletter } from "@/lib/newsletter.functions";
 import logo from "@/assets/theheroes-logo.png.asset.json";
 
 export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
@@ -150,29 +151,158 @@ export function AnnouncementBar() {
   );
 }
 
+const SOCIALS = [
+  {
+    label: "Threads",
+    href: "https://www.threads.com/@theheroes_authorstudio",
+    icon: ThreadsIcon,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/theheroes_authorstudio",
+    icon: Instagram,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/theheroesauthorstudio",
+    icon: Linkedin,
+  },
+  { label: "X", href: "https://x.com/moubarrac", icon: XIcon },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/19fEAZNYmW/",
+    icon: Facebook,
+  },
+] as const;
+
+function ThreadsIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.016c.03-3.579.879-6.43 2.525-8.482C5.872 1.219 8.614.05 12.176.024h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.084 3.507 5.327l-2.04.594c-1.104-3.96-3.898-5.953-8.3-5.986-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.853-2.045 1.647-1.613 1.618-3.593 1.087-4.798-.255-.574-.705-1.046-1.293-1.373-.155-.077-.32-.144-.493-.2-.108-.433-.242-.855-.4-1.269.691.087 1.316.244 1.856.475 1.013.44 1.748 1.153 2.116 2.045.804 1.946.875 5.148-1.487 7.45-1.876 1.773-4.075 2.437-7.526 2.459zm.706-6.381c-2.591 0-4.085-1.2-4.085-2.842 0-1.62 1.443-2.795 4.008-2.795.136 0 .27.003.404.01-.041-.853-.342-1.553-.936-2.065-.689-.594-1.714-.897-3.043-.897l-.022.001c-1.073 0-2.21.242-3.113.664l-.77-1.608c1.175-.55 2.537-.854 3.898-.854h.022c2.207.011 3.899.623 5.03 1.82 1.06 1.121 1.594 2.715 1.588 4.738v.005c0 .912-.076 1.713-.214 2.437 1.153.197 1.941.735 2.306 1.615.24.577.322 1.224.256 1.93-1.348-.033-2.386-.376-3.062-1.02-.363.192-.763.353-1.193.479-.66.197-1.39.3-2.17.307zm-.025-3.876c-1.548.015-2.105.66-2.105 1.034 0 .337.374.894 1.866.894.346 0 .666-.032.965-.099.286-.628.453-1.348.51-2.166-.403-.045-.798-.065-1.173-.063h-.073z" />
+    </svg>
+  );
+}
+
+function XIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden className={className}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
 export function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  const [note, setNote] = useState("");
+
+  async function subscribe(e: FormEvent) {
+    e.preventDefault();
+    if (status === "sending") return;
+    setStatus("sending");
+    setNote("");
+    try {
+      const res = await subscribeNewsletter({ data: { email } });
+      if (res?.ok) {
+        setStatus("done");
+        setNote(
+          res.alreadySubscribed
+            ? "You're already on the list."
+            : "You're on the list. Platform tips arrive soon."
+        );
+        setEmail("");
+      } else {
+        setStatus("error");
+        setNote("Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setNote("Enter a valid email address.");
+    }
+  }
 
   return (
     <footer className="border-t">
-      <div className="mx-auto flex max-w-[1500px] flex-col gap-6 px-5 py-12 text-sm text-muted-foreground md:flex-row md:justify-between">
-        <div>
-          <img src={logo.url} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className="h-10 w-auto" />
-          <p className="mt-1">Websites and launch funnels for nonfiction authors.</p>
-          <p className="mt-3">
-            {CONTACT_EMAIL}
-          </p>
+      <div className="mx-auto max-w-[1500px] px-5 py-12">
+        <div className="grid gap-10 md:grid-cols-2">
+          <div>
+            <h2 className="max-w-[34ch] font-serif text-2xl">
+              Build a book platform that works beyond launch day.
+            </h2>
+            <p className="mt-2 max-w-[55ch] text-muted-foreground">
+              Get practical ideas on author websites, email automation, reader
+              magnets, and book launches without the jargon.
+            </p>
+            <form onSubmit={subscribe} className="mt-5 flex max-w-md flex-col gap-3 sm:flex-row">
+              <label className="sr-only" htmlFor="newsletter-email">
+                Email address
+              </label>
+              <input
+                id="newsletter-email"
+                type="email"
+                required
+                maxLength={255}
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground/70"
+              />
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-60"
+              >
+                {status === "sending" ? "Joining..." : "Get platform tips"}
+              </button>
+            </form>
+            <p className="mt-2 text-xs text-muted-foreground" role="status">
+              {note || "No spam. Unsubscribe anytime."}
+            </p>
+          </div>
+          <nav
+            aria-label="Footer"
+            className="flex max-w-xl flex-wrap gap-x-6 gap-y-4 text-sm text-muted-foreground md:justify-end"
+          >
+            {nav.map((n) => (
+              <Link key={n.to} to={n.to} className="hover:text-foreground">
+                {n.label}
+              </Link>
+            ))}
+            <Link to="/account" className="hover:text-foreground">My account</Link>
+            <Link to="/terms" className="hover:text-foreground">Terms of service</Link>
+            <Link to="/privacy" className="hover:text-foreground">Privacy policy</Link>
+            <Link to="/refund-policy" className="hover:text-foreground">Refund policy</Link>
+          </nav>
         </div>
-        <nav aria-label="Footer" className="flex max-w-xl flex-wrap gap-x-6 gap-y-4">
-          {nav.map((n) => (
-            <Link key={n.to} to={n.to} className="hover:text-foreground">
-              {n.label}
-            </Link>
-          ))}
-          <Link to="/account" className="hover:text-foreground">My account</Link>
-          <Link to="/terms" className="hover:text-foreground">Terms of service</Link>
-          <Link to="/privacy" className="hover:text-foreground">Privacy policy</Link>
-          <Link to="/refund-policy" className="hover:text-foreground">Refund policy</Link>
-        </nav>
+        <div className="mt-10 flex flex-col gap-6 border-t pt-8 text-sm text-muted-foreground md:flex-row md:items-start md:justify-between">
+          <div>
+            <img
+              src={logo.url}
+              alt="TheHeroes Agency · Author Studio"
+              width={1190}
+              height={196}
+              className="h-10 w-auto"
+            />
+            <p className="mt-1">Websites and launch funnels for nonfiction authors.</p>
+            <p className="mt-3">{CONTACT_EMAIL}</p>
+          </div>
+          <div className="flex items-center gap-3" aria-label="Social media">
+            {SOCIALS.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={s.label}
+                title={s.label}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-foreground/25 text-muted-foreground hover:border-foreground hover:bg-secondary hover:text-foreground"
+              >
+                <s.icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   );
