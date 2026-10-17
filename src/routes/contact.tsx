@@ -21,7 +21,7 @@ const next = [
 function Contact() {
   return <>
     <PageIntro label="Contact" title="Get my free author site review.">Tell me about your book and I'll send a short video review with the quick wins for your site.</PageIntro>
-    <section id="review" className="scroll-mt-36 border-t"><div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr]">
+    <section id="review" className="scroll-mt-36 border-t"><div className="mx-auto grid max-w-[1500px] gap-12 px-5 py-16 md:grid-cols-[1.4fr_1fr]">
       <ReviewForm />
       <aside className="md:border-l md:pl-12"><h2 className="text-3xl">Let's talk about your book.</h2><dl className="mt-8 space-y-6"><div><dt className="text-sm text-muted-foreground">Email</dt><dd className="mt-2 break-words text-lg">{CONTACT_EMAIL}</dd></div><div><dt className="text-sm text-muted-foreground">Response time</dt><dd className="mt-2">Under 12 hours</dd></div></dl>
         <div className="mt-8 border-t pt-6"><Button asChild variant="studioOutline" size="studio"><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">{BOOKING_LABEL}</a></Button><p className="mt-4 text-sm text-muted-foreground">Pick a time that suits you. No preparation needed.</p></div>
@@ -29,6 +29,6 @@ function Contact() {
       </aside>
     </div></section>
     <ReviewPreview />
-    <section className="border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-16"><h2 className="text-4xl">What happens next</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{next.map(([title, text], i) => <li key={title} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-muted-foreground">{text}</p></li>)}</ol></div></section>
+    <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-16"><h2 className="text-4xl">What happens next</h2><ol className="mt-10 grid gap-8 md:grid-cols-3">{next.map(([title, text], i) => <li key={title} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{title}</h3><p className="mt-3 text-muted-foreground">{text}</p></li>)}</ol></div></section>
   </>;
 }

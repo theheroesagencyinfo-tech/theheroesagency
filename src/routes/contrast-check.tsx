@@ -82,7 +82,7 @@ function ContrastCheck() {
       Pick a page from my work or upload a screenshot of your own site. I'll point out text readers may struggle to see and suggest accessible colours to fix it.
     </PageIntro>
 
-    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 md:grid-cols-[320px_minmax(0,1fr)]">
+    <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-12 md:grid-cols-[320px_minmax(0,1fr)]">
       <div className="space-y-8">
         <fieldset>
           <legend className="text-sm font-semibold">1. Choose a page</legend>

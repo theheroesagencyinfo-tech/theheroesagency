@@ -70,11 +70,11 @@ function Admin() {
   }
   async function signOut() { await supabase.auth.signOut(); navigate({ to: "/auth", replace: true }); }
 
-  if (isAdmin === null) return <p className="mx-auto max-w-6xl px-5 py-20 text-muted-foreground">Loading…</p>;
-  if (!isAdmin) return <section className="mx-auto max-w-6xl px-5 py-20"><h1 className="text-4xl">No admin access</h1><p className="mt-4 text-muted-foreground">This account isn't an admin.</p><Button onClick={signOut} variant="studioOutline" size="studio" className="mt-6">Sign out</Button></section>;
+  if (isAdmin === null) return <p className="mx-auto max-w-[1500px] px-5 py-20 text-muted-foreground">Loading…</p>;
+  if (!isAdmin) return <section className="mx-auto max-w-[1500px] px-5 py-20"><h1 className="text-4xl">No admin access</h1><p className="mt-4 text-muted-foreground">This account isn't an admin.</p><Button onClick={signOut} variant="studioOutline" size="studio" className="mt-6">Sign out</Button></section>;
 
   const pending = reviews.filter(r => !r.approved).length;
-  return <section className="mx-auto max-w-6xl px-5 py-16">
+  return <section className="mx-auto max-w-[1500px] px-5 py-16">
     <div className="flex flex-wrap items-end justify-between gap-4">
       <h1 className="text-4xl sm:text-5xl">Admin</h1>
       <Button onClick={signOut} variant="studioOutline" size="studio">Sign out</Button>

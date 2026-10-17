@@ -61,7 +61,7 @@ const faqs = [
 
 function Pricing() {
   return <>
-    <section className="mx-auto max-w-6xl px-5 pb-14 pt-16 sm:pt-20">
+    <section className="mx-auto max-w-[1500px] px-5 pb-14 pt-16 sm:pt-20">
       <p className="text-sm font-semibold text-muted-foreground">Pricing</p>
       <h1 className="mt-6 max-w-[22ch] text-4xl leading-[1.08] sm:text-6xl">Turn your book into a platform that creates opportunities.</h1>
       <p className="mt-6 max-w-[60ch] text-lg text-muted-foreground">I build author websites, email systems, and launch creative that turn readers into subscribers, clients, and speaking opportunities.</p>
@@ -72,13 +72,13 @@ function Pricing() {
       <p className="mt-6 text-sm text-muted-foreground">One point of contact. Clear timeline. No jargon.</p>
     </section>
 
-    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]">
+    <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]">
       <h2 className="text-4xl">Who this is for</h2>
       <div><p className="text-lg text-muted-foreground">Nonfiction authors who:</p>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2">{audience.map(a => <li key={a} className="flex gap-3 border-t pt-4"><Check aria-hidden className="mt-1 h-4 w-4 shrink-0 text-primary" />{a}</li>)}</ul></div>
     </div></section>
 
-    <section id="packages" className="scroll-mt-28 border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-16">
+    <section id="packages" className="scroll-mt-28 border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-16">
       <h2 className="text-4xl">Three packages, one goal.</h2>
       <p className="mt-4 max-w-[60ch] text-muted-foreground">Every package is completed within 2–4 weeks, with a written scope agreed before building begins.</p>
       <div className="mt-10 grid gap-6 lg:grid-cols-3">
@@ -96,24 +96,24 @@ function Pricing() {
       <p className="mt-10 border-l-2 border-primary pl-4 text-sm">Need it faster? Rush delivery is available for an additional $150, subject to availability.</p>
     </div></section>
 
-    <section className="border-t"><div className="mx-auto max-w-6xl px-5 py-16">
+    <section className="border-t"><div className="mx-auto max-w-[1500px] px-5 py-16">
       <h2 className="text-4xl">Why these packages work</h2>
       <p className="mt-4 max-w-[60ch] text-muted-foreground">Each package is designed around a clear reader journey.</p>
       <ol className="mt-10 grid gap-8 md:grid-cols-3">{journeys.map(([t, d], i) => <li key={t} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-2xl">{t}</h3><p className="mt-3 text-muted-foreground">{d}</p></li>)}</ol>
       <p className="mt-12 max-w-[30ch] font-serif text-3xl italic">Your book should not be the end of the conversation. It should be the beginning.</p>
     </div></section>
 
-    <section className="border-t bg-secondary"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]">
+    <section className="border-t bg-secondary"><div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]">
       <h2 className="text-4xl">Need something specific?</h2>
       <dl className="divide-y border-y">{[...addons.map(a => [a.name, a.price]), [RUSH.name, RUSH.price]].map(([n, p]) => <div key={n} className="flex justify-between gap-6 py-4"><dt>{n}</dt><dd className="shrink-0 font-semibold">{p}</dd></div>)}</dl>
     </div></section>
 
-    <section className="border-t"><div className="mx-auto max-w-6xl px-5 py-16">
+    <section className="border-t"><div className="mx-auto max-w-[1500px] px-5 py-16">
       <h2 className="text-4xl">How we work</h2>
       <ol className="mt-10 grid gap-8 md:grid-cols-4">{steps.map(([t, d], i) => <li key={t} className="border-t pt-5"><span className="font-serif text-3xl text-ring">0{i + 1}</span><h3 className="mt-4 text-xl">{t}</h3><p className="mt-3 text-muted-foreground">{d}</p></li>)}</ol>
     </div></section>
 
-    <section className="border-t bg-secondary"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-2">
+    <section className="border-t bg-secondary"><div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-16 md:grid-cols-2">
       <div><h2 className="text-4xl">Payment</h2><p className="mt-4 text-muted-foreground">Simple milestones, agreed in writing before we begin.</p></div>
       <div className="grid gap-8">
         <div><h3 className="text-xl">All packages</h3><ul className="mt-4 divide-y border-y">{[["40%", "deposit to reserve your project"], ["30%", "at design and content approval"], ["30%", "before launch or handover"]].map(([a, b]) => <li key={b} className="flex gap-4 py-3"><span className="w-12 font-semibold">{a}</span>{b}</li>)}</ul></div>
@@ -121,12 +121,12 @@ function Pricing() {
       </div>
     </div></section>
 
-    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]">
+    <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-16 md:grid-cols-[1fr_1.4fr]">
       <h2 className="text-4xl">Questions authors ask</h2>
       <Accordion type="single" collapsible className="border-t">{faqs.map(([q, a], i) => <AccordionItem key={q} value={String(i)}><AccordionTrigger className="py-5 text-left text-base">{q}</AccordionTrigger><AccordionContent className="text-base text-muted-foreground">{a}</AccordionContent></AccordionItem>)}</Accordion>
     </div></section>
 
-    <section className="border-t bg-secondary pb-24 md:pb-0"><div className="mx-auto max-w-6xl px-5 py-16">
+    <section className="border-t bg-secondary pb-24 md:pb-0"><div className="mx-auto max-w-[1500px] px-5 py-16">
       <h2 className="max-w-[22ch] text-4xl sm:text-5xl">Let's give your readers a clear next step.</h2>
       <p className="mt-4 max-w-[60ch] text-lg text-muted-foreground">Book a discovery call and we'll map the simplest path from your book to more subscribers, clients, and opportunities.</p>
       <CallButton className="mt-8" />

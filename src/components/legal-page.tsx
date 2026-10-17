@@ -25,14 +25,14 @@ export function legalHead(document: LegalDocument) {
 export function LegalPage({ document }: { document: LegalDocument }) {
   return <>
     <PageIntro label="Our policies" title={document.title}>{document.description}</PageIntro>
-    <div className="mx-auto max-w-6xl px-5 pb-10">
+    <div className="mx-auto max-w-[1500px] px-5 pb-10">
       <p className="text-sm text-muted-foreground">Last updated: <time dateTime={legalPolicy.updatedAt}>16 October 2026</time></p>
       <nav aria-label="Legal policies" className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm">
         {policyLinks.map(link => <Link key={link.to} to={link.to} className="underline underline-offset-4" activeProps={{ className: "font-semibold text-primary" }}>{link.label}</Link>)}
       </nav>
     </div>
     <div className="border-t">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
+      <div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-12 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-16">
         <aside>
           <nav aria-label="On this page" className="lg:sticky lg:top-28">
             <h2 className="font-sans text-sm font-semibold">On this page</h2>
@@ -61,6 +61,6 @@ export function LegalPage({ document }: { document: LegalDocument }) {
         </article>
       </div>
     </div>
-    <section className="border-t bg-secondary"><div className="mx-auto max-w-6xl px-5 py-10"><p className="max-w-[70ch] text-muted-foreground leading-7">{policyFooterNote}</p></div></section>
+    <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-10"><p className="max-w-[70ch] text-muted-foreground leading-7">{policyFooterNote}</p></div></section>
   </>;
 }

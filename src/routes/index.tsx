@@ -54,7 +54,7 @@ function Home() {
     <>
       <section className="relative overflow-hidden bg-pitch text-pitch-foreground">
         <img src={banner.url} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25" />
-        <div className="relative mx-auto max-w-6xl px-5 pb-24 pt-20 sm:pt-28">
+        <div className="relative mx-auto max-w-[1500px] px-5 pb-24 pt-20 sm:pt-28">
         <div className="rise max-w-3xl">
           <SectionLabel className="text-pitch-muted">Nonfiction author website design</SectionLabel>
           <h1 className="mt-6 text-5xl leading-[1.05] sm:text-7xl">
@@ -72,7 +72,7 @@ function Home() {
       </section>
 
       <section aria-labelledby="build" className="border-t">
-        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-16 md:grid-cols-[1fr_2fr] md:gap-10 md:py-20">
+        <div className="mx-auto grid max-w-[1500px] gap-6 px-5 py-16 md:grid-cols-[1fr_2fr] md:gap-10 md:py-20">
           <div>
             <SectionLabel>Contents</SectionLabel>
             <h2 id="build" className="mt-4 text-4xl">What I build</h2>
@@ -94,7 +94,7 @@ function Home() {
       </section>
 
       <section aria-labelledby="why" className="border-t bg-secondary">
-        <div className="mx-auto max-w-6xl px-5 py-20">
+        <div className="mx-auto max-w-[1500px] px-5 py-20">
           <SectionLabel>Why authors need this</SectionLabel>
           <h2 id="why" className="mt-4 max-w-[22ch] text-4xl">Your book is the start of the funnel, not the end.</h2>
           <div className="mt-12 grid gap-10 md:grid-cols-3">
@@ -110,7 +110,7 @@ function Home() {
       </section>
 
       <section id="work" aria-labelledby="work-h" className="scroll-mt-24 border-t">
-        <div className="mx-auto max-w-6xl px-5 py-20">
+        <div className="mx-auto max-w-[1500px] px-5 py-20">
           <SectionLabel>Selected work</SectionLabel>
           <h2 id="work-h" className="mt-4 text-4xl">Recent pages</h2>
           <div className="mt-12 grid gap-14 md:grid-cols-2 md:gap-x-8">
@@ -146,7 +146,7 @@ function Home() {
       </section>
 
       <section aria-labelledby="how" className="border-t">
-        <div className="mx-auto max-w-6xl px-5 py-20">
+        <div className="mx-auto max-w-[1500px] px-5 py-20">
           <SectionLabel>How it works</SectionLabel>
           <h2 id="how" className="mt-4 text-4xl">Three steps, no pressure</h2>
           <ol className="mt-12 grid gap-10 md:grid-cols-3">
@@ -165,7 +165,7 @@ function Home() {
       <ReviewPreview />
 
       <section id="review" aria-labelledby="review-h" className="scroll-mt-24 border-t bg-secondary">
-        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 md:grid-cols-2">
+        <div className="mx-auto grid max-w-[1500px] gap-12 px-5 py-20 md:grid-cols-2">
           <div>
             <SectionLabel>Free author site review</SectionLabel>
             <h2 id="review-h" className="mt-4 max-w-[18ch] text-4xl sm:text-5xl">Find out what your site is costing you.</h2>

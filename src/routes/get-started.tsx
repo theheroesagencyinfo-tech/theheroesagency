@@ -95,12 +95,12 @@ function GetStarted() {
   </section>;
 
   return <>
-    <section className="mx-auto max-w-6xl px-5 pb-10 pt-16 sm:pt-20">
+    <section className="mx-auto max-w-[1500px] px-5 pb-10 pt-16 sm:pt-20">
       <Link to="/pricing" hash="packages" className="text-sm underline underline-offset-4">← Back to pricing</Link>
       <h1 className="mt-6 max-w-[22ch] text-4xl leading-[1.08] sm:text-6xl">{step === "choose" ? "Confirm your package." : "How would you like to move forward?"}</h1>
       <ol className="mt-6 flex gap-6 text-sm text-muted-foreground">{["Package", "Next step"].map((l, i) => <li key={l} className={i === ["choose", "method"].indexOf(step) ? "font-semibold text-foreground" : ""}>0{i + 1} {l}</li>)}</ol>
     </section>
-    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-12 px-5 py-14 md:grid-cols-[1.4fr_1fr]">
+    <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-12 px-5 py-14 md:grid-cols-[1.4fr_1fr]">
       <div>
         {step === "choose" && <form onSubmit={onConfirm} noValidate>
           <fieldset><legend className="text-xl">Package</legend>

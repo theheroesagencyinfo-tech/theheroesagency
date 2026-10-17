@@ -43,9 +43,9 @@ function Project() {
   }
 
   return <>
-    <div className="mx-auto max-w-6xl px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
+    <div className="mx-auto max-w-[1500px] px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
     <PageIntro label="Author website · 6 pages" title="Jonathan Reed.">A literary author website design bringing together Jonathan’s books, journal essays, speaking events, and resources for readers.</PageIntro>
-    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 md:grid-cols-[220px_minmax(0,1fr)]">
+    <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-8 px-5 py-12 md:grid-cols-[220px_minmax(0,1fr)]">
       <div role="tablist" aria-label="Website pages" className="flex min-w-0 gap-2 overflow-x-auto pb-2 md:flex-col md:overflow-visible md:pb-0">
         {pages.map((p, index) => <Button
           key={p.label}

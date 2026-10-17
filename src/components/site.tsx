@@ -1,6 +1,7 @@
 import { UserRound } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
+import logo from "@/assets/theheroes-logo.png.asset.json";
 
 export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
@@ -53,10 +54,9 @@ export function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4">
-        <Link to="/" className="flex flex-col leading-tight" onClick={() => setOpen(false)}>
-          <span className="font-serif text-lg sm:text-xl">TheHeroes Agency</span>
-          <span className="text-[0.65rem] uppercase tracking-[0.22em] text-muted-foreground">Author Studio</span>
+      <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-5 py-4">
+        <Link to="/" className="flex items-center" onClick={() => setOpen(false)}>
+          <img src={logo.url} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className="h-8 w-auto sm:h-10" />
         </Link>
         <nav aria-label="Main" className="hidden items-center gap-7 text-sm md:flex">
           {nav.map((n) => (
@@ -154,10 +154,9 @@ export function Footer() {
 
   return (
     <footer className="border-t">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 text-sm text-muted-foreground md:flex-row md:justify-between">
+      <div className="mx-auto flex max-w-[1500px] flex-col gap-6 px-5 py-12 text-sm text-muted-foreground md:flex-row md:justify-between">
         <div>
-          <p className="font-serif text-lg text-foreground">TheHeroes Agency</p>
-          <p className="text-xs uppercase tracking-[0.22em]">Author Studio</p>
+          <img src={logo.url} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className="h-10 w-auto" />
           <p className="mt-1">Websites and launch funnels for nonfiction authors.</p>
           <p className="mt-3">
             {CONTACT_EMAIL}
@@ -181,7 +180,7 @@ export function Footer() {
 
 export function ComingNext({ title }: { title: string }) {
   return (
-    <section className="mx-auto max-w-6xl px-5 py-28">
+    <section className="mx-auto max-w-[1500px] px-5 py-28">
       <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">Coming next</p>
       <h1 className="mt-4 max-w-[20ch] text-5xl">{title}</h1>
       <p className="mt-6 max-w-[60ch] text-lg text-muted-foreground">
