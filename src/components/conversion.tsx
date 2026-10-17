@@ -19,7 +19,7 @@ function Label({ children }: { children: string }) {
 export function ReaderJourney({ secondary = false }: { secondary?: boolean }) {
   return (
     <section aria-labelledby="journey-h" className={`border-t ${secondary ? "bg-secondary" : ""}`}>
-      <div className="mx-auto max-w-6xl px-5 py-20">
+      <div className="mx-auto max-w-[1500px] px-5 py-20">
         <Label>The reader journey</Label>
         <h2 id="journey-h" className="mt-4 max-w-[24ch] text-4xl">From someone who read your book to someone who hires you.</h2>
         <ol className="mt-12 grid gap-0 md:grid-cols-4">
@@ -40,7 +40,7 @@ export function ReaderJourney({ secondary = false }: { secondary?: boolean }) {
 export function ReviewPreview({ secondary = false }: { secondary?: boolean }) {
   return (
     <section aria-labelledby="preview-h" className={`border-t ${secondary ? "bg-secondary" : ""}`}>
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-20 md:grid-cols-[1fr_2fr]">
+      <div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-20 md:grid-cols-[1fr_2fr]">
         <div>
           <Label>What your review covers</Label>
           <h2 id="preview-h" className="mt-4 text-4xl">A short video, four clear sections.</h2>

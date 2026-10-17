@@ -11,7 +11,7 @@ export function Stars({ value, label }: { value: number; label?: string }) {
 }
 
 export function CaseStudy({ sections }: { sections: { heading: string; body: string }[] }) {
-  return <>{sections.map((s) => <section key={s.heading} className="border-t"><div className="mx-auto grid max-w-6xl gap-6 px-5 py-12 md:grid-cols-[1fr_1.4fr]">
+  return <>{sections.map((s) => <section key={s.heading} className="border-t"><div className="mx-auto grid max-w-[1500px] gap-6 px-5 py-12 md:grid-cols-[1fr_1.4fr]">
     <h2 className="text-3xl sm:text-4xl">{s.heading}</h2>
     <p className="max-w-[60ch] text-lg text-muted-foreground">{s.body}</p>
   </div></section>)}</>;
@@ -36,7 +36,7 @@ export function ProjectReviews({ project, author, quote }: { project: ProjectKey
     } catch { setStatus("error"); }
   }
 
-  return <section className="border-t bg-secondary"><div className="mx-auto grid max-w-6xl gap-12 px-5 py-16 md:grid-cols-2">
+  return <section className="border-t bg-secondary"><div className="mx-auto grid max-w-[1500px] gap-12 px-5 py-16 md:grid-cols-2">
     <div>
       <h2 className="text-3xl sm:text-4xl">Author review</h2>
       <figure className="mt-8 border-t pt-6">

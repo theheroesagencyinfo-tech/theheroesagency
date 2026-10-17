@@ -18,7 +18,7 @@ export const Route = createFileRoute("/work")({
 function Work() {
   return <>
     <PageIntro label="Work" title="Selected work.">Websites and launch assets I've built for authors.</PageIntro>
-    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-x-8 gap-y-14 px-5 py-16 md:grid-cols-2">
+    <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-x-8 gap-y-14 px-5 py-16 md:grid-cols-2">
       <article><Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={danielHome.url} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
         <p className="mt-6 text-sm text-muted-foreground">Author website · 8 pages</p>
         <h2 className="mt-3 text-3xl">Daniel Carter: author website</h2>

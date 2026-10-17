@@ -39,9 +39,9 @@ function Project() {
   useEffect(() => { viewer.current?.scrollTo({ top: 0 }); }, [active]);
   const page = pages[active] ?? pages[0]!;
   return <>
-    <div className="mx-auto max-w-6xl px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
+    <div className="mx-auto max-w-[1500px] px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
     <PageIntro label="Author website · 8 pages" title="Daniel Carter.">An eight-page author website design. Pick a page, then scroll up and down to see all of it.</PageIntro>
-    <section className="border-t"><div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 md:grid-cols-[220px_1fr]">
+    <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-8 px-5 py-12 md:grid-cols-[220px_1fr]">
       <div role="tablist" aria-label="Website pages" className="flex gap-2 overflow-x-auto pb-2 md:flex-col md:overflow-visible md:pb-0">
         {pages.map((p, i) => <button key={p.label} role="tab" aria-selected={i === active} aria-controls="dc-viewer" onClick={() => setActive(i)}
           className={`shrink-0 border-l-2 px-3 py-2 text-left text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${i === active ? "border-primary font-semibold text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
