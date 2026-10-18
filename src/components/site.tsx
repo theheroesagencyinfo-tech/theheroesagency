@@ -167,29 +167,39 @@ export function AnnouncementBar() {
   );
 }
 
-const SOCIALS = [
+export const SOCIALS = [
   {
     label: "Threads",
+    handle: "@theheroes_authorstudio",
     href: "https://www.threads.com/@theheroes_authorstudio",
     icon: ThreadsIcon,
   },
   {
     label: "Instagram",
+    handle: "@theheroes_authorstudio",
     href: "https://www.instagram.com/theheroes_authorstudio",
     icon: Instagram,
   },
   {
     label: "LinkedIn",
+    handle: "TheHeroes Author Studio",
     href: "https://www.linkedin.com/in/theheroesauthorstudio",
     icon: Linkedin,
   },
-  { label: "X", href: "https://x.com/moubarrac", icon: XIcon },
+  {
+    label: "X",
+    handle: "@moubarrac",
+    href: "https://x.com/moubarrac",
+    icon: XIcon,
+  },
   {
     label: "Facebook",
+    handle: "TheHeroes Agency",
     href: "https://www.facebook.com/share/19fEAZNYmW/",
     icon: Facebook,
   },
 ] as const;
+
 
 function ThreadsIcon({ className }: { className?: string }) {
   return (

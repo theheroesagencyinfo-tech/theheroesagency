@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BOOKING_LABEL, BOOKING_URL, CONTACT_EMAIL, INFO_EMAIL, SUPPORT_EMAIL } from "@/components/site";
+import { BOOKING_LABEL, BOOKING_URL, CONTACT_EMAIL, INFO_EMAIL, SOCIALS, SUPPORT_EMAIL } from "@/components/site";
 import { PageIntro } from "@/components/page";
 import { ReviewForm } from "@/components/ReviewForm";
 import { ReviewPreview } from "@/components/conversion";
@@ -25,7 +25,7 @@ function Contact() {
       <ReviewForm />
       <aside className="md:border-l md:pl-12"><h2 className="text-3xl">Let's talk about your book.</h2><dl className="mt-8 space-y-6"><div><dt className="text-sm text-muted-foreground">Email</dt><dd className="mt-2 break-words text-lg">{CONTACT_EMAIL}</dd><dd className="mt-1 text-sm text-muted-foreground">Agency enquiries: {INFO_EMAIL} · Support: {SUPPORT_EMAIL}</dd></div><div><dt className="text-sm text-muted-foreground">Response time</dt><dd className="mt-2">Under 12 hours</dd></div></dl>
         <div className="mt-8 border-t pt-6"><Button asChild variant="studioOutline" size="studio"><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">{BOOKING_LABEL}</a></Button><p className="mt-4 text-sm text-muted-foreground">Pick a time that suits you. No preparation needed.</p></div>
-        <div className="mt-8 border-t pt-6"><p className="text-sm text-muted-foreground">Find me online</p><ul className="mt-4 space-y-3"><li><a href="https://www.instagram.com/theheroes_authorstudio/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Instagram · @theheroes_authorstudio</a></li><li><a href="https://www.threads.com/@theheroes_authorstudio" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Threads · @theheroes_authorstudio</a></li></ul></div>
+        <div className="mt-8 border-t pt-6"><p className="text-sm text-muted-foreground">Find me online</p><ul className="mt-4 space-y-3">{SOCIALS.map((s) => <li key={s.label}><a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 underline underline-offset-4 hover:text-foreground"><s.icon aria-hidden className="h-4 w-4" />{s.label} · {s.handle}</a></li>)}</ul></div>
       </aside>
     </div></section>
     <ReviewPreview />
