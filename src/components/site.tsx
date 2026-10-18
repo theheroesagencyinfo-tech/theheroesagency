@@ -2,9 +2,25 @@ import { Facebook, Instagram, Linkedin, UserRound } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { subscribeNewsletter } from "@/lib/newsletter.functions";
-import logo from "@/assets/theheroes-logo.png.asset.json";
+import logoLight from "@/assets/theheroes-logo.png.asset.json";
+import logoDark from "@/assets/theheroes-logo-dark.png.asset.json";
 
-export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
+// Absolute asset origin so images also load when the site is hosted elsewhere (e.g. Vercel).
+const ASSET_ORIGIN = "https://theheroesagency.lovable.app";
+export const assetSrc = (a: { url: string }) => (a.url.startsWith("/__l5e/") ? ASSET_ORIGIN + a.url : a.url);
+
+function Logo({ className }: { className: string }) {
+  return (
+    <>
+      <img src={assetSrc(logoLight)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={`${className} dark:hidden`} />
+      <img src={assetSrc(logoDark)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={`${className} hidden dark:block`} />
+    </>
+  );
+}
+
+export const CONTACT_EMAIL = "hello@theheroesagency.org";
+export const INFO_EMAIL = "info@theheroesagency.org";
+export const SUPPORT_EMAIL = "support@theheroesagency.org";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 
@@ -57,7 +73,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-5 py-4">
         <Link to="/" className="flex items-center" onClick={() => setOpen(false)}>
-          <img src={logo.url} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className="h-8 w-auto sm:h-10" />
+          <Logo className="h-8 w-auto sm:h-10" />
         </Link>
         <nav aria-label="Main" className="hidden items-center gap-7 text-sm md:flex">
           {nav.map((n) => (
@@ -277,15 +293,10 @@ export function Footer() {
         </div>
         <div className="mt-10 flex flex-col gap-6 border-t pt-8 text-sm text-muted-foreground md:flex-row md:items-start md:justify-between">
           <div>
-            <img
-              src={logo.url}
-              alt="TheHeroes Agency · Author Studio"
-              width={1190}
-              height={196}
-              className="h-10 w-auto"
-            />
+            <Logo className="h-10 w-auto" />
             <p className="mt-1">Websites and launch funnels for nonfiction authors.</p>
-            <p className="mt-3">{CONTACT_EMAIL}</p>
+            <p className="mt-3"><a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-foreground">{CONTACT_EMAIL}</a></p>
+            <p><a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-foreground">{SUPPORT_EMAIL}</a> · support</p>
           </div>
           <div className="flex items-center gap-3" aria-label="Social media">
             {SOCIALS.map((s) => (

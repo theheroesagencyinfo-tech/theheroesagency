@@ -1,3 +1,4 @@
+import { assetSrc } from "@/components/site";
 import { createFileRoute } from "@tanstack/react-router";
 import { useId, useState } from "react";
 import { PageIntro, ReviewCta } from "@/components/page";
@@ -12,12 +13,12 @@ import jrHome from "@/assets/jonathan-reed/home.png.asset.json";
 import jrContact from "@/assets/jonathan-reed/contact.png.asset.json";
 
 const samples = [
-  { label: "Daniel Carter · Homepage", src: dcHome.url },
-  { label: "Daniel Carter · Books", src: dcBooks.url },
-  { label: "Eleanor Whitmore · Homepage", src: ewHome.url },
-  { label: "Eleanor Whitmore · Events", src: ewEvents.url },
-  { label: "Jonathan Reed · Homepage", src: jrHome.url },
-  { label: "Jonathan Reed · Contact", src: jrContact.url },
+  { label: "Daniel Carter · Homepage", src: assetSrc(dcHome) },
+  { label: "Daniel Carter · Books", src: assetSrc(dcBooks) },
+  { label: "Eleanor Whitmore · Homepage", src: assetSrc(ewHome) },
+  { label: "Eleanor Whitmore · Events", src: assetSrc(ewEvents) },
+  { label: "Jonathan Reed · Homepage", src: assetSrc(jrHome) },
+  { label: "Jonathan Reed · Contact", src: assetSrc(jrContact) },
 ];
 
 export const Route = createFileRoute("/contrast-check")({

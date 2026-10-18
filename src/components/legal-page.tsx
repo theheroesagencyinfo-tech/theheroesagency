@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { PageIntro } from "@/components/page";
 import { Button } from "@/components/ui/button";
-import { CONTACT_EMAIL } from "@/components/site";
+import { SUPPORT_EMAIL } from "@/components/site";
 import { legalPolicy, policyFooterNote, type LegalDocument } from "@/lib/legal-policy";
 
 const policyLinks = [
@@ -54,7 +54,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
           <section id="policy-contact" className="scroll-mt-28 pt-9">
             <h2 className="text-2xl sm:text-3xl">Contact</h2>
             <p className="mt-5 text-muted-foreground">For questions about this policy, contact TheHeroes Agency.</p>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="mt-3 block break-words text-primary underline underline-offset-4">{CONTACT_EMAIL}</a>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="mt-3 block break-words text-primary underline underline-offset-4">{SUPPORT_EMAIL}</a>
             <Button asChild variant="studioOutline" size="studio" className="mt-6"><Link to="/contact">Contact TheHeroes Agency</Link></Button>
             <p className="mt-8 text-sm"><Link to="/" className="text-muted-foreground underline underline-offset-4">TheHeroes Agency website</Link></p>
           </section>
