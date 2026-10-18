@@ -5,7 +5,7 @@ type GeolocatedRequest = Request & { cf?: { country?: unknown } };
 function countryOf(request: Request): string | null {
   const cf = (request as GeolocatedRequest).cf?.country;
   if (typeof cf === "string") return cf.toUpperCase();
-  if (typeof process !== "undefined" && process.env?.VERCEL) {
+  if (typeof process !== "undefined" && process.env?.['VERCEL']) {
     const v = request.headers.get("x-vercel-ip-country");
     if (v) return v.toUpperCase();
   }
