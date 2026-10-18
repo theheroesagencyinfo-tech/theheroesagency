@@ -1,3 +1,4 @@
+import { assetSrc } from "@/components/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { PageIntro, ReviewCta } from "@/components/page";
@@ -12,13 +13,13 @@ import resources from "@/assets/eleanor-whitmore/resources.png.asset.json";
 import contact from "@/assets/eleanor-whitmore/contact.png.asset.json";
 
 const pages = [
-  { label: "Homepage", src: home.url, width: 830, height: 1895 },
-  { label: "About the author", src: about.url, width: 1024, height: 1536 },
-  { label: "The Kindness Effect", src: kindnessEffect.url, width: 1024, height: 1536 },
-  { label: "Events", src: events.url, width: 1024, height: 1536 },
-  { label: "Journal", src: journal.url, width: 1024, height: 1536 },
-  { label: "Resources", src: resources.url, width: 1024, height: 1536 },
-  { label: "Contact", src: contact.url, width: 1024, height: 1536 },
+  { label: "Homepage", src: assetSrc(home), width: 830, height: 1895 },
+  { label: "About the author", src: assetSrc(about), width: 1024, height: 1536 },
+  { label: "The Kindness Effect", src: assetSrc(kindnessEffect), width: 1024, height: 1536 },
+  { label: "Events", src: assetSrc(events), width: 1024, height: 1536 },
+  { label: "Journal", src: assetSrc(journal), width: 1024, height: 1536 },
+  { label: "Resources", src: assetSrc(resources), width: 1024, height: 1536 },
+  { label: "Contact", src: assetSrc(contact), width: 1024, height: 1536 },
 ];
 
 export const Route = createFileRoute("/projects/eleanor-whitmore")({

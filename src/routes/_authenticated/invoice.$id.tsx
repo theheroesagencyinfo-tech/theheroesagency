@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { CONTACT_EMAIL } from "@/components/site";
+import { SUPPORT_EMAIL } from "@/components/site";
 import { invoiceLines, packageSlugs, type PackageSlug } from "@/lib/packages";
 import { invoiceNo, invoiceReady, money, type Order } from "@/lib/client-projects";
 
@@ -37,7 +37,7 @@ function Invoice() {
     </div>
     <article className="border bg-background p-8 sm:p-12 print:border-0 print:p-0">
       <header className="flex flex-wrap justify-between gap-6 border-b pb-8">
-        <div><p className="font-serif text-3xl">TheHeroes Agency</p><p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Author Studio</p><p className="mt-3 text-sm">{CONTACT_EMAIL}</p></div>
+        <div><p className="font-serif text-3xl">TheHeroes Agency</p><p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Author Studio</p><p className="mt-3 text-sm">{SUPPORT_EMAIL}</p></div>
         <div className="text-right"><p className="text-3xl">Invoice</p><p className="mt-2 text-sm">{invoiceNo(order)}</p><p className="text-sm text-muted-foreground">Issued {issued}</p></div>
       </header>
       <div className="grid gap-6 border-b py-8 sm:grid-cols-2">
@@ -57,7 +57,7 @@ function Invoice() {
         <ul className="mt-4 divide-y border-y">{inv.schedule.map(s => <li key={s.label} className="flex justify-between gap-4 py-3"><span>{s.label}</span><span className="font-semibold">{money(s.amount)}</span></li>)}</ul>
         {order.package === "book-launch" && <p className="mt-3 text-sm text-muted-foreground">Prefer three payments? The package is also available as 3 payments of $1,900. Just reply to let me know.</p>}
       </div>
-      <p className="mt-8 text-sm text-muted-foreground">Pay by invoice, card, or bank transfer. Payment details are sent with your confirmation email. Prices are starting prices; the final scope is agreed in writing before work begins. Questions? Email {CONTACT_EMAIL} and quote {invoiceNo(order)}.</p>
+      <p className="mt-8 text-sm text-muted-foreground">Pay by invoice, card, or bank transfer. Payment details are sent with your confirmation email. Prices are starting prices; the final scope is agreed in writing before work begins. Questions? Email {SUPPORT_EMAIL} and quote {invoiceNo(order)}.</p>
     </article>
   </section>;
 }

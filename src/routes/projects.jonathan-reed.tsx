@@ -1,3 +1,4 @@
+import { assetSrc } from "@/components/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { PageIntro, ReviewCta } from "@/components/page";
@@ -11,12 +12,12 @@ import resources from "@/assets/jonathan-reed/resources.png.asset.json";
 import contact from "@/assets/jonathan-reed/contact.png.asset.json";
 
 const pages = [
-  { label: "Homepage", src: home.url, width: 1024, height: 1536 },
-  { label: "Books", src: books.url, width: 1024, height: 1536 },
-  { label: "Journal / Essays", src: journal.url, width: 1024, height: 1536 },
-  { label: "Events / Speaking", src: events.url, width: 1024, height: 1536 },
-  { label: "Resources", src: resources.url, width: 793, height: 1983 },
-  { label: "Contact", src: contact.url, width: 1024, height: 1536 },
+  { label: "Homepage", src: assetSrc(home), width: 1024, height: 1536 },
+  { label: "Books", src: assetSrc(books), width: 1024, height: 1536 },
+  { label: "Journal / Essays", src: assetSrc(journal), width: 1024, height: 1536 },
+  { label: "Events / Speaking", src: assetSrc(events), width: 1024, height: 1536 },
+  { label: "Resources", src: assetSrc(resources), width: 793, height: 1983 },
+  { label: "Contact", src: assetSrc(contact), width: 1024, height: 1536 },
 ];
 
 export const Route = createFileRoute("/projects/jonathan-reed")({

@@ -1,10 +1,11 @@
+import { assetSrc } from "@/components/site";
 import { useState } from "react";
 import burgundy from "@/assets/mou/burgundy.png.asset.json";
 import white from "@/assets/mou/white.png.asset.json";
 
 const photos = [
-  { src: burgundy.url, alt: "Mou Barrac in a burgundy shirt, seated with a stack of books" },
-  { src: white.url, alt: "Mou Barrac in a white shirt, seated on a black chair" },
+  { src: assetSrc(burgundy), alt: "Mou Barrac in a burgundy shirt, seated with a stack of books" },
+  { src: assetSrc(white), alt: "Mou Barrac in a white shirt, seated on a black chair" },
 ];
 
 export function PhotoStack() {

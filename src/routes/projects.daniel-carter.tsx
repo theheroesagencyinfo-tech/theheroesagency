@@ -1,3 +1,4 @@
+import { assetSrc } from "@/components/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { PageIntro, ReviewCta } from "@/components/page";
@@ -13,14 +14,14 @@ import contact from "@/assets/daniel-carter/contact.png.asset.json";
 
 
 const pages = [
-  { label: "Homepage", src: home.url },
-  { label: "About the Author", src: about.url },
-  { label: "Books", src: books.url },
-  { label: "The Better Choice", src: betterChoice.url },
-  { label: "Journal / Blog", src: journal.url },
-  { label: "Speaking / Media", src: speaking.url },
-  { label: "Resources / Newsletter", src: resources.url },
-  { label: "Contact", src: contact.url },
+  { label: "Homepage", src: assetSrc(home) },
+  { label: "About the Author", src: assetSrc(about) },
+  { label: "Books", src: assetSrc(books) },
+  { label: "The Better Choice", src: assetSrc(betterChoice) },
+  { label: "Journal / Blog", src: assetSrc(journal) },
+  { label: "Speaking / Media", src: assetSrc(speaking) },
+  { label: "Resources / Newsletter", src: assetSrc(resources) },
+  { label: "Contact", src: assetSrc(contact) },
 ];
 
 export const Route = createFileRoute("/projects/daniel-carter")({
