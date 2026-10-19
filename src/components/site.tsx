@@ -11,10 +11,10 @@ export const assetSrc = (a: { url: string }) => (a.url.startsWith("/__l5e/") ? A
 
 function Logo({ className }: { className: string }) {
   return (
-    <>
-      <img src={assetSrc(logoLight)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={`${className} dark:hidden`} />
-      <img src={assetSrc(logoDark)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={`${className} hidden dark:block`} />
-    </>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcSet={assetSrc(logoDark)} />
+      <img src={assetSrc(logoLight)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={className} />
+    </picture>
   );
 }
 
