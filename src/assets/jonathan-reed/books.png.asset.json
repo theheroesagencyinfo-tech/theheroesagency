@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "65123f06-901e-4d0c-87ab-9315160b00ef",
+  "asset_id": "dc558ba5-6f8d-4e5f-9d6b-b6a183474a63",
   "project_id": "e81b352a-5fc2-4a56-8001-b5a0ad32cd56",
-  "url": "/__l5e/assets-v1/65123f06-901e-4d0c-87ab-9315160b00ef/books.png",
-  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/65123f06-901e-4d0c-87ab-9315160b00ef/books.png",
-  "original_filename": "books.png",
-  "size": 1863297,
-  "content_type": "image/png",
-  "created_at": "2026-10-15T15:44:31Z"
+  "url": "/__l5e/assets-v1/dc558ba5-6f8d-4e5f-9d6b-b6a183474a63/jonathan-reed-books.webp",
+  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/dc558ba5-6f8d-4e5f-9d6b-b6a183474a63/jonathan-reed-books.webp",
+  "original_filename": "jonathan-reed-books.webp",
+  "size": 112150,
+  "content_type": "image/webp",
+  "created_at": "2026-10-20T11:07:47Z"
 }

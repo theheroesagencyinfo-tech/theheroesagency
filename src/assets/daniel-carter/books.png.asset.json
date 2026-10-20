@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "1ececc27-58d7-4049-9073-c0b7828db2ae",
+  "asset_id": "56e87a78-5420-4fd2-ab8c-220e624eb7df",
   "project_id": "e81b352a-5fc2-4a56-8001-b5a0ad32cd56",
-  "url": "/__l5e/assets-v1/1ececc27-58d7-4049-9073-c0b7828db2ae/daniel-carter-books.png",
-  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/1ececc27-58d7-4049-9073-c0b7828db2ae/daniel-carter-books.png",
-  "original_filename": "daniel-carter-books.png",
-  "size": 1884863,
-  "content_type": "image/png",
-  "created_at": "2026-10-15T13:39:00Z"
+  "url": "/__l5e/assets-v1/56e87a78-5420-4fd2-ab8c-220e624eb7df/daniel-carter-books.webp",
+  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/56e87a78-5420-4fd2-ab8c-220e624eb7df/daniel-carter-books.webp",
+  "original_filename": "daniel-carter-books.webp",
+  "size": 121828,
+  "content_type": "image/webp",
+  "created_at": "2026-10-20T11:06:54Z"
 }

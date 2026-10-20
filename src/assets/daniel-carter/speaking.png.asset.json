@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "4727cfb1-fe3d-4caa-a113-4209b280c81c",
+  "asset_id": "e52fb69f-5e8a-4f2d-8def-0d26e3591391",
   "project_id": "e81b352a-5fc2-4a56-8001-b5a0ad32cd56",
-  "url": "/__l5e/assets-v1/4727cfb1-fe3d-4caa-a113-4209b280c81c/daniel-carter-speaking.png",
-  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/4727cfb1-fe3d-4caa-a113-4209b280c81c/daniel-carter-speaking.png",
-  "original_filename": "daniel-carter-speaking.png",
-  "size": 1745661,
-  "content_type": "image/png",
-  "created_at": "2026-10-15T13:39:07Z"
+  "url": "/__l5e/assets-v1/e52fb69f-5e8a-4f2d-8def-0d26e3591391/daniel-carter-speaking.webp",
+  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/e52fb69f-5e8a-4f2d-8def-0d26e3591391/daniel-carter-speaking.webp",
+  "original_filename": "daniel-carter-speaking.webp",
+  "size": 136768,
+  "content_type": "image/webp",
+  "created_at": "2026-10-20T11:07:14Z"
 }
