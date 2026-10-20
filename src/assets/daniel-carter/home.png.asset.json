@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "27952ba3-c6fc-4c69-922c-d10fc4874846",
+  "asset_id": "340b3d49-9333-4efe-ad38-51dcfe98c94c",
   "project_id": "e81b352a-5fc2-4a56-8001-b5a0ad32cd56",
-  "url": "/__l5e/assets-v1/27952ba3-c6fc-4c69-922c-d10fc4874846/daniel-carter-home.png",
-  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/27952ba3-c6fc-4c69-922c-d10fc4874846/daniel-carter-home.png",
-  "original_filename": "daniel-carter-home.png",
-  "size": 1901647,
-  "content_type": "image/png",
-  "created_at": "2026-10-15T13:38:51Z"
+  "url": "/__l5e/assets-v1/340b3d49-9333-4efe-ad38-51dcfe98c94c/daniel-carter-home.webp",
+  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/340b3d49-9333-4efe-ad38-51dcfe98c94c/daniel-carter-home.webp",
+  "original_filename": "daniel-carter-home.webp",
+  "size": 120580,
+  "content_type": "image/webp",
+  "created_at": "2026-10-20T11:07:02Z"
 }

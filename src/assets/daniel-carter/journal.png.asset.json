@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "4ff7cd88-c184-4437-9ea3-ac407ff8545a",
+  "asset_id": "e8ee6283-4442-4369-bcd8-537f34c427d1",
   "project_id": "e81b352a-5fc2-4a56-8001-b5a0ad32cd56",
-  "url": "/__l5e/assets-v1/4ff7cd88-c184-4437-9ea3-ac407ff8545a/daniel-carter-journal.png",
-  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/4ff7cd88-c184-4437-9ea3-ac407ff8545a/daniel-carter-journal.png",
-  "original_filename": "daniel-carter-journal.png",
-  "size": 1736740,
-  "content_type": "image/png",
-  "created_at": "2026-10-15T13:38:58Z"
+  "url": "/__l5e/assets-v1/e8ee6283-4442-4369-bcd8-537f34c427d1/daniel-carter-journal.webp",
+  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/e8ee6283-4442-4369-bcd8-537f34c427d1/daniel-carter-journal.webp",
+  "original_filename": "daniel-carter-journal.webp",
+  "size": 148176,
+  "content_type": "image/webp",
+  "created_at": "2026-10-20T11:07:06Z"
 }

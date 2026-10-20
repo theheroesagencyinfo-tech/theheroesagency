@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "1f153a8b-8aaa-438a-8d7e-31dc23b9b17d",
+  "asset_id": "5071bc15-4b37-4f7b-a2eb-54198a1f6740",
   "project_id": "e81b352a-5fc2-4a56-8001-b5a0ad32cd56",
-  "url": "/__l5e/assets-v1/1f153a8b-8aaa-438a-8d7e-31dc23b9b17d/journal.png",
-  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/1f153a8b-8aaa-438a-8d7e-31dc23b9b17d/journal.png",
-  "original_filename": "journal.png",
-  "size": 1858935,
-  "content_type": "image/png",
-  "created_at": "2026-10-15T15:44:35Z"
+  "url": "/__l5e/assets-v1/5071bc15-4b37-4f7b-a2eb-54198a1f6740/jonathan-reed-journal.webp",
+  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/5071bc15-4b37-4f7b-a2eb-54198a1f6740/jonathan-reed-journal.webp",
+  "original_filename": "jonathan-reed-journal.webp",
+  "size": 134128,
+  "content_type": "image/webp",
+  "created_at": "2026-10-20T11:08:02Z"
 }

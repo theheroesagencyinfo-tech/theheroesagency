@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "asset_id": "543cfafa-b851-4e76-a604-9b4d48056bdb",
+  "asset_id": "a97171bf-dd5f-413e-962b-24b585ac991b",
   "project_id": "e81b352a-5fc2-4a56-8001-b5a0ad32cd56",
-  "url": "/__l5e/assets-v1/543cfafa-b851-4e76-a604-9b4d48056bdb/eleanor-whitmore-resources.png",
-  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/543cfafa-b851-4e76-a604-9b4d48056bdb/eleanor-whitmore-resources.png",
-  "original_filename": "eleanor-whitmore-resources.png",
-  "size": 2147493,
-  "content_type": "image/png",
-  "created_at": "2026-10-15T14:18:43Z"
+  "url": "/__l5e/assets-v1/a97171bf-dd5f-413e-962b-24b585ac991b/eleanor-whitmore-resources.webp",
+  "r2_key": "a/v1/e81b352a-5fc2-4a56-8001-b5a0ad32cd56/a97171bf-dd5f-413e-962b-24b585ac991b/eleanor-whitmore-resources.webp",
+  "original_filename": "eleanor-whitmore-resources.webp",
+  "size": 161024,
+  "content_type": "image/webp",
+  "created_at": "2026-10-20T11:07:43Z"
 }
