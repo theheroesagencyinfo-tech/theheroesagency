@@ -14,11 +14,14 @@ describe("Social links", () => {
     expect(hrefFor("Instagram")).toBe("https://www.instagram.com/theheroes_authorstudio");
     expect(hrefFor("Threads")).toBe("https://www.threads.com/@theheroes_authorstudio");
   });
-  it("lists one entry per profile, each with an icon and handle", () => {
+  it("lists one entry per profile, each with a renderable icon and handle", () => {
     expect(SOCIALS).toHaveLength(6);
     for (const s of SOCIALS) {
       expect(s.handle).toBeTruthy();
-      expect(typeof s.icon).toBe("function");
+      // lucide icons are forwardRef objects; the inline ones are plain functions
+      const renderable =
+        typeof s.icon === "function" || (typeof s.icon === "object" && "$$typeof" in s.icon);
+      expect(renderable).toBe(true);
     }
   });
 });
