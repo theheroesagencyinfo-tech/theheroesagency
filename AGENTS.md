@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Use shared PageIntro, ReviewCta, and studio Button variants for content pages to keep heading scale, spacing, and controls consistent.
+- Select the shared header/footer logo with a picture source using prefers-color-scheme, matching the site's system-driven color tokens without requiring a dark class.
 - Use the existing validated request server function for review and quote forms, storing service, message, and request_type separately so requests retain their intent.
 - Keep sample project details on their own content route; omit results until verified data exists.
 - Uploaded author website showcases use dedicated project routes and asset-pointer imports, keeping screenshot navigation local to each showcase so existing projects remain independent.

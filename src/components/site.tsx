@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { subscribeNewsletter } from "@/lib/newsletter.functions";
 import logoLight from "@/assets/theheroes-logo.png.asset.json";
-import logoDark from "@/assets/theheroes-logo-dark.png.asset.json";
+import logoDark from "@/assets/theheroes-logo-dark-trimmed.png.asset.json";
 
 // Absolute asset origin so images also load when the site is hosted elsewhere (e.g. Vercel).
 const ASSET_ORIGIN = "https://theheroesagency.lovable.app";
@@ -11,10 +11,10 @@ export const assetSrc = (a: { url: string }) => (a.url.startsWith("/__l5e/") ? A
 
 function Logo({ className }: { className: string }) {
   return (
-    <>
-      <img src={assetSrc(logoLight)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={`${className} dark:hidden`} />
-      <img src={assetSrc(logoDark)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={`${className} hidden dark:block`} />
-    </>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcSet={assetSrc(logoDark)} />
+      <img src={assetSrc(logoLight)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={className} />
+    </picture>
   );
 }
 

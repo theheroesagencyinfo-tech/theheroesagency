@@ -1,4 +1,5 @@
 # Page rebuild
+- [x] Match header and footer logos to system dark mode and add related icons to About's four skills.
 - [x] Remove all imagery from the site at the user's request; placeholders remain.
 - [x] Rebuild Services with three offers, process, FAQs, and quote form.
 - [x] Rebuild Work and the fictional sample project detail page.
