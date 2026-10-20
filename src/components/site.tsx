@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { subscribeNewsletter } from "@/lib/newsletter.functions";
 import logoLight from "@/assets/theheroes-logo.png.asset.json";
-import logoDark from "@/assets/theheroes-logo-dark.png.asset.json";
+import logoDark from "@/assets/theheroes-logo-dark-trimmed.png.asset.json";
 
 // Absolute asset origin so images also load when the site is hosted elsewhere (e.g. Vercel).
 const ASSET_ORIGIN = "https://theheroesagency.lovable.app";
