@@ -137,6 +137,6 @@
 
 
 /* Pen cursor (author theme) */
-body { cursor: url(/cursors/pen.svg) 6 26, auto; }
-a, button, [role="button"], label, select, summary { cursor: url(/cursors/pen-pointer.svg) 6 26, pointer; }
+body { cursor: url(/cursors/pen.svg) 10 22, auto; }
+a, button, [role="button"], label, select, summary { cursor: url(/cursors/pen-pointer.svg) 10 22, pointer; }
 input, textarea { cursor: text; }
