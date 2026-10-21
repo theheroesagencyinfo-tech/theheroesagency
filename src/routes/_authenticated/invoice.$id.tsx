@@ -7,6 +7,7 @@ import { invoiceLines, packageSlugs, type PackageSlug } from "@/lib/packages";
 import { invoiceNo, invoiceReady, money, type Order } from "@/lib/client-projects";
 
 export const Route = createFileRoute("/_authenticated/invoice/$id")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Invoice · TheHeroes Agency" },
     { name: "description", content: "Your project invoice from TheHeroes Agency." },

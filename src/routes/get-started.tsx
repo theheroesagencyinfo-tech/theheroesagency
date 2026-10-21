@@ -10,8 +10,10 @@ import { money } from "@/lib/client-projects";
 import { submitOrder } from "@/lib/orders.functions";
 
 export const Route = createFileRoute("/get-started")({
+  staticData: { sitemap: false },
   validateSearch: (s) => z.object({ package: z.enum(packageSlugs).catch("reader-to-client") }).parse(s),
   head: () => ({ meta: [
+    { name: "robots", content: "noindex" },
     { title: "Confirm your package · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Review your author platform package, choose add-ons, and send your project details." },
     { property: "og:title", content: "Confirm your package · TheHeroes Agency" },

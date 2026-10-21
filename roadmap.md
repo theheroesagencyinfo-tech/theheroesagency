@@ -23,3 +23,8 @@
 - [x] Align revision promises with unlimited revisions within scope and test confirmed policy values.
 - [x] Verify legal pages and navigation on desktop and phone layouts.
 
+
+# Optimized site and search setup
+- [ ] Publish optimized site and sitemap (publishing approval declined).
+- [ ] Add and validate router-derived dynamic sitemap.
+- [ ] Verify Google ownership and submit the live sitemap (requires publication).

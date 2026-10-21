@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
 export const Route = createFileRoute("/pricing")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Pricing · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Author website, email system, and book launch packages for nonfiction authors, from $1,500. Delivered in 2–4 weeks." },

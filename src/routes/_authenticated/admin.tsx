@@ -10,6 +10,7 @@ type Request = Database["public"]["Tables"]["review_requests"]["Row"];
 type Order = Database["public"]["Tables"]["package_orders"]["Row"];
 
 export const Route = createFileRoute("/_authenticated/admin")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Admin · TheHeroes Agency" },
     { name: "description", content: "Approve project reviews and read contact messages." },

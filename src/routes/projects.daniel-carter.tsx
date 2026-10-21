@@ -25,6 +25,7 @@ const pages = [
 ];
 
 export const Route = createFileRoute("/projects/daniel-carter")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Daniel Carter author website · TheHeroes Agency · Author Studio" },
     { name: "description", content: "An eight-page author website design for nonfiction author Daniel Carter: home, about, books, book page, journal, speaking, resources, and contact." },

@@ -8,6 +8,7 @@ import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
 
 export const Route = createFileRoute("/work")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Selected work · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Explore author website designs for Daniel Carter, Eleanor Whitmore, and Jonathan Reed." },

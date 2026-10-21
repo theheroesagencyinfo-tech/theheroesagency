@@ -7,6 +7,7 @@ import { invoiceReady, loadProject } from "@/lib/client-projects";
 import { ProgressBar } from "@/components/progress-bar";
 
 export const Route = createFileRoute("/_authenticated/my-projects/$id")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Project dashboard · TheHeroes Agency" },
     { name: "description", content: "Live pages, wireframes, and updates for your author platform project." },

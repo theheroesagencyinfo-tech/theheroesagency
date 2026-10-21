@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/auth")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Sign in · TheHeroes Agency" },
     { name: "description", content: "Sign in to follow your project with TheHeroes Agency." },
