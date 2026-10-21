@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageIntro, ReviewCta, ImagePlaceholder } from "@/components/page";
 export const Route = createFileRoute("/projects/the-quiet-advantage")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "The Quiet Advantage sample project | TheHeroes Agency · Author Studio" },
     { name: "description", content: "A fictional author website sample: project overview, reader journey, planned pages and features, and illustrative creative concepts." },

@@ -21,6 +21,7 @@ const pages = [
 ];
 
 export const Route = createFileRoute("/projects/jonathan-reed")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Jonathan Reed author website · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Explore six pages of Jonathan Reed’s literary author website design, including books, journal essays, events, reader resources, and contact." },

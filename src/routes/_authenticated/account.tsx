@@ -7,6 +7,7 @@ import { packages, addons, progressOf } from "@/lib/packages";
 import { invoiceReady, type Order, type Task } from "@/lib/client-projects";
 
 export const Route = createFileRoute("/_authenticated/account")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "My projects · TheHeroes Agency" },
     { name: "description", content: "Follow the progress of your author platform project." },

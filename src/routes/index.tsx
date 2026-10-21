@@ -10,6 +10,7 @@ import banner from "@/assets/banner-writers-desk.png.asset.json";
 import { ProjectRating } from "@/components/project-rating";
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "TheHeroes Agency · Author Studio: websites and funnels for nonfiction authors" },
@@ -21,6 +22,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "TheHeroes Agency · Author Studio" },
       { property: "og:description", content: "Websites for nonfiction authors that bring you clients, not just sales." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: assetSrc(banner) },
+      { name: "twitter:image", content: assetSrc(banner) },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "/" }],

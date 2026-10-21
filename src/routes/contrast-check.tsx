@@ -22,6 +22,7 @@ const samples = [
 ];
 
 export const Route = createFileRoute("/contrast-check")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Free colour contrast check · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Upload a screenshot of your author website and get an AI-powered list of hard-to-read text with accessible colour suggestions." },

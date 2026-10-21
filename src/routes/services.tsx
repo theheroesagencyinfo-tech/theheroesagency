@@ -9,6 +9,7 @@ import { timelineAnswer } from "@/lib/packages";
 import { revisionAnswer } from "@/lib/legal-policy";
 
 export const Route = createFileRoute("/services")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Services · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Author websites, five-email welcome funnels, and book launch kits for nonfiction authors. Explore the scope and request a quote." },

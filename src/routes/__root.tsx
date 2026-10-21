@@ -75,9 +75,11 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
+      { name: "google-site-verification", content: "zfnzTn7UbAu3dr3V68aFgMgDdv8FfMpEUWwB0ikRrCs" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "TheHeroes Agency · Author Studio" },
       { name: "description", content: "Websites and launch funnels for nonfiction authors." },

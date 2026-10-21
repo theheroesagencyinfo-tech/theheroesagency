@@ -5,6 +5,7 @@ import { ReviewForm } from "@/components/ReviewForm";
 import { ReviewPreview } from "@/components/conversion";
 import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/contact")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Free author site review · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Tell Mou Barrac about your nonfiction book and request a free short video review with quick wins for your author website." },

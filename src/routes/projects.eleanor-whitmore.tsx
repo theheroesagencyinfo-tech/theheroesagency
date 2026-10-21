@@ -23,6 +23,7 @@ const pages = [
 ];
 
 export const Route = createFileRoute("/projects/eleanor-whitmore")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Eleanor Whitmore author website · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Explore seven pages of Eleanor Whitmore’s author website design, including The Kindness Effect, events, journal, resources, and contact." },

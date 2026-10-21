@@ -7,6 +7,7 @@ import { loadProject } from "@/lib/client-projects";
 import { ProgressBar } from "@/components/progress-bar";
 
 export const Route = createFileRoute("/_authenticated/admin_/orders/$id")({
+  staticData: { sitemap: false },
   head: () => ({ meta: [
     { title: "Manage project · TheHeroes Agency admin" },
     { name: "description", content: "Manage tasks, pages, wireframes, and updates for a client project." },

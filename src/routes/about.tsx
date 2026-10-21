@@ -3,6 +3,7 @@ import { PageIntro, ReviewCta } from "@/components/page";
 import { PhotoStack } from "@/components/photo-stack";
 import { PanelsTopLeft, BookOpen, Mail, Clapperboard } from "lucide-react";
 export const Route = createFileRoute("/about")({
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "About Mou Barrac · TheHeroes Agency · Author Studio" },
     { name: "description", content: "Meet Mou Barrac: author websites, email marketing automation, and AI-powered launch creative, with one point of contact and a clear process." },
