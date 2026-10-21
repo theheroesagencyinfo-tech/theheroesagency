@@ -54,7 +54,7 @@ function Project() {
         </div>
         <div id="dc-viewer" ref={viewer} role="tabpanel" tabIndex={0} aria-label={`${page.label} screenshot, scrollable`}
           className="mt-4 h-[70vh] overflow-y-auto overscroll-contain border bg-muted focus-visible:outline-2 focus-visible:outline-ring">
-          <img key={page.src} src={page.src} alt={`Daniel Carter website: ${page.label} page`} width={1024} height={1536} className="block h-auto w-full" />
+          <img key={page.src} decoding="async" src={page.src} alt={`Daniel Carter website: ${page.label} page`} width={1024} height={1536} className="block h-auto w-full" />
         </div>
         <p className="mt-3 text-sm text-muted-foreground">Page {active + 1} of {pages.length}. Scroll inside the frame to move through the page.</p>
       </div>

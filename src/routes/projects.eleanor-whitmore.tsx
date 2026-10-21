@@ -80,7 +80,7 @@ function Project() {
         <div className="border-b pb-3"><h2 className="text-2xl">{page.label}</h2></div>
         <div id="ew-viewer" ref={viewer} role="tabpanel" tabIndex={0} aria-labelledby={`ew-tab-${active}`}
           className="mt-4 h-[70vh] overflow-y-auto overscroll-contain border bg-muted focus-visible:outline-2 focus-visible:outline-ring">
-          <img key={page.src} src={page.src} alt={`Eleanor Whitmore website: ${page.label} page`} width={page.width} height={page.height} className="block h-auto w-full" />
+          <img key={page.src} decoding="async" src={page.src} alt={`Eleanor Whitmore website: ${page.label} page`} width={page.width} height={page.height} className="block h-auto w-full" />
         </div>
         <p className="mt-3 text-sm text-muted-foreground">Page {active + 1} of {pages.length}</p>
       </div>

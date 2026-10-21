@@ -15,7 +15,7 @@ export function PhotoStack() {
       aria-label="Show the other photo of Mou Barrac" className="relative block aspect-[2/3] w-full">
       {photos.map((p, i) => {
         const isFront = i === front;
-        return <img key={p.src} src={p.src} alt={isFront ? p.alt : ""} aria-hidden={!isFront} width={1024} height={1536}
+        return <img key={p.src} decoding="async" src={p.src} alt={isFront ? p.alt : ""} aria-hidden={!isFront} width={1024} height={1536}
           className={`absolute inset-0 h-full w-full rounded-md border object-cover shadow-lg transition-transform duration-300 ${isFront ? "z-10 -rotate-3" : "z-0 translate-x-6 rotate-6 opacity-90"}`} />;
       })}
     </button>

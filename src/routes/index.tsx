@@ -54,7 +54,7 @@ function Home() {
   return (
     <>
       <section className="relative overflow-hidden bg-pitch text-pitch-foreground">
-        <img src={assetSrc(banner)} alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25" />
+        <img src={assetSrc(banner)} alt="" fetchPriority="high" decoding="async" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25" />
         <div className="relative mx-auto max-w-[1500px] px-5 pb-24 pt-20 sm:pt-28">
         <div className="rise max-w-3xl">
           <SectionLabel className="text-pitch-muted">Nonfiction author website design</SectionLabel>
@@ -116,21 +116,21 @@ function Home() {
           <h2 id="work-h" className="mt-4 text-4xl">Recent pages</h2>
           <div className="mt-12 grid gap-14 md:grid-cols-2 md:gap-x-8">
             <article>
-              <Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={assetSrc(danielHome)} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
+              <Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img loading="lazy" decoding="async" src={assetSrc(danielHome)} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Author website · 8 pages</p>
               <h3 className="mt-2 text-2xl">Daniel Carter: author website</h3>
               <ProjectRating project="daniel-carter" />
               <Link to="/projects/daniel-carter" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
             <article>
-              <Link to="/projects/eleanor-whitmore" aria-label="View the Eleanor Whitmore author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={assetSrc(eleanorHome)} alt="Eleanor Whitmore author website homepage" width={830} height={1895} className="h-full w-full object-cover object-top" /></div></Link>
+              <Link to="/projects/eleanor-whitmore" aria-label="View the Eleanor Whitmore author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img loading="lazy" decoding="async" src={assetSrc(eleanorHome)} alt="Eleanor Whitmore author website homepage" width={830} height={1895} className="h-full w-full object-cover object-top" /></div></Link>
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Author website · 7 pages</p>
               <h3 className="mt-2 text-2xl">Eleanor Whitmore: author website</h3>
               <ProjectRating project="eleanor-whitmore" />
               <Link to="/projects/eleanor-whitmore" className="mt-4 inline-block text-sm underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
             </article>
             <article>
-              <Link to="/projects/jonathan-reed" aria-label="View the Jonathan Reed author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={assetSrc(jonathanHome)} alt="Jonathan Reed literary author website homepage" width={1024} height={1536} className="h-full w-full object-cover object-top" /></div></Link>
+              <Link to="/projects/jonathan-reed" aria-label="View the Jonathan Reed author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img loading="lazy" decoding="async" src={assetSrc(jonathanHome)} alt="Jonathan Reed literary author website homepage" width={1024} height={1536} className="h-full w-full object-cover object-top" /></div></Link>
               <p className="mt-5 text-xs uppercase tracking-[0.2em] text-muted-foreground">Literary author website · 6 pages</p>
               <h3 className="mt-2 text-2xl">Jonathan Reed: author website</h3>
               <ProjectRating project="jonathan-reed" />

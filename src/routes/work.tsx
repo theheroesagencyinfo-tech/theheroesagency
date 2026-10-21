@@ -20,7 +20,7 @@ function Work() {
   return <>
     <PageIntro label="Work" title="Selected work.">Websites and launch assets I've built for authors.</PageIntro>
     <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-x-8 gap-y-14 px-5 py-16 md:grid-cols-2">
-      <article><Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={assetSrc(danielHome)} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
+      <article><Link to="/projects/daniel-carter" aria-label="View the Daniel Carter author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img loading="lazy" decoding="async" src={assetSrc(danielHome)} alt="Daniel Carter author website homepage" className="h-full w-full object-cover object-top" /></div></Link>
         <p className="mt-6 text-sm text-muted-foreground">Author website · 8 pages</p>
         <h2 className="mt-3 text-3xl">Daniel Carter: author website</h2>
         <ProjectRating project="daniel-carter" />
@@ -28,7 +28,7 @@ function Work() {
         <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Book page</li><li>Newsletter</li></ul>
         <Link to="/projects/daniel-carter" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
       </article>
-      <article><Link to="/projects/eleanor-whitmore" aria-label="View the Eleanor Whitmore author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={assetSrc(eleanorHome)} alt="Eleanor Whitmore author website homepage" width={830} height={1895} className="h-full w-full object-cover object-top" /></div></Link>
+      <article><Link to="/projects/eleanor-whitmore" aria-label="View the Eleanor Whitmore author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img loading="lazy" decoding="async" src={assetSrc(eleanorHome)} alt="Eleanor Whitmore author website homepage" width={830} height={1895} className="h-full w-full object-cover object-top" /></div></Link>
         <p className="mt-6 text-sm text-muted-foreground">Author website · 7 pages</p>
         <h2 className="mt-3 text-3xl">Eleanor Whitmore: author website</h2>
         <ProjectRating project="eleanor-whitmore" />
@@ -36,7 +36,7 @@ function Work() {
         <ul aria-label="Project tags" className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground"><li>Author website</li><li>Book page</li><li>Reader resources</li></ul>
         <Link to="/projects/eleanor-whitmore" className="mt-6 inline-block font-semibold underline underline-offset-4">View project <span aria-hidden="true">↗</span></Link>
       </article>
-      <article><Link to="/projects/jonathan-reed" aria-label="View the Jonathan Reed author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img src={assetSrc(jonathanHome)} alt="Jonathan Reed literary author website homepage" width={1024} height={1536} className="h-full w-full object-cover object-top" /></div></Link>
+      <article><Link to="/projects/jonathan-reed" aria-label="View the Jonathan Reed author website"><div className="aspect-[4/3] overflow-hidden border bg-muted"><img loading="lazy" decoding="async" src={assetSrc(jonathanHome)} alt="Jonathan Reed literary author website homepage" width={1024} height={1536} className="h-full w-full object-cover object-top" /></div></Link>
         <p className="mt-6 text-sm text-muted-foreground">Literary author website · 6 pages</p>
         <h2 className="mt-3 text-3xl">Jonathan Reed: author website</h2>
         <ProjectRating project="jonathan-reed" />
