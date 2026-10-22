@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { BOOKING_URL } from "@/components/site";
 import { packages, addons, RUSH, timelineAnswer } from "@/lib/packages";
+import { packageAmounts, threePaymentDescription } from "@/lib/pricing-values";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 
@@ -117,8 +118,8 @@ function Pricing() {
     <section className="border-t bg-secondary"><div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-16 md:grid-cols-2">
       <div><h2 className="text-4xl">Payment</h2><p className="mt-4 text-muted-foreground">Simple milestones, agreed in writing before we begin.</p></div>
       <div className="grid gap-8">
-        <div><h3 className="text-xl">All packages</h3><ul className="mt-4 divide-y border-y">{[["40%", "deposit to reserve your project"], ["30%", "at design and content approval"], ["30%", "before launch or handover"]].map(([a, b]) => <li key={b} className="flex gap-4 py-3"><span className="w-12 font-semibold">{a}</span>{b}</li>)}</ul></div>
-        <div><h3 className="text-xl">Book launch platform</h3><ul className="mt-4 divide-y border-y"><li className="py-3">3 payments of $1,900, or</li><li className="py-3">50% deposit and 50% before launch</li></ul></div>
+        <div><h3 className="text-xl">Book presence and Reader-to-client system</h3><ul className="mt-4 divide-y border-y">{[["40%", "deposit to reserve your project"], ["30%", "at design and content approval"], ["30%", "before launch or handover"]].map(([a, b]) => <li key={b} className="flex gap-4 py-3"><span className="w-12 font-semibold">{a}</span>{b}</li>)}</ul></div>
+        <div><h3 className="text-xl">Book launch platform</h3><ul className="mt-4 divide-y border-y"><li className="py-3">Three payments: {threePaymentDescription(packageAmounts["book-launch"])}, or</li><li className="py-3">50% deposit and 50% before launch</li></ul><p className="mt-3 text-sm text-muted-foreground">One-off add-ons and rush delivery increase the total. Monthly services are billed separately.</p></div>
       </div>
     </div></section>
 

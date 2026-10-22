@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { revisionLabel } from "@/lib/legal-policy";
+import { packageAmounts, formatPrice } from "@/lib/pricing-values";
+export { packageAmounts } from "@/lib/pricing-values";
 
 export const packageSlugs = ["book-presence", "reader-to-client", "book-launch"] as const;
 export type PackageSlug = (typeof packageSlugs)[number];
@@ -25,7 +27,8 @@ export const addons = [
   { id: "ads-management", name: "Paid ads management, excluding ad spend", price: "from $750/month" },
 ] as const;
 export const addonIds = addons.map(a => a.id) as [string, ...string[]];
-export const packageAmounts: Record<PackageSlug, number> = { "book-presence": 1500, "reader-to-client": 3000, "book-launch": 5500 };
+// Displayed prices are derived from the same numeric values used by invoices.
+for (const pkg of packages) pkg.price = formatPrice(packageAmounts[pkg.slug]);
 export const addonAmounts: Record<string, { amount: number; monthly?: boolean }> = {
   "extra-page": { amount: 350 }, "email-sequence": { amount: 500 }, "video-ad": { amount: 250 }, "speaker-page": { amount: 400 },
   "magnet-copy": { amount: 400 }, "email-management": { amount: 500, monthly: true }, maintenance: { amount: 150, monthly: true }, "ads-management": { amount: 750, monthly: true },
@@ -33,8 +36,10 @@ export const addonAmounts: Record<string, { amount: number; monthly?: boolean }>
 export const RUSH_AMOUNT = 150;
 
 export function invoiceLines(pkg: PackageSlug, addonList: string[], rush: boolean) {
+  const selectedPackage = packages.find(p => p.slug === pkg);
+  if (!selectedPackage) throw new Error("Unknown package");
   const lines: { label: string; amount: number; monthly?: boolean }[] = [
-    { label: packages.find(p => p.slug === pkg)!.name, amount: packageAmounts[pkg] },
+    { label: selectedPackage.name, amount: packageAmounts[pkg] },
     ...addonList.map(id => ({ label: addons.find(a => a.id === id)?.name ?? id, ...(addonAmounts[id] ?? { amount: 0 }) })),
     ...(rush ? [{ label: "Rush delivery", amount: RUSH_AMOUNT }] : []),
   ];
