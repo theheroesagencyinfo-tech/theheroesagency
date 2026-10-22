@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { SUPPORT_EMAIL } from "@/components/site";
 import { invoiceLines, packageSlugs, type PackageSlug } from "@/lib/packages";
+import { threePaymentDescription } from "@/lib/pricing-values";
 import { invoiceNo, invoiceReady, money, type Order } from "@/lib/client-projects";
 
 export const Route = createFileRoute("/_authenticated/invoice/$id")({
@@ -56,7 +57,7 @@ function Invoice() {
       <div className="mt-10 border-t pt-6">
         <h2 className="text-xl">Payment schedule</h2>
         <ul className="mt-4 divide-y border-y">{inv.schedule.map(s => <li key={s.label} className="flex justify-between gap-4 py-3"><span>{s.label}</span><span className="font-semibold">{money(s.amount)}</span></li>)}</ul>
-        {order.package === "book-launch" && <p className="mt-3 text-sm text-muted-foreground">Prefer three payments? The package is also available as 3 payments of $1,900. Just reply to let me know.</p>}
+        {order.package === "book-launch" && <p className="mt-3 text-sm text-muted-foreground">Prefer three payments? Your project total can be split into {threePaymentDescription(inv.oneOff)}. Monthly services remain separate. Just reply to let me know.</p>}
       </div>
       <p className="mt-8 text-sm text-muted-foreground">Pay by invoice, card, or bank transfer. Payment details are sent with your confirmation email. Prices are starting prices; the final scope is agreed in writing before work begins. Questions? Email {SUPPORT_EMAIL} and quote {invoiceNo(order)}.</p>
     </article>

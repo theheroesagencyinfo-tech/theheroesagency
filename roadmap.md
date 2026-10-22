@@ -1,3 +1,6 @@
+# Price consistency
+- [x] Audit package and add-on prices across pages and invoices; correct launch installments to total $5,500 and verify calculations.
+
 # Page rebuild
 - [x] Match header and footer logos to system dark mode and add related icons to About's four skills.
 - [x] Remove all imagery from the site at the user's request; placeholders remain.
