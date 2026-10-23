@@ -28,6 +28,7 @@
 
 
 # Optimized site and search setup
+- [x] Add the supplied Google ownership verification tag once, preserving the existing account's tag.
 - [ ] Publish optimized site and sitemap (publishing approval declined).
 - [ ] Add and validate router-derived dynamic sitemap.
 - [ ] Verify Google ownership and submit the live sitemap (requires publication).
