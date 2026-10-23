@@ -80,6 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "google-site-verification", content: "zfnzTn7UbAu3dr3V68aFgMgDdv8FfMpEUWwB0ikRrCs" },
+      { name: "google-site-verification", content: "dWdSrNhCmS_Ux_w9-WSQ6sj2UMSux5fl1YoCYfNq3I4" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "TheHeroes Agency · Author Studio" },
       { name: "description", content: "Websites and launch funnels for nonfiction authors." },
