@@ -18,9 +18,9 @@ function Logo({ className }: { className: string }) {
   );
 }
 
-export const CONTACT_EMAIL = "hello@theheroesagency.org";
-export const INFO_EMAIL = "info@theheroesagency.org";
-export const SUPPORT_EMAIL = "support@theheroesagency.org";
+export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
+export const INFO_EMAIL = "theheroesagency.info@gmail.com";
+export const SUPPORT_EMAIL = "theheroesagency.info@gmail.com";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 
@@ -320,7 +320,7 @@ export function Footer() {
             <Logo className="h-10 w-auto" />
             <p className="mt-1">Websites and launch funnels for nonfiction authors.</p>
             <p className="mt-3"><a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-foreground">{CONTACT_EMAIL}</a></p>
-            <p><a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-foreground">{SUPPORT_EMAIL}</a> · support</p>
+            
           </div>
           <div className="flex items-center gap-3" aria-label="Social media">
             {SOCIALS.map((s) => (
