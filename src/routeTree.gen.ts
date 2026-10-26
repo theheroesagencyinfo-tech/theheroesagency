@@ -13,8 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthorWebsiteDesignNonfictionAuthorsRouteImport } from './routes/author-website-design-nonfiction-authors'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContrastCheckRouteImport } from './routes/contrast-check'
+import { Route as EmailMarketingForAuthorsRouteImport } from './routes/email-marketing-for-authors'
 import { Route as GetStartedRouteImport } from './routes/get-started'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -51,6 +54,17 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthorWebsiteDesignNonfictionAuthorsRoute =
+  AuthorWebsiteDesignNonfictionAuthorsRouteImport.update({
+    id: '/author-website-design-nonfiction-authors',
+    path: '/author-website-design-nonfiction-authors',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -61,6 +75,12 @@ const ContrastCheckRoute = ContrastCheckRouteImport.update({
   path: '/contrast-check',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmailMarketingForAuthorsRoute =
+  EmailMarketingForAuthorsRouteImport.update({
+    id: '/email-marketing-for-authors',
+    path: '/email-marketing-for-authors',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GetStartedRoute = GetStartedRouteImport.update({
   id: '/get-started',
   path: '/get-started',
@@ -149,8 +169,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/author-website-design-nonfiction-authors': typeof AuthorWebsiteDesignNonfictionAuthorsRoute
+  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/email-marketing-for-authors': typeof EmailMarketingForAuthorsRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -172,8 +195,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/author-website-design-nonfiction-authors': typeof AuthorWebsiteDesignNonfictionAuthorsRoute
+  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/email-marketing-for-authors': typeof EmailMarketingForAuthorsRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -197,8 +223,11 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
+  '/author-website-design-nonfiction-authors': typeof AuthorWebsiteDesignNonfictionAuthorsRoute
+  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/email-marketing-for-authors': typeof EmailMarketingForAuthorsRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
@@ -222,8 +251,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/author-website-design-nonfiction-authors'
+    | '/blog'
     | '/contact'
     | '/contrast-check'
+    | '/email-marketing-for-authors'
     | '/get-started'
     | '/pricing'
     | '/privacy'
@@ -245,8 +277,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/auth'
+    | '/author-website-design-nonfiction-authors'
+    | '/blog'
     | '/contact'
     | '/contrast-check'
+    | '/email-marketing-for-authors'
     | '/get-started'
     | '/pricing'
     | '/privacy'
@@ -269,8 +304,11 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/about'
     | '/auth'
+    | '/author-website-design-nonfiction-authors'
+    | '/blog'
     | '/contact'
     | '/contrast-check'
+    | '/email-marketing-for-authors'
     | '/get-started'
     | '/pricing'
     | '/privacy'
@@ -294,8 +332,11 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
+  AuthorWebsiteDesignNonfictionAuthorsRoute: typeof AuthorWebsiteDesignNonfictionAuthorsRoute
+  BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
   ContrastCheckRoute: typeof ContrastCheckRoute
+  EmailMarketingForAuthorsRoute: typeof EmailMarketingForAuthorsRoute
   GetStartedRoute: typeof GetStartedRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -339,6 +380,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/author-website-design-nonfiction-authors': {
+      id: '/author-website-design-nonfiction-authors'
+      path: '/author-website-design-nonfiction-authors'
+      fullPath: '/author-website-design-nonfiction-authors'
+      preLoaderRoute: typeof AuthorWebsiteDesignNonfictionAuthorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -351,6 +406,13 @@ declare module '@tanstack/react-router' {
       path: '/contrast-check'
       fullPath: '/contrast-check'
       preLoaderRoute: typeof ContrastCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/email-marketing-for-authors': {
+      id: '/email-marketing-for-authors'
+      path: '/email-marketing-for-authors'
+      fullPath: '/email-marketing-for-authors'
+      preLoaderRoute: typeof EmailMarketingForAuthorsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/get-started': {
@@ -492,8 +554,12 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
+  AuthorWebsiteDesignNonfictionAuthorsRoute:
+    AuthorWebsiteDesignNonfictionAuthorsRoute,
+  BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
   ContrastCheckRoute: ContrastCheckRoute,
+  EmailMarketingForAuthorsRoute: EmailMarketingForAuthorsRoute,
   GetStartedRoute: GetStartedRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
