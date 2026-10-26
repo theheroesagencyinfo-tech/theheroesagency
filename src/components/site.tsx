@@ -1,7 +1,7 @@
 import { Facebook, Instagram, Linkedin, UserRound } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useState, type FormEvent, type ReactNode } from "react";
-import { subscribeNewsletter } from "@/lib/newsletter.functions";
+import { useState, type ReactNode } from "react";
+import { NewsletterSignup } from "@/components/newsletter-signup";
 import logoLight from "@/assets/theheroes-logo.png.asset.json";
 import logoDark from "@/assets/theheroes-logo-dark-trimmed.png.asset.json";
 
@@ -232,74 +232,11 @@ function TikTokIcon({ className }: { className?: string }) {
 }
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
-  const [note, setNote] = useState("");
-
-  async function subscribe(e: FormEvent) {
-    e.preventDefault();
-    if (status === "sending") return;
-    setStatus("sending");
-    setNote("");
-    try {
-      const res = await subscribeNewsletter({ data: { email } });
-      if (res?.ok) {
-        setStatus("done");
-        setNote(
-          res.alreadySubscribed
-            ? "You're already on the list."
-            : "You're on the list. Platform tips arrive soon."
-        );
-        setEmail("");
-      } else {
-        setStatus("error");
-        setNote("Something went wrong. Please try again.");
-      }
-    } catch {
-      setStatus("error");
-      setNote("Enter a valid email address.");
-    }
-  }
-
   return (
     <footer className="border-t">
       <div className="mx-auto max-w-[1500px] px-5 py-12">
         <div className="grid gap-10 md:grid-cols-2">
-          <div>
-            <h2 className="max-w-[34ch] font-serif text-2xl">
-              Build a book platform that works beyond launch day.
-            </h2>
-            <p className="mt-2 max-w-[55ch] text-muted-foreground">
-              Get practical ideas on author websites, email automation, reader
-              magnets, and book launches without the jargon.
-            </p>
-            <form onSubmit={subscribe} className="mt-5 flex max-w-md flex-col gap-3 sm:flex-row">
-              <label className="sr-only" htmlFor="newsletter-email">
-                Email address
-              </label>
-              <input
-                id="newsletter-email"
-                type="email"
-                required
-                maxLength={255}
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full rounded-md border border-input bg-background px-4 py-3 text-sm placeholder:text-muted-foreground/70"
-              />
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-60"
-              >
-                {status === "sending" ? "Joining..." : "Get platform tips"}
-              </button>
-            </form>
-            <p className="mt-2 text-xs text-muted-foreground" role="status">
-              {note || "No spam. Unsubscribe anytime."}
-            </p>
-          </div>
+          <NewsletterSignup />
           <nav
             aria-label="Footer"
             className="flex max-w-xl flex-wrap gap-x-6 gap-y-4 text-sm text-muted-foreground md:justify-end"
@@ -309,6 +246,7 @@ export function Footer() {
                 {n.label}
               </Link>
             ))}
+            <Link to="/blog" className="hover:text-foreground">Blog</Link>
             <Link to="/account" className="hover:text-foreground">My account</Link>
             <Link to="/terms" className="hover:text-foreground">Terms of service</Link>
             <Link to="/privacy" className="hover:text-foreground">Privacy policy</Link>

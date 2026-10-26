@@ -22,3 +22,4 @@
 - Enforce country access in the server entry before dispatch using trusted request.cf country metadata, never caller headers; disable page prerendering and keep blocked responses uncached so delivery cannot bypass the gate or leak restrictions to other visitors.
 
 - Derive sitemap URLs from explicit staticData.sitemap decisions on every route; exclude the authenticated subtree and transaction pages, and omit lastmod without page-specific change timestamps so the sitemap stays accurate.
+- Keep editorial guides in a browser-safe article module and render each from its own static leaf route through a shared article layout so metadata, links, and content remain aligned.
