@@ -2,8 +2,8 @@
 - [x] Audit package and add-on prices across pages and invoices; correct launch installments to total $5,500 and verify calculations.
 
 # SEO blog posts
-- [ ] Write the two uploaded author website and email marketing guides with page metadata and relevant internal links.
-- [ ] Add a blog index, shared email signup, and existing project imagery; verify navigation and publish.
+- [x] Write the two uploaded author website and email marketing guides with page metadata and relevant internal links.
+- [x] Add a blog index, shared email signup, and existing project imagery; verify navigation and publish.
 
 # Page rebuild
 - [x] Match header and footer logos to system dark mode and add related icons to About's four skills.
