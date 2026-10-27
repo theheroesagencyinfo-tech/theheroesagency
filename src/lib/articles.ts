@@ -1,6 +1,4 @@
 import type { ReactNode } from "react";
-import danielHome from "@/assets/daniel-carter/home.png.asset.json";
-import eleanorResources from "@/assets/eleanor-whitmore/resources.png.asset.json";
 
 export type Article = {
   path: "/author-website-design-nonfiction-authors" | "/email-marketing-for-authors";
@@ -8,9 +6,6 @@ export type Article = {
   description: string;
   category: string;
   intro: string;
-  image: { url: string };
-  imageAlt: string;
-  imageCaption: string;
   sections: { id: string; title: string; content: ReactNode }[];
   cta: string;
 };
@@ -23,9 +18,6 @@ export const articleSummaries = [
     description: "Learn what a nonfiction author website needs to connect your book with coaching, consulting, or speaking enquiries. Includes a simple website checklist.",
     category: "Author websites",
     intro: "Author website design gives your book a home and your readers a clear next step. A book can introduce your ideas, but an author website helps readers understand what to do next. If you also coach, consult, or speak, your website should make your services, audience, and enquiry process clear.",
-    image: danielHome,
-    imageAlt: "Author website design example: Daniel Carter homepage from TheHeroes Agency portfolio",
-    imageCaption: "Daniel Carter website showcase from our portfolio. A design example, not a claim about enquiries or sales.",
   },
   {
     path: "/email-marketing-for-authors",
@@ -33,9 +25,6 @@ export const articleSummaries = [
     description: "A simple guide to email marketing for authors. Learn how to grow an email list, choose a lead magnet, and turn readers into future clients.",
     category: "Email marketing",
     intro: "Email marketing for authors gives readers a way to stay connected after they finish your book. For nonfiction authors who offer coaching, consulting, or speaking, it also creates a natural path from reader to enquiry. Start with a useful resource, clear expectations, and emails that help before they ask.",
-    image: eleanorResources,
-    imageAlt: "Email marketing for authors resource page example from the Eleanor Whitmore website showcase",
-    imageCaption: "Eleanor Whitmore resources page from our portfolio. An example of presenting reader resources, not evidence of subscriber results.",
   },
 ] as const;
 
