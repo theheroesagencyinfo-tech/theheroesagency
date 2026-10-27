@@ -38,7 +38,7 @@ export function articleHead(article: Pick<Article, "path" | "title" | "descripti
       { property: "og:description", content: article.description },
       { property: "og:type", content: "article" },
       { property: "og:url", content: url },
-      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:card", content: "summary" },
     ],
     links: [{ rel: "canonical", href: url }],
     scripts: [{ type: "application/ld+json", children: JSON.stringify({

@@ -13,7 +13,7 @@ export const Route = createFileRoute("/blog")({
       { property: "og:description", content: "Clear, practical guidance for building your nonfiction author platform." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://theheroesagency.lovable.app/blog" },
-      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:card", content: "summary" },
     ],
     links: [{ rel: "canonical", href: "https://theheroesagency.lovable.app/blog" }],
   }),
