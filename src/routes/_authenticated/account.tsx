@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Mail, CalendarDays, FileText, LayoutDashboard } from "lucide-react";
+import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings } from "lucide-react";
+import { AccountSettings } from "@/components/account-settings";
+import banner from "@/assets/banner-writers-desk.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/progress-bar";
@@ -43,8 +45,11 @@ function Account() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [tab, setTab] = useState<"projects" | "settings">("projects");
   useEffect(() => { (async () => {
     const { data: u } = await supabase.auth.getUser();
+    setName(u.user?.user_metadata?.["full_name"] ?? "");
     setEmail(u.user?.email ?? "");
     if (u.user) { const { data } = await supabase.rpc("has_role", { _user_id: u.user.id, _role: "admin" }); setIsAdmin(!!data); }
     const { data } = await supabase.from("package_orders").select("*").ilike("email", u.user?.email ?? "").order("created_at", { ascending: false });
@@ -54,16 +59,29 @@ function Account() {
   })(); }, []);
   async function signOut() { await supabase.auth.signOut(); navigate({ to: "/auth", replace: true }); }
 
-  return <section className="mx-auto max-w-[1500px] px-5 py-16">
-    <div className="flex flex-wrap items-end justify-between gap-6 border-b pb-10">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Private client space</p>
-        <h1 className="mt-3 text-4xl sm:text-5xl">Welcome back</h1>
-        {email && <p className="mt-3 text-sm text-muted-foreground">Signed in as {email}</p>}
+  const firstName = String(name).split(" ")[0];
+  return <section className="mx-auto max-w-[1500px] px-5 py-10 sm:py-14">
+    <div className="relative overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-12">
+      <img src={banner.url} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-30" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-pitch via-pitch/80 to-transparent" />
+      <div className="relative flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Private client space</p>
+          <h1 className="mt-3 text-4xl sm:text-5xl">Welcome back{firstName ? `, ${firstName}` : ""}.</h1>
+          {email && <p className="mt-3 text-sm text-pitch-muted">Signed in as {email}</p>}
+        </div>
+        <div className="flex gap-3">{isAdmin && <Button asChild variant="studio" size="studio"><Link to="/admin">Open admin</Link></Button>}<Button onClick={signOut} variant="studioOutline" size="studio" className="border-pitch-foreground/40 bg-transparent text-pitch-foreground hover:bg-pitch-foreground/10">Sign out</Button></div>
       </div>
-      <div className="flex gap-3">{isAdmin && <Button asChild variant="studio" size="studio"><Link to="/admin">Open admin</Link></Button>}<Button onClick={signOut} variant="studioOutline" size="studio">Sign out</Button></div>
     </div>
 
+    <div role="tablist" aria-label="Account sections" className="mt-8 flex gap-2 border-b">
+      {([["projects", "My projects", FolderKanban], ["settings", "Account settings", Settings]] as const).map(([k, l, I]) =>
+        <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
+          className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${tab === k ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
+          <I aria-hidden className="h-4 w-4" />{l}</button>)}
+    </div>
+
+    {tab === "settings" ? <div className="mt-10"><AccountSettings email={email} /></div> :
     <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_340px]">
       <div>
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
@@ -109,6 +127,6 @@ function Account() {
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 underline underline-offset-4"><CalendarDays aria-hidden className="h-4 w-4 shrink-0 text-primary" />Book a check-in call</a>
         </div>
       </aside>
-    </div>
+    </div>}
   </section>;
 }
