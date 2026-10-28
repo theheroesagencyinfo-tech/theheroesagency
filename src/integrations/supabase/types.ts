@@ -77,6 +77,36 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string
+          full_name: string
+          referral_code: string
+          referred_by: string | null
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          referral_code: string
+          referred_by?: string | null
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string
+          referral_code?: string
+          referred_by?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       project_items: {
         Row: {
           body: string
@@ -177,6 +207,24 @@ export type Database = {
           },
         ]
       }
+      referral_visits: {
+        Row: {
+          code: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
       review_requests: {
         Row: {
           book: string
@@ -243,7 +291,24 @@ export type Database = {
         }
         Returns: boolean
       }
+      my_referral_stats: { Args: never; Returns: Json }
+      new_referral_code: { Args: never; Returns: string }
       owns_order: { Args: { _order_id: string }; Returns: boolean }
+      referral_leaderboard: {
+        Args: never
+        Returns: {
+          avatar_url: string
+          created_at: string
+          email: string
+          full_name: string
+          projects: number
+          referral_code: string
+          referred_by: string
+          signups: number
+          user_id: string
+          visits: number
+        }[]
+      }
     }
     Enums: {
       app_role: "admin"
