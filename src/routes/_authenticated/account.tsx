@@ -49,7 +49,7 @@ function Account() {
   const [tab, setTab] = useState<"projects" | "settings">("projects");
   useEffect(() => { (async () => {
     const { data: u } = await supabase.auth.getUser();
-    setName(u.user?.user_metadata?.full_name ?? "");
+    setName(u.user?.user_metadata?.["full_name"] ?? "");
     setEmail(u.user?.email ?? "");
     if (u.user) { const { data } = await supabase.rpc("has_role", { _user_id: u.user.id, _role: "admin" }); setIsAdmin(!!data); }
     const { data } = await supabase.from("package_orders").select("*").ilike("email", u.user?.email ?? "").order("created_at", { ascending: false });

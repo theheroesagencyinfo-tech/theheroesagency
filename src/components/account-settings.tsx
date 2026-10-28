@@ -31,7 +31,7 @@ export function AccountSettings({ email }: { email: string }) {
 
   useEffect(() => { supabase.auth.getUser().then(({ data }) => {
     const m = data.user?.user_metadata ?? {};
-    setName(m.full_name ?? ""); setPhone(m.phone ?? "");
+    setName(m["full_name"] ?? ""); setPhone(m["phone"] ?? "");
     if (data.user?.created_at) setCreated(new Date(data.user.created_at).toLocaleDateString());
   }); }, []);
 
