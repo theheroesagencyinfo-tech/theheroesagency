@@ -70,7 +70,7 @@ function Account() {
           <h1 className="mt-3 text-4xl sm:text-5xl">Welcome back{firstName ? `, ${firstName}` : ""}.</h1>
           {email && <p className="mt-3 text-sm text-pitch-muted">Signed in as {email}</p>}
         </div>
-        <div className="flex gap-3">{isAdmin && <Button asChild variant="studio" size="studio"><Link to="/admin">Open admin</Link></Button>}<Button onClick={signOut} variant="ghostDark" size="studio">Sign out</Button></div>
+        <div className="flex gap-3">{isAdmin && <Button asChild variant="studio" size="studio"><Link to="/admin">Open admin</Link></Button>}<Button onClick={signOut} variant="studioOutline" size="studio" className="border-pitch-foreground/40 bg-transparent text-pitch-foreground hover:bg-pitch-foreground/10">Sign out</Button></div>
       </div>
     </div>
 
