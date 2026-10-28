@@ -4,6 +4,7 @@ import { Eye, EyeOff, Check, MailCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { CONTACT_EMAIL } from "@/components/site";
+import banner from "@/assets/banner-writers-desk.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
   staticData: { sitemap: false },
@@ -47,13 +48,17 @@ function AuthPage() {
   }
   const switchTo = (m: "in" | "up") => { setMode(m); setMsg(""); setSent(""); };
 
-  return <section className="mx-auto grid max-w-[1500px] gap-12 px-5 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24">
-    <div className="flex flex-col justify-center">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Private client space</p>
-      <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl">Your author platform, in one quiet place.</h1>
-      <p className="mt-6 max-w-[52ch] text-lg text-muted-foreground">Sign in to see where your project stands, what comes next, and everything we have built together so far.</p>
-      <ul className="mt-10 grid gap-4 border-t pt-8">{perks.map(p => <li key={p} className="flex gap-3">
-        <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"><Check aria-hidden className="h-3.5 w-3.5" /></span><span>{p}</span></li>)}</ul>
+  return <section className="mx-auto grid max-w-[1500px] items-stretch gap-10 px-5 py-12 lg:grid-cols-2 lg:gap-16 lg:py-20">
+    <div className="relative flex min-h-[520px] flex-col justify-end overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-12">
+      <img src={banner.url} alt="" aria-hidden fetchPriority="high" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-pitch via-pitch/70 to-transparent" />
+      <div className="relative">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Private client space</p>
+        <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl">Your author platform, in one quiet place.</h1>
+        <p className="mt-6 max-w-[52ch] text-lg text-pitch-muted">Sign in to see where your project stands, what comes next, and everything we have built together so far.</p>
+        <ul className="mt-10 grid gap-4 border-t border-pitch-foreground/20 pt-8">{perks.map(p => <li key={p} className="flex gap-3">
+          <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pitch-accent text-pitch"><Check aria-hidden className="h-3.5 w-3.5" /></span><span>{p}</span></li>)}</ul>
+      </div>
     </div>
 
     <div className="rounded-2xl border bg-card p-6 shadow-sm sm:p-10">
