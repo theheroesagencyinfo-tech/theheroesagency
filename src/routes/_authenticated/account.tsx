@@ -1,6 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Mail, CalendarDays, FileText, LayoutDashboard } from "lucide-react";
+import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings } from "lucide-react";
+import { AccountSettings } from "@/components/account-settings";
+import banner from "@/assets/banner-writers-desk.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/progress-bar";
@@ -43,8 +45,11 @@ function Account() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [tab, setTab] = useState<"projects" | "settings">("projects");
   useEffect(() => { (async () => {
     const { data: u } = await supabase.auth.getUser();
+    setName(u.user?.user_metadata?.full_name ?? "");
     setEmail(u.user?.email ?? "");
     if (u.user) { const { data } = await supabase.rpc("has_role", { _user_id: u.user.id, _role: "admin" }); setIsAdmin(!!data); }
     const { data } = await supabase.from("package_orders").select("*").ilike("email", u.user?.email ?? "").order("created_at", { ascending: false });
@@ -122,6 +127,6 @@ function Account() {
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 underline underline-offset-4"><CalendarDays aria-hidden className="h-4 w-4 shrink-0 text-primary" />Book a check-in call</a>
         </div>
       </aside>
-    </div>
+    </div>}
   </section>;
 }
