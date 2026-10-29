@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { AdminReferrals } from "@/components/admin-referrals";
 import { packages, addons, orderStatuses } from "@/lib/packages";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -27,7 +28,7 @@ const fmt = (d: string) => new Date(d).toLocaleString();
 function Admin() {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [tab, setTab] = useState<"orders" | "reviews" | "messages">("orders");
+  const [tab, setTab] = useState<"orders" | "reviews" | "messages" | "referrals">("orders");
   const [reviews, setReviews] = useState<Review[]>([]);
   const [requests, setRequests] = useState<Request[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -81,10 +82,10 @@ function Admin() {
       <Button onClick={signOut} variant="studioOutline" size="studio">Sign out</Button>
     </div>
     <div role="tablist" className="mt-10 flex gap-6 border-b">
-      {([["orders", `Orders (${orders.filter(o => o.status === "new").length} new)`], ["reviews", `Reviews (${pending} pending)`], ["messages", `Messages (${requests.length})`]] as const).map(([k, l]) =>
+      {([["orders", `Orders (${orders.filter(o => o.status === "new").length} new)`], ["reviews", `Reviews (${pending} pending)`], ["messages", `Messages (${requests.length})`], ["referrals", "Referrals"]] as const).map(([k, l]) =>
         <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`-mb-px border-b-2 pb-3 text-sm font-semibold ${tab === k ? "border-primary text-foreground" : "border-transparent text-muted-foreground"}`}>{l}</button>)}
     </div>
-    {tab === "orders" ? <ul className="divide-y">
+    {tab === "referrals" ? <AdminReferrals /> : tab === "orders" ? <ul className="divide-y">
       {orders.length === 0 && <li className="py-8 text-muted-foreground">No orders yet.</li>}
       {orders.map(o => <li key={o.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
