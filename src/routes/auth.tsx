@@ -94,7 +94,7 @@ function AuthPage() {
             {mode === "up" && <p className="text-xs text-muted-foreground">At least 8 characters.</p>}
           </div>
           {mode === "up" && <div className="grid gap-2"><label htmlFor="a-ref" className="text-xs font-semibold uppercase tracking-wider">Referral code (optional)</label>
-            <input id="a-ref" name="ref" defaultValue={typeof window === "undefined" ? "" : localStorage.getItem(REF_STORAGE_KEY) ?? ""} placeholder="HERO-XXXXXX" maxLength={11} className={`${inputClass} uppercase`} /></div>}
+            <input id="a-ref" name="ref" placeholder="HERO-XXXXXX" maxLength={11} className={`${inputClass} uppercase`} /><p className="text-xs text-muted-foreground">If a friend sent you a link, we have already saved their code.</p></div>}
           {msg && <p role="alert" className="rounded-md border border-destructive/40 px-4 py-3 text-sm text-destructive">{msg}</p>}
           <Button type="submit" disabled={busy} variant="studio" size="studio" className="w-full">{busy ? "Please wait…" : mode === "in" ? "Sign in" : "Create account"}</Button>
         </form>
