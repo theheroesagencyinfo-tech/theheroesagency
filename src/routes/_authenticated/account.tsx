@@ -1,8 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings } from "lucide-react";
+import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings, Gift } from "lucide-react";
+import { ReferralPanel, RankChip, useReferralStats } from "@/components/referral-panel";
+import { Avatar, useMyAvatar } from "@/components/avatar-upload";
+import mouPhoto from "@/assets/mou/burgundy.png.asset.json";
 import { AccountSettings } from "@/components/account-settings";
-import banner from "@/assets/banner-writers-desk.png.asset.json";
+import banner from "@/assets/jonathan-reed/books.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/progress-bar";
@@ -46,7 +49,9 @@ function Account() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [tab, setTab] = useState<"projects" | "settings">("projects");
+  const [tab, setTab] = useState<"projects" | "refer" | "settings">("projects");
+  const stats = useReferralStats();
+  const avatar = useMyAvatar();
   useEffect(() => { (async () => {
     const { data: u } = await supabase.auth.getUser();
     setName(u.user?.user_metadata?.["full_name"] ?? "");
@@ -62,26 +67,30 @@ function Account() {
   const firstName = String(name).split(" ")[0];
   return <section className="mx-auto max-w-[1500px] px-5 py-10 sm:py-14">
     <div className="relative overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-12">
-      <img src={banner.url} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-30" />
+      <img src={banner.url} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-top opacity-20" />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-pitch via-pitch/80 to-transparent" />
       <div className="relative flex flex-wrap items-end justify-between gap-6">
-        <div>
+        <div className="flex flex-wrap items-center gap-6">
+          <Avatar url={avatar} name={name || email} className="h-20 w-20 text-2xl" />
+          <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Private client space</p>
           <h1 className="mt-3 text-4xl sm:text-5xl">Welcome back{firstName ? `, ${firstName}` : ""}.</h1>
           {email && <p className="mt-3 text-sm text-pitch-muted">Signed in as {email}</p>}
+          {stats && <button type="button" onClick={() => setTab("refer")} className="mt-4 block text-left" aria-label="Open your loyalty rank"><RankChip referrals={Number(stats.signups)} /></button>}
+          </div>
         </div>
         <div className="flex gap-3">{isAdmin && <Button asChild variant="studio" size="studio"><Link to="/admin">Open admin</Link></Button>}<Button onClick={signOut} variant="studioOutline" size="studio" className="border-pitch-foreground/40 bg-transparent text-pitch-foreground hover:bg-pitch-foreground/10">Sign out</Button></div>
       </div>
     </div>
 
     <div role="tablist" aria-label="Account sections" className="mt-8 flex gap-2 border-b">
-      {([["projects", "My projects", FolderKanban], ["settings", "Account settings", Settings]] as const).map(([k, l, I]) =>
+      {([["projects", "My projects", FolderKanban], ["refer", "Refer & rewards", Gift], ["settings", "Account settings", Settings]] as const).map(([k, l, I]) =>
         <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
           className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${tab === k ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
           <I aria-hidden className="h-4 w-4" />{l}</button>)}
     </div>
 
-    {tab === "settings" ? <div className="mt-10"><AccountSettings email={email} /></div> :
+    {tab === "settings" ? <div className="mt-10"><AccountSettings email={email} /></div> : tab === "refer" ? <div className="mt-10"><ReferralPanel stats={stats} /></div> :
     <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_340px]">
       <div>
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
@@ -120,7 +129,8 @@ function Account() {
 
       <aside className="h-fit rounded-2xl border bg-secondary p-6 lg:sticky lg:top-24">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your studio contact</p>
-        <p className="mt-3 text-2xl">Mou Barrac</p>
+        <div className="mt-4 flex items-center gap-4"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-16 w-16 rounded-full object-cover object-top" />
+        <p className="text-2xl">Mou Barrac</p></div>
         <p className="mt-1 text-sm text-muted-foreground">Questions, feedback, or files? Reach me directly.</p>
         <div className="mt-6 grid gap-3 text-sm">
           <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-2 break-all underline underline-offset-4"><Mail aria-hidden className="h-4 w-4 shrink-0 text-primary" />{CONTACT_EMAIL}</a>

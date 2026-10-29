@@ -13,6 +13,21 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AnnouncementBar, Header, Footer } from "@/components/site";
+import { supabase } from "@/integrations/supabase/client";
+import { REF_STORAGE_KEY, isReferralCode } from "@/lib/loyalty";
+
+function ReferralCapture() {
+  useEffect(() => {
+    const code = new URLSearchParams(window.location.search).get("ref")?.trim().toUpperCase() ?? "";
+    if (!isReferralCode(code)) return;
+    localStorage.setItem(REF_STORAGE_KEY, code);
+    const k = `ref_visit_${code}`;
+    if (sessionStorage.getItem(k)) return;
+    sessionStorage.setItem(k, "1");
+    supabase.from("referral_visits").insert({ code }).then(() => {});
+  }, []);
+  return null;
+}
 
 function NotFoundComponent() {
   return (
@@ -126,6 +141,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <ReferralCapture />
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to content
       </a>
