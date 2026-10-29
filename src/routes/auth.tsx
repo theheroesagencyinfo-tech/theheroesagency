@@ -5,6 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { CONTACT_EMAIL } from "@/components/site";
 import banner from "@/assets/banner-writers-desk.png.asset.json";
+import signupPhoto from "@/assets/mou/white.png.asset.json";
+import { REF_STORAGE_KEY, isReferralCode } from "@/lib/loyalty";
 
 export const Route = createFileRoute("/auth")({
   staticData: { sitemap: false },
@@ -20,6 +22,7 @@ export const Route = createFileRoute("/auth")({
 });
 
 const inputClass = "w-full rounded-md border border-input bg-background px-4 py-3 text-base transition-colors focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30";
+const upPerks = ["Your own referral code from day one", "Seven loyalty levels with badges and studio rewards", "A personal profile with your author photo"];
 const perks = ["Follow your project progress task by task", "Review wireframes and live pages as they land", "Download your invoice whenever you need it"];
 
 function AuthPage() {
@@ -41,7 +44,9 @@ function AuthPage() {
       if (error) return setMsg(error.message);
       navigate({ to: "/account" });
     } else {
-      const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/account` } });
+      const stored = (localStorage.getItem(REF_STORAGE_KEY) ?? "").toUpperCase();
+      const ref = String(f.get("ref") ?? "").trim().toUpperCase() || stored;
+      const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/account`, data: isReferralCode(ref) ? { ref } : {} } });
       setBusy(false);
       if (error) setMsg(error.message); else setSent(email);
     }
@@ -50,13 +55,13 @@ function AuthPage() {
 
   return <section className="mx-auto grid max-w-[1500px] items-stretch gap-10 px-5 py-12 lg:grid-cols-2 lg:gap-16 lg:py-20">
     <div className="relative flex min-h-[520px] flex-col justify-end overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-12">
-      <img src={banner.url} alt="" aria-hidden fetchPriority="high" className="absolute inset-0 h-full w-full object-cover opacity-40" />
+      <img key={mode} src={mode === "in" ? banner.url : signupPhoto.url} alt="" aria-hidden fetchPriority="high" className={`absolute inset-0 h-full w-full object-cover animate-in fade-in duration-700 ${mode === "in" ? "opacity-40" : "object-top opacity-35"}`} />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-pitch via-pitch/70 to-transparent" />
       <div className="relative">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Private client space</p>
-        <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl">Your author platform, in one quiet place.</h1>
-        <p className="mt-6 max-w-[52ch] text-lg text-pitch-muted">Sign in to see where your project stands, what comes next, and everything we have built together so far.</p>
-        <ul className="mt-10 grid gap-4 border-t border-pitch-foreground/20 pt-8">{perks.map(p => <li key={p} className="flex gap-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">{mode === "in" ? "Private client space" : "Join the studio"}</p>
+        <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl">{mode === "in" ? "Your author platform, in one quiet place." : "Begin your author platform with a studio that knows nonfiction."}</h1>
+        <p className="mt-6 max-w-[52ch] text-lg text-pitch-muted">{mode === "in" ? "Sign in to see where your project stands, what comes next, and everything we have built together so far." : "Create your account to follow your project, collect loyalty badges, and invite fellow authors with your own referral code."}</p>
+        <ul className="mt-10 grid gap-4 border-t border-pitch-foreground/20 pt-8">{(mode === "in" ? perks : upPerks).map(p => <li key={p} className="flex gap-3">
           <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-pitch-accent text-pitch"><Check aria-hidden className="h-3.5 w-3.5" /></span><span>{p}</span></li>)}</ul>
       </div>
     </div>
@@ -88,6 +93,8 @@ function AuthPage() {
             </div>
             {mode === "up" && <p className="text-xs text-muted-foreground">At least 8 characters.</p>}
           </div>
+          {mode === "up" && <div className="grid gap-2"><label htmlFor="a-ref" className="text-xs font-semibold uppercase tracking-wider">Referral code (optional)</label>
+            <input id="a-ref" name="ref" defaultValue={typeof window === "undefined" ? "" : localStorage.getItem(REF_STORAGE_KEY) ?? ""} placeholder="HERO-XXXXXX" maxLength={11} className={`${inputClass} uppercase`} /></div>}
           {msg && <p role="alert" className="rounded-md border border-destructive/40 px-4 py-3 text-sm text-destructive">{msg}</p>}
           <Button type="submit" disabled={busy} variant="studio" size="studio" className="w-full">{busy ? "Please wait…" : mode === "in" ? "Sign in" : "Create account"}</Button>
         </form>
