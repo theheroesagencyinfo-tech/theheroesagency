@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
-import { Check, KeyRound, UserRound, ShieldCheck } from "lucide-react";
+import { Check, KeyRound, UserRound, ShieldCheck, Camera } from "lucide-react";
+import { AvatarUpload } from "@/components/avatar-upload";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
@@ -38,6 +39,7 @@ export function AccountSettings({ email }: { email: string }) {
   async function saveProfile(e: FormEvent) {
     e.preventDefault(); setP({ ok: "", err: "", busy: true });
     const { error } = await supabase.auth.updateUser({ data: { full_name: name.trim().slice(0, 100), phone: phone.trim().slice(0, 40) } });
+    if (!error) { const { data } = await supabase.auth.getUser(); if (data.user) await supabase.from("profiles").update({ full_name: name.trim().slice(0, 100) }).eq("user_id", data.user.id); }
     setP({ ok: error ? "" : "Profile saved.", err: error?.message ?? "", busy: false });
   }
   async function savePassword(e: FormEvent<HTMLFormElement>) {
@@ -52,6 +54,7 @@ export function AccountSettings({ email }: { email: string }) {
   }
 
   return <div className="grid gap-8 lg:grid-cols-2">
+    <div className="lg:col-span-2"><Card icon={Camera} title="Profile photo" text="Shown on your dashboard so your studio space feels like yours."><AvatarUpload name={name} /></Card></div>
     <Card icon={UserRound} title="Your profile" text="How we address you in updates and on invoices.">
       <form onSubmit={saveProfile} className="grid gap-5">
         <div className="grid gap-2"><label htmlFor="s-name" className={label}>Full name</label><input id="s-name" value={name} maxLength={100} onChange={e => setName(e.target.value)} autoComplete="name" className={inputClass} /></div>
