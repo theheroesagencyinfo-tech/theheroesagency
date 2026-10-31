@@ -78,6 +78,13 @@
       "when": 1793273098319,
       "tag": "0010_avatars_private_read",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1793454981162,
+      "tag": "0011_referral_rewards",
+      "breakpoints": true
     }
   ]
 }
