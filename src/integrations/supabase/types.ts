@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      book_teaser_requests: {
+        Row: {
+          admin_notes: string
+          book_cover_url: string | null
+          book_description: string
+          book_link: string
+          book_title: string
+          call_to_action: string
+          created_at: string
+          first_edition: boolean
+          id: string
+          preferred_format: string
+          release_date: string
+          status: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string
+          book_cover_url?: string | null
+          book_description: string
+          book_link: string
+          book_title: string
+          call_to_action: string
+          created_at?: string
+          first_edition?: boolean
+          id?: string
+          preferred_format: string
+          release_date: string
+          status?: string
+          user_id?: string
+        }
+        Update: {
+          admin_notes?: string
+          book_cover_url?: string | null
+          book_description?: string
+          book_link?: string
+          book_title?: string
+          call_to_action?: string
+          created_at?: string
+          first_edition?: boolean
+          id?: string
+          preferred_format?: string
+          release_date?: string
+          status?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           created_at: string
@@ -225,6 +273,51 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          admin_notes: string
+          approved: boolean
+          converted_at: string | null
+          created_at: string
+          deposit_paid: boolean
+          id: string
+          project_value: number | null
+          referred_email: string
+          referred_name: string
+          referred_user_id: string | null
+          referrer_id: string
+          status: string
+        }
+        Insert: {
+          admin_notes?: string
+          approved?: boolean
+          converted_at?: string | null
+          created_at?: string
+          deposit_paid?: boolean
+          id?: string
+          project_value?: number | null
+          referred_email: string
+          referred_name?: string
+          referred_user_id?: string | null
+          referrer_id: string
+          status?: string
+        }
+        Update: {
+          admin_notes?: string
+          approved?: boolean
+          converted_at?: string | null
+          created_at?: string
+          deposit_paid?: boolean
+          id?: string
+          project_value?: number | null
+          referred_email?: string
+          referred_name?: string
+          referred_user_id?: string | null
+          referrer_id?: string
+          status?: string
+        }
+        Relationships: []
+      }
       review_requests: {
         Row: {
           book: string
@@ -258,6 +351,51 @@ export type Database = {
           request_type?: string
           service?: string
           website?: string | null
+        }
+        Relationships: []
+      }
+      reward_activity: {
+        Row: {
+          activity_type: string
+          created_at: string
+          description: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          created_at?: string
+          description: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          activity_type?: string
+          created_at?: string
+          description?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      tier_overrides: {
+        Row: {
+          created_at: string
+          reason: string
+          tier_level: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          reason: string
+          tier_level: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          reason?: string
+          tier_level?: number
+          user_id?: string
         }
         Relationships: []
       }
