@@ -248,6 +248,7 @@ export function Footer() {
             ))}
             <Link to="/blog" className="hover:text-foreground">Blog</Link>
             <Link to="/account" className="hover:text-foreground">My account</Link>
+            <Link to="/referrals" className="hover:text-foreground">Referral program</Link>
             <Link to="/terms" className="hover:text-foreground">Terms of service</Link>
             <Link to="/privacy" className="hover:text-foreground">Privacy policy</Link>
             <Link to="/refund-policy" className="hover:text-foreground">Refund policy</Link>

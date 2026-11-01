@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings, Gift } from "lucide-react";
-import { ReferralPanel, RankChip, useReferralStats } from "@/components/referral-panel";
+import { ReferralPanel, RankChip, useReferralStats, useMyTier } from "@/components/referral-panel";
 import { Avatar, useMyAvatar } from "@/components/avatar-upload";
 import mouPhoto from "@/assets/mou/burgundy.png.asset.json";
 import { AccountSettings } from "@/components/account-settings";
@@ -51,6 +51,7 @@ function Account() {
   const [name, setName] = useState("");
   const [tab, setTab] = useState<"projects" | "refer" | "settings">("projects");
   const stats = useReferralStats();
+  const mine = useMyTier();
   const avatar = useMyAvatar();
   useEffect(() => { (async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -76,7 +77,7 @@ function Account() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Private client space</p>
           <h1 className="mt-3 text-4xl sm:text-5xl">Welcome back{firstName ? `, ${firstName}` : ""}.</h1>
           {email && <p className="mt-3 text-sm text-pitch-muted">Signed in as {email}</p>}
-          {stats && <button type="button" onClick={() => setTab("refer")} className="mt-4 block text-left" aria-label="Open your loyalty rank"><RankChip referrals={Number(stats.signups)} /></button>}
+          {mine.data && <button type="button" onClick={() => setTab("refer")} className="mt-4 block text-left" aria-label="Open your loyalty rank"><RankChip level={mine.data.tier.level.level} /></button>}
           </div>
         </div>
         <div className="flex gap-3">{isAdmin && <Button asChild variant="studio" size="studio"><Link to="/admin">Open admin</Link></Button>}<Button onClick={signOut} variant="studioOutline" size="studio" className="border-pitch-foreground/40 bg-transparent text-pitch-foreground hover:bg-pitch-foreground/10">Sign out</Button></div>
@@ -90,7 +91,7 @@ function Account() {
           <I aria-hidden className="h-4 w-4" />{l}</button>)}
     </div>
 
-    {tab === "settings" ? <div className="mt-10"><AccountSettings email={email} /></div> : tab === "refer" ? <div className="mt-10"><ReferralPanel stats={stats} /></div> :
+    {tab === "settings" ? <div className="mt-10"><AccountSettings email={email} /></div> : tab === "refer" ? <div className="mt-10"><ReferralPanel stats={stats} mine={mine} /></div> :
     <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_340px]">
       <div>
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
