@@ -21,6 +21,7 @@ import { Route as EmailMarketingForAuthorsRouteImport } from './routes/email-mar
 import { Route as GetStartedRouteImport } from './routes/get-started'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ReferralsRouteImport } from './routes/referrals'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as TermsRouteImport } from './routes/terms'
@@ -94,6 +95,11 @@ const PricingRoute = PricingRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferralsRoute = ReferralsRouteImport.update({
+  id: '/referrals',
+  path: '/referrals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RefundPolicyRoute = RefundPolicyRouteImport.update({
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/referrals': typeof ReferralsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
@@ -203,6 +210,7 @@ export interface FileRoutesByTo {
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/referrals': typeof ReferralsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
@@ -231,6 +239,7 @@ export interface FileRoutesById {
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
   '/privacy': typeof PrivacyRoute
+  '/referrals': typeof ReferralsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
   '/terms': typeof TermsRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/get-started'
     | '/pricing'
     | '/privacy'
+    | '/referrals'
     | '/refund-policy'
     | '/services'
     | '/terms'
@@ -285,6 +295,7 @@ export interface FileRouteTypes {
     | '/get-started'
     | '/pricing'
     | '/privacy'
+    | '/referrals'
     | '/refund-policy'
     | '/services'
     | '/terms'
@@ -312,6 +323,7 @@ export interface FileRouteTypes {
     | '/get-started'
     | '/pricing'
     | '/privacy'
+    | '/referrals'
     | '/refund-policy'
     | '/services'
     | '/terms'
@@ -340,6 +352,7 @@ export interface RootRouteChildren {
   GetStartedRoute: typeof GetStartedRoute
   PricingRoute: typeof PricingRoute
   PrivacyRoute: typeof PrivacyRoute
+  ReferralsRoute: typeof ReferralsRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
   ServicesRoute: typeof ServicesRoute
   TermsRoute: typeof TermsRoute
@@ -434,6 +447,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/referrals': {
+      id: '/referrals'
+      path: '/referrals'
+      fullPath: '/referrals'
+      preLoaderRoute: typeof ReferralsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/refund-policy': {
@@ -563,6 +583,7 @@ const rootRouteChildren: RootRouteChildren = {
   GetStartedRoute: GetStartedRoute,
   PricingRoute: PricingRoute,
   PrivacyRoute: PrivacyRoute,
+  ReferralsRoute: ReferralsRoute,
   RefundPolicyRoute: RefundPolicyRoute,
   ServicesRoute: ServicesRoute,
   TermsRoute: TermsRoute,
