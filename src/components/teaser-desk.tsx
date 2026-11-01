@@ -67,7 +67,6 @@ export function TeaserDesk() {
         : <ul className="mt-3 divide-y rounded-xl border">{list.map(t => <li key={t.id} className="flex items-center justify-between gap-3 p-4 text-sm">
           <span><span className="block font-medium">{t.book_title}</span><span className="text-muted-foreground">Released {new Date(t.release_date).toLocaleDateString()}</span></span>
           <StatusPill s={t.status === "requested" ? "pending" : t.status === "in_production" ? "booked" : t.status === "delivered" ? "converted" : "rejected"} /></li>)}</ul>}
-      {list && list.length > 0 && <p className="mt-2 text-xs text-muted-foreground">Status: {list.map(t => `${t.book_title} · ${t.status.replace("_", " ")}`).join("; ")}</p>}
     </div>
   </div>;
 }
