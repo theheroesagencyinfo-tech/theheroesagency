@@ -59,7 +59,7 @@ function Referrals() {
       <h2 className="text-3xl sm:text-4xl">Seven tiers, each with its own badge.</h2>
       <p className="mt-4 max-w-[60ch] text-muted-foreground">Tiers are based on converted referrals: authors who became paying clients.</p>
       <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2 lg:grid-cols-4">{LEVELS.map(l =>
-        <li key={l.level} className={`flex flex-col bg-card p-7 ${l.level === 7 ? "sm:col-span-2 lg:col-span-1" : ""}`}>
+        <li key={l.level} className={`flex flex-col bg-card p-7 ${l.level === 7 ? "sm:col-span-2" : ""}`}>
           <LoyaltyBadge level={l} />
           <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Level {l.level} · {l.min} {l.min === 1 ? "referral" : "referrals"}</p>
           <h3 className="mt-2 text-2xl">{l.title}</h3><p className="text-sm text-muted-foreground">{l.badge}</p>
