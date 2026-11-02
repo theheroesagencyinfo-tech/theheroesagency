@@ -19,7 +19,9 @@ describe("tier expiry", () => {
   const now = new Date("2026-10-31");
   it("keeps a tier within 12 months of earning it", () => expect(tierFrom(["2026-01-10"], now).level.level).toBe(2));
   it("drops a tier after 12 months with no recent referrals", () => expect(tierFrom(["2025-01-10"], now).level.level).toBe(1));
-  it("retains a lapsed tier with enough recent referrals", () =>
-    expect(tierFrom(["2024-01-01", "2026-03-01", "2026-04-01"], now).level.level).toBe(3));
+  it("drops lapsed tiers when recent referrals fall short", () =>
+    expect(tierFrom(["2025-01-01", "2025-02-01"], now).level.level).toBe(1));
+  it("retains a lapsed tier while recent referrals meet the threshold", () =>
+    expect(tierFrom(["2024-01-01", "2024-02-01", "2024-03-01", "2026-09-01"], now).level.level).toBe(2));
   it("applies an admin override", () => expect(tierFrom([], now, 5).level.level).toBe(5));
 });

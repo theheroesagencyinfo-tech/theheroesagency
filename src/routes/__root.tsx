@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AnnouncementBar, Header, Footer } from "@/components/site";
 import { supabase } from "@/integrations/supabase/client";
+import { Toaster } from "@/components/ui/sonner";
 import { REF_STORAGE_KEY, isReferralCode } from "@/lib/loyalty";
 
 function ReferralCapture() {
@@ -150,6 +151,7 @@ function RootComponent() {
 
       <main id="main">
         <Outlet />
+        <Toaster />
       </main>
       <div className="print:hidden"><Footer /></div>
     </QueryClientProvider>

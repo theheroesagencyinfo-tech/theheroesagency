@@ -23,3 +23,4 @@
 
 - Derive sitemap URLs from explicit staticData.sitemap decisions on every route; exclude the authenticated subtree and transaction pages, and omit lastmod without page-specific change timestamps so the sitemap stays accurate.
 - Keep editorial guides in a browser-safe article module and render each from its own static leaf route through a shared article layout so metadata, links, and content remain aligned.
+- Compute referral tiers in the browser-safe loyalty module from converted referral dates plus optional admin override, while database triggers enforce conversion, self-referral and teaser eligibility rules so UI and data cannot disagree.

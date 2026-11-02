@@ -27,7 +27,7 @@ const STEPS = [
   [Wallet, "They become a paying client."], [Award, "You move up a tier and unlock rewards."],
 ] as const;
 
-const FAQ = [
+const FAQ: [string, string][] = [
   ["When does a referral count?", "Once the author you referred books an eligible project and pays their deposit or first invoice. The studio confirms each referral before it counts."],
   ["Who qualifies as a referral?", "A new client with no previous working relationship with TheHeroes Agency. Self-referrals are not allowed."],
   ["How long does my tier last?", "Your tier stays active for 12 months from the date you earn it. After that, you keep it while you hold the required number of successful referrals within the past 12 months."],
@@ -45,7 +45,7 @@ function Referrals() {
       <p className="mt-6 max-w-[58ch] text-lg text-pitch-muted">Every successful referral moves you up a tier and unlocks ongoing rewards, priority service and exclusive book-launch benefits.</p>
       <div className="mt-10 flex flex-wrap gap-3">
         <Button asChild variant="studio" size="studio"><Link to="/account">Get my referral link</Link></Button>
-        <Button asChild variant="ghostDark" size="studio"><a href="#tiers">See reward tiers</a></Button>
+        <Button asChild variant="studioOutline" size="studio" className="border-pitch-foreground/40 bg-transparent text-pitch-foreground hover:bg-pitch-foreground/10"><a href="#tiers">See reward tiers</a></Button>
       </div>
     </div></section>
 
@@ -59,7 +59,7 @@ function Referrals() {
       <h2 className="text-3xl sm:text-4xl">Seven tiers, each with its own badge.</h2>
       <p className="mt-4 max-w-[60ch] text-muted-foreground">Tiers are based on converted referrals: authors who became paying clients.</p>
       <ol className="mt-12 grid gap-px overflow-hidden rounded-2xl border bg-border sm:grid-cols-2 lg:grid-cols-4">{LEVELS.map(l =>
-        <li key={l.level} className={`flex flex-col bg-card p-7 ${l.level === 7 ? "sm:col-span-2 lg:col-span-1" : ""}`}>
+        <li key={l.level} className={`flex flex-col bg-card p-7 ${l.level === 7 ? "sm:col-span-2" : ""}`}>
           <LoyaltyBadge level={l} />
           <p className="mt-5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Level {l.level} · {l.min} {l.min === 1 ? "referral" : "referrals"}</p>
           <h3 className="mt-2 text-2xl">{l.title}</h3><p className="text-sm text-muted-foreground">{l.badge}</p>
