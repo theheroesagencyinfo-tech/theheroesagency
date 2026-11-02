@@ -24,6 +24,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ReferralsRouteImport } from './routes/referrals'
 import { Route as RefundPolicyRouteImport } from './routes/refund-policy'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
@@ -112,6 +113,11 @@ const ServicesRoute = ServicesRouteImport.update({
   path: '/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
   path: '/terms',
@@ -186,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/referrals': typeof ReferralsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/account': typeof AuthenticatedAccountRoute
@@ -213,6 +220,7 @@ export interface FileRoutesByTo {
   '/referrals': typeof ReferralsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/account': typeof AuthenticatedAccountRoute
@@ -242,6 +250,7 @@ export interface FileRoutesById {
   '/referrals': typeof ReferralsRoute
   '/refund-policy': typeof RefundPolicyRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/work': typeof WorkRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
@@ -271,6 +280,7 @@ export interface FileRouteTypes {
     | '/referrals'
     | '/refund-policy'
     | '/services'
+    | '/sitemap.xml'
     | '/terms'
     | '/work'
     | '/account'
@@ -298,6 +308,7 @@ export interface FileRouteTypes {
     | '/referrals'
     | '/refund-policy'
     | '/services'
+    | '/sitemap.xml'
     | '/terms'
     | '/work'
     | '/account'
@@ -326,6 +337,7 @@ export interface FileRouteTypes {
     | '/referrals'
     | '/refund-policy'
     | '/services'
+    | '/sitemap.xml'
     | '/terms'
     | '/work'
     | '/_authenticated/account'
@@ -355,6 +367,7 @@ export interface RootRouteChildren {
   ReferralsRoute: typeof ReferralsRoute
   RefundPolicyRoute: typeof RefundPolicyRoute
   ServicesRoute: typeof ServicesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   WorkRoute: typeof WorkRoute
   ProjectsDanielCarterRoute: typeof ProjectsDanielCarterRoute
@@ -468,6 +481,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -586,6 +606,7 @@ const rootRouteChildren: RootRouteChildren = {
   ReferralsRoute: ReferralsRoute,
   RefundPolicyRoute: RefundPolicyRoute,
   ServicesRoute: ServicesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   WorkRoute: WorkRoute,
   ProjectsDanielCarterRoute: ProjectsDanielCarterRoute,
