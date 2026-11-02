@@ -22,6 +22,6 @@ describe("tier expiry", () => {
   it("drops lapsed tiers when recent referrals fall short", () =>
     expect(tierFrom(["2025-01-01", "2025-02-01"], now).level.level).toBe(1));
   it("retains a lapsed tier while recent referrals meet the threshold", () =>
-    expect(tierFrom(["2024-01-01", "2026-03-01"], new Date("2027-04-01")).level.level).toBe(2));
+    expect(tierFrom(["2024-01-01", "2024-02-01", "2024-03-01", "2026-09-01"], now).level.level).toBe(2));
   it("applies an admin override", () => expect(tierFrom([], now, 5).level.level).toBe(5));
 });
