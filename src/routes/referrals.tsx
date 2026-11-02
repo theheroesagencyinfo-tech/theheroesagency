@@ -27,7 +27,7 @@ const STEPS = [
   [Wallet, "They become a paying client."], [Award, "You move up a tier and unlock rewards."],
 ] as const;
 
-const FAQ = [
+const FAQ: [string, string][] = [
   ["When does a referral count?", "Once the author you referred books an eligible project and pays their deposit or first invoice. The studio confirms each referral before it counts."],
   ["Who qualifies as a referral?", "A new client with no previous working relationship with TheHeroes Agency. Self-referrals are not allowed."],
   ["How long does my tier last?", "Your tier stays active for 12 months from the date you earn it. After that, you keep it while you hold the required number of successful referrals within the past 12 months."],
@@ -45,7 +45,7 @@ function Referrals() {
       <p className="mt-6 max-w-[58ch] text-lg text-pitch-muted">Every successful referral moves you up a tier and unlocks ongoing rewards, priority service and exclusive book-launch benefits.</p>
       <div className="mt-10 flex flex-wrap gap-3">
         <Button asChild variant="studio" size="studio"><Link to="/account">Get my referral link</Link></Button>
-        <Button asChild variant="ghostDark" size="studio"><a href="#tiers">See reward tiers</a></Button>
+        <Button asChild variant="studioOutline" size="studio" className="border-pitch-foreground/40 bg-transparent text-pitch-foreground hover:bg-pitch-foreground/10"><a href="#tiers">See reward tiers</a></Button>
       </div>
     </div></section>
 
