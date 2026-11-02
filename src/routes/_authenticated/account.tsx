@@ -55,17 +55,25 @@ function Account() {
   const avatar = useMyAvatar();
   useEffect(() => { (async () => {
     const { data: u } = await supabase.auth.getUser();
-    setName(u.user?.user_metadata?.["full_name"] ?? "");
+    const meta = u.user?.user_metadata ?? {};
+    let display: string = meta["full_name"] || meta["name"] || meta["given_name"] || "";
     setEmail(u.user?.email ?? "");
     if (u.user) { const { data } = await supabase.rpc("has_role", { _user_id: u.user.id, _role: "admin" }); setIsAdmin(!!data); }
+    if (!display && u.user) {
+      const { data: p } = await supabase.from("profiles").select("full_name").eq("user_id", u.user.id).maybeSingle();
+      display = p?.full_name ?? "";
+    }
     const { data } = await supabase.from("package_orders").select("*").ilike("email", u.user?.email ?? "").order("created_at", { ascending: false });
+    if (!display && data?.[0]) display = (data[0] as { name?: string }).name ?? "";
+    setName(display);
     const ids = (data ?? []).map(o => o.id);
     if (ids.length) { const t = await supabase.from("project_tasks").select("*").in("order_id", ids); setTasks(t.data ?? []); }
     setOrders(data ?? []);
   })(); }, []);
   async function signOut() { await supabase.auth.signOut(); navigate({ to: "/auth", replace: true }); }
 
-  const firstName = String(name).split(" ")[0];
+  const rawFirst = String(name).trim().split(/\s+/)[0] ?? "";
+  const firstName = rawFirst ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1) : "";
   return <section className="mx-auto max-w-[1500px] px-5 py-10 sm:py-14">
     <div className="relative overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-12">
       <img src={banner.url} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-top opacity-20" />
