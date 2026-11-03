@@ -9,9 +9,9 @@ function sitemapPaths(): string[] {
   const paths: string[] = [];
   for (const src of Object.values(sources)) {
     if (!/sitemap:\s*true/.test(src)) continue;
-    const m = src.match(/createFileRoute\(\s*["'`]([^"'`]+)["'`]/);
-    if (!m || m[1].includes("$")) continue;
-    paths.push(m[1] === "/" ? "/" : m[1].replace(/\/$/, ""));
+    const path = src.match(/createFileRoute\(\s*["'`]([^"'`]+)["'`]/)?.[1];
+    if (!path || path.includes("$")) continue;
+    paths.push(path === "/" ? "/" : path.replace(/\/$/, ""));
   }
   return [...new Set(paths)].sort();
 }
