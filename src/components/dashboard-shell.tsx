@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { LogOut, Menu, X, type LucideIcon } from "lucide-react";
 
-export type NavItem<K extends string> = { key: K; label: string; icon: LucideIcon; badge?: number | string };
+export type NavItem<K extends string> = { key: K; label: string; icon: LucideIcon; badge?: number | string | undefined };
 
 /** Shared dashboard frame: dark sidebar (drawer on small screens) + content area. */
 export function DashboardShell<K extends string>({ eyebrow, title, identity, items, active, onSelect, onSignOut, footer, children }: {
@@ -75,7 +75,7 @@ export function SectionHeader({ eyebrow, title, text, action }: { eyebrow: strin
   </div>;
 }
 
-export function StatCard({ label, value, hint, icon: I }: { label: string; value: ReactNode; hint?: string; icon: LucideIcon }) {
+export function StatCard({ label, value, hint, icon: I }: { label: string; value: ReactNode; hint?: string | undefined; icon: LucideIcon }) {
   return <div className="rounded-xl border bg-background p-5">
     <div className="flex items-center justify-between"><p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-primary"><I aria-hidden className="h-4 w-4" /></span></div>
