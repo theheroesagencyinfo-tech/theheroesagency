@@ -2,6 +2,8 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { LayoutDashboard, ShoppingBag, Star, Inbox, Gift, User, Phone } from "lucide-react";
+import { DashboardShell, SectionHeader, StatCard } from "@/components/dashboard-shell";
 import { AdminReferrals } from "@/components/admin-referrals";
 import { packages, addons, orderStatuses } from "@/lib/packages";
 import type { Database } from "@/integrations/supabase/types";
@@ -28,7 +30,7 @@ const fmt = (d: string) => new Date(d).toLocaleString();
 function Admin() {
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [tab, setTab] = useState<"orders" | "reviews" | "messages" | "referrals">("orders");
+  const [tab, setTab] = useState<"overview" | "orders" | "reviews" | "messages" | "referrals">("overview");
   const [reviews, setReviews] = useState<Review[]>([]);
   const [requests, setRequests] = useState<Request[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -76,16 +78,35 @@ function Admin() {
   if (!isAdmin) return <section className="mx-auto max-w-[1500px] px-5 py-20"><h1 className="text-4xl">No admin access</h1><p className="mt-4 text-muted-foreground">This account isn't an admin.</p><Button onClick={signOut} variant="studioOutline" size="studio" className="mt-6">Sign out</Button></section>;
 
   const pending = reviews.filter(r => !r.approved).length;
-  return <section className="mx-auto max-w-[1500px] px-5 py-16">
-    <div className="flex flex-wrap items-end justify-between gap-4">
-      <h1 className="text-4xl sm:text-5xl">Admin</h1>
-      <Button onClick={signOut} variant="studioOutline" size="studio">Sign out</Button>
-    </div>
-    <div role="tablist" className="mt-10 flex gap-6 border-b">
-      {([["orders", `Orders (${orders.filter(o => o.status === "new").length} new)`], ["reviews", `Reviews (${pending} pending)`], ["messages", `Messages (${requests.length})`], ["referrals", "Referrals"]] as const).map(([k, l]) =>
-        <button key={k} role="tab" aria-selected={tab === k} onClick={() => setTab(k)} className={`-mb-px border-b-2 pb-3 text-sm font-semibold ${tab === k ? "border-primary text-foreground" : "border-transparent text-muted-foreground"}`}>{l}</button>)}
-    </div>
-    {tab === "referrals" ? <AdminReferrals /> : tab === "orders" ? <ul className="divide-y">
+  const fresh = orders.filter(o => o.status === "new").length;
+  const calls = orders.filter(o => o.wants_call).length;
+  const titles: Record<typeof tab, [string, string]> = {
+    overview: ["Studio cockpit", "Good to see you, Mou."], orders: ["Pipeline", "Orders"], reviews: ["Moderation", "Reviews"],
+    messages: ["Inbox", "Messages"], referrals: ["Loyalty", "Referrals"],
+  };
+  return <DashboardShell eyebrow="TheHeroes Agency" title="Admin" active={tab} onSelect={setTab} onSignOut={signOut}
+    items={[{ key: "overview", label: "Overview", icon: LayoutDashboard }, { key: "orders", label: "Orders", icon: ShoppingBag, badge: fresh },
+      { key: "reviews", label: "Reviews", icon: Star, badge: pending }, { key: "messages", label: "Messages", icon: Inbox, badge: requests.length },
+      { key: "referrals", label: "Referrals", icon: Gift }]}
+    footer={<Link to="/account" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground"><User aria-hidden className="h-4 w-4" />My account</Link>}>
+    <SectionHeader eyebrow={titles[tab][0]} title={titles[tab][1]} />
+    {tab === "overview" ? <div className="grid gap-8">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard label="New orders" value={fresh} hint={`${orders.length} total`} icon={ShoppingBag} />
+        <StatCard label="Want a call" value={calls} hint="Asked to talk first" icon={Phone} />
+        <StatCard label="Reviews to approve" value={pending} hint={`${reviews.length} total`} icon={Star} />
+        <StatCard label="Messages" value={requests.length} hint="From the contact form" icon={Inbox} />
+      </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="rounded-xl border bg-background p-6"><div className="flex items-center justify-between"><h2 className="text-2xl">Latest orders</h2><button type="button" onClick={() => setTab("orders")} className="text-sm text-primary underline-offset-4 hover:underline">See all orders</button></div>
+          <ul className="mt-4 divide-y">{orders.slice(0, 5).map(o => <li key={o.id} className="flex items-center justify-between gap-3 py-3 text-sm"><span><span className="font-medium">{o.name}</span><span className="block text-muted-foreground">{packages.find(p => p.slug === o.package)?.name}</span></span><span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-primary">{o.status}</span></li>)}
+          {orders.length === 0 && <li className="py-3 text-sm text-muted-foreground">No orders yet.</li>}</ul></div>
+        <div className="rounded-xl border bg-background p-6"><div className="flex items-center justify-between"><h2 className="text-2xl">Latest messages</h2><button type="button" onClick={() => setTab("messages")} className="text-sm text-primary underline-offset-4 hover:underline">Open inbox</button></div>
+          <ul className="mt-4 divide-y">{requests.slice(0, 5).map(m => <li key={m.id} className="py-3 text-sm"><span className="font-medium">{m.name}</span><span className="block text-muted-foreground">{m.request_type === "quote" ? "Quote request" : "Free review"} · {new Date(m.created_at).toLocaleDateString()}</span></li>)}
+          {requests.length === 0 && <li className="py-3 text-sm text-muted-foreground">No messages yet.</li>}</ul></div>
+      </div>
+    </div> : tab === "referrals"
+ ? <AdminReferrals /> : tab === "orders" ? <ul className="divide-y rounded-xl border bg-background px-6">
       {orders.length === 0 && <li className="py-8 text-muted-foreground">No orders yet.</li>}
       {orders.map(o => <li key={o.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
@@ -103,7 +124,7 @@ function Admin() {
           <Button onClick={() => removeOrder(o.id)} variant="ghost" size="sm">Delete</Button>
         </div>
       </li>)}
-    </ul> : tab === "reviews" ? <ul className="divide-y">
+    </ul> : tab === "reviews" ? <ul className="divide-y rounded-xl border bg-background px-6">
       {reviews.length === 0 && <li className="py-8 text-muted-foreground">No reviews yet.</li>}
       {reviews.map(r => <li key={r.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
@@ -118,7 +139,7 @@ function Admin() {
           <Button onClick={() => removeReview(r.id)} variant="ghost" size="sm">Delete</Button>
         </div>
       </li>)}
-    </ul> : <ul className="divide-y">
+    </ul> : <ul className="divide-y rounded-xl border bg-background px-6">
       {requests.length === 0 && <li className="py-8 text-muted-foreground">No messages yet.</li>}
       {requests.map(m => <li key={m.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
@@ -134,5 +155,5 @@ function Admin() {
         </div>
       </li>)}
     </ul>}
-  </section>;
+  </DashboardShell>;
 }
