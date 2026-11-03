@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings, Gift } from "lucide-react";
+import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings, Gift, Shield, TrendingUp } from "lucide-react";
+import { DashboardShell, SectionHeader, StatCard } from "@/components/dashboard-shell";
 import { ReferralPanel, RankChip, useReferralStats, useMyTier } from "@/components/referral-panel";
 import { Avatar, useMyAvatar } from "@/components/avatar-upload";
 import mouPhoto from "@/assets/mou/burgundy.png.asset.json";
@@ -74,34 +75,39 @@ function Account() {
 
   const rawFirst = String(name).trim().split(/\s+/)[0] ?? "";
   const firstName = rawFirst ? rawFirst.charAt(0).toUpperCase() + rawFirst.slice(1) : "";
-  return <section className="mx-auto max-w-[1500px] px-5 py-10 sm:py-14">
-    <div className="relative overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-12">
+  const level = mine.data?.tier.level.level;
+  const doneTasks = tasks.filter(t => t.done).length;
+  const overall = tasks.length ? Math.round((doneTasks / tasks.length) * 100) : 0;
+  const sections: Record<typeof tab, [string, string, string]> = {
+    projects: ["Private client space", `Welcome back${firstName ? `, ${firstName}` : ""}.`, "Everything about your author platform, in one place."],
+    refer: ["Loyalty program", "Refer & rewards", "Share your link and unlock savings as authors you refer start with us."],
+    settings: ["Your profile", "Account settings", "Update your details, photo and password."],
+  };
+  const [eyebrow, heading, intro] = sections[tab];
+  return <DashboardShell eyebrow="Client portal" title="My studio" active={tab} onSelect={setTab} onSignOut={signOut}
+    items={[{ key: "projects", label: "My projects", icon: FolderKanban, badge: orders?.length || undefined }, { key: "refer", label: "Refer & rewards", icon: Gift }, { key: "settings", label: "Account settings", icon: Settings }]}
+    identity={<div className="flex items-center gap-3"><Avatar url={avatar} name={name || email} className="h-11 w-11 text-base" />
+      <div className="min-w-0"><p className="truncate font-medium">{firstName || "Author"}</p><p className="truncate text-xs text-pitch-muted">{email}</p></div></div>}
+    footer={<>{level !== undefined && <button type="button" onClick={() => setTab("refer")} className="text-left" aria-label="Open your loyalty rank"><RankChip level={level} /></button>}
+      {isAdmin && <Link to="/admin" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground"><Shield aria-hidden className="h-4 w-4" />Open admin</Link>}</>}>
+    {tab === "projects" ? <div className="relative mb-8 overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-10">
       <img src={banner.url} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-top opacity-20" />
       <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-pitch via-pitch/80 to-transparent" />
-      <div className="relative flex flex-wrap items-end justify-between gap-6">
-        <div className="flex flex-wrap items-center gap-6">
-          <Avatar url={avatar} name={name || email} className="h-20 w-20 text-2xl" />
-          <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Private client space</p>
-          <h1 className="mt-3 text-4xl sm:text-5xl">Welcome back{firstName ? `, ${firstName}` : ""}.</h1>
-          {email && <p className="mt-3 text-sm text-pitch-muted">Signed in as {email}</p>}
-          {mine.data && <button type="button" onClick={() => setTab("refer")} className="mt-4 block text-left" aria-label="Open your loyalty rank"><RankChip level={mine.data.tier.level.level} /></button>}
-          </div>
-        </div>
-        <div className="flex gap-3">{isAdmin && <Button asChild variant="studio" size="studio"><Link to="/admin">Open admin</Link></Button>}<Button onClick={signOut} variant="studioOutline" size="studio" className="border-pitch-foreground/40 bg-transparent text-pitch-foreground hover:bg-pitch-foreground/10">Sign out</Button></div>
+      <div className="relative">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">{eyebrow}</p>
+        <h1 className="mt-3 text-4xl sm:text-5xl">{heading}</h1>
+        <p className="mt-3 max-w-[55ch] text-pitch-muted">{intro}</p>
       </div>
-    </div>
+    </div> : <SectionHeader eyebrow={eyebrow} title={heading} text={intro} />}
 
-    <div role="tablist" aria-label="Account sections" className="mt-8 flex gap-2 border-b">
-      {([["projects", "My projects", FolderKanban], ["refer", "Refer & rewards", Gift], ["settings", "Account settings", Settings]] as const).map(([k, l, I]) =>
-        <button key={k} type="button" role="tab" aria-selected={tab === k} onClick={() => setTab(k)}
-          className={`-mb-px flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors ${tab === k ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
-          <I aria-hidden className="h-4 w-4" />{l}</button>)}
-    </div>
-
-    {tab === "settings" ? <div className="mt-10"><AccountSettings email={email} /></div> : tab === "refer" ? <div className="mt-10"><ReferralPanel stats={stats} mine={mine} /></div> :
-    <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_340px]">
+    {tab === "settings" ? <AccountSettings email={email} /> : tab === "refer" ? <ReferralPanel stats={stats} mine={mine} /> :
+    <div className="grid gap-8 xl:grid-cols-[1fr_320px]">
       <div>
+        {orders && orders.length > 0 && <div className="mb-8 grid gap-4 sm:grid-cols-3">
+          <StatCard label="Active projects" value={orders.length} icon={FolderKanban} />
+          <StatCard label="Overall progress" value={`${overall}%`} hint={tasks.length ? `${doneTasks} of ${tasks.length} tasks done` : "Tasks appear once scheduled"} icon={TrendingUp} />
+          <StatCard label="Loyalty level" value={level ?? "–"} hint={mine.data?.tier.level.title} icon={Gift} />
+        </div>}
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
         : orders.length === 0 ? <div className="rounded-2xl border bg-card p-8 sm:p-10">
             <h2 className="text-3xl">Your author platform starts here.</h2>
@@ -136,7 +142,7 @@ function Account() {
           </li>; })}</ul>}
       </div>
 
-      <aside className="h-fit rounded-2xl border bg-secondary p-6 lg:sticky lg:top-24">
+      <aside className="h-fit rounded-2xl border bg-secondary p-6 xl:sticky xl:top-24">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your studio contact</p>
         <div className="mt-4 flex items-center gap-4"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-16 w-16 rounded-full object-cover object-top" />
         <p className="text-2xl">Mou Barrac</p></div>
@@ -147,5 +153,5 @@ function Account() {
         </div>
       </aside>
     </div>}
-  </section>;
+  </DashboardShell>;
 }
