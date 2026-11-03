@@ -9,14 +9,13 @@ import signupPhoto from "@/assets/mou/white.png.asset.json";
 import { REF_STORAGE_KEY, isReferralCode } from "@/lib/loyalty";
 
 export const Route = createFileRoute("/auth")({
-  staticData: { sitemap: false },
+  staticData: { sitemap: true },
   head: () => ({ meta: [
     { title: "Client sign in · TheHeroes Agency" },
     { name: "description", content: "Sign in to your private client space with TheHeroes Agency." },
     { property: "og:title", content: "Client sign in · TheHeroes Agency" },
     { property: "og:description", content: "Private client space for TheHeroes Agency · Author Studio." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
-    { name: "robots", content: "noindex" },
   ] }),
   component: AuthPage,
 });
