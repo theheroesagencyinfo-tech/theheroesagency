@@ -18,7 +18,7 @@ const sections = [
   { heading: "What I built", body: "A home page that leads with the book's promise, a book page with retailer links, a free chapter signup, and a speaker page. Calm typography and one accent color keep the focus on the author's ideas." },
 ];
 function Project() {
-  return <><div className="mx-auto max-w-[1500px] px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
+  return <><div className="mx-auto max-w-[1500px] px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to case studies</Link></div>
     <PageIntro label="Sample project · fictional author" title="The Quiet Advantage.">A sample author website. Not a client project.</PageIntro>
     <section className="border-t"><div className="mx-auto max-w-[1500px] px-5 py-16"><ImagePlaceholder label="Sample website screenshot" /></div></section>
     {sections.map(s => <section key={s.heading} className="border-t"><div className="mx-auto grid max-w-[1500px] gap-6 px-5 py-12 md:grid-cols-[1fr_1.4fr]"><h2 className="text-3xl sm:text-4xl">{s.heading}</h2><p className="max-w-[60ch] text-lg text-muted-foreground">{s.body}</p></div></section>)}

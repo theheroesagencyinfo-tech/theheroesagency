@@ -1,5 +1,5 @@
 // Browser-safe price values shared by packages and legal payment terms.
-export const packageAmounts = { "book-presence": 1500, "reader-to-client": 3000, "book-launch": 5500 } as const;
+export const packageAmounts = { "book-presence": 1500, "reader-to-client": 3000, "book-launch": 5400 } as const;
 
 export function formatPrice(amount: number) {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: Number.isInteger(amount) ? 0 : 2, maximumFractionDigits: 2 }).format(amount);

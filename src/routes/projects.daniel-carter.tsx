@@ -41,7 +41,7 @@ function Project() {
   useEffect(() => { viewer.current?.scrollTo({ top: 0 }); }, [active]);
   const page = pages[active] ?? pages[0]!;
   return <>
-    <div className="mx-auto max-w-[1500px] px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to selected work</Link></div>
+    <div className="mx-auto max-w-[1500px] px-5 pt-10"><Link to="/work" className="text-sm underline underline-offset-4">← Back to case studies</Link></div>
     <PageIntro label="Author website · 8 pages" title="Daniel Carter.">An eight-page author website design. Pick a page, then scroll up and down to see all of it.</PageIntro>
     <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-8 px-5 py-12 md:grid-cols-[220px_1fr]">
       <div role="tablist" aria-label="Website pages" className="flex gap-2 overflow-x-auto pb-2 md:flex-col md:overflow-visible md:pb-0">

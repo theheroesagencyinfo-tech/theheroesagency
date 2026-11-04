@@ -5,22 +5,22 @@ import { threePaymentAmounts } from "@/lib/pricing-values";
 
 describe("invoice", () => {
   it("uses the confirmed starting prices for packages and invoices", () => {
-    expect(packageAmounts).toEqual({ "book-presence": 1500, "reader-to-client": 3000, "book-launch": 5500 });
+    expect(packageAmounts).toEqual({ "book-presence": 1500, "reader-to-client": 3000, "book-launch": 5400 });
     for (const pkg of packages) {
       expect(Number(pkg.price.replace(/[$,]/g, ""))).toBe(packageAmounts[pkg.slug]);
       expect(invoiceLines(pkg.slug, [], false).oneOff).toBe(packageAmounts[pkg.slug]);
     }
   });
-  it("splits the $5,500 launch price into three cent-exact payments", () => {
-    const amounts = threePaymentAmounts(5500);
-    expect(amounts).toEqual([1833.33, 1833.33, 1833.34]);
-    expect(amounts.reduce((sum, amount) => sum + Math.round(amount * 100), 0)).toBe(550000);
+  it("splits the $5,400 launch price into three equal payments of $1,800", () => {
+    const amounts = threePaymentAmounts(5400);
+    expect(amounts).toEqual([1800, 1800, 1800]);
+    expect(amounts.reduce((sum, amount) => sum + Math.round(amount * 100), 0)).toBe(540000);
   });
   it("includes launch one-off extras in installments but excludes monthly services", () => {
     const inv = invoiceLines("book-launch", ["speaker-page", "maintenance"], true);
-    expect(inv.oneOff).toBe(6050);
+    expect(inv.oneOff).toBe(5950);
     expect(inv.monthly).toBe(150);
-    expect(threePaymentAmounts(inv.oneOff)).toEqual([2016.66, 2016.66, 2016.68]);
+    expect(threePaymentAmounts(inv.oneOff)).toEqual([1983.33, 1983.33, 1983.34]);
   });
   it("keeps every displayed add-on price aligned with invoice amounts", () => {
     expect(RUSH_AMOUNT).toBe(150);
@@ -40,7 +40,7 @@ describe("invoice", () => {
     expect(inv.monthly).toBe(150);
   });
   it("splits book launch 50/50", () => {
-    expect(invoiceLines("book-launch", [], false).schedule.map(s => s.amount)).toEqual([2750, 2750]);
+    expect(invoiceLines("book-launch", [], false).schedule.map(s => s.amount)).toEqual([2700, 2700]);
   });
 });
 describe("progress", () => {
