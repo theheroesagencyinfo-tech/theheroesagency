@@ -115,7 +115,7 @@ function Home() {
 
       <section id="work" aria-labelledby="work-h" className="scroll-mt-24 border-t">
         <div className="mx-auto max-w-[1500px] px-5 py-20">
-          <SectionLabel>Selected work</SectionLabel>
+          <SectionLabel>Case studies</SectionLabel>
           <h2 id="work-h" className="mt-4 text-4xl">Recent pages</h2>
           <div className="mt-12 grid gap-14 md:grid-cols-2 md:gap-x-8">
             <article>
