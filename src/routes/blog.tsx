@@ -25,7 +25,7 @@ function Blog() {
     <PageIntro label="Journal" title="Ideas for your author platform.">Practical notes on connecting your book, your website, and your wider work.</PageIntro>
     <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-14 px-5 py-16 md:grid-cols-2">
       {articleSummaries.map(article => <article key={article.path} className="min-w-0 border-t pt-6">
-        <p className="text-sm text-muted-foreground">{article.category}</p>
+        <p className="text-sm text-muted-foreground">{article.category} · {article.readingTime}</p>
         <h2 className="mt-3 text-3xl"><Link to={article.path}>{article.title}</Link></h2>
         <p className="mt-4 max-w-[60ch] text-muted-foreground">{article.description}</p>
         <Button asChild variant="studioOutline" size="studio" className="mt-6"><Link to={article.path}>Read article <span aria-hidden>↗</span></Link></Button>

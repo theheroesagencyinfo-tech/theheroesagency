@@ -9,7 +9,7 @@ export type Article = {
   datePublished: string;
   dateModified: string;
   readingTime: string;
-  keywords: string[];
+  keywords: readonly string[];
   sections: { id: string; title: string; content: ReactNode }[];
   cta: string;
 };

@@ -13,7 +13,10 @@ export function ArticlePage({ article }: { article: Article }) {
           <nav aria-label="Article contents" className="border-t pt-5">
             <Link to="/blog" className="text-sm underline underline-offset-4">← All articles</Link>
             <p className="mt-8 text-sm font-semibold">In this article</p>
+            <p className="mt-6 text-sm text-muted-foreground">{article.readingTime} · By Mou Barrac</p>
             <ol className="mt-4 space-y-3 text-sm text-muted-foreground">{article.sections.map(section => <li key={section.id}><a href={`#${section.id}`} className="underline-offset-4 hover:underline">{section.title}</a></li>)}</ol>
+            <p className="mt-8 text-sm font-semibold">Related services</p>
+            <ul className="mt-4 space-y-3 text-sm"><li><Link to="/services" className="underline underline-offset-4">Author websites and email systems</Link></li><li><Link to="/pricing" className="underline underline-offset-4">Packages and pricing</Link></li><li><Link to="/work" className="underline underline-offset-4">Case studies</Link></li></ul>
           </nav>
           <div className="min-w-0 max-w-[80ch]">
             {article.sections.map(section => <section key={section.id} id={section.id} className="scroll-mt-36 first:mt-0 border-t pt-8 first:border-t-0 first:pt-0">
