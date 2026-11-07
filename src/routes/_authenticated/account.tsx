@@ -1,12 +1,11 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings, Gift, Shield, TrendingUp } from "lucide-react";
-import { DashboardShell, SectionHeader, StatCard } from "@/components/dashboard-shell";
+import { Check, Mail, CalendarDays, FileText, LayoutDashboard, FolderKanban, Settings, Gift, Shield, TrendingUp, LogOut } from "lucide-react";
+import { StatCard } from "@/components/dashboard-shell";
 import { ReferralPanel, RankChip, useReferralStats, useMyTier } from "@/components/referral-panel";
 import { Avatar, useMyAvatar } from "@/components/avatar-upload";
 import mouPhoto from "@/assets/mou/burgundy.png.asset.json";
 import { AccountSettings } from "@/components/account-settings";
-import banner from "@/assets/jonathan-reed/books.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/progress-bar";
@@ -83,27 +82,48 @@ function Account() {
     refer: ["Loyalty program", "Refer & rewards", "Share your link and unlock savings as authors you refer start with us."],
     settings: ["Your profile", "Account settings", "Update your details, photo and password."],
   };
-  const [eyebrow, heading, intro] = sections[tab];
-  return <DashboardShell eyebrow="Client portal" title="My studio" active={tab} onSelect={setTab} onSignOut={signOut}
-    items={[{ key: "projects", label: "My projects", icon: FolderKanban, badge: orders?.length || undefined }, { key: "refer", label: "Refer & rewards", icon: Gift }, { key: "settings", label: "Account settings", icon: Settings }]}
-    identity={<div className="flex items-center gap-3"><Avatar url={avatar} name={name || email} className="h-11 w-11 text-base" />
-      <div className="min-w-0"><p className="truncate font-medium">{firstName || "Author"}</p><p className="truncate text-xs text-pitch-muted">{email}</p></div></div>}
-    footer={<>{level !== undefined && <button type="button" onClick={() => setTab("refer")} className="text-left" aria-label="Open your loyalty rank"><RankChip level={level} /></button>}
-      {isAdmin && <Link to="/admin" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground"><Shield aria-hidden className="h-4 w-4" />Open admin</Link>}</>}>
-    {tab === "projects" ? <div className="relative mb-8 overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-10">
-      <img src={banner.url} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover object-top opacity-20" />
-      <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-pitch via-pitch/80 to-transparent" />
-      <div className="relative">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">{eyebrow}</p>
-        <h1 className="mt-3 text-4xl sm:text-5xl">{heading}</h1>
-        <p className="mt-3 max-w-[55ch] text-pitch-muted">{intro}</p>
+  const [, heading, intro] = sections[tab];
+  const TABS = [
+    { key: "projects" as const, label: "Projects", icon: FolderKanban, badge: orders?.length || undefined },
+    { key: "refer" as const, label: "Rewards", icon: Gift, badge: undefined },
+    { key: "settings" as const, label: "Settings", icon: Settings, badge: undefined },
+  ];
+  return <div className="mx-auto max-w-[1500px] px-4 pb-20 pt-8 sm:px-8 sm:pt-12">
+    <header className="border-b pb-8">
+      <div className="flex flex-wrap items-center justify-between gap-6">
+        <div className="flex items-center gap-4 sm:gap-5">
+          <Avatar url={avatar} name={name || email} className="h-14 w-14 text-lg ring-1 ring-border ring-offset-4 ring-offset-background sm:h-16 sm:w-16" />
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">Private client dossier</p>
+            <p className="mt-1 truncate font-serif text-2xl sm:text-3xl">{firstName || "Author"}</p>
+            <p className="truncate text-sm text-muted-foreground">{email}</p>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          {level !== undefined && <button type="button" onClick={() => setTab("refer")} aria-label="Open your loyalty rank"><RankChip level={level} /></button>}
+          {isAdmin && <Button asChild variant="studioOutline" size="sm"><Link to="/admin"><Shield aria-hidden className="mr-2 h-4 w-4" />Open admin</Link></Button>}
+          <Button type="button" variant="ghost" size="sm" onClick={signOut}><LogOut aria-hidden className="mr-2 h-4 w-4" />Sign out</Button>
+        </div>
       </div>
-    </div> : <SectionHeader eyebrow={eyebrow} title={heading} text={intro} />}
-
+      <div className="mt-10 max-w-[60ch]">
+        <h1 className="text-4xl sm:text-5xl">{heading}</h1>
+        <p className="mt-3 text-muted-foreground">{intro}</p>
+      </div>
+      <nav aria-label="Account sections" className="mt-8 inline-flex w-full gap-1 rounded-full border bg-secondary p-1 sm:w-auto">
+        {TABS.map(({ key, label, icon: I, badge }) => {
+          const on = tab === key;
+          return <button key={key} type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
+            className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors sm:flex-none sm:px-5 ${on ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+            <I aria-hidden className={`h-4 w-4 ${on ? "text-primary" : ""}`} />{label}
+            {badge ? <span className="rounded-full bg-primary px-1.5 text-[11px] text-primary-foreground">{badge}</span> : null}
+          </button>; })}
+      </nav>
+    </header>
+    <div className="pt-10">
     {tab === "settings" ? <AccountSettings email={email} /> : tab === "refer" ? <ReferralPanel stats={stats} mine={mine} /> :
     <div className="grid gap-8 xl:grid-cols-[1fr_320px]">
       <div>
-        {orders && orders.length > 0 && <div className="mb-8 grid gap-4 sm:grid-cols-3">
+        {orders && orders.length > 0 && <div className="mb-8 grid grid-cols-3 divide-x rounded-2xl border bg-card [&>*]:rounded-none [&>*]:border-0 [&>*]:bg-transparent [&>*]:p-4 sm:[&>*]:p-6">
           <StatCard label="Active projects" value={orders.length} icon={FolderKanban} />
           <StatCard label="Overall progress" value={`${overall}%`} hint={tasks.length ? `${doneTasks} of ${tasks.length} tasks done` : "Tasks appear once scheduled"} icon={TrendingUp} />
           <StatCard label="Loyalty level" value={level ?? "–"} hint={mine.data?.tier.level.title} icon={Gift} />
@@ -122,12 +142,12 @@ function Account() {
           const mine = tasks.filter(t => t.order_id === o.id);
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
-          return <li key={o.id} className="rounded-2xl border bg-card p-6 sm:p-8">
+          return <li key={o.id} className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-sm sm:p-10"><span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-primary" />
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <span className="rounded-full bg-secondary px-3 py-1 font-medium text-primary">{statusLabel(o.status)}</span>
               <span className="text-muted-foreground">Requested {new Date(o.created_at).toLocaleDateString()}</span>
             </div>
-            <h2 className="mt-4 text-3xl">{o.book}</h2>
+            <h2 className="mt-5 font-serif text-3xl sm:text-4xl">{o.book}</h2>
             <p className="mt-1 text-muted-foreground">{packages.find(p => p.slug === o.package)?.name}</p>
             {(o.addons.length > 0 || o.rush) && <p className="mt-2 text-sm text-muted-foreground">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
             <div className="mt-8"><Roadmap pct={pct} /></div>
@@ -142,7 +162,7 @@ function Account() {
           </li>; })}</ul>}
       </div>
 
-      <aside className="h-fit rounded-2xl border bg-secondary p-6 xl:sticky xl:top-24">
+      <aside className="h-fit rounded-2xl border bg-card p-7 shadow-sm xl:sticky xl:top-24">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your studio contact</p>
         <div className="mt-4 flex items-center gap-4"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-16 w-16 rounded-full object-cover object-top" />
         <p className="text-2xl">Mou Barrac</p></div>
@@ -153,5 +173,6 @@ function Account() {
         </div>
       </aside>
     </div>}
-  </DashboardShell>;
+    </div>
+  </div>;
 }
