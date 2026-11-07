@@ -10,7 +10,7 @@ import banner from "@/assets/jonathan-reed/books.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ProgressBar } from "@/components/progress-bar";
-import { BOOKING_URL, CONTACT_EMAIL } from "@/components/site";
+import { BOOKING_URL, SUPPORT_EMAIL } from "@/components/site";
 import { packages, addons, progressOf } from "@/lib/packages";
 import { invoiceReady, type Order, type Task } from "@/lib/client-projects";
 
@@ -148,7 +148,7 @@ function Account() {
         <p className="text-2xl">Mou Barrac</p></div>
         <p className="mt-1 text-sm text-muted-foreground">Questions, feedback, or files? Reach me directly.</p>
         <div className="mt-6 grid gap-3 text-sm">
-          <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-2 break-all underline underline-offset-4"><Mail aria-hidden className="h-4 w-4 shrink-0 text-primary" />{CONTACT_EMAIL}</a>
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-2 break-all underline underline-offset-4"><Mail aria-hidden className="h-4 w-4 shrink-0 text-primary" />{SUPPORT_EMAIL}</a>
           <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 underline underline-offset-4"><CalendarDays aria-hidden className="h-4 w-4 shrink-0 text-primary" />Book a check-in call</a>
         </div>
       </aside>

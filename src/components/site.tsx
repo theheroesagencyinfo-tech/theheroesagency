@@ -18,9 +18,9 @@ function Logo({ className }: { className: string }) {
   );
 }
 
-export const CONTACT_EMAIL = "theheroesagency.info@gmail.com";
-export const INFO_EMAIL = "theheroesagency.info@gmail.com";
-export const SUPPORT_EMAIL = "theheroesagency.info@gmail.com";
+export const CONTACT_EMAIL = "info@theheroesagency.org";
+export const INFO_EMAIL = "info@theheroesagency.org";
+export const SUPPORT_EMAIL = "admin@theheroesagency.org";
 export const BOOKING_URL = "https://calendly.com/theheroesagency-info/30min";
 export const BOOKING_LABEL = "Book a 15-minute call";
 

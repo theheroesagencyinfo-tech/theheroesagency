@@ -3,7 +3,7 @@ import { useState, type FormEvent } from "react";
 import { Eye, EyeOff, Check, MailCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { CONTACT_EMAIL } from "@/components/site";
+import { SUPPORT_EMAIL } from "@/components/site";
 import banner from "@/assets/banner-writers-desk.png.asset.json";
 import signupPhoto from "@/assets/mou/white.png.asset.json";
 import { REF_STORAGE_KEY, isReferralCode } from "@/lib/loyalty";
@@ -98,7 +98,7 @@ function AuthPage() {
           <Button type="submit" disabled={busy} variant="studio" size="studio" className="w-full">{busy ? "Please wait…" : mode === "in" ? "Sign in" : "Create account"}</Button>
         </form>
       </>}
-      <p className="mt-8 border-t pt-6 text-sm text-muted-foreground">Trouble signing in? Email Mou at <a href={`mailto:${CONTACT_EMAIL}`} className="text-foreground underline underline-offset-4">{CONTACT_EMAIL}</a></p>
+      <p className="mt-8 border-t pt-6 text-sm text-muted-foreground">Trouble signing in or resetting your password? Email Mou at <a href={`mailto:${SUPPORT_EMAIL}`} className="text-foreground underline underline-offset-4">{SUPPORT_EMAIL}</a></p>
     </div>
   </section>;
 }
