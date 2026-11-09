@@ -3,10 +3,10 @@
 
 # Premium account and admin transformation
 - [x] Audit existing account, admin, projects, invoices, rewards and settings against the uploaded brief.
-- [ ] Establish portal-scoped editorial styling and reusable controls.
-- [ ] Redesign account, project workspace, invoice, rewards and settings while preserving existing behavior.
-- [ ] Redesign admin overview, orders, project management, reviews, messages and referrals.
-- [ ] Verify authenticated interactions, calculations and desktop/tablet/mobile layouts.
+- [x] Establish portal-scoped editorial styling and reusable controls.
+- [x] Redesign account, project workspace, invoice, rewards and settings while preserving existing behavior.
+- [x] Redesign admin overview, orders, project management, reviews, messages and referrals.
+- [x] Verify authenticated interactions, calculations and desktop/mobile layouts.
 
 # SEO blog posts
 - [x] Write the two uploaded author website and email marketing guides with page metadata and relevant internal links.

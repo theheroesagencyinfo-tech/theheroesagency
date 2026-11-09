@@ -38,7 +38,7 @@ export function RankChip({ level }: { level: number }) {
   const l = LEVELS[level - 1] ?? LEVELS[0]!;
   return <span className="inline-flex items-center gap-3 rounded-full border border-pitch-foreground/20 bg-pitch-foreground/5 py-1 pl-1 pr-4">
     <LoyaltyBadge level={l} size="sm" />
-    <span className="text-sm"><span className="block text-xs uppercase tracking-[0.18em] text-pitch-accent">Level {l.level}</span>{l.title}</span>
+    <span className="text-sm"><span className="block text-xs uppercase tracking-[0.18em] text-brass">Level {l.level}</span>{l.title}</span>
   </span>;
 }
 
@@ -85,7 +85,7 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Your tier · Level {current.level} of 7{tier.overridden ? " · set by the studio" : ""}</p>
         <h2 className="mt-2 text-4xl">{current.title}</h2>
-        <p className="mt-1 text-pitch-muted">{current.badge} · {n} successful {n === 1 ? "referral" : "referrals"}</p>
+        <p className="mt-1 text-pitch-muted">{current.badge} · {n} converted · {mine.data.referrals.filter(r => !["converted", "rejected"].includes(r.status)).length} pending</p>
         <div className="mt-6 h-2 overflow-hidden rounded-full bg-pitch-foreground/15" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Progress to next tier">
           <div className="h-full rounded-full bg-pitch-accent transition-all" style={{ width: `${pct}%` }} /></div>
         <p className="mt-3 text-sm text-pitch-muted">{next ? `${next.min - n} more successful ${next.min - n === 1 ? "referral" : "referrals"} to reach ${next.title}.` : "You hold the highest tier in the studio. Thank you."}
@@ -127,10 +127,11 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
         <thead className="bg-secondary text-xs uppercase tracking-wider text-muted-foreground"><tr>
           <th className="p-4">Name</th><th className="p-4">Email</th>
           <th className="p-4"><button type="button" onClick={() => setAsc(!asc)} className="inline-flex items-center gap-1 uppercase">Submitted <ArrowUpDown aria-hidden className="h-3 w-3" /></button></th>
-          <th className="p-4">Status</th><th className="p-4">Reward</th></tr></thead>
+          <th className="p-4">Status</th><th className="p-4">Deposit</th><th className="p-4">Reward</th></tr></thead>
         <tbody className="divide-y">{rows.map(r => <tr key={r.id}>
           <td className="p-4">{r.referred_name || "—"}</td><td className="p-4">{r.referred_email}</td>
           <td className="p-4">{new Date(r.created_at).toLocaleDateString()}</td><td className="p-4"><StatusPill s={r.status} /></td>
+          <td className="p-4">{r.deposit_paid ? "Paid" : "Not yet"}</td>
           <td className="p-4">{r.status === "converted" ? <span className="font-medium text-primary">Counts toward your tier</span> : <span className="text-muted-foreground">—</span>}</td></tr>)}</tbody>
       </table></div>}
     </div>

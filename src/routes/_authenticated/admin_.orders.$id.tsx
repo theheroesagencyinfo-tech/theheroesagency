@@ -53,10 +53,11 @@ function Manage() {
   if (!p) return <p className="mx-auto max-w-5xl px-5 py-20 text-muted-foreground">Loading…</p>;
   if (!p.order) return <p className="mx-auto max-w-5xl px-5 py-20">Order not found.</p>;
   const { order, tasks, items } = p;
-  return <section className="mx-auto max-w-5xl px-5 py-14">
-    <Link to="/admin" className="text-sm underline underline-offset-4">← Admin</Link>
-    <h1 className="mt-6 text-4xl">{order.name} · {order.book}</h1>
-    <p className="mt-2 text-muted-foreground">{packages.find(x => x.slug === order.package)?.name} · {order.email}</p>
+  return <section className="mx-auto max-w-6xl px-5 py-14">
+    <Link to="/admin" className="text-sm underline underline-offset-4">← Back to studio room</Link>
+    <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-brass">Project workspace · {packages.find(x => x.slug === order.package)?.name}</p>
+    <h1 className="mt-3 text-5xl leading-tight">{order.book}</h1>
+    <p className="mt-3 text-muted-foreground">{order.name} · <a href={`mailto:${order.email}`} className="underline underline-offset-4">{order.email}</a> · <span className="capitalize">{order.status}</span></p>
     <div className="mt-6 max-w-xl"><ProgressBar value={progressOf(tasks)} /></div>
     {err && <p role="alert" className="mt-4 text-sm text-destructive">{err}</p>}
 

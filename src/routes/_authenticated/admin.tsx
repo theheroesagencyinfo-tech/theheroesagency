@@ -34,6 +34,9 @@ function Admin() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [requests, setRequests] = useState<Request[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [q, setQ] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [newest, setNewest] = useState(true);
 
   async function load() {
     const [r, m, o] = await Promise.all([
@@ -80,16 +83,29 @@ function Admin() {
   const pending = reviews.filter(r => !r.approved).length;
   const fresh = orders.filter(o => o.status === "new").length;
   const calls = orders.filter(o => o.wants_call).length;
-  const titles: Record<typeof tab, [string, string]> = {
-    overview: ["Studio cockpit", "Good to see you, Mou."], orders: ["Pipeline", "Orders"], reviews: ["Moderation", "Reviews"],
-    messages: ["Inbox", "Messages"], referrals: ["Loyalty", "Referrals"],
+  const titles: Record<typeof tab, [string, string, string]> = {
+    overview: ["Studio cockpit", "Studio overview", "A clear view of the studio's activity, projects and client relationships."],
+    orders: ["Pipeline", "Orders", "Search, filter and manage every confirmed package."], reviews: ["Moderation", "Reviews", "Approve what appears on your public case studies."],
+    messages: ["Inbox", "Messages", "Quote and free review requests from your website."], referrals: ["Loyalty", "Referrals", "Pipeline, client tiers and teaser production."],
   };
-  return <DashboardShell eyebrow="TheHeroes Agency" title="Admin" active={tab} onSelect={setTab} onSignOut={signOut}
+  const needle = q.trim().toLowerCase();
+  const sort = <T extends { created_at: string }>(a: T, b: T) => (newest ? -1 : 1) * a.created_at.localeCompare(b.created_at);
+  const shownOrders = orders.filter(o => (filter === "all" || o.status === filter) && `${o.name} ${o.email} ${o.book} ${o.package}`.toLowerCase().includes(needle)).sort(sort);
+  const shownRequests = requests.filter(m => (filter === "all" || m.request_type === filter) && `${m.name} ${m.email} ${m.book} ${m.message}`.toLowerCase().includes(needle)).sort(sort);
+  const statusTone = (s: string) => s === "invoice-sent" || s === "invoice sent" ? "border-brass/50 text-brass" : s === "launched" ? "border-primary bg-primary text-primary-foreground" : s === "new" ? "border-border text-muted-foreground" : "border-primary/40 text-primary";
+  const Status = ({ s }: { s: string }) => <span className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium capitalize ${statusTone(s)}`}>{s.replace(/[-_]/g, " ")}</span>;
+  const select = (t: typeof tab) => { setTab(t); setQ(""); setFilter("all"); };
+  const toolbar = (options: [string, string][]) => <div className="mb-6 flex flex-wrap gap-3">
+    <input value={q} onChange={e => setQ(e.target.value)} aria-label="Search" placeholder="Search name, email or book" className="h-10 min-w-0 flex-1 rounded-md border bg-card px-3 text-sm sm:max-w-sm" />
+    <select value={filter} onChange={e => setFilter(e.target.value)} aria-label="Filter" className="h-10 rounded-md border bg-card px-3 text-sm">{options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select>
+    <button type="button" onClick={() => setNewest(!newest)} className="h-10 rounded-md border bg-card px-3 text-sm">{newest ? "Newest first" : "Oldest first"}</button>
+  </div>;
+  return <DashboardShell eyebrow="TheHeroes Agency" title="Admin" active={tab} onSelect={select} onSignOut={signOut}
     items={[{ key: "overview", label: "Overview", icon: LayoutDashboard }, { key: "orders", label: "Orders", icon: ShoppingBag, badge: fresh },
       { key: "reviews", label: "Reviews", icon: Star, badge: pending }, { key: "messages", label: "Messages", icon: Inbox, badge: requests.length },
       { key: "referrals", label: "Referrals", icon: Gift }]}
     footer={<Link to="/account" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground"><User aria-hidden className="h-4 w-4" />My account</Link>}>
-    <SectionHeader eyebrow={titles[tab][0]} title={titles[tab][1]} />
+    <SectionHeader eyebrow={titles[tab][0]} title={titles[tab][1]} text={titles[tab][2]} />
     {tab === "overview" ? <div className="grid gap-8">
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard label="New orders" value={fresh} hint={`${orders.length} total`} icon={ShoppingBag} />
@@ -99,19 +115,20 @@ function Admin() {
       </div>
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-xl border bg-background p-6"><div className="flex items-center justify-between"><h2 className="text-2xl">Latest orders</h2><button type="button" onClick={() => setTab("orders")} className="text-sm text-primary underline-offset-4 hover:underline">See all orders</button></div>
-          <ul className="mt-4 divide-y">{orders.slice(0, 5).map(o => <li key={o.id} className="flex items-center justify-between gap-3 py-3 text-sm"><span><span className="font-medium">{o.name}</span><span className="block text-muted-foreground">{packages.find(p => p.slug === o.package)?.name}</span></span><span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-primary">{o.status}</span></li>)}
+          <ul className="mt-4 divide-y">{orders.slice(0, 5).map(o => <li key={o.id} className="flex items-center justify-between gap-3 py-3 text-sm"><span className="min-w-0"><span className="font-medium">{o.name}</span><span className="block truncate font-serif text-base">{o.book}</span><span className="block text-muted-foreground">{packages.find(p => p.slug === o.package)?.name} · {new Date(o.created_at).toLocaleDateString()}</span></span><Status s={o.status} /></li>)}
           {orders.length === 0 && <li className="py-3 text-sm text-muted-foreground">No orders yet.</li>}</ul></div>
         <div className="rounded-xl border bg-background p-6"><div className="flex items-center justify-between"><h2 className="text-2xl">Latest messages</h2><button type="button" onClick={() => setTab("messages")} className="text-sm text-primary underline-offset-4 hover:underline">Open inbox</button></div>
-          <ul className="mt-4 divide-y">{requests.slice(0, 5).map(m => <li key={m.id} className="py-3 text-sm"><span className="font-medium">{m.name}</span><span className="block text-muted-foreground">{m.request_type === "quote" ? "Quote request" : "Free review"} · {new Date(m.created_at).toLocaleDateString()}</span></li>)}
+          <ul className="mt-4 divide-y">{requests.slice(0, 5).map(m => <li key={m.id} className="py-3 text-sm"><span className="font-medium">{m.name}</span><span className="block text-muted-foreground">{m.request_type === "quote" ? "Quote request" : "Free review"} · {new Date(m.created_at).toLocaleDateString()}</span>{m.message && <span className="mt-1 block truncate text-muted-foreground">{m.message}</span>}</li>)}
           {requests.length === 0 && <li className="py-3 text-sm text-muted-foreground">No messages yet.</li>}</ul></div>
       </div>
     </div> : tab === "referrals"
- ? <AdminReferrals /> : tab === "orders" ? <ul className="divide-y rounded-xl border bg-background px-6">
-      {orders.length === 0 && <li className="py-8 text-muted-foreground">No orders yet.</li>}
-      {orders.map(o => <li key={o.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
+ ? <AdminReferrals /> : tab === "orders" ? <>{toolbar([["all", "All statuses"], ...orderStatuses.map(s => [s, s.replace(/[-_]/g, " ")] as [string, string])])}<ul className="divide-y rounded-lg border bg-card px-6">
+      {shownOrders.length === 0 && <li className="py-8 text-muted-foreground">No matching orders.</li>}
+      {shownOrders.map(o => <li key={o.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
           <p className="text-sm text-muted-foreground">{fmt(o.created_at)} · {o.wants_call ? <span className="font-semibold text-primary">Wants a call first</span> : "Ready for invoice"}</p>
-          <p className="mt-2 text-xl">{packages.find(p => p.slug === o.package)?.name}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-3"><p className="font-serif text-2xl">{o.book}</p><Status s={o.status} /></div>
+          <p className="mt-1 text-sm text-muted-foreground">{packages.find(p => p.slug === o.package)?.name}</p>
           <p className="mt-1 font-semibold">{o.name} · <a href={`mailto:${o.email}`} className="underline underline-offset-4">{o.email}</a></p>
           <p className="mt-1">Book: {o.book}</p>
           {(o.addons.length > 0 || o.rush) && <p className="mt-1 text-sm">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
@@ -124,7 +141,7 @@ function Admin() {
           <Button onClick={() => removeOrder(o.id)} variant="ghost" size="sm">Delete</Button>
         </div>
       </li>)}
-    </ul> : tab === "reviews" ? <ul className="divide-y rounded-xl border bg-background px-6">
+    </ul></> : tab === "reviews" ? <ul className="divide-y rounded-lg border bg-card px-6">
       {reviews.length === 0 && <li className="py-8 text-muted-foreground">No reviews yet.</li>}
       {reviews.map(r => <li key={r.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
@@ -139,11 +156,11 @@ function Admin() {
           <Button onClick={() => removeReview(r.id)} variant="ghost" size="sm">Delete</Button>
         </div>
       </li>)}
-    </ul> : <ul className="divide-y rounded-xl border bg-background px-6">
-      {requests.length === 0 && <li className="py-8 text-muted-foreground">No messages yet.</li>}
-      {requests.map(m => <li key={m.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
+    </ul> : <>{toolbar([["all", "All messages"], ["quote", "Quote requests"], ["review", "Free review requests"]])}<ul className="divide-y rounded-lg border bg-card px-6">
+      {shownRequests.length === 0 && <li className="py-8 text-muted-foreground">No matching messages.</li>}
+      {shownRequests.map(m => <li key={m.id} className="grid gap-3 py-6 md:grid-cols-[1fr_auto]">
         <div>
-          <p className="text-sm text-muted-foreground">{m.request_type === "quote" ? "Quote request" : "Free review request"} · {m.service} · {fmt(m.created_at)}</p>
+          <p className="text-sm text-muted-foreground"><span className={`mr-2 rounded-full border px-2.5 py-0.5 text-xs font-medium ${m.request_type === "quote" ? "border-brass/50 text-brass" : "border-primary/40 text-primary"}`}>{m.request_type === "quote" ? "Quote request" : "Free review request"}</span>{m.service} · {fmt(m.created_at)}</p>
           <p className="mt-2 font-semibold">{m.name} · <a href={`mailto:${m.email}`} className="underline underline-offset-4">{m.email}</a></p>
           <p className="mt-1">Book: {m.book}</p>
           {m.website && <p className="mt-1">Website: {m.website}</p>}
@@ -154,6 +171,6 @@ function Admin() {
           <Button onClick={() => removeRequest(m.id)} variant="ghost" size="sm">Delete</Button>
         </div>
       </li>)}
-    </ul>}
+    </ul></>}
   </DashboardShell>;
 }

@@ -37,14 +37,14 @@ function Invoice() {
       <Link to="/account" className="text-sm underline underline-offset-4">← Back to my projects</Link>
       <Button onClick={() => window.print()} variant="studio" size="studio">Download invoice (PDF)</Button>
     </div>
-    <article className="border bg-background p-8 sm:p-12 print:border-0 print:p-0">
+    <article className="border-t-4 border-t-primary bg-card p-8 shadow-sm sm:p-12 print:border-0 print:p-0 print:shadow-none">
       <header className="flex flex-wrap justify-between gap-6 border-b pb-8">
         <div><p className="font-serif text-3xl">TheHeroes Agency</p><p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Author Studio</p><p className="mt-3 text-sm">{SUPPORT_EMAIL}</p></div>
         <div className="text-right"><p className="text-3xl">Invoice</p><p className="mt-2 text-sm">{invoiceNo(order)}</p><p className="text-sm text-muted-foreground">Issued {issued}</p></div>
       </header>
       <div className="grid gap-6 border-b py-8 sm:grid-cols-2">
         <div><p className="text-sm text-muted-foreground">Billed to</p><p className="mt-2 font-semibold">{order.name}</p><p>{order.email}</p></div>
-        <div><p className="text-sm text-muted-foreground">Project</p><p className="mt-2">{order.book}</p></div>
+        <div><p className="text-sm text-muted-foreground">Project</p><p className="mt-2 font-serif text-xl">{order.book}</p><p className="mt-1 text-sm capitalize text-muted-foreground">Project status: {order.status}</p></div>
       </div>
       <table className="w-full text-left">
         <thead><tr className="border-b text-sm text-muted-foreground"><th className="py-3 font-normal">Item</th><th className="py-3 text-right font-normal">Amount</th></tr></thead>

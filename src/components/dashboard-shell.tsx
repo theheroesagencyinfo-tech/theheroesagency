@@ -27,8 +27,8 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
 
   const panel = <div className="flex h-full flex-col gap-8 p-5">
     <div>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-pitch-accent">{eyebrow}</p>
-      <p className="mt-1 text-2xl">{title}</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-pitch-muted">{eyebrow}</p>
+      <p className="mt-1 font-serif text-2xl">{title} <span className="text-pitch-accent">·</span> studio room</p>
     </div>
     {identity && <div className="rounded-xl border border-pitch-foreground/10 bg-pitch-foreground/5 p-4">{identity}</div>}
     {nav}
@@ -41,7 +41,7 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
   </div>;
 
   return <div className="mx-auto max-w-[1500px] px-3 py-6 sm:px-5">
-    <div className="grid min-h-[80vh] overflow-hidden rounded-2xl border bg-card lg:grid-cols-[272px_1fr]">
+    <div className="grid min-h-[80vh] overflow-hidden rounded-lg border bg-background lg:grid-cols-[248px_1fr]">
       <aside className="hidden bg-pitch text-pitch-foreground lg:block">
         <div className="sticky top-0">{panel}</div>
       </aside>
@@ -76,10 +76,10 @@ export function SectionHeader({ eyebrow, title, text, action }: { eyebrow: strin
 }
 
 export function StatCard({ label, value, hint, icon: I }: { label: string; value: ReactNode; hint?: string | undefined; icon: LucideIcon }) {
-  return <div className="rounded-xl border bg-background p-5">
-    <div className="flex items-center justify-between"><p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{label}</p>
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-primary"><I aria-hidden className="h-4 w-4" /></span></div>
-    <p className="mt-3 font-serif text-4xl">{value}</p>
+  return <div className="border-t border-foreground/15 pt-5">
+    <div className="flex items-center justify-between gap-2"><p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
+      <I aria-hidden className="h-4 w-4 shrink-0 text-brass" /></div>
+    <p className="mt-3 font-serif text-4xl leading-none sm:text-5xl">{value}</p>
     {hint && <p className="mt-1 text-sm text-muted-foreground">{hint}</p>}
   </div>;
 }

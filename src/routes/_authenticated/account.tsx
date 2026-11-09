@@ -32,9 +32,9 @@ const statusLabel = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
 function Roadmap({ pct }: { pct: number }) {
   const current = pct >= 100 ? STAGES.length : stageOf(pct);
-  return <ol className="grid gap-3 sm:grid-cols-4">{STAGES.map((s, i) => {
+  return <ol className="relative grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-0 sm:before:absolute sm:before:left-6 sm:before:right-6 sm:before:top-6 sm:before:h-px sm:before:bg-border">{STAGES.map((s, i) => {
     const done = i < current, now = i === current;
-    return <li key={s} className={`rounded-lg border p-3 text-sm ${now ? "border-primary bg-secondary" : ""}`}>
+    return <li key={s} className={`relative rounded-md border border-transparent bg-card p-3 text-sm sm:bg-transparent ${now ? "border-primary/50" : ""}`}>
       <span className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs ${done ? "border-primary bg-primary text-primary-foreground" : now ? "border-primary text-primary" : "text-muted-foreground"}`}>
         {done ? <Check aria-hidden className="h-3.5 w-3.5" /> : i + 1}</span>
       <span className={`mt-2 block ${done || now ? "font-medium" : "text-muted-foreground"}`}>{s}</span>
@@ -78,7 +78,7 @@ function Account() {
   const doneTasks = tasks.filter(t => t.done).length;
   const overall = tasks.length ? Math.round((doneTasks / tasks.length) * 100) : 0;
   const sections: Record<typeof tab, [string, string, string]> = {
-    projects: ["Private client space", `Welcome back${firstName ? `, ${firstName}` : ""}.`, "Everything about your author platform, in one place."],
+    projects: ["Private client space", `Welcome back${firstName ? `, ${firstName}` : ""}.`, "Your creative journey, thoughtfully managed."],
     refer: ["Loyalty program", "Refer & rewards", "Share your link and unlock savings as authors you refer start with us."],
     settings: ["Your profile", "Account settings", "Update your details, photo and password."],
   };
@@ -95,7 +95,7 @@ function Account() {
           <Avatar url={avatar} name={name || email} className="h-14 w-14 text-lg ring-1 ring-border ring-offset-4 ring-offset-background sm:h-16 sm:w-16" />
           <div className="min-w-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">Private client dossier</p>
-            <p className="mt-1 truncate font-serif text-2xl sm:text-3xl">{firstName || "Author"}</p>
+            <p className="mt-1 truncate font-serif text-2xl sm:text-3xl">{name.trim() || firstName || "Author"}</p>
             <p className="truncate text-sm text-muted-foreground">{email}</p>
           </div>
         </div>
@@ -131,11 +131,11 @@ function Account() {
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
         : orders.length === 0 ? <div className="rounded-2xl border bg-card p-8 sm:p-10">
             <h2 className="text-3xl">Your author platform starts here.</h2>
-            <p className="mt-3 max-w-[60ch] text-muted-foreground">There are no projects linked to this email yet. Pick a starting point below.</p>
+            <p className="mt-3 max-w-[60ch] text-muted-foreground">Every great author platform begins with a clear direction. Let's build yours.</p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <Link to="/pricing" hash="packages" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">See packages</span><span className="mt-1 block text-sm text-muted-foreground">Compare the three ways I help.</span></Link>
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Book a call</span><span className="mt-1 block text-sm text-muted-foreground">Talk through your book and goals.</span></a>
-              <Link to="/contact" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Get a free review</span><span className="mt-1 block text-sm text-muted-foreground">Feedback on your current site.</span></Link>
+              <Link to="/pricing" hash="packages" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Explore packages</span><span className="mt-1 block text-sm text-muted-foreground">Compare the three ways I help.</span></Link>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Book a 15-minute call</span><span className="mt-1 block text-sm text-muted-foreground">Talk through your book and goals.</span></a>
+              <Link to="/contact" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Request a free review</span><span className="mt-1 block text-sm text-muted-foreground">Feedback on your current site.</span></Link>
             </div>
           </div>
         : <ul className="grid gap-8">{orders.map(o => {
@@ -165,11 +165,11 @@ function Account() {
       <aside className="h-fit rounded-2xl border bg-card p-7 shadow-sm xl:sticky xl:top-24">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your studio contact</p>
         <div className="mt-4 flex items-center gap-4"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-16 w-16 rounded-full object-cover object-top" />
-        <p className="text-2xl">Mou Barrac</p></div>
-        <p className="mt-1 text-sm text-muted-foreground">Questions, feedback, or files? Reach me directly.</p>
+        <div><p className="font-serif text-2xl">Mou Barrac</p><p className="text-xs uppercase tracking-[0.16em] text-brass">Founder · TheHeroes Agency</p></div></div>
+        <p className="mt-5 border-t pt-5 text-sm text-muted-foreground">Questions, feedback, or files? Your studio contact is always within reach.</p>
         <div className="mt-6 grid gap-3 text-sm">
           <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-2 break-all underline underline-offset-4"><Mail aria-hidden className="h-4 w-4 shrink-0 text-primary" />{SUPPORT_EMAIL}</a>
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 underline underline-offset-4"><CalendarDays aria-hidden className="h-4 w-4 shrink-0 text-primary" />Book a check-in call</a>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 underline underline-offset-4"><CalendarDays aria-hidden className="h-4 w-4 shrink-0 text-primary" />Book a 15-minute call</a>
         </div>
       </aside>
     </div>}

@@ -30,15 +30,16 @@ function Dashboard() {
 
   return <>
     <section className="mx-auto max-w-[1500px] px-5 pb-10 pt-16">
-      <Link to="/account" className="text-sm underline underline-offset-4">← My projects</Link>
-      <p className="mt-6 text-sm font-semibold text-muted-foreground">{packages.find(x => x.slug === order.package)?.name}</p>
-      <h1 className="mt-3 text-4xl leading-[1.08] sm:text-5xl">{order.book}</h1>
+      <Link to="/account" className="text-sm underline underline-offset-4">← Back to my projects</Link>
+      <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-brass">{packages.find(x => x.slug === order.package)?.name}</p>
+      <h1 className="mt-3 max-w-[18ch] text-5xl leading-[1.02] sm:text-7xl">{order.book}</h1>
+      <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted-foreground"><span>Status <strong className="font-medium capitalize text-foreground">{order.status}</strong></span><span>{tasks.filter(t => t.done).length} of {tasks.length} tasks done</span>{tasks.find(t => !t.done) && <span>Current milestone <strong className="font-medium text-foreground">{tasks.find(t => !t.done)!.title}</strong></span>}</div>
       <div className="mt-8 max-w-xl"><ProgressBar value={progressOf(tasks)} /></div>
       {invoiceReady(order) && <Button asChild variant="studioOutline" size="studio" className="mt-6"><Link to="/invoice/$id" params={{ id: order.id }}>View and download invoice</Link></Button>}
     </section>
 
     <section className="border-t"><div className="mx-auto grid max-w-[1500px] gap-10 px-5 py-14 md:grid-cols-[1fr_1.4fr]">
-      <h2 className="text-3xl">Tasks</h2>
+      <h2 className="text-3xl">Tasks and milestones</h2>
       {tasks.length === 0 ? <p className="text-muted-foreground">Your task list will appear here once work is scheduled.</p>
       : <ul className="divide-y border-y">{tasks.map(t => <li key={t.id} className="flex items-center gap-3 py-3">
           <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border ${t.done ? "border-primary bg-primary text-primary-foreground" : ""}`}>{t.done && <Check aria-hidden className="h-3 w-3" />}</span>
@@ -48,11 +49,11 @@ function Dashboard() {
     <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-14">
       <h2 className="text-3xl">Live pages</h2>
       {pages.length === 0 ? <p className="mt-4 text-muted-foreground">Links to your pages will appear here as they go live.</p>
-      : <ul className="mt-6 divide-y border-y">{pages.map(i => <li key={i.id} className="flex flex-wrap justify-between gap-3 py-4"><span>{i.title}</span>{i.url && <a href={i.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Open page ↗</a>}</li>)}</ul>}
+      : <ul className="mt-6 divide-y border-y">{pages.map(i => <li key={i.id} className="flex flex-wrap items-center justify-between gap-3 py-4"><span className="min-w-0"><span className="block font-serif text-xl">{i.title}</span>{i.url && <span className="block break-all text-sm text-muted-foreground">{i.url}</span>}</span>{i.url && <a href={i.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Visit page ↗</a>}</li>)}</ul>}
     </div></section>
 
     <section className="border-t"><div className="mx-auto max-w-[1500px] px-5 py-14">
-      <h2 className="text-3xl">Wireframes</h2>
+      <h2 className="text-3xl">Wireframes and mockups</h2>
       {wires.length === 0 ? <p className="mt-4 text-muted-foreground">Wireframes will appear here for your review.</p>
       : <div className="mt-6 grid gap-8 md:grid-cols-2">{wires.map(i => <figure key={i.id}>
           {i.src && <a href={i.src} target="_blank" rel="noopener noreferrer"><img src={i.src} alt={i.title} className="w-full border" loading="lazy" /></a>}
@@ -60,9 +61,9 @@ function Dashboard() {
     </div></section>
 
     <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-14">
-      <h2 className="text-3xl">Updates</h2>
+      <h2 className="text-3xl">Studio updates</h2>
       {updates.length === 0 ? <p className="mt-4 text-muted-foreground">Project updates will be posted here.</p>
-      : <ol className="mt-6 divide-y border-y">{updates.map(i => <li key={i.id} className="py-5"><p className="text-sm text-muted-foreground">{new Date(i.created_at).toLocaleDateString()}</p><h3 className="mt-1 text-xl">{i.title}</h3>{i.body && <p className="mt-2 max-w-[70ch] whitespace-pre-wrap">{i.body}</p>}</li>)}</ol>}
+      : <ol className="mt-6 border-l pl-6">{updates.map(i => <li key={i.id} className="relative py-5 before:absolute before:-left-[29px] before:top-7 before:h-2 before:w-2 before:rounded-full before:bg-primary"><p className="text-sm text-muted-foreground">{new Date(i.created_at).toLocaleDateString()}</p><h3 className="mt-1 text-xl">{i.title}</h3>{i.body && <p className="mt-2 max-w-[70ch] whitespace-pre-wrap">{i.body}</p>}</li>)}</ol>}
     </div></section>
   </>;
 }
