@@ -29,13 +29,14 @@ export function useMyTier() {
     ]);
     if (r.error) return setError(r.error.message);
     const rows = r.data ?? [];
-    setData({ referrals: rows, tier: tierFrom(rows.filter(x => x.status === "converted" && x.converted_at).map(x => x.converted_at!), new Date(), o.data?.tier_level) });
+    setData({ referrals: rows, tier: tierFrom(rows.filter(x => x.status === "converted" && x.converted_at).flatMap(x => x.converted_at ? [x.converted_at] : []), new Date(), o.data?.tier_level) });
   })(); }, []);
   return { data, error };
 }
 
 export function RankChip({ level }: { level: number }) {
-  const l = LEVELS[level - 1] ?? LEVELS[0]!;
+  const l = LEVELS[level - 1] ?? LEVELS[0];
+  if (!l) return null;
   return <span className="inline-flex items-center gap-3 rounded-full border border-pitch-foreground/20 bg-pitch-foreground/5 py-1 pl-1 pr-4">
     <LoyaltyBadge level={l} size="sm" />
     <span className="text-sm"><span className="block text-xs uppercase tracking-[0.18em] text-brass">Level {l.level}</span>{l.title}</span>
@@ -80,7 +81,7 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
   ] as const;
 
   return <div className="grid gap-10">
-    <div className="grid gap-8 overflow-hidden rounded-2xl bg-pitch p-8 text-pitch-foreground sm:p-10 lg:grid-cols-[auto_1fr] lg:items-center">
+    <div className="grid gap-8 overflow-hidden rounded-lg bg-pitch p-8 text-pitch-foreground sm:p-10 lg:grid-cols-[auto_1fr] lg:items-center">
       <LoyaltyBadge level={current} size="lg" />
       <div>
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Your tier · Level {current.level} of 7{tier.overridden ? " · set by the studio" : ""}</p>
@@ -93,7 +94,7 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
       </div>
     </div>
 
-    <div className="rounded-2xl border bg-card p-6 sm:p-8">
+    <div className="border-t py-8">
       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your referral link</p>
       <h3 className="mt-2 text-2xl">Introduce an author you believe in.</h3>
       <p className="mt-2 text-sm text-muted-foreground">When they become a paying client through your link, you move up a tier. <Link to="/referrals" className="underline underline-offset-4">How the program works</Link></p>
@@ -110,7 +111,7 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
     <div>
       <h3 className="text-2xl">Your rewards</h3>
       <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{rewards.map(([I, t, d, on]) =>
-        <li key={t} className={`rounded-2xl border p-6 ${on ? "border-primary bg-card" : "bg-secondary/50"}`}>
+        <li key={t} className={`rounded-lg border p-6 ${on ? "border-primary bg-card" : "bg-secondary/50"}`}>
           <I aria-hidden className={`h-5 w-5 ${on ? "text-primary" : "text-muted-foreground"}`} />
           <p className="mt-3 font-medium">{t}</p><p className="mt-1 text-sm text-muted-foreground">{d}</p></li>)}</ul>
       <p className="mt-3 text-xs text-muted-foreground">Discounts apply while your tier is active and exclude taxes, payment fees, hosting, domains, third-party licenses, plugins, rush fees and other third-party costs. One referral discount per project; not combined with major promotions.</p>
@@ -122,8 +123,8 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
         <label className="relative"><span className="sr-only">Search referrals</span><Search aria-hidden className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search name, email, status" className="h-10 rounded-md border bg-background pl-9 pr-3 text-sm" /></label>
       </div>
-      {mine.data.referrals.length === 0 ? <div className="mt-4 rounded-2xl border border-dashed p-8"><p className="font-medium">No referrals yet.</p><p className="mt-1 text-sm text-muted-foreground">Share your link above. Authors who sign up with it appear here, and you can watch their status move to converted.</p></div>
-      : <div className="mt-4 overflow-x-auto rounded-2xl border"><table className="w-full min-w-[640px] text-left text-sm">
+      {mine.data.referrals.length === 0 ? <div className="mt-4 rounded-lg border border-dashed p-8"><p className="font-medium">No referrals yet.</p><p className="mt-1 text-sm text-muted-foreground">Share your link above. Authors who sign up with it appear here, and you can watch their status move to converted.</p></div>
+      : <div className="mt-4 overflow-x-auto rounded-lg border"><table className="w-full min-w-[640px] text-left text-sm">
         <thead className="bg-secondary text-xs uppercase tracking-wider text-muted-foreground"><tr>
           <th className="p-4">Name</th><th className="p-4">Email</th>
           <th className="p-4"><button type="button" onClick={() => setAsc(!asc)} className="inline-flex items-center gap-1 uppercase">Submitted <ArrowUpDown aria-hidden className="h-3 w-3" /></button></th>
@@ -136,13 +137,13 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
       </table></div>}
     </div>
 
-    {current.teaser ? <TeaserDesk /> : <div className="rounded-2xl border border-dashed p-8"><Film aria-hidden className="h-5 w-5 text-muted-foreground" /><p className="mt-3 font-medium">Free book teasers unlock at Level 4.</p><p className="mt-1 text-sm text-muted-foreground">Reach Studio Ambassador to request a complimentary 30-second teaser for every newly released book.</p></div>}
+    {current.teaser ? <TeaserDesk /> : <div className="rounded-lg border border-dashed p-8"><Film aria-hidden className="h-5 w-5 text-muted-foreground" /><p className="mt-3 font-medium">Free book teasers unlock at Level 4.</p><p className="mt-1 text-sm text-muted-foreground">Reach Studio Ambassador to request a complimentary 30-second teaser for every newly released book.</p></div>}
 
     <div>
       <h3 className="text-2xl">Tier progress</h3>
-      <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7">{LEVELS.map(l => {
+      <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">{LEVELS.map(l => {
         const earned = current.level >= l.level, isNext = next?.level === l.level;
-        return <li key={l.level} className={`flex flex-col items-center rounded-2xl border p-5 text-center ${isNext ? "border-primary ring-2 ring-primary/20" : ""} ${earned ? "bg-card" : "bg-secondary/50"}`}>
+        return <li key={l.level} className={`flex flex-col items-center rounded-lg border p-5 text-center ${isNext ? "border-primary ring-2 ring-primary/20" : ""} ${earned ? "bg-card" : "bg-secondary/50"}`}>
           <LoyaltyBadge level={l} earned={earned} />
           <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Level {l.level}</p>
           <p className="mt-1 font-medium">{l.title}</p><p className="mt-1 text-xs text-muted-foreground">{l.badge}</p>

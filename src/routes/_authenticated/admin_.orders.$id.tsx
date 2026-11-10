@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { packages, progressOf } from "@/lib/packages";
 import { loadProject } from "@/lib/client-projects";
 import { ProgressBar } from "@/components/progress-bar";
+import { Pencil, Trash2, ExternalLink } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/_authenticated/admin_/orders/$id")({
   staticData: { sitemap: false },
@@ -25,6 +27,7 @@ function Manage() {
   const { id } = Route.useParams();
   const [p, setP] = useState<Awaited<ReturnType<typeof loadProject>> | null>(null);
   const [err, setErr] = useState("");
+  const [editing, setEditing] = useState<{ kind: "task" | "page"; id: string; title: string; url: string } | null>(null);
   const reload = () => loadProject(id).then(setP);
   useEffect(() => { reload(); }, [id]);
 
@@ -33,6 +36,16 @@ function Manage() {
     if (!title) return;
     const { error } = await supabase.from("project_tasks").insert({ order_id: id, title });
     if (error) return setErr(error.message); f.reset(); reload();
+  }
+  async function saveEdit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!editing) return;
+    if (editing.kind === "page" && !/^https?:\/\//.test(editing.url)) return setErr("Add a full link starting with https://");
+    const result = editing.kind === "task"
+      ? await supabase.from("project_tasks").update({ title: editing.title.trim() }).eq("id", editing.id)
+      : await supabase.from("project_items").update({ title: editing.title.trim(), url: editing.url }).eq("id", editing.id);
+    if (result.error) return setErr(result.error.message);
+    setEditing(null); setErr(""); reload();
   }
   async function addItem(e: FormEvent<HTMLFormElement>, kind: "page" | "wireframe" | "update") {
     e.preventDefault(); setErr(""); const f = e.currentTarget; const d = new FormData(f);
@@ -53,7 +66,7 @@ function Manage() {
   if (!p) return <p className="mx-auto max-w-5xl px-5 py-20 text-muted-foreground">Loading…</p>;
   if (!p.order) return <p className="mx-auto max-w-5xl px-5 py-20">Order not found.</p>;
   const { order, tasks, items } = p;
-  return <section className="mx-auto max-w-6xl px-5 py-14">
+  return <section className="portal mx-auto max-w-[1500px] px-5 py-14 sm:px-10">
     <Link to="/admin" className="text-sm underline underline-offset-4">← Back to studio room</Link>
     <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-brass">Project workspace · {packages.find(x => x.slug === order.package)?.name}</p>
     <h1 className="mt-3 text-5xl leading-tight">{order.book}</h1>
@@ -61,12 +74,13 @@ function Manage() {
     <div className="mt-6 max-w-xl"><ProgressBar value={progressOf(tasks)} /></div>
     {err && <p role="alert" className="mt-4 text-sm text-destructive">{err}</p>}
 
-    <div className="mt-12 border-t pt-8"><h2 className="text-2xl">Tasks</h2><p className="mt-1 text-sm text-muted-foreground">Tick a task when it's done. The client's progress bar updates straight away.</p>
+    <div className="mt-12 border-t pt-8"><h2 className="text-2xl">Task manager</h2>
       <ul className="mt-4 divide-y border-y">{tasks.map(t => <li key={t.id} className="flex items-center gap-3 py-3">
         <input type="checkbox" checked={t.done} aria-label={`Mark "${t.title}" done`} onChange={async () => { await supabase.from("project_tasks").update({ done: !t.done }).eq("id", t.id); reload(); }} className="h-4 w-4 accent-primary" />
-        <span className="flex-1">{t.title}</span>
-        <button type="button" onClick={async () => { await supabase.from("project_tasks").delete().eq("id", t.id); reload(); }} className="text-sm text-muted-foreground underline">Remove</button></li>)}</ul>
-      <form onSubmit={addTask} className="mt-4 flex gap-3"><input name="title" maxLength={200} placeholder="e.g. Design homepage" aria-label="New task" className={inputClass} /><Button type="submit" variant="studio" size="sm">Add task</Button></form>
+        <span className="min-w-0 flex-1 break-words">{t.title}</span>
+        <Button variant="ghost" size="icon" title="Edit task" aria-label={`Edit ${t.title}`} onClick={() => setEditing({kind:"task",id:t.id,title:t.title,url:""})}><Pencil /></Button>
+        <Button variant="ghost" size="icon" title="Remove task" aria-label={`Remove ${t.title}`} onClick={async () => { await supabase.from("project_tasks").delete().eq("id", t.id); reload(); }}><Trash2 /></Button></li>)}</ul>
+      <form onSubmit={addTask} className="mt-4 flex flex-wrap gap-3"><input name="title" maxLength={200} placeholder="e.g. Design homepage" aria-label="New task" className={`${inputClass} min-w-0 flex-1`} /><Button type="submit" variant="studio" size="studio">Add task</Button></form>
     </div>
 
     <div className="mt-12 grid gap-10 border-t pt-8 md:grid-cols-3">
@@ -83,8 +97,10 @@ function Manage() {
 
     <div className="mt-12 border-t pt-8"><h2 className="text-2xl">Shared with client</h2>
       <ul className="mt-4 divide-y border-y">{items.length === 0 && <li className="py-4 text-muted-foreground">Nothing yet.</li>}{items.map(i => <li key={i.id} className="flex flex-wrap items-center gap-3 py-3">
-        <span className="w-24 text-sm text-muted-foreground">{i.kind}</span><span className="flex-1">{i.title}</span>
-        <button type="button" onClick={async () => { if (i.kind === "wireframe" && i.url) await supabase.storage.from("project-files").remove([i.url]); await supabase.from("project_items").delete().eq("id", i.id); reload(); }} className="text-sm text-muted-foreground underline">Remove</button></li>)}</ul>
+        <span className="w-24 text-sm text-muted-foreground">{i.kind}</span><span className="min-w-0 flex-1 break-words">{i.title}{i.kind === "wireframe" && i.src && <a href={i.src} target="_blank" rel="noopener noreferrer"><img src={i.src} alt={i.title} loading="lazy" className="mt-3 max-h-48 max-w-full rounded-md border object-contain" /></a>}</span>
+        {i.kind === "page" && <><Button asChild variant="ghost" size="icon"><a href={i.url ?? undefined} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${i.title}`} title="Visit page"><ExternalLink /></a></Button><Button variant="ghost" size="icon" aria-label={`Edit ${i.title}`} title="Edit page" onClick={() => setEditing({kind:"page",id:i.id,title:i.title,url:i.url ?? ""})}><Pencil /></Button></>}
+        <Button variant="ghost" size="icon" title="Remove item" aria-label={`Remove ${i.title}`} onClick={async () => { if (i.kind === "wireframe" && i.url) await supabase.storage.from("project-files").remove([i.url]); await supabase.from("project_items").delete().eq("id", i.id); reload(); }}><Trash2 /></Button></li>)}</ul>
     </div>
+    <Dialog open={editing !== null} onOpenChange={open => { if (!open) setEditing(null); }}><DialogContent className="portal"><DialogTitle>Edit {editing?.kind === "task" ? "task" : "page"}</DialogTitle><DialogDescription>Update the details shared with this client.</DialogDescription>{editing && <form onSubmit={saveEdit} className="grid gap-4"><label className="grid gap-2 text-sm">Title<input required maxLength={200} className={inputClass} value={editing.title} onChange={e => setEditing({...editing,title:e.target.value})} /></label>{editing.kind === "page" && <label className="grid gap-2 text-sm">URL<input required type="url" className={inputClass} value={editing.url} onChange={e => setEditing({...editing,url:e.target.value})} /></label>}<Button variant="studio" type="submit">Save changes</Button></form>}</DialogContent></Dialog>
   </section>;
 }

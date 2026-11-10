@@ -32,7 +32,7 @@ function Invoice() {
   const inv = invoiceLines(order.package as PackageSlug, order.addons, order.rush);
   const issued = new Date(order.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
-  return <section className="mx-auto max-w-3xl px-5 py-12 print:max-w-none print:p-0">
+  return <section className="portal portal-invoice mx-auto max-w-3xl px-5 py-12 print:max-w-none print:p-0">
     <div className="mb-8 flex flex-wrap justify-between gap-3 print:hidden">
       <Link to="/account" className="text-sm underline underline-offset-4">← Back to my projects</Link>
       <Button onClick={() => window.print()} variant="studio" size="studio">Download invoice (PDF)</Button>

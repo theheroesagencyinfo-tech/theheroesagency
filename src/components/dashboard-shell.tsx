@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { LogOut, Menu, X, type LucideIcon } from "lucide-react";
+import { LogOut, Menu, type LucideIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
 export type NavItem<K extends string> = { key: K; label: string; icon: LucideIcon; badge?: number | string | undefined };
 
@@ -14,14 +16,14 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
   const nav = <nav aria-label={`${title} sections`} className="grid gap-1">
     {items.map(({ key, label, icon: I, badge }) => {
       const on = key === active;
-      return <button key={key} type="button" aria-current={on ? "page" : undefined}
+      return <Button variant="ghost" key={key} type="button" aria-current={on ? "page" : undefined}
         onClick={() => { onSelect(key); setOpen(false); }}
-        className={`group flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors ${on ? "bg-pitch-foreground/10 text-pitch-foreground" : "text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground"}`}>
+        className={`group flex h-auto justify-start gap-3 rounded-md px-3 py-2.5 text-left text-sm font-medium hover:bg-pitch-foreground/10 hover:text-pitch-foreground ${on ? "bg-pitch-foreground/10 text-pitch-foreground" : "text-pitch-muted"}`}>
         <span className={`h-5 w-0.5 rounded-full ${on ? "bg-pitch-accent" : "bg-transparent"}`} aria-hidden />
         <I aria-hidden className={`h-4 w-4 ${on ? "text-pitch-accent" : ""}`} />
         <span className="flex-1">{label}</span>
         {badge !== undefined && badge !== 0 && <span className="rounded-full bg-primary px-2 py-0.5 text-xs text-primary-foreground">{badge}</span>}
-      </button>;
+      </Button>;
     })}
   </nav>;
 
@@ -34,33 +36,33 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
     {nav}
     <div className="mt-auto grid gap-3 border-t border-pitch-foreground/10 pt-5">
       {footer}
-      <button type="button" onClick={onSignOut} className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground">
-        <LogOut aria-hidden className="h-4 w-4" />Sign out</button>
+      <Button variant="ghost" type="button" onClick={onSignOut} className="justify-start gap-3 px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground">
+        <LogOut aria-hidden className="h-4 w-4" />Sign out</Button>
       <Link to="/" className="px-3 text-xs text-pitch-muted underline-offset-4 hover:underline">Back to website</Link>
     </div>
   </div>;
 
-  return <div className="mx-auto max-w-[1500px] px-3 py-6 sm:px-5">
-    <div className="grid min-h-[80vh] overflow-hidden rounded-lg border bg-background lg:grid-cols-[248px_1fr]">
+  return <div className="portal mx-auto max-w-[1500px] px-3 py-6 sm:px-5">
+    <div className="grid min-h-[720px] rounded-lg border bg-background lg:grid-cols-[248px_1fr]">
       <aside className="hidden bg-pitch text-pitch-foreground lg:block">
-        <div className="sticky top-0">{panel}</div>
+        <div className="sticky top-24">{panel}</div>
       </aside>
       <div className="min-w-0">
         <div className="flex items-center justify-between gap-3 border-b bg-pitch px-4 py-3 text-pitch-foreground lg:hidden">
-          <button type="button" onClick={() => setOpen(true)} aria-label="Open menu" className="rounded-md p-2 hover:bg-pitch-foreground/10"><Menu className="h-5 w-5" /></button>
+          <Button variant="ghost" size="icon" type="button" onClick={() => setOpen(true)} aria-label="Open admin menu" className="hover:bg-pitch-foreground/10 hover:text-pitch-foreground"><Menu className="h-5 w-5" /></Button>
           <p className="text-sm font-medium">{current?.label}</p>
           <span className="w-9" />
         </div>
         <main className="p-5 sm:p-8 lg:p-10">{children}</main>
       </div>
     </div>
-    {open && <div className="fixed inset-0 z-50 lg:hidden" role="dialog" aria-modal="true">
-      <button type="button" aria-label="Close menu" onClick={() => setOpen(false)} className="absolute inset-0 bg-pitch/60" />
-      <div className="absolute inset-y-0 left-0 w-[280px] overflow-y-auto bg-pitch text-pitch-foreground shadow-2xl">
-        <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="absolute right-3 top-3 rounded-md p-2 hover:bg-pitch-foreground/10"><X className="h-5 w-5" /></button>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="portal inset-y-0 left-0 top-0 h-dvh w-[min(300px,90vw)] translate-x-0 translate-y-0 overflow-y-auto rounded-none bg-pitch p-0 text-pitch-foreground sm:rounded-none">
+        <DialogTitle className="sr-only">Admin navigation</DialogTitle>
+        <DialogDescription className="sr-only">Choose a studio section.</DialogDescription>
         {panel}
-      </div>
-    </div>}
+      </DialogContent>
+    </Dialog>
   </div>;
 }
 

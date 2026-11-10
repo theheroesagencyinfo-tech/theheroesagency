@@ -41,7 +41,7 @@ export function TeaserDesk() {
     setBusy(false);
   }
 
-  return <div className="grid gap-8 rounded-2xl border bg-card p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]">
+  return <div className="grid gap-8 rounded-lg border bg-card p-6 sm:p-8 lg:grid-cols-[1.2fr_1fr]">
     <form onSubmit={submit} className="grid gap-4">
       <div><Film aria-hidden className="h-5 w-5 text-primary" /><h3 className="mt-2 text-2xl">Request your free book teaser</h3>
         <p className="mt-1 text-sm text-muted-foreground">One standard 30-second teaser per first-edition title, requested within 6 months of release.</p></div>
@@ -64,7 +64,7 @@ export function TeaserDesk() {
     <div>
       <h4 className="text-lg">Your teaser requests</h4>
       {list === null ? <p className="mt-3 text-sm text-muted-foreground">Loading…</p> : list.length === 0 ? <p className="mt-3 text-sm text-muted-foreground">No requests yet.</p>
-        : <ul className="mt-3 divide-y rounded-xl border">{list.map(t => <li key={t.id} className="flex items-center justify-between gap-3 p-4 text-sm">
+        : <ul className="mt-3 divide-y rounded-lg border">{list.map(t => <li key={t.id} className="flex items-center justify-between gap-3 p-4 text-sm">
           <span><span className="block font-medium">{t.book_title}</span><span className="text-muted-foreground">Released {new Date(t.release_date).toLocaleDateString()}</span></span>
           <StatusPill s={t.status === "requested" ? "pending" : t.status === "in_production" ? "booked" : t.status === "delivered" ? "converted" : "rejected"} /></li>)}</ul>}
     </div>

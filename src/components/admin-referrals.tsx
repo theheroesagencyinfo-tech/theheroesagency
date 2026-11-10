@@ -18,7 +18,7 @@ function useSorted<R>(rows: R[], text: (r: R) => string, key: (r: R) => string |
     .sort((a, b) => { const x = key(a), y = key(b); return (asc ? 1 : -1) * (x < y ? -1 : x > y ? 1 : 0); }), [rows, q, asc]); // eslint-disable-line react-hooks/exhaustive-deps
   const search = <label className="relative"><span className="sr-only">Search</span><Search aria-hidden className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
     <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search" className="h-10 rounded-md border bg-background pl-9 pr-3 text-sm" /></label>;
-  const sortBtn = (label: string) => <button type="button" onClick={() => setAsc(!asc)} className="inline-flex items-center gap-1 uppercase">{label}<ArrowUpDown aria-hidden className="h-3 w-3" /></button>;
+  const sortBtn = (label: string) => <Button variant="ghost" size="sm" type="button" onClick={() => setAsc(!asc)} className="inline-flex items-center gap-1 uppercase">{label}<ArrowUpDown aria-hidden className="h-3 w-3" /></Button>;
   return { out, search, sortBtn };
 }
 
@@ -42,7 +42,7 @@ export function AdminReferrals() {
   const byId = Object.fromEntries(profiles.map(p => [p.user_id, p]));
   const clients = profiles.map(p => {
     const mine = (refs ?? []).filter(r => r.referrer_id === p.user_id && r.status === "converted" && r.converted_at);
-    return { ...p, tier: tierFrom(mine.map(r => r.converted_at!), new Date(), overrides.find(o => o.user_id === p.user_id)?.tier_level) };
+    return { ...p, tier: tierFrom(mine.flatMap(r => r.converted_at ? [r.converted_at] : []), new Date(), overrides.find(o => o.user_id === p.user_id)?.tier_level) };
   });
   const C = useSorted(clients, c => `${c.full_name} ${c.email} ${c.referral_code}`, c => c.tier.converted);
   const R = useSorted(refs ?? [], r => `${r.referred_name} ${r.referred_email} ${r.status} ${byId[r.referrer_id]?.email ?? ""}`, r => r.created_at);
@@ -77,15 +77,15 @@ export function AdminReferrals() {
   const unlocked = clients.filter(c => c.tier.level.level > 1).length;
   const th = "p-4"; const head = "bg-secondary text-xs uppercase tracking-wider text-muted-foreground";
 
-  return <div className="grid gap-12 py-8">
+  return <div className="grid min-w-0 gap-12 py-2">
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
       {([["Total clients", profiles.length], ["Total referrals", refs.length], ["Pending referrals", refs.filter(r => r.status === "pending").length], ["Converted referrals", converted], ["Clients with rewards unlocked", unlocked]] as const).map(([l, v]) =>
-        <div key={l} className="rounded-2xl border bg-card p-6"><p className="text-4xl">{v}</p><p className="mt-1 text-sm text-muted-foreground">{l}</p></div>)}
+        <div key={l} className="border-t pt-5"><p className="text-4xl">{v}</p><p className="mt-1 text-sm text-muted-foreground">{l}</p></div>)}
     </div>
 
     <section>
       <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="text-2xl">Referrals</h2>{R.search}</div>
-      <div className="mt-4 overflow-x-auto rounded-2xl border"><table className="w-full min-w-[1100px] text-left text-sm">
+      <div className="mt-4 portal-table overflow-x-auto rounded-lg border"><table className="w-full min-w-[1100px] text-left text-sm">
         <thead className={head}><tr><th className={th}>Referrer</th><th className={th}>Referred client</th><th className={th}>{R.sortBtn("Submitted")}</th><th className={th}>Status</th><th className={th}>Project value</th><th className={th}>Deposit paid</th><th className={th}>Notes</th><th className={th}>Actions</th></tr></thead>
         <tbody className="divide-y">{R.out.length === 0 ? <tr><td colSpan={8} className="p-6 text-muted-foreground">No referrals yet. They appear when someone signs up with a referral link.</td></tr> : R.out.map(r => <tr key={r.id} className="align-top">
           <td className={th}>{byId[r.referrer_id]?.full_name || byId[r.referrer_id]?.email || "—"}</td>
@@ -105,7 +105,7 @@ export function AdminReferrals() {
 
     <section>
       <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="text-2xl">Clients</h2>{C.search}</div>
-      <div className="mt-4 overflow-x-auto rounded-2xl border"><table className="w-full min-w-[960px] text-left text-sm">
+      <div className="mt-4 portal-table overflow-x-auto rounded-lg border"><table className="w-full min-w-[960px] text-left text-sm">
         <thead className={head}><tr><th className={th}>Client</th><th className={th}>Tier</th><th className={th}>{C.sortBtn("Successful")}</th><th className={th}>Referral link</th><th className={th}>Ongoing discount</th><th className={th}>Actions</th></tr></thead>
         <tbody className="divide-y">{C.out.map(c => <tr key={c.user_id}>
           <td className={th}><p className="font-medium">{c.full_name || "—"}</p><a href={`mailto:${c.email}`} className="text-muted-foreground underline underline-offset-4">{c.email}</a></td>
@@ -119,11 +119,11 @@ export function AdminReferrals() {
 
     <section>
       <div className="flex flex-wrap items-end justify-between gap-4"><h2 className="text-2xl">Book teaser requests</h2>{B.search}</div>
-      <div className="mt-4 overflow-x-auto rounded-2xl border"><table className="w-full min-w-[960px] text-left text-sm">
+      <div className="mt-4 portal-table overflow-x-auto rounded-lg border"><table className="w-full min-w-[960px] text-left text-sm">
         <thead className={head}><tr><th className={th}>Client</th><th className={th}>Book</th><th className={th}>Release date</th><th className={th}>{B.sortBtn("Requested")}</th><th className={th}>Details</th><th className={th}>Status</th></tr></thead>
         <tbody className="divide-y">{B.out.length === 0 ? <tr><td colSpan={6} className="p-6 text-muted-foreground">No teaser requests yet.</td></tr> : B.out.map(t => <tr key={t.id} className="align-top">
           <td className={th}>{byId[t.user_id]?.full_name || byId[t.user_id]?.email || "—"}</td>
-          <td className={th}><p className="font-medium">{t.book_title}</p><a href={t.book_link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground underline underline-offset-4">Sales page</a>{t.book_cover_url && <button type="button" className="ml-3 underline underline-offset-4" onClick={() => cover(t.book_cover_url!)}>Cover</button>}</td>
+          <td className={th}><p className="font-medium">{t.book_title}</p><a href={t.book_link} target="_blank" rel="noopener noreferrer" className="text-muted-foreground underline underline-offset-4">Sales page</a>{t.book_cover_url && <button type="button" className="ml-3 underline underline-offset-4" onClick={() => { if (t.book_cover_url) cover(t.book_cover_url); }}>Cover</button>}</td>
           <td className={th}>{new Date(t.release_date).toLocaleDateString()}</td><td className={th}>{new Date(t.created_at).toLocaleDateString()}</td>
           <td className={`${th} max-w-xs`}><p>{t.book_description}</p><p className="mt-1 text-muted-foreground">CTA: {t.call_to_action} · {t.preferred_format}</p></td>
           <td className={th}><select aria-label="Teaser status" value={t.status} className={input} onChange={e => setTeaser(t.id, e.target.value)}>{TEASER_STATUSES.map(s => <option key={s} value={s}>{statusText(s)}</option>)}</select></td></tr>)}</tbody></table></div>

@@ -34,7 +34,7 @@ function Roadmap({ pct }: { pct: number }) {
   const current = pct >= 100 ? STAGES.length : stageOf(pct);
   return <ol className="relative grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-0 sm:before:absolute sm:before:left-6 sm:before:right-6 sm:before:top-6 sm:before:h-px sm:before:bg-border">{STAGES.map((s, i) => {
     const done = i < current, now = i === current;
-    return <li key={s} className={`relative rounded-md border border-transparent bg-card p-3 text-sm sm:bg-transparent ${now ? "border-primary/50" : ""}`}>
+    return <li key={s} className={`relative rounded-md border bg-card p-3 text-sm sm:bg-transparent ${now ? "border-primary/50" : "border-transparent"}`}>
       <span className={`flex h-6 w-6 items-center justify-center rounded-full border text-xs ${done ? "border-primary bg-primary text-primary-foreground" : now ? "border-primary text-primary" : "text-muted-foreground"}`}>
         {done ? <Check aria-hidden className="h-3.5 w-3.5" /> : i + 1}</span>
       <span className={`mt-2 block ${done || now ? "font-medium" : "text-muted-foreground"}`}>{s}</span>
@@ -88,10 +88,10 @@ function Account() {
     { key: "refer" as const, label: "Rewards", icon: Gift, badge: undefined },
     { key: "settings" as const, label: "Settings", icon: Settings, badge: undefined },
   ];
-  return <div className="mx-auto max-w-[1500px] px-4 pb-20 pt-8 sm:px-8 sm:pt-12">
+  return <div className="portal mx-auto max-w-[1500px] px-4 pb-20 pt-8 sm:px-8 sm:pt-12">
     <header className="border-b pb-8">
       <div className="flex flex-wrap items-center justify-between gap-6">
-        <div className="flex items-center gap-4 sm:gap-5">
+        <div className="flex min-w-0 items-center gap-4 sm:gap-5">
           <Avatar url={avatar} name={name || email} className="h-14 w-14 text-lg ring-1 ring-border ring-offset-4 ring-offset-background sm:h-16 sm:w-16" />
           <div className="min-w-0">
             <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">Private client dossier</p>
@@ -100,7 +100,7 @@ function Account() {
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          {level !== undefined && <button type="button" onClick={() => setTab("refer")} aria-label="Open your loyalty rank"><RankChip level={level} /></button>}
+          {level !== undefined && <Button variant="ghost" size="studio" className="h-auto p-0" type="button" onClick={() => setTab("refer")} aria-label="Open your loyalty rank"><RankChip level={level} /></Button>}
           {isAdmin && <Button asChild variant="studioOutline" size="sm"><Link to="/admin"><Shield aria-hidden className="mr-2 h-4 w-4" />Open admin</Link></Button>}
           <Button type="button" variant="ghost" size="sm" onClick={signOut}><LogOut aria-hidden className="mr-2 h-4 w-4" />Sign out</Button>
         </div>
@@ -112,42 +112,42 @@ function Account() {
       <nav aria-label="Account sections" className="mt-8 inline-flex w-full gap-1 rounded-full border bg-secondary p-1 sm:w-auto">
         {TABS.map(({ key, label, icon: I, badge }) => {
           const on = tab === key;
-          return <button key={key} type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors sm:flex-none sm:px-5 ${on ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+          return <Button variant="ghost" key={key} type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
+            className={`flex h-auto flex-1 items-center justify-center gap-1.5 rounded-full px-2 py-2 text-sm font-medium transition-colors sm:flex-none sm:px-5 ${on ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
             <I aria-hidden className={`h-4 w-4 ${on ? "text-primary" : ""}`} />{label}
             {badge ? <span className="rounded-full bg-primary px-1.5 text-[11px] text-primary-foreground">{badge}</span> : null}
-          </button>; })}
+          </Button>; })}
       </nav>
     </header>
     <div className="pt-10">
     {tab === "settings" ? <AccountSettings email={email} /> : tab === "refer" ? <ReferralPanel stats={stats} mine={mine} /> :
     <div className="grid gap-8 xl:grid-cols-[1fr_320px]">
       <div>
-        {orders && orders.length > 0 && <div className="mb-8 grid grid-cols-3 divide-x rounded-2xl border bg-card [&>*]:rounded-none [&>*]:border-0 [&>*]:bg-transparent [&>*]:p-4 sm:[&>*]:p-6">
-          <StatCard label="Active projects" value={orders.length} icon={FolderKanban} />
+        {orders && orders.length > 0 && <div className="mb-8 grid grid-cols-3 divide-x [&>*]:rounded-none [&>*]:border-0 [&>*]:bg-transparent [&>*]:p-4 sm:[&>*]:p-6">
+          <StatCard label="Projects" value={orders.length} icon={FolderKanban} />
           <StatCard label="Overall progress" value={`${overall}%`} hint={tasks.length ? `${doneTasks} of ${tasks.length} tasks done` : "Tasks appear once scheduled"} icon={TrendingUp} />
           <StatCard label="Loyalty level" value={level ?? "–"} hint={mine.data?.tier.level.title} icon={Gift} />
         </div>}
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
-        : orders.length === 0 ? <div className="rounded-2xl border bg-card p-8 sm:p-10">
+        : orders.length === 0 ? <div className="rounded-lg border bg-card p-8 sm:p-10">
             <h2 className="text-3xl">Your author platform starts here.</h2>
             <p className="mt-3 max-w-[60ch] text-muted-foreground">Every great author platform begins with a clear direction. Let's build yours.</p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              <Link to="/pricing" hash="packages" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Explore packages</span><span className="mt-1 block text-sm text-muted-foreground">Compare the three ways I help.</span></Link>
-              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Book a 15-minute call</span><span className="mt-1 block text-sm text-muted-foreground">Talk through your book and goals.</span></a>
-              <Link to="/contact" className="rounded-xl border p-5 transition-colors hover:border-primary"><span className="font-medium">Request a free review</span><span className="mt-1 block text-sm text-muted-foreground">Feedback on your current site.</span></Link>
+              <Link to="/pricing" hash="packages" className="rounded-lg border p-5 transition-colors hover:border-primary"><span className="font-medium">Explore packages</span><span className="mt-1 block text-sm text-muted-foreground">Compare the three ways I help.</span></Link>
+              <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="rounded-lg border p-5 transition-colors hover:border-primary"><span className="font-medium">Book a 15-minute call</span><span className="mt-1 block text-sm text-muted-foreground">Talk through your book and goals.</span></a>
+              <Link to="/contact" className="rounded-lg border p-5 transition-colors hover:border-primary"><span className="font-medium">Request a free review</span><span className="mt-1 block text-sm text-muted-foreground">Feedback on your current site.</span></Link>
             </div>
           </div>
-        : <ul className="grid gap-8">{orders.map(o => {
+        : <ul className="grid gap-8">{[...orders].sort((a,b) => Number(a.status === "launched") - Number(b.status === "launched")).map((o, index) => {
           const mine = tasks.filter(t => t.order_id === o.id);
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
-          return <li key={o.id} className="relative overflow-hidden rounded-2xl border bg-card p-6 shadow-sm sm:p-10"><span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-primary" />
+          return <li key={o.id} className="relative overflow-hidden rounded-lg border bg-card p-6 shadow-sm sm:p-10"><span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-primary" />
             <div className="flex flex-wrap items-center gap-3 text-sm">
               <span className="rounded-full bg-secondary px-3 py-1 font-medium text-primary">{statusLabel(o.status)}</span>
               <span className="text-muted-foreground">Requested {new Date(o.created_at).toLocaleDateString()}</span>
             </div>
-            <h2 className="mt-5 font-serif text-3xl sm:text-4xl">{o.book}</h2>
+            {index === 0 && <p className="mt-5 text-xs font-medium text-brass">Featured project</p>}<h2 className="mt-2 font-serif text-3xl sm:text-4xl">{o.book}</h2>
             <p className="mt-1 text-muted-foreground">{packages.find(p => p.slug === o.package)?.name}</p>
             {(o.addons.length > 0 || o.rush) && <p className="mt-2 text-sm text-muted-foreground">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
             <div className="mt-8"><Roadmap pct={pct} /></div>
@@ -162,7 +162,7 @@ function Account() {
           </li>; })}</ul>}
       </div>
 
-      <aside className="h-fit rounded-2xl border bg-card p-7 shadow-sm xl:sticky xl:top-24">
+      <aside className="h-fit rounded-lg border bg-card p-7 shadow-sm xl:sticky xl:top-24">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your studio contact</p>
         <div className="mt-4 flex items-center gap-4"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-16 w-16 rounded-full object-cover object-top" />
         <div><p className="font-serif text-2xl">Mou Barrac</p><p className="text-xs uppercase tracking-[0.16em] text-brass">Founder · TheHeroes Agency</p></div></div>
