@@ -78,8 +78,8 @@ function Account() {
   const overall = tasks.length ? Math.round((doneTasks / tasks.length) * 100) : 0;
   const sections: Record<typeof tab, [string, string, string]> = {
     projects: ["Private client space", `Welcome back${firstName ? `, ${firstName}` : ""}.`, "Your creative journey, thoughtfully managed."],
-    refer: ["Loyalty program", "Refer & rewards", "Share your link and unlock savings as authors you refer start with us."],
-    settings: ["Your profile", "Account settings", "Update your details, photo and password."],
+    refer: ["Loyalty program", "Refer & Rewards", "Share TheHeroes Agency and unlock exclusive rewards."],
+    settings: ["Your profile", "Account Settings", "Update your details, photo and password."],
   };
   const [, heading, intro] = sections[tab];
   const TABS = [

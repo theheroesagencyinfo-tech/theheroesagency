@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Check, Copy, Mail, Linkedin, MessageCircle, Facebook, Search, ArrowUpDown, Film, Headphones, CalendarCheck, BadgePercent } from "lucide-react";
+import { Check, Copy, Mail, Linkedin, MessageCircle, Facebook, Search, ArrowUpDown, Film, Users, Clock, Gift, Hourglass, ArrowRight, CircleCheck, Lock, Link as LinkIcon } from "lucide-react";
+import desk from "@/assets/banner-writers-desk.png.asset.json";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { LoyaltyBadge } from "@/components/loyalty-badge";
@@ -43,11 +44,18 @@ export function RankChip({ level }: { level: number }) {
   </span>;
 }
 
-const STATUS_STYLE: Record<string, string> = {
-  pending: "bg-secondary text-muted-foreground", contacted: "bg-secondary text-foreground", booked: "bg-accent text-accent-foreground",
-  converted: "bg-primary text-primary-foreground", rejected: "bg-destructive/10 text-destructive",
+const STATUS_STYLE: Record<string, [string, string]> = {
+  pending: ["bg-medal-brass/25 text-foreground", "bg-medal-brass"], contacted: ["bg-secondary text-foreground", "bg-muted-foreground/50"],
+  booked: ["bg-medal-sapphire/15 text-foreground", "bg-medal-sapphire"], converted: ["bg-primary/15 text-foreground", "bg-primary"],
+  rejected: ["bg-destructive/10 text-destructive", "bg-destructive"],
+  requested: ["bg-medal-brass/25 text-foreground", "bg-medal-brass"], in_production: ["bg-medal-sapphire/15 text-foreground", "bg-medal-sapphire"], delivered: ["bg-primary/15 text-foreground", "bg-primary"],
 };
-export const StatusPill = ({ s }: { s: string }) => <span className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${STATUS_STYLE[s] ?? "bg-secondary"}`}>{statusText(s)}</span>;
+export const StatusPill = ({ s }: { s: string }) => { const [pill, dot] = STATUS_STYLE[s] ?? ["bg-secondary", "bg-muted-foreground"];
+  return <span className="inline-flex items-center gap-2 whitespace-nowrap"><span aria-hidden className={`h-2.5 w-2.5 rounded-full ${dot}`} /><span className={`rounded-full px-2.5 py-0.5 text-sm ${pill}`}>{statusText(s)}</span></span>; };
+export const DepositDot = ({ paid }: { paid: boolean }) => <span className="inline-flex items-center gap-2 whitespace-nowrap"><span aria-hidden className={`h-2.5 w-2.5 rounded-full ${paid ? "bg-primary" : "bg-medal-brass"}`} />{paid ? "Paid" : "Pending"}</span>;
+export const money = (v: number | null) => v == null ? "—" : `$${Number(v).toLocaleString("en-US")}`;
+
+const card = "min-w-0 rounded-sm border bg-card shadow-sm";
 
 export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: ReturnType<typeof useMyTier> }) {
   const [copied, setCopied] = useState(false);
@@ -63,93 +71,121 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
   const { tier } = mine.data;
   const current = tier.level, next = nextLevel(tier.converted);
   const n = tier.converted;
+  const pending = mine.data.referrals.filter(r => !["converted", "rejected"].includes(r.status)).length;
   const link = stats.code && origin ? referralLink(origin, stats.code) : "";
-  const pct = next ? Math.min(100, Math.round(((n - (LEVELS[next.level - 2]?.min ?? 0)) / (next.min - (LEVELS[next.level - 2]?.min ?? 0))) * 100)) : 100;
+  const prevMin = next ? (LEVELS[next.level - 2]?.min ?? 0) : 0;
+  const pct = next ? Math.min(100, Math.round(((n - prevMin) / (next.min - prevMin)) * 100)) : 100;
+  const daysLeft = tier.expiresAt ? Math.max(0, Math.ceil((tier.expiresAt.getTime() - Date.now()) / 86400000)) : null;
   const msg = `I've been working with TheHeroes Agency on my author platform. If you're a nonfiction author, they're worth a look: ${link}`;
   const enc = encodeURIComponent;
   async function copy() { await navigator.clipboard.writeText(link); setCopied(true); setTimeout(() => setCopied(false), 2000); }
   const shares = [
-    [MessageCircle, "WhatsApp", `https://wa.me/?text=${enc(msg)}`], [Mail, "Email", `mailto:?subject=${enc("An author studio I recommend")}&body=${enc(msg)}`],
-    [null, "X", `https://x.com/intent/tweet?text=${enc(msg)}`], [Facebook, "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(link)}`],
-    [Linkedin, "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(link)}`],
+    [MessageCircle, "WhatsApp", `https://wa.me/?text=${enc(msg)}`], [Linkedin, "LinkedIn", `https://www.linkedin.com/sharing/share-offsite/?url=${enc(link)}`],
+    [null, "Share on X", `https://x.com/intent/tweet?text=${enc(msg)}`], [Facebook, "Facebook", `https://www.facebook.com/sharer/sharer.php?u=${enc(link)}`],
+    [Mail, "Email", `mailto:?subject=${enc("An author studio I recommend")}&body=${enc(msg)}`],
   ] as const;
   const rewards = [
-    [BadgePercent, "Ongoing project discount", current.discount ? `$${current.discount} off every eligible project` : "Unlocks at Level 2", current.discount > 0],
-    [Film, "Free book teaser", current.teaser ? "One 30-second teaser per new book" : "Unlocks at Level 4", current.teaser],
-    [Headphones, "Priority support", current.priority === "vip" ? "VIP priority support" : current.priority === "priority" ? "Priority support" : "Unlocks at Level 5", current.priority !== "none"],
-    [CalendarCheck, "Annual strategy session", current.strategy ? "Included every year" : "Unlocks at Level 7", current.strategy],
+    [current.discount ? `$${current.discount} off eligible projects` : "$100 off eligible projects (Level 2+)", current.discount > 0],
+    ["Book teaser (Level 4+)", current.teaser],
+    ["Priority queue (Level 5+)", current.priority !== "none"],
+    ["Annual strategy session (Level 7)", current.strategy],
+  ] as const;
+  const stat = [
+    [Users, String(n), "Converted Referrals"], [Clock, String(pending), "Pending Referrals"],
+    [Gift, `$${current.discount}`, "Available Rewards"], [Hourglass, daysLeft === null ? "—" : `${daysLeft} days`, "Reward Expiry"],
   ] as const;
 
-  return <div className="grid gap-10">
-    <div className="grid gap-8 overflow-hidden rounded-lg bg-pitch p-8 text-pitch-foreground sm:p-10 lg:grid-cols-[auto_1fr] lg:items-center">
+  return <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+    <div className="relative grid min-w-0 gap-6 overflow-hidden rounded-sm bg-[var(--portal-forest)] p-6 text-pitch-foreground sm:grid-cols-[auto_1fr] sm:items-center sm:p-8 lg:grid-cols-[auto_1fr_220px]">
       <LoyaltyBadge level={current} size="lg" />
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-pitch-accent">Your tier · Level {current.level} of 7{tier.overridden ? " · set by the studio" : ""}</p>
-        <h2 className="mt-2 text-4xl">{current.title}</h2>
-        <p className="mt-1 text-pitch-muted">{current.badge} · {n} converted · {mine.data.referrals.filter(r => !["converted", "rejected"].includes(r.status)).length} pending</p>
-        <div className="mt-6 h-2 overflow-hidden rounded-full bg-pitch-foreground/15" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Progress to next tier">
-          <div className="h-full rounded-full bg-pitch-accent transition-all" style={{ width: `${pct}%` }} /></div>
-        <p className="mt-3 text-sm text-pitch-muted">{next ? `${next.min - n} more successful ${next.min - n === 1 ? "referral" : "referrals"} to reach ${next.title}.` : "You hold the highest tier in the studio. Thank you."}
-          {tier.expiresAt && ` Active until ${tier.expiresAt.toLocaleDateString()}.`}</p>
+      <div className="min-w-0">
+        <p className="text-sm font-medium uppercase tracking-[0.08em] text-medal-gold">Your loyalty membership{tier.overridden ? " · set by the studio" : ""}</p>
+        <h2 className="mt-2 font-serif text-3xl sm:text-[2.2rem]">Level {current.level} · {current.title}</h2>
+        <p className="mt-2">{current.discount ? `$${current.discount} off eligible projects` : "Your referral link and live tracker"}</p>
+      </div>
+      <div className="min-w-0 border-pitch-foreground/25 sm:col-span-2 lg:col-span-1 lg:border-l lg:pl-8">
+        <p>{next ? `Progress to Level ${next.level}` : "Highest tier reached"}</p>
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-pitch-foreground/20" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Progress to next tier">
+          <div className="h-full rounded-full bg-pitch-accent" style={{ width: `${pct}%` }} /></div>
+        <p className="mt-3 text-sm">{pct}% complete</p>
       </div>
     </div>
 
-    <div className="border-t py-8">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your referral link</p>
-      <h3 className="mt-2 text-2xl">Introduce an author you believe in.</h3>
-      <p className="mt-2 text-sm text-muted-foreground">When they become a paying client through your link, you move up a tier. <Link to="/referrals" className="underline underline-offset-4">How the program works</Link></p>
-      <div className="mt-6 flex flex-wrap items-center gap-3">
-        <p className="min-w-0 flex-1 truncate rounded-md border bg-secondary px-4 py-3 text-sm">{link || "Preparing your link…"}</p>
-        <Button type="button" variant="studio" size="studio" disabled={!link} onClick={copy}>{copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}{copied ? "Link copied" : "Copy link"}</Button>
+    <section aria-labelledby="ref-link" className={`${card} p-6`}>
+      <h2 id="ref-link" className="font-serif text-[1.7rem]">Your Referral Link</h2>
+      <p className="text-sm text-muted-foreground">Share with friends and fellow authors.</p>
+      <div className="mt-4 flex gap-2">
+        <p className="flex min-w-0 flex-1 items-center gap-2 rounded-sm border bg-background px-3 py-2.5 text-sm"><LinkIcon aria-hidden className="h-4 w-4 shrink-0" /><span className="truncate underline underline-offset-2">{link || "Preparing your link…"}</span></p>
+        <Button type="button" variant="studio" size="icon" className="h-11 w-11 shrink-0 rounded-sm" disabled={!link} onClick={copy} aria-label={copied ? "Link copied" : "Copy link"}>{copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}</Button>
       </div>
-      <p className="mt-3 text-xs text-muted-foreground">Your code: <code className="font-mono">{stats.code}</code></p>
-      <div className="mt-6 flex flex-wrap gap-3 text-sm">{shares.map(([I, l, href]) =>
-        <a key={l} className="inline-flex items-center gap-2 rounded-full border px-4 py-2 hover:border-primary" href={href} target={l === "Email" ? undefined : "_blank"} rel="noopener noreferrer">
-          {I ? <I aria-hidden className="h-4 w-4 text-primary" /> : <span aria-hidden className="font-semibold text-primary">X</span>}Share on {l}</a>)}</div>
+      <p role="status" className="mt-1 h-4 text-xs text-primary">{copied ? "Link copied" : ""}</p>
+      <div className="mt-2 flex flex-wrap gap-2 text-sm">{shares.map(([I, l, href]) =>
+        <a key={l} className="inline-flex items-center gap-2 rounded-sm border bg-background px-3 py-2 hover:border-primary" href={href} target={l === "Email" ? undefined : "_blank"} rel="noopener noreferrer" aria-label={l.startsWith("Share") ? l : `Share on ${l}`}>
+          {I ? <I aria-hidden className="h-4 w-4 text-primary" /> : <span aria-hidden className="font-bold">𝕏</span>}{l}</a>)}</div>
+    </section>
+
+    <div className={`${card} grid grid-cols-2 sm:grid-cols-4`}>{stat.map(([I, v, l], i) =>
+      <div key={l} className={`flex flex-col items-center px-3 py-5 text-center ${i % 2 ? "border-l" : ""} ${i === 2 ? "border-t sm:border-l sm:border-t-0" : ""} ${i === 3 ? "border-t sm:border-t-0" : ""}`}>
+        <I aria-hidden className="h-7 w-7" /><p className="mt-2 font-serif text-3xl sm:text-4xl">{v}</p><p className="text-sm">{l}</p></div>)}</div>
+
+    <div className="relative min-w-0 overflow-hidden rounded-sm bg-pitch p-6 text-pitch-foreground xl:row-span-2">
+      <img src={desk.url} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+      <div className="relative">
+        <h2 className="font-serif text-3xl">The Loyalty Ladder</h2>
+        <p className="mt-2 max-w-[26ch]">Unlock greater rewards as you refer more authors.</p>
+        <a href="#tiers" className="mt-6 inline-flex items-center gap-2 rounded-sm border border-medal-gold px-4 py-2.5 text-medal-gold">View All Tiers<ArrowRight aria-hidden className="h-4 w-4" /></a>
+      </div>
     </div>
 
-    <div>
-      <h3 className="text-2xl">Your rewards</h3>
-      <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{rewards.map(([I, t, d, on]) =>
-        <li key={t} className={`rounded-lg border p-6 ${on ? "border-primary bg-card" : "bg-secondary/50"}`}>
-          <I aria-hidden className={`h-5 w-5 ${on ? "text-primary" : "text-muted-foreground"}`} />
-          <p className="mt-3 font-medium">{t}</p><p className="mt-1 text-sm text-muted-foreground">{d}</p></li>)}</ul>
-      <p className="mt-3 text-xs text-muted-foreground">Discounts apply while your tier is active and exclude taxes, payment fees, hosting, domains, third-party licenses, plugins, rush fees and other third-party costs. One referral discount per project; not combined with major promotions.</p>
-    </div>
+    <section aria-labelledby="ref-prog" className={`${card} p-6`}>
+      <h2 id="ref-prog" className="font-serif text-[1.7rem]">Your Referral Progress</h2>
+      <div className="mt-1 flex flex-wrap items-end justify-between gap-2"><p className="text-sm text-muted-foreground">Refer more authors and earn bigger rewards.</p>
+        <p className="text-sm">{next ? `${n} of ${next.min} referrals converted` : `${n} referrals converted`}</p></div>
+      <div className="mt-3 h-3 overflow-hidden rounded-full bg-secondary"><div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} /></div>
+      {tier.expiresAt && <p className="mt-2 text-xs text-muted-foreground">Tier active until {tier.expiresAt.toLocaleDateString()}.</p>}
+    </section>
 
-    <div>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <h3 className="text-2xl">Referral tracker</h3>
+    <section aria-labelledby="ref-recent" className={`${card} p-5 sm:p-6`}>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div><h2 id="ref-recent" className="font-serif text-[1.7rem]">Recent Referrals</h2><p className="text-sm text-muted-foreground">Track your referral activity and status.</p></div>
         <label className="relative"><span className="sr-only">Search referrals</span><Search aria-hidden className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search name, email, status" className="h-10 rounded-md border bg-background pl-9 pr-3 text-sm" /></label>
+          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search referrals…" className="h-10 w-56 rounded-sm border bg-background pl-9 pr-3 text-sm" /></label>
       </div>
-      {mine.data.referrals.length === 0 ? <div className="mt-4 rounded-lg border border-dashed p-8"><p className="font-medium">No referrals yet.</p><p className="mt-1 text-sm text-muted-foreground">Share your link above. Authors who sign up with it appear here, and you can watch their status move to converted.</p></div>
-      : <div className="mt-4 overflow-x-auto rounded-lg border"><table className="w-full min-w-[640px] text-left text-sm">
-        <thead className="bg-secondary text-xs uppercase tracking-wider text-muted-foreground"><tr>
-          <th className="p-4">Name</th><th className="p-4">Email</th>
-          <th className="p-4"><button type="button" onClick={() => setAsc(!asc)} className="inline-flex items-center gap-1 uppercase">Submitted <ArrowUpDown aria-hidden className="h-3 w-3" /></button></th>
-          <th className="p-4">Status</th><th className="p-4">Deposit</th><th className="p-4">Reward</th></tr></thead>
-        <tbody className="divide-y">{rows.map(r => <tr key={r.id}>
-          <td className="p-4">{r.referred_name || "—"}</td><td className="p-4">{r.referred_email}</td>
-          <td className="p-4">{new Date(r.created_at).toLocaleDateString()}</td><td className="p-4"><StatusPill s={r.status} /></td>
-          <td className="p-4">{r.deposit_paid ? "Paid" : "Not yet"}</td>
-          <td className="p-4">{r.status === "converted" ? <span className="font-medium text-primary">Counts toward your tier</span> : <span className="text-muted-foreground">—</span>}</td></tr>)}</tbody>
+      {mine.data.referrals.length === 0 ? <div className="mt-5 rounded-sm border border-dashed p-6"><p className="font-medium">No referrals yet.</p><p className="mt-1 text-sm text-muted-foreground">Share your link above. Authors who sign up with it appear here, and you can watch their status move to converted.</p></div>
+      : <div className="portal-table mt-5 overflow-x-auto"><table className="w-full min-w-[620px] text-left text-[15px]">
+        <thead className="bg-secondary text-sm font-medium"><tr>
+          <th className="px-4 py-3 font-medium">Referred Author</th>
+          <th className="px-4 py-3 font-medium"><button type="button" onClick={() => setAsc(!asc)} className="inline-flex items-center gap-1">Date <ArrowUpDown aria-hidden className="h-3 w-3" /></button></th>
+          <th className="px-4 py-3 font-medium">Status</th><th className="px-4 py-3 font-medium">Deposit Status</th><th className="px-4 py-3 font-medium">Project Value</th></tr></thead>
+        <tbody className="divide-y [&_td]:border-l [&_td:first-child]:border-l-0">{rows.map(r => <tr key={r.id}>
+          <td className="px-4 py-3">{r.referred_name || r.referred_email}</td>
+          <td className="px-4 py-3">{new Date(r.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</td>
+          <td className="px-4 py-3"><StatusPill s={r.status} /></td><td className="px-4 py-3"><DepositDot paid={r.deposit_paid} /></td>
+          <td className="px-4 py-3">{money(r.project_value)}</td></tr>)}</tbody>
       </table></div>}
-    </div>
+    </section>
 
-    {current.teaser ? <TeaserDesk /> : <div className="rounded-lg border border-dashed p-8"><Film aria-hidden className="h-5 w-5 text-muted-foreground" /><p className="mt-3 font-medium">Free book teasers unlock at Level 4.</p><p className="mt-1 text-sm text-muted-foreground">Reach Studio Ambassador to request a complimentary 30-second teaser for every newly released book.</p></div>}
+    <section aria-labelledby="ref-avail" className={`${card} p-6`}>
+      <h2 id="ref-avail" className="flex items-center gap-3 font-serif text-[1.7rem]"><Gift aria-hidden className="h-6 w-6" />Available Rewards</h2>
+      <p className="mt-1 text-sm">Share the journey and enjoy exclusive benefits.</p>
+      <ul className="mt-5 grid gap-3">{rewards.map(([t, on]) => <li key={t} className={`flex items-center gap-3 ${on ? "" : "text-muted-foreground"}`}>
+        {on ? <CircleCheck aria-hidden className="h-5 w-5 shrink-0 text-primary" /> : <Lock aria-hidden className="h-5 w-5 shrink-0" />}{t}<span className="sr-only">{on ? "unlocked" : "locked"}</span></li>)}</ul>
+      <Button asChild variant="studio" className="mt-6 rounded-sm"><Link to="/referrals">Learn more about rewards<ArrowRight aria-hidden className="ml-2 h-4 w-4" /></Link></Button>
+    </section>
 
-    <div>
-      <h3 className="text-2xl">Tier progress</h3>
-      <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">{LEVELS.map(l => {
-        const earned = current.level >= l.level, isNext = next?.level === l.level;
-        return <li key={l.level} className={`flex flex-col items-center rounded-lg border p-5 text-center ${isNext ? "border-primary ring-2 ring-primary/20" : ""} ${earned ? "bg-card" : "bg-secondary/50"}`}>
-          <LoyaltyBadge level={l} earned={earned} />
-          <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">Level {l.level}</p>
-          <p className="mt-1 font-medium">{l.title}</p><p className="mt-1 text-xs text-muted-foreground">{l.badge}</p>
-          <p className="mt-3 text-xs">{earned ? <span className="font-medium text-primary">Earned</span> : `${l.min} successful referrals`}</p>
-          <p className="mt-2 text-xs text-muted-foreground">{l.perk}</p>
+    <div className="min-w-0">{current.teaser ? <TeaserDesk /> : <div className={`${card} p-6`}><Film aria-hidden className="h-5 w-5 text-muted-foreground" /><p className="mt-3 font-serif text-2xl">Book Teaser Desk</p><p className="mt-1 text-sm text-muted-foreground">Free 30-second book teasers unlock at Level 4 (Studio Ambassador), one for every newly released book.</p></div>}
+      <p className="mt-4 text-xs text-muted-foreground">Discounts apply while your tier is active and exclude taxes, payment fees, hosting, domains, third-party licenses, plugins, rush fees and other third-party costs. One referral discount per project; not combined with major promotions.</p></div>
+
+    <section id="tiers" aria-labelledby="ref-tiers" className={`${card} scroll-mt-28 p-6`}>
+      <h2 id="ref-tiers" className="font-serif text-[1.7rem]">Loyalty Tiers</h2>
+      <p className="text-sm text-muted-foreground">Reach higher levels for greater rewards.</p>
+      <ol className="relative mt-4 grid gap-1 before:absolute before:bottom-6 before:left-[26px] before:top-6 before:w-px before:bg-border">{LEVELS.map(l => {
+        const earned = current.level >= l.level, now = current.level === l.level;
+        return <li key={l.level} className={`relative flex items-start gap-3 rounded-sm px-3 py-2.5 ${now ? "bg-primary/10" : ""}`}>
+          <span className={`relative flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${earned ? "bg-primary text-primary-foreground" : "border bg-card"}`}>{earned ? <Check aria-hidden className="h-4 w-4" /> : <Lock aria-hidden className="h-3.5 w-3.5" />}</span>
+          <span className="min-w-0"><span className="block font-medium">Level {l.level} · {l.title}</span>
+            <span className="block text-sm text-muted-foreground">{l.min === 0 ? "Starting tier" : `${l.min} converted ${l.min === 1 ? "referral" : "referrals"}`}{l.discount ? ` · $${l.discount} off` : ""}{l.teaser ? " + free teaser" : ""}{l.priority === "vip" ? " & VIP" : l.priority === "priority" ? " & priority" : ""}</span></span>
         </li>; })}</ol>
-    </div>
+    </section>
   </div>;
 }
