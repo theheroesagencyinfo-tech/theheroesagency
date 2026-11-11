@@ -105,6 +105,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "TheHeroes Agency" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
     ],
     links: [
       { rel: "preconnect", href: "https://theheroesagency.lovable.app" },
@@ -125,11 +126,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const SITE = "https://theheroesagency.org";
+const SITE_LD = JSON.stringify({
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "ProfessionalService", "@id": `${SITE}/#studio`, name: "TheHeroes Agency · Author Studio", url: SITE, logo: `${SITE}/favicon.png`, email: "info@theheroesagency.org",
+      description: "Author website design, book launch funnels and email marketing for nonfiction authors.",
+      founder: { "@type": "Person", name: "Mou Barrac", url: `${SITE}/about` }, areaServed: "Worldwide",
+      knowsAbout: ["Author website design", "Nonfiction book marketing", "Book launch funnels", "Email marketing for authors"],
+      sameAs: ["https://www.instagram.com/theheroes_authorstudio", "https://www.linkedin.com/in/theheroesauthorstudio", "https://x.com/moubarrac", "https://www.facebook.com/share/19fEAZNYmW/", "https://www.tiktok.com/@moubarrac"] },
+    { "@type": "WebSite", "@id": `${SITE}/#website`, url: SITE, name: "TheHeroes Agency", publisher: { "@id": `${SITE}/#studio` }, inLanguage: "en" },
+  ],
+});
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        <CanonicalLink />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: SITE_LD }} />
       </head>
       <body>
         {children}
@@ -160,4 +176,10 @@ function RootComponent() {
       {!portal && <div className="print:hidden"><Footer /></div>}
     </QueryClientProvider>
   );
+}
+
+function CanonicalLink() {
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const clean = path !== "/" ? path.replace(/\/+$/, "") : "/";
+  return <link rel="canonical" href={`${SITE}${clean === "/" ? "" : clean}`} />;
 }

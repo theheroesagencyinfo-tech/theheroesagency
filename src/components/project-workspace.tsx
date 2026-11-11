@@ -34,8 +34,8 @@ export function CoverUpload({ order, onChange }: { order: Order; onChange: () =>
     toast.success("Cover uploaded"); onChange();
   }
   return <div className="w-full max-w-[220px]">
-    <div className="relative aspect-[2/3] overflow-hidden rounded-sm bg-pitch text-pitch-foreground shadow-md">
-      {url ? <img src={url} alt={`Cover of ${order.book}`} className="h-full w-full object-cover" />
+    <div className={`relative overflow-hidden rounded-sm shadow-md ${url ? "" : "aspect-[2/3] bg-pitch text-pitch-foreground"}`}>
+      {url ? <img src={url} alt={`Cover of ${order.book}`} className="block h-auto w-full" />
         : <div className="flex h-full flex-col items-center justify-center p-4 text-center"><span className="font-serif text-xl uppercase leading-tight">{order.book}</span><span className="mt-3 h-px w-10 bg-medal-brass" /></div>}
       {busy && <div className="absolute inset-0 flex items-center justify-center bg-pitch/60"><Loader2 aria-label="Uploading" className="h-6 w-6 animate-spin" /></div>}
     </div>

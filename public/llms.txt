@@ -1,0 +1,16 @@
+# TheHeroes Agency · Author Studio
+
+> A design studio run by Mou Barrac that builds author websites, book launch funnels and email marketing for nonfiction authors. Projects take 2 to 4 weeks.
+
+## Key pages
+- [Services](https://theheroesagency.org/services): what the studio builds for nonfiction authors
+- [Pricing](https://theheroesagency.org/pricing): packages, add-ons and payment terms
+- [Work](https://theheroesagency.org/work): author website showcases
+- [About](https://theheroesagency.org/about): Mou Barrac and how the studio works
+- [Contact](https://theheroesagency.org/contact): email info@theheroesagency.org or book a 15-minute call
+- [Blog](https://theheroesagency.org/blog): guides on author websites and email marketing
+
+## Policies
+- [Terms](https://theheroesagency.org/terms)
+- [Privacy](https://theheroesagency.org/privacy)
+- [Refund policy](https://theheroesagency.org/refund-policy)

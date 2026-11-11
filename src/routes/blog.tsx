@@ -15,7 +15,6 @@ export const Route = createFileRoute("/blog")({
       { property: "og:url", content: "https://theheroesagency.lovable.app/blog" },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: "https://theheroesagency.lovable.app/blog" }],
   }),
   component: Blog,
 });

@@ -17,7 +17,6 @@ export const Route = createFileRoute("/referrals")({
       { property: "og:type", content: "website" }, { property: "og:url", content: URL },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: URL }],
   }),
   component: Referrals,
 });

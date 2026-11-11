@@ -197,7 +197,7 @@ function Account() {
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
           return <li key={o.id} className="grid grid-cols-[96px_1fr] gap-4 rounded-md border bg-card p-2.5 shadow-sm sm:grid-cols-[200px_1fr] sm:gap-6 2xl:grid-cols-[200px_1fr_auto]">
-            <Link to="/my-projects/$id" params={{ id: o.id }} aria-label={`Open ${o.book} project`} className="block transition hover:opacity-90">{covers[o.id] ? <img src={covers[o.id]} alt={`Cover of ${o.book}`} loading="lazy" className="aspect-[2/3] w-full max-w-[200px] object-cover shadow-md" /> :
+            <Link to="/my-projects/$id" params={{ id: o.id }} aria-label={`Open ${o.book} project`} className="block transition hover:opacity-90">{covers[o.id] ? <img src={covers[o.id]} alt={`Cover of ${o.book}`} loading="lazy" className="block h-auto w-full max-w-[200px] shadow-md" /> :
             <div aria-hidden className="flex aspect-[2/3] w-full max-w-[200px] flex-col items-center justify-center bg-pitch p-4 text-center text-pitch-foreground">
               <span className="break-words font-serif text-sm uppercase leading-tight tracking-wide sm:text-3xl">{o.book}</span>
               <span className="mt-3 h-px w-10 bg-medal-brass" />

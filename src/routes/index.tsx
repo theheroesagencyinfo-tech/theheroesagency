@@ -26,7 +26,6 @@ export const Route = createFileRoute("/")({
       { name: "twitter:image", content: assetSrc(banner) },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Home,
 });

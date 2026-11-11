@@ -55,7 +55,6 @@ export function articleHead(article: Pick<Article, "path" | "title" | "descripti
       { property: "article:modified_time", content: article.dateModified },
       { name: "twitter:card", content: "summary" },
     ],
-    links: [{ rel: "canonical", href: url }],
     scripts: [{ type: "application/ld+json", children: JSON.stringify({
       "@context": "https://schema.org", "@type": "BlogPosting", headline: article.title,
       description: article.description, url, mainEntityOfPage: url,
