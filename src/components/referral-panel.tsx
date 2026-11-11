@@ -96,14 +96,14 @@ export function ReferralPanel({ stats, mine }: { stats: Stats | null; mine: Retu
   ] as const;
 
   return <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
-    <div className="relative grid min-w-0 gap-6 overflow-hidden rounded-sm bg-[var(--portal-forest)] p-6 text-pitch-foreground sm:grid-cols-[auto_1fr] sm:items-center sm:p-8 lg:grid-cols-[auto_1fr_220px]">
-      <LoyaltyBadge level={current} size="lg" />
+    <div className="relative grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-x-4 gap-y-4 overflow-hidden rounded-sm bg-[var(--portal-forest)] p-4 text-pitch-foreground sm:gap-6 sm:p-6 sm:p-8 lg:grid-cols-[auto_1fr_220px]">
+      <LoyaltyBadge level={current} size="hero" />
       <div className="min-w-0">
-        <p className="text-sm font-medium uppercase tracking-[0.08em] text-medal-gold">Your loyalty membership{tier.overridden ? " · set by the studio" : ""}</p>
-        <h2 className="mt-2 font-serif text-3xl sm:text-[2.2rem]">Level {current.level} · {current.title}</h2>
-        <p className="mt-2">{current.discount ? `$${current.discount} off eligible projects` : "Your referral link and live tracker"}</p>
+        <p className="text-xs font-medium uppercase tracking-[0.08em] text-medal-gold sm:text-sm">Your loyalty membership{tier.overridden ? " · set by the studio" : ""}</p>
+        <h2 className="mt-1 font-serif text-xl leading-tight sm:mt-2 sm:text-[2.2rem]">Level {current.level} · {current.title}</h2>
+        <p className="mt-1 text-sm sm:mt-2 sm:text-base">{current.discount ? `$${current.discount} off eligible projects` : "Your referral link and live tracker"}</p>
       </div>
-      <div className="min-w-0 border-pitch-foreground/25 sm:col-span-2 lg:col-span-1 lg:border-l lg:pl-8">
+      <div className="col-span-2 min-w-0 border-pitch-foreground/25 lg:col-span-1 lg:border-l lg:pl-8">
         <p>{next ? `Progress to Level ${next.level}` : "Highest tier reached"}</p>
         <div className="mt-3 h-2 overflow-hidden rounded-full bg-pitch-foreground/20" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Progress to next tier">
           <div className="h-full rounded-full bg-pitch-accent" style={{ width: `${pct}%` }} /></div>

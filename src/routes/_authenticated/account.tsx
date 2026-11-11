@@ -116,10 +116,10 @@ function Account() {
   const lastUpdate = activity[0]?.at;
   const navy = "bg-[var(--portal-navy)]";
   return <div className="portal mx-auto max-w-[1500px] px-3 pb-16 pt-6 sm:px-5">
-   <div className="grid min-h-[1000px] overflow-hidden rounded-lg border bg-background lg:grid-cols-[230px_1fr]">
-    <aside className={`hidden flex-col ${navy} px-4 py-8 text-pitch-foreground lg:flex`}>
+   <div className="grid min-h-[1000px] overflow-clip rounded-lg border bg-background lg:grid-cols-[230px_1fr]">
+    <aside className={`hidden flex-col ${navy} px-4 py-8 text-pitch-foreground lg:sticky lg:top-0 lg:flex lg:h-screen lg:self-start lg:overflow-y-auto`}>
       <Link to="/" aria-label="TheHeroes Agency home" className="px-3"><LogoOnDark className="h-10 w-auto" /></Link>
-      <nav aria-label="Account sections (sidebar)" className="mt-20 grid gap-1">
+      <nav aria-label="Account sections (sidebar)" className="mt-12 grid gap-1">
         {sideItem("projects", "Projects", FolderKanban, orders?.length || undefined)}
         {sideItem("messages", "Messages", MessagesSquare)}
         {sideItem("refer", "Refer & Rewards", Trophy)}

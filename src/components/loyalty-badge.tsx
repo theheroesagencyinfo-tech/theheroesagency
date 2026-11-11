@@ -11,11 +11,11 @@ const STYLE = [
   { icon: Star, ring: "from-medal-gold to-pitch", face: "bg-pitch" },
 ];
 
-export function LoyaltyBadge({ level, earned = true, size = "md" }: { level: LoyaltyLevel; earned?: boolean; size?: "sm" | "md" | "lg" }) {
+export function LoyaltyBadge({ level, earned = true, size = "md" }: { level: LoyaltyLevel; earned?: boolean; size?: "sm" | "md" | "lg" | "hero" }) {
   const s = STYLE[level.level - 1]!;
   const Icon = s.icon;
-  const dim = size === "lg" ? "h-28 w-28" : size === "sm" ? "h-12 w-12" : "h-16 w-16";
-  const ic = size === "lg" ? "h-11 w-11" : size === "sm" ? "h-5 w-5" : "h-7 w-7";
+  const dim = size === "hero" ? "h-14 w-14 sm:h-28 sm:w-28" : size === "lg" ? "h-28 w-28" : size === "sm" ? "h-12 w-12" : "h-16 w-16";
+  const ic = size === "hero" ? "h-6 w-6 sm:h-11 sm:w-11" : size === "lg" ? "h-11 w-11" : size === "sm" ? "h-5 w-5" : "h-7 w-7";
   return <span role="img" aria-label={`${level.badge} badge${earned ? "" : ", locked"}`}
     className={`relative inline-flex shrink-0 items-center justify-center rounded-full bg-gradient-to-br p-[3px] shadow-md ${dim} ${earned ? s.ring : "from-border to-border"}`}>
     <span className={`flex h-full w-full items-center justify-center rounded-full border-2 border-background/40 ${earned ? s.face : "bg-secondary"}`}>

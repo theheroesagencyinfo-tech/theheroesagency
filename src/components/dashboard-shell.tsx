@@ -45,9 +45,9 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
   </div>;
 
   return <div className="portal mx-auto max-w-[1500px] px-3 py-6 sm:px-5">
-    <div className="grid min-h-[720px] overflow-hidden rounded-lg border shadow-sm bg-background lg:grid-cols-[248px_1fr]">
-      <aside className="hidden bg-[var(--portal-navy)] text-pitch-foreground lg:block">
-        <div className="sticky top-24">{panel}</div>
+    <div className="grid min-h-[720px] overflow-clip rounded-lg border shadow-sm bg-background lg:grid-cols-[248px_1fr]">
+      <aside className="hidden self-start bg-[var(--portal-navy)] text-pitch-foreground lg:sticky lg:top-0 lg:block lg:h-screen lg:overflow-y-auto">
+        <div>{panel}</div>
       </aside>
       <div className="min-w-0">
         <div className="flex items-center justify-between gap-3 sticky top-0 z-10 border-b bg-[var(--portal-navy)] px-4 py-3 text-pitch-foreground lg:hidden">
