@@ -190,3 +190,17 @@ input, textarea { cursor: text; }
   .portal-invoice { --background: oklch(1 0 0); --card: oklch(1 0 0); --foreground: oklch(0.2 0.045 278); --muted-foreground: oklch(0.38 0.04 278); --border: oklch(0.85 0 0); color: var(--foreground); }
   .portal-invoice tr, .portal-invoice li { break-inside: avoid; }
 }
+
+/* Google sign-in button: Google's own light/dark themes, switched by the system setting. */
+button.google-btn {
+  background: #ffffff;
+  border: 1px solid #747775;
+  color: #1f1f1f;
+}
+button.google-btn:hover { background: #f8f9fa; border-color: #5f6368; }
+button.google-btn:disabled { opacity: 0.6; }
+button.google-btn svg { width: 18px; height: 18px; }
+@media (prefers-color-scheme: dark) {
+  button.google-btn { background: #131314; border-color: #8e918f; color: #e3e3e3; }
+  button.google-btn:hover { background: #1f1f20; border-color: #a8aba9; }
+}
