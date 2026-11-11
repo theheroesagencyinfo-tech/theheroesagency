@@ -19,7 +19,7 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
       const on = key === active;
       return <Button variant="ghost" key={key} type="button" aria-current={on ? "page" : undefined}
         onClick={() => { onSelect(key); setOpen(false); }}
-        className={`group flex h-auto justify-start gap-3 rounded-md px-3 py-2.5 text-left text-sm font-medium hover:bg-pitch-foreground/10 hover:text-pitch-foreground ${on ? "bg-pitch-foreground/10 text-pitch-foreground" : "text-pitch-muted"}`}>
+        className={`group flex h-auto justify-start gap-3 rounded-md px-3 py-2 text-left text-sm font-medium hover:bg-pitch-foreground/10 hover:text-pitch-foreground ${on ? "bg-pitch-foreground/10 text-pitch-foreground" : "text-pitch-muted"}`}>
         <span className={`h-5 w-0.5 rounded-full ${on ? "bg-pitch-accent" : "bg-transparent"}`} aria-hidden />
         <I aria-hidden className={`h-4 w-4 ${on ? "text-pitch-accent" : ""}`} />
         <span className="flex-1">{label}</span>
@@ -28,14 +28,14 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
     })}
   </nav>;
 
-  const panel = <div className="flex h-full flex-col gap-8 p-5">
+  const panel = <div className="flex h-full flex-col gap-4 p-4">
     <div>
-      <Link to="/" aria-label="TheHeroes Agency home"><PortalMark className="mb-6" /></Link>
+      <Link to="/" aria-label="TheHeroes Agency home"><PortalMark className="mb-3" /></Link>
       <p className="mt-1 font-serif text-2xl">{title} <span className="text-pitch-accent">·</span> studio room</p>
     </div>
     {identity && <div className="rounded-xl border border-pitch-foreground/10 bg-pitch-foreground/5 p-4">{identity}</div>}
     {nav}
-    <div className="mt-auto grid gap-3 border-t border-pitch-foreground/10 pt-5">
+    <div className="mt-auto grid gap-1 border-t border-pitch-foreground/10 pt-3">
       {footer}
       <Button variant="ghost" type="button" onClick={onSignOut} className="justify-start gap-3 px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground">
         <LogOut aria-hidden className="h-4 w-4" />Sign out</Button>

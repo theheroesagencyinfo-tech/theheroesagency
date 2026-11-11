@@ -97,7 +97,7 @@ function Account() {
   const sideItem = (key: typeof tab, label: string, I: typeof Gift, badge?: number) => {
     const on = tab === key;
     return <Button key={key} variant="ghost" type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
-      className={`h-auto w-full justify-start gap-3 rounded-full px-4 py-3 text-sm font-medium hover:bg-pitch-foreground/10 hover:text-pitch-foreground ${on ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-pitch-muted"}`}>
+      className={`h-auto w-full justify-start gap-3 rounded-full px-4 py-2.5 text-sm font-medium hover:bg-pitch-foreground/10 hover:text-pitch-foreground ${on ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-pitch-muted"}`}>
       <I aria-hidden className="h-4 w-4" /><span className="flex-1 text-left">{label}</span>
       {badge ? <span className="rounded-full bg-medal-brass px-1.5 text-[11px] text-pitch">{badge}</span> : null}
     </Button>;
@@ -117,20 +117,20 @@ function Account() {
   const navy = "bg-[var(--portal-navy)]";
   return <div className="portal mx-auto max-w-[1500px] px-3 pb-16 pt-6 sm:px-5">
    <div className="grid min-h-[1000px] overflow-clip rounded-lg border bg-background lg:grid-cols-[230px_1fr]">
-    <aside className={`hidden flex-col ${navy} px-4 py-8 text-pitch-foreground lg:sticky lg:top-0 lg:flex lg:h-screen lg:self-start lg:overflow-y-auto`}>
-      <Link to="/" aria-label="TheHeroes Agency home" className="px-3"><PortalMark /></Link>
-      <nav aria-label="Account sections (sidebar)" className="mt-12 grid gap-1">
+    <aside className={`hidden flex-col ${navy} px-4 py-5 text-pitch-foreground lg:sticky lg:top-0 lg:flex lg:h-screen lg:self-start lg:overflow-y-auto`}>
+      <Link to="/" aria-label="TheHeroes Agency home" className="px-1"><PortalMark /></Link>
+      <nav aria-label="Account sections (sidebar)" className="mt-6 grid gap-0.5">
         {sideItem("projects", "Projects", FolderKanban, orders?.length || undefined)}
         {sideItem("messages", "Messages", MessagesSquare)}
         {sideItem("refer", "Refer & Rewards", Trophy)}
         {sideItem("settings", "Settings", Settings)}
       </nav>
-      <div className="mx-4 mt-8 grid gap-1 border-t border-pitch-foreground/15 pt-6 text-sm">
+      <div className="mx-4 mt-4 grid gap-0 border-t border-pitch-foreground/15 pt-3 text-sm">
         <Button variant="ghost" type="button" onClick={() => setTab("settings")} className="h-auto justify-start gap-3 px-0 py-2 text-pitch-muted hover:bg-transparent hover:text-pitch-foreground"><User aria-hidden className="h-4 w-4" />My Account</Button>
         <Button variant="ghost" type="button" onClick={signOut} className="h-auto justify-start gap-3 px-0 py-2 text-pitch-muted hover:bg-transparent hover:text-pitch-foreground"><LogOut aria-hidden className="h-4 w-4" />Sign Out</Button>
         <Link to="/" className="py-2 text-xs text-pitch-muted underline-offset-4 hover:text-pitch-foreground hover:underline">Back to website</Link>
       </div>
-      <div className="mt-auto px-3 pt-16"><span aria-hidden className="block h-px w-28 bg-medal-brass" /><p className="mt-8 font-serif text-xl italic leading-snug text-pitch-muted">Great books.<br />Greater impact.</p></div>
+      <div className="mt-auto px-3 pt-4"><span aria-hidden className="block h-px w-28 bg-medal-brass" /><p className="mt-3 font-serif text-base italic leading-snug text-pitch-muted">Great books.<br />Greater impact.</p></div>
     </aside>
     <div className="min-w-0 px-4 py-8 sm:px-8 lg:px-10">
     <div className="mb-6 flex items-center justify-between gap-4 lg:hidden"><Link to="/" aria-label="TheHeroes Agency home"><PortalMark dark={false} /></Link><Link to="/" className="text-sm underline underline-offset-4">Back to website</Link></div>
