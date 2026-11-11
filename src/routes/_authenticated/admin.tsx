@@ -108,10 +108,10 @@ function Admin() {
     <SectionHeader eyebrow={titles[tab][0]} title={titles[tab][1]} text={titles[tab][2]} />
     {tab === "overview" ? <div className="grid gap-8">
       <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
-        <StatCard label="New orders" value={fresh} hint={`${orders.length} total`} icon={ShoppingBag} />
-        <StatCard label="Want a call" value={calls} hint="Asked to talk first" icon={Phone} />
-        <StatCard label="Reviews to approve" value={pending} hint={`${reviews.length} total`} icon={Star} />
-        <StatCard label="Messages" value={requests.length} hint="From the contact form" icon={Inbox} />
+        <StatCard label="New orders" value={fresh} hint={`${orders.length} total`} icon={ShoppingBag} onClick={() => { select("orders"); setFilter("new"); }} />
+        <StatCard label="Want a call" value={calls} hint="Asked to talk first" icon={Phone} onClick={() => select("orders")} />
+        <StatCard label="Reviews to approve" value={pending} hint={`${reviews.length} total`} icon={Star} onClick={() => select("reviews")} />
+        <StatCard label="Messages" value={requests.length} hint="From the contact form" icon={Inbox} onClick={() => select("messages")} />
       </div>
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="border-t py-6"><div className="flex items-center justify-between"><h2 className="text-2xl">Latest orders</h2><Button variant="link" type="button" onClick={() => select("orders")} className="text-sm text-primary underline-offset-4 hover:underline">See all orders</Button></div>

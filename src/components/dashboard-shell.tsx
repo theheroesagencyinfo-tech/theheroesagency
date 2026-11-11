@@ -1,4 +1,4 @@
-import { LogoOnDark } from "@/components/site";
+import { PortalMark } from "@/components/site";
 import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { LogOut, Menu, type LucideIcon } from "lucide-react";
@@ -30,8 +30,7 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
 
   const panel = <div className="flex h-full flex-col gap-8 p-5">
     <div>
-      <Link to="/" aria-label="TheHeroes Agency home"><LogoOnDark className="mb-6 h-8 w-auto" /></Link>
-      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-pitch-muted">{eyebrow}</p>
+      <Link to="/" aria-label="TheHeroes Agency home"><PortalMark className="mb-6" /></Link>
       <p className="mt-1 font-serif text-2xl">{title} <span className="text-pitch-accent">·</span> studio room</p>
     </div>
     {identity && <div className="rounded-xl border border-pitch-foreground/10 bg-pitch-foreground/5 p-4">{identity}</div>}
@@ -52,7 +51,7 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
       <div className="min-w-0">
         <div className="flex items-center justify-between gap-3 sticky top-0 z-10 border-b bg-[var(--portal-navy)] px-4 py-3 text-pitch-foreground lg:hidden">
           <Button variant="ghost" size="icon" type="button" onClick={() => setOpen(true)} aria-label="Open admin menu" className="hover:bg-pitch-foreground/10 hover:text-pitch-foreground"><Menu className="h-5 w-5" /></Button>
-          <p className="font-serif text-lg">{current?.label}</p>
+          <span className="flex min-w-0 items-center gap-2"><img src="/favicon.png" alt="" className="h-7 w-7 shrink-0 rounded bg-background p-0.5" /><p className="truncate font-serif text-lg">{current?.label}</p></span>
           <span className="w-9" />
         </div>
         <main className="p-4 sm:p-8 lg:p-10">{children}</main>
@@ -79,11 +78,12 @@ export function SectionHeader({ eyebrow, title, text, action }: { eyebrow: strin
   </div>;
 }
 
-export function StatCard({ label, value, hint, icon: I }: { label: string; value: ReactNode; hint?: string | undefined; icon: LucideIcon }) {
-  return <div className="min-w-0 rounded-sm border border-t-2 border-t-brass bg-card p-4 shadow-sm sm:p-5">
+export function StatCard({ label, value, hint, icon: I, onClick }: { label: string; value: ReactNode; hint?: string | undefined; icon: LucideIcon; onClick?: () => void }) {
+  const Tag = onClick ? "button" : "div";
+  return <Tag type={onClick ? "button" : undefined} onClick={onClick} aria-label={onClick ? `${label}: open` : undefined} className={`min-w-0 rounded-sm border border-t-2 border-t-brass bg-card p-4 text-left shadow-sm sm:p-5 ${onClick ? "cursor-pointer transition hover:-translate-y-0.5 hover:border-primary hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring" : ""}`}>
     <div className="flex items-center justify-between gap-2"><p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]">{label}</p>
       <I aria-hidden className="h-4 w-4 shrink-0 text-brass" /></div>
     <p className="mt-3 font-serif text-3xl leading-none sm:text-5xl">{value}</p>
     {hint && <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{hint}</p>}
-  </div>;
+  </Tag>;
 }

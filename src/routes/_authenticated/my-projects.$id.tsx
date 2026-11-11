@@ -1,4 +1,4 @@
-import { BrandLogo } from "@/components/site";
+import { PortalMark } from "@/components/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
@@ -36,7 +36,7 @@ function Dashboard() {
     <section className="mx-auto grid max-w-[1500px] gap-8 px-5 pb-10 pt-10 md:grid-cols-[220px_1fr] md:items-start">
       <div className="order-2 md:order-1"><CoverUpload order={order} onChange={reload} /></div>
       <div className="order-1 min-w-0 md:order-2">
-      <div className="flex flex-wrap items-center justify-between gap-4"><Link to="/" aria-label="TheHeroes Agency home"><BrandLogo className="h-8 w-auto" /></Link><Link to="/account" className="text-sm underline underline-offset-4">← Back to my projects</Link></div>
+      <div className="flex flex-wrap items-center justify-between gap-4"><Link to="/" aria-label="TheHeroes Agency home"><PortalMark dark={false} /></Link><Link to="/account" className="text-sm underline underline-offset-4">← Back to my projects</Link></div>
       <p className="mt-8 text-[11px] font-semibold uppercase tracking-[0.22em] text-brass">{packages.find(x => x.slug === order.package)?.name}</p>
       <h1 className="mt-3 max-w-[18ch] break-words text-4xl leading-[1.02] sm:text-6xl">{order.book}</h1>
       <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm text-muted-foreground"><span>Status <strong className="font-medium capitalize text-foreground">{order.status}</strong></span><span>{tasks.filter(t => t.done).length} of {tasks.length} tasks done</span>{nextTask && <span>Up next <strong className="font-medium text-foreground">{nextTask.title}</strong></span>}</div>

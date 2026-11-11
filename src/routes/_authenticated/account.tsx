@@ -1,5 +1,5 @@
 import { ProjectMessages } from "@/components/project-workspace";
-import { BrandLogo, LogoOnDark } from "@/components/site";
+import { PortalMark } from "@/components/site";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Check, Mail, CalendarDays, FileText, FolderKanban, Settings, Gift, Shield, LogOut, Trophy, User, ChevronRight, ArrowRight, Download, MessagesSquare } from "lucide-react";
@@ -118,7 +118,7 @@ function Account() {
   return <div className="portal mx-auto max-w-[1500px] px-3 pb-16 pt-6 sm:px-5">
    <div className="grid min-h-[1000px] overflow-clip rounded-lg border bg-background lg:grid-cols-[230px_1fr]">
     <aside className={`hidden flex-col ${navy} px-4 py-8 text-pitch-foreground lg:sticky lg:top-0 lg:flex lg:h-screen lg:self-start lg:overflow-y-auto`}>
-      <Link to="/" aria-label="TheHeroes Agency home" className="px-3"><LogoOnDark className="h-10 w-auto" /></Link>
+      <Link to="/" aria-label="TheHeroes Agency home" className="px-3"><PortalMark /></Link>
       <nav aria-label="Account sections (sidebar)" className="mt-12 grid gap-1">
         {sideItem("projects", "Projects", FolderKanban, orders?.length || undefined)}
         {sideItem("messages", "Messages", MessagesSquare)}
@@ -133,7 +133,7 @@ function Account() {
       <div className="mt-auto px-3 pt-16"><span aria-hidden className="block h-px w-28 bg-medal-brass" /><p className="mt-8 font-serif text-xl italic leading-snug text-pitch-muted">Great books.<br />Greater impact.</p></div>
     </aside>
     <div className="min-w-0 px-4 py-8 sm:px-8 lg:px-10">
-    <div className="mb-6 flex items-center justify-between gap-4 lg:hidden"><Link to="/" aria-label="TheHeroes Agency home"><BrandLogo className="h-8 w-auto" /></Link><Link to="/" className="text-sm underline underline-offset-4">Back to website</Link></div>
+    <div className="mb-6 flex items-center justify-between gap-4 lg:hidden"><Link to="/" aria-label="TheHeroes Agency home"><PortalMark dark={false} /></Link><Link to="/" className="text-sm underline underline-offset-4">Back to website</Link></div>
     <header>
       <div className="flex flex-wrap items-start justify-between gap-6 2xl:flex-nowrap">
         <div className="flex min-w-0 items-center gap-5 sm:gap-10">
@@ -197,17 +197,17 @@ function Account() {
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
           return <li key={o.id} className="grid grid-cols-[96px_1fr] gap-4 rounded-md border bg-card p-2.5 shadow-sm sm:grid-cols-[200px_1fr] sm:gap-6 2xl:grid-cols-[200px_1fr_auto]">
-            {covers[o.id] ? <img src={covers[o.id]} alt={`Cover of ${o.book}`} loading="lazy" className="aspect-[2/3] w-full max-w-[200px] object-cover shadow-md" /> :
+            <Link to="/my-projects/$id" params={{ id: o.id }} aria-label={`Open ${o.book} project`} className="block transition hover:opacity-90">{covers[o.id] ? <img src={covers[o.id]} alt={`Cover of ${o.book}`} loading="lazy" className="aspect-[2/3] w-full max-w-[200px] object-cover shadow-md" /> :
             <div aria-hidden className="flex aspect-[2/3] w-full max-w-[200px] flex-col items-center justify-center bg-pitch p-4 text-center text-pitch-foreground">
               <span className="break-words font-serif text-sm uppercase leading-tight tracking-wide sm:text-3xl">{o.book}</span>
               <span className="mt-3 h-px w-10 bg-medal-brass" />
-            </div>}
+            </div>}</Link>
             <div className="contents sm:block sm:min-w-0 sm:py-4 sm:pr-2"><div className="min-w-0 self-center py-2 sm:py-0">
               <div className="flex flex-wrap items-center gap-2 text-sm">
                 <span className="rounded-full bg-primary px-3 py-0.5 font-medium text-primary-foreground">{statusLabel(o.status)}</span>
                 <span>· Updated {ago(o.id === top?.id && lastUpdate ? lastUpdate : o.created_at).toLowerCase()}</span>
               </div>
-              <h2 className="mt-2 break-words font-serif text-2xl sm:text-[2.6rem]">{o.book}</h2>
+              <h2 className="mt-2 break-words font-serif text-2xl sm:text-[2.6rem]"><Link to="/my-projects/$id" params={{ id: o.id }} className="hover:underline underline-offset-4">{o.book}</Link></h2>
               <p className="mt-1 inline-block border-b border-brass font-serif text-base sm:text-xl">{packages.find(p => p.slug === o.package)?.name} Package</p>
               </div><div className="col-span-2 min-w-0 px-2 sm:px-0">{(o.addons.length > 0 || o.rush) && <p className="mt-2 text-sm text-muted-foreground">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
               <div className="mt-4 flex items-baseline justify-between gap-3"><span className="font-serif text-lg">{pct}% Complete</span><span className="text-sm">{mine.length ? `${mine.filter(t => t.done).length} of ${mine.length} tasks` : "Tasks not yet scheduled"}</span></div>

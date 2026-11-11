@@ -22,6 +22,13 @@ function Logo({ className }: { className: string }) {
 export function LogoOnDark({ className = "h-9 w-auto" }: { className?: string }) {
   return <img src={assetSrc(logoDark)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={className} />;
 }
+/** Favicon mark on a paper tile with wordmark, for portal sidebars and top bars. */
+export function PortalMark({ dark = true, className = "" }: { dark?: boolean; className?: string }) {
+  return <span className={`inline-flex items-center gap-3 ${className}`}>
+    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-background shadow-sm ring-1 ring-medal-brass/50"><img src="/favicon.png" alt="" width={64} height={64} className="h-7 w-7" /></span>
+    <span className="min-w-0 leading-tight"><span className={`block font-serif text-lg ${dark ? "text-pitch-foreground" : "text-foreground"}`}>TheHeroes Agency</span><span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-medal-brass">Author Studio</span></span>
+  </span>;
+}
 /** Logo following the visitor's colour scheme. */
 export function BrandLogo({ className = "h-9 w-auto" }: { className?: string }) { return <Logo className={className} />; }
 
