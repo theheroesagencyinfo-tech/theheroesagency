@@ -80,8 +80,8 @@ export function ProjectWorkspace({ orderId }: { orderId: string }) {
         <p className="mt-1 text-xs text-muted-foreground">{started} of 3 started · {done} of 3 approved</p></div>
     </div>
     <ol className="mt-6 grid grid-cols-3 gap-2" role="tablist" aria-label="Workspace sections">{SECTIONS.map(s => { const st = notes[s.key]?.status; const on = tab === s.key;
-      return <li key={s.key}><button type="button" role="tab" aria-selected={on} onClick={() => setTab(s.key)} className={`flex w-full flex-col items-start gap-1 rounded-sm border p-3 text-left transition-colors ${on ? "border-primary bg-primary/10" : "hover:border-foreground/40"}`}>
-        <span className="flex items-center gap-2 font-medium"><s.icon aria-hidden className="h-4 w-4" />{s.label}{st === "approved" && <Check aria-label="approved" className="h-4 w-4 text-primary" />}</span>
+      return <li key={s.key}><button type="button" role="tab" aria-selected={on} onClick={() => setTab(s.key)} className={`flex h-full w-full min-w-0 flex-col items-start gap-1 rounded-sm border p-2 text-left sm:p-3 transition-colors ${on ? "border-primary bg-primary/10" : "hover:border-foreground/40"}`}>
+        <span className="flex min-w-0 items-center gap-1.5 text-sm font-medium sm:gap-2 sm:text-base"><s.icon aria-hidden className="hidden h-4 w-4 shrink-0 sm:block" />{s.label}{st === "approved" && <Check aria-label="approved" className="h-4 w-4 text-primary" />}</span>
         <span className="text-xs text-muted-foreground">{st ? STATUS[st as keyof typeof STATUS] : "Not started"}</span></button></li>; })}</ol>
     {!loaded ? <p className="mt-6 text-muted-foreground">Loading notes…</p> : <div className="mt-5">
       <label htmlFor="ws-body" className="text-sm font-medium">{cur.label} notes</label>
@@ -101,10 +101,10 @@ export function ProjectWorkspace({ orderId }: { orderId: string }) {
 export function ProjectMessages({ orderId, studio = false }: { orderId: string; studio?: boolean }) {
   const [msgs, setMsgs] = useState<Msg[] | null>(null);
   const [body, setBody] = useState(""); const [busy, setBusy] = useState(false);
-  const end = useRef<HTMLLIElement>(null);
+  const box = useRef<HTMLOListElement>(null);
   const load = () => supabase.from("project_messages").select("*").eq("order_id", orderId).order("created_at").then(({ data, error }) => { if (error) toast.error(error.message); setMsgs(data ?? []); });
   useEffect(() => { load(); const t = setInterval(load, 20000); return () => clearInterval(t); }, [orderId]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => { end.current?.scrollIntoView({ block: "nearest" }); }, [msgs?.length]);
+  useEffect(() => { const b = box.current; if (b) b.scrollTop = b.scrollHeight; }, [msgs?.length]);
   async function send(e: FormEvent) {
     e.preventDefault(); const t = body.trim(); if (!t) return;
     setBusy(true); const { error } = await supabase.from("project_messages").insert({ order_id: orderId, body: t.slice(0, 4000) }); setBusy(false);
@@ -115,14 +115,13 @@ export function ProjectMessages({ orderId, studio = false }: { orderId: string; 
     <p className="text-xs font-medium uppercase tracking-[0.18em] text-brass">Direct line</p>
     <h2 id="pm" className="mt-1 font-serif text-[2rem]">{studio ? "Messages with the client" : "Talk to Mou about this project"}</h2>
     <p className="text-sm text-muted-foreground">{studio ? "Replies appear on the client's project page." : "Ask for changes or share thoughts. Mou usually replies within one business day."}</p>
-    <ol className="mt-5 grid max-h-[420px] gap-3 overflow-y-auto pr-1" aria-live="polite">
+    <ol ref={box} className="mt-5 grid max-h-[420px] gap-3 overflow-y-auto pr-1" aria-live="polite">
       {msgs === null ? <li className="text-muted-foreground">Loading messages…</li> : msgs.length === 0 ? <li className="rounded-sm border border-dashed p-5 text-sm text-muted-foreground">No messages yet. Start the conversation below.</li>
       : msgs.map(m => { const mine = m.from_studio === studio;
         return <li key={m.id} className={`max-w-[85%] rounded-sm px-4 py-3 ${mine ? "justify-self-end bg-primary text-primary-foreground" : "justify-self-start bg-secondary"}`}>
           <p className="text-xs opacity-80">{m.from_studio ? "Mou · TheHeroes Agency" : studio ? "Client" : "You"} · {new Date(m.created_at).toLocaleString()}</p>
           <p className="mt-1 whitespace-pre-wrap break-words">{m.body}</p></li>; })}
-      <li ref={end} aria-hidden className="list-none" />
-    </ol>
+          </ol>
     <form onSubmit={send} className="mt-4 flex items-end gap-2">
       <label className="min-w-0 flex-1"><span className="sr-only">Your message</span>
         <textarea value={body} onChange={e => setBody(e.target.value)} maxLength={4000} rows={2} placeholder={studio ? "Reply to the client…" : "Describe the change you'd like…"} onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) send(e); }}

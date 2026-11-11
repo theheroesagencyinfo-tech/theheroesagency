@@ -57,24 +57,24 @@ function Dashboard() {
           <span className={t.done ? "" : "text-muted-foreground"}>{t.title}</span><span className="sr-only">{t.done ? "done" : "to do"}</span></li>)}</ul>}
     </div></section>
 
-    <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-14">
+    {pages.length > 0 &&     <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-14">
       <h2 className="text-3xl">Live pages</h2>
       {pages.length === 0 ? <p className="mt-4 text-muted-foreground">Links to your pages will appear here as they go live.</p>
       : <ul className="mt-6 divide-y border-y">{pages.map(i => <li key={i.id} className="flex flex-wrap items-center justify-between gap-3 py-4"><span className="min-w-0"><span className="block font-serif text-xl">{i.title}</span>{i.url && <span className="block break-all text-sm text-muted-foreground">{i.url}</span>}</span>{i.url && <a href={i.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">Visit page ↗</a>}</li>)}</ul>}
-    </div></section>
+    </div></section>}
 
-    <section className="border-t"><div className="mx-auto max-w-[1500px] px-5 py-14">
-      <h2 className="text-3xl">Wireframes and mockups</h2>
+    {wires.length > 0 &&     <section className="border-t"><div className="mx-auto max-w-[1500px] px-5 py-14">
+      <h2 className="text-3xl">Design previews</h2>
       {wires.length === 0 ? <p className="mt-4 text-muted-foreground">Wireframes will appear here for your review.</p>
       : <div className="mt-6 grid gap-8 md:grid-cols-2">{wires.map(i => <figure key={i.id}>
           {i.src && <a href={i.src} target="_blank" rel="noopener noreferrer"><img src={i.src} alt={i.title} className="w-full border" loading="lazy" /></a>}
           <figcaption className="mt-3"><span className="font-semibold">{i.title}</span>{i.body && <span className="mt-1 block text-sm text-muted-foreground">{i.body}</span>}</figcaption></figure>)}</div>}
-    </div></section>
+    </div></section>}
 
-    <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-14">
+    {updates.length > 0 &&     <section className="border-t bg-secondary"><div className="mx-auto max-w-[1500px] px-5 py-14">
       <h2 className="text-3xl">Studio updates</h2>
       {updates.length === 0 ? <p className="mt-4 text-muted-foreground">Project updates will be posted here.</p>
       : <ol className="mt-6 border-l pl-6">{updates.map(i => <li key={i.id} className="relative py-5 before:absolute before:-left-[29px] before:top-7 before:h-2 before:w-2 before:rounded-full before:bg-primary"><p className="text-sm text-muted-foreground">{new Date(i.created_at).toLocaleDateString()}</p><h3 className="mt-1 text-xl">{i.title}</h3>{i.body && <p className="mt-2 max-w-[70ch] whitespace-pre-wrap">{i.body}</p>}</li>)}</ol>}
-    </div></section>
+    </div></section>}
   </div>;
 }
