@@ -134,7 +134,7 @@ export function AdminReferrals() {
     <Dialog open={!!sel} onOpenChange={o => !o && setOpen(null)}>
       <DialogContent className="portal max-h-[90vh] overflow-y-auto sm:max-w-lg">
         {sel && <>
-          <DialogHeader><DialogTitle className="font-serif text-2xl">{sel.referred_name || sel.referred_email}</DialogTitle>
+          <DialogHeader><DialogTitle className="break-all font-serif text-2xl">{sel.referred_name || sel.referred_email}</DialogTitle>
             <DialogDescription>{sel.referred_email} · referred by {byId[sel.referrer_id]?.full_name || byId[sel.referrer_id]?.email || "—"} on {new Date(sel.created_at).toLocaleDateString()}</DialogDescription></DialogHeader>
           <div className="grid gap-4">
             <label className="grid gap-1 text-sm font-medium">Status<select value={sel.status} className={`${input} h-10`} onChange={e => update(sel.id, { status: e.target.value })}>{REFERRAL_STATUSES.map(x => <option key={x} value={x}>{statusText(x)}</option>)}</select></label>

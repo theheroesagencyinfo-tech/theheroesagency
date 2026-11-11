@@ -1,3 +1,5 @@
+import logoLight from "@/assets/theheroes-logo.png.asset.json";
+import { assetSrc } from "@/components/site";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -39,7 +41,7 @@ function Invoice() {
     </div>
     <article className="border-t-4 border-t-primary bg-card p-8 shadow-sm sm:p-12 print:border-0 print:p-0 print:shadow-none">
       <header className="flex flex-wrap justify-between gap-6 border-b pb-8">
-        <div><p className="font-serif text-3xl">TheHeroes Agency</p><p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Author Studio</p><p className="mt-3 text-sm">{SUPPORT_EMAIL}</p></div>
+        <div><img src={assetSrc(logoLight)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className="h-10 w-auto" /><p className="mt-3 text-sm">{SUPPORT_EMAIL}</p></div>
         <div className="text-right"><p className="text-3xl">Invoice</p><p className="mt-2 text-sm">{invoiceNo(order)}</p><p className="text-sm text-muted-foreground">Issued {issued}</p></div>
       </header>
       <div className="grid gap-6 border-b py-8 sm:grid-cols-2">

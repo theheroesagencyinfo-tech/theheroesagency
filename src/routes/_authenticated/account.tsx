@@ -1,6 +1,8 @@
+import { ProjectMessages } from "@/components/project-workspace";
+import { BrandLogo, LogoOnDark } from "@/components/site";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Check, Mail, CalendarDays, FileText, FolderKanban, Settings, Gift, Shield, LogOut, Trophy, User, ChevronRight, ArrowRight, Download } from "lucide-react";
+import { Check, Mail, CalendarDays, FileText, FolderKanban, Settings, Gift, Shield, LogOut, Trophy, User, ChevronRight, ArrowRight, Download, MessagesSquare } from "lucide-react";
 import { ReferralPanel, RankChip, useReferralStats, useMyTier } from "@/components/referral-panel";
 import { Avatar, useMyAvatar } from "@/components/avatar-upload";
 import mouPhoto from "@/assets/mou/burgundy.png.asset.json";
@@ -49,7 +51,7 @@ function Account() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [covers, setCovers] = useState<Record<string, string>>({});
-  const [tab, setTab] = useState<"projects" | "refer" | "settings">("projects");
+  const [tab, setTab] = useState<"projects" | "messages" | "refer" | "settings">("projects");
   const stats = useReferralStats();
   const mine = useMyTier();
   const avatar = useMyAvatar();
@@ -80,12 +82,14 @@ function Account() {
   const overall = tasks.length ? Math.round((doneTasks / tasks.length) * 100) : 0;
   const sections: Record<typeof tab, [string, string, string]> = {
     projects: ["Private client space", `Welcome back${firstName ? `, ${firstName}` : ""}.`, "Your creative journey, thoughtfully managed."],
+    messages: ["Direct line", "Messages", "Talk to Mou about any of your projects."],
     refer: ["Loyalty program", "Refer & Rewards", "Share TheHeroes Agency and unlock exclusive rewards."],
     settings: ["Your profile", "Account Settings", "Update your details, photo and password."],
   };
   const [, heading, intro] = sections[tab];
   const TABS = [
     { key: "projects" as const, label: "Projects", icon: FolderKanban, badge: orders?.length || undefined },
+    { key: "messages" as const, label: "Messages", icon: MessagesSquare, badge: undefined },
     { key: "refer" as const, label: "Refer & Rewards", icon: Trophy, badge: undefined },
     { key: "settings" as const, label: "Settings", icon: Settings, badge: undefined },
   ];
@@ -114,9 +118,10 @@ function Account() {
   return <div className="portal mx-auto max-w-[1500px] px-3 pb-16 pt-6 sm:px-5">
    <div className="grid min-h-[1000px] overflow-hidden rounded-lg border bg-background lg:grid-cols-[230px_1fr]">
     <aside className={`hidden flex-col ${navy} px-4 py-8 text-pitch-foreground lg:flex`}>
-      <p className="px-3 font-serif text-[2rem] leading-[0.95]">TheHeroes<br />Agency</p>
+      <Link to="/" aria-label="TheHeroes Agency home" className="px-3"><LogoOnDark className="h-10 w-auto" /></Link>
       <nav aria-label="Account sections (sidebar)" className="mt-20 grid gap-1">
         {sideItem("projects", "Projects", FolderKanban, orders?.length || undefined)}
+        {sideItem("messages", "Messages", MessagesSquare)}
         {sideItem("refer", "Refer & Rewards", Trophy)}
         {sideItem("settings", "Settings", Settings)}
       </nav>
@@ -128,6 +133,7 @@ function Account() {
       <div className="mt-auto px-3 pt-16"><span aria-hidden className="block h-px w-28 bg-medal-brass" /><p className="mt-8 font-serif text-xl italic leading-snug text-pitch-muted">Great books.<br />Greater impact.</p></div>
     </aside>
     <div className="min-w-0 px-4 py-8 sm:px-8 lg:px-10">
+    <div className="mb-6 flex items-center justify-between gap-4 lg:hidden"><Link to="/" aria-label="TheHeroes Agency home"><BrandLogo className="h-8 w-auto" /></Link><Link to="/" className="text-sm underline underline-offset-4">Back to website</Link></div>
     <header>
       <div className="flex flex-wrap items-start justify-between gap-6 2xl:flex-nowrap">
         <div className="flex min-w-0 items-center gap-5 sm:gap-10">
@@ -154,14 +160,16 @@ function Account() {
           const on = tab === key;
           return <Button variant="ghost" key={key} type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
             className={`flex h-auto flex-1 items-center justify-center gap-2 rounded-full px-2 py-2.5 text-[13px] sm:flex-none sm:px-7 sm:py-3 sm:text-[15px] ${on ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-foreground hover:bg-transparent"}`}>
-            <I aria-hidden className="hidden h-5 w-5 sm:block" /><span className="sm:hidden">{label.replace("Refer & ", "")}</span><span className="hidden sm:inline">{label}</span>
+            <I aria-hidden className="hidden h-5 w-5 sm:block" /><span className="sm:hidden">{label.replace("Refer & ", "").replace("Messages", "Chat")}</span><span className="hidden sm:inline">{label}</span>
             {badge ? <span className="rounded-full bg-medal-brass/80 px-1.5 text-[11px] text-pitch">{badge}</span> : null}
           </Button>; })}
       </nav><span aria-hidden className="hidden h-px flex-1 bg-border sm:block" />
       </div>
     </header>
     <div className="pt-8">
-    {tab === "settings" ? <AccountSettings email={email} /> : tab === "refer" ? <ReferralPanel stats={stats} mine={mine} /> :
+    {tab === "messages" ? (orders === null ? <p className="text-muted-foreground">Loading your messages…</p> : orders.length === 0 ? <div className="rounded-sm border bg-card p-8"><p className="font-serif text-2xl">No project threads yet.</p><p className="mt-2 text-muted-foreground">Each project gets its own conversation with Mou once it starts. Until then, email <a className="underline underline-offset-4" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</p></div>
+      : <div className="grid gap-6">{orders.map(o => <div key={o.id}><p className="mb-2 text-sm text-muted-foreground">Project · <Link to="/my-projects/$id" params={{ id: o.id }} className="font-medium text-foreground underline underline-offset-4">{o.book}</Link></p><ProjectMessages orderId={o.id} /></div>)}</div>)
+    : tab === "settings" ? <AccountSettings email={email} /> : tab === "refer" ? <ReferralPanel stats={stats} mine={mine} /> :
     <div className="grid gap-6 2xl:grid-cols-[1fr_330px]">
       <div className="min-w-0">
         {orders && orders.length > 0 && <div className="mb-6 grid grid-cols-3">

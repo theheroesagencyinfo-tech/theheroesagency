@@ -18,6 +18,13 @@ function Logo({ className }: { className: string }) {
   );
 }
 
+/** Light-on-dark logo for navy portal panels. */
+export function LogoOnDark({ className = "h-9 w-auto" }: { className?: string }) {
+  return <img src={assetSrc(logoDark)} alt="TheHeroes Agency · Author Studio" width={1190} height={196} className={className} />;
+}
+/** Logo following the visitor's colour scheme. */
+export function BrandLogo({ className = "h-9 w-auto" }: { className?: string }) { return <Logo className={className} />; }
+
 export const CONTACT_EMAIL = "info@theheroesagency.org";
 export const INFO_EMAIL = "info@theheroesagency.org";
 export const SUPPORT_EMAIL = "admin@theheroesagency.org";

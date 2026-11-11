@@ -46,9 +46,13 @@ export function tierFrom(convertedAt: (string | Date)[], now: Date = new Date(),
   return best;
 }
 
-export function referralLink(origin: string, code: string) {
-  return `${origin}/?ref=${encodeURIComponent(code)}`;
+/** Public brand domain for share links, so links never show the hosting address. */
+export const SHARE_ORIGIN = "https://theheroesagency.org";
+/** Short share link: theheroesagency.org/r/AB12CD (the HERO- prefix is restored on arrival). */
+export function referralLink(_origin: string, code: string) {
+  return `${SHARE_ORIGIN}/r/${encodeURIComponent(code.replace(/^HERO-/i, ""))}`;
 }
+export const codeFromShort = (s: string) => { const c = s.trim().toUpperCase(); return c.startsWith("HERO-") ? c : `HERO-${c}`; };
 
 export const REFERRAL_STATUSES = ["pending", "contacted", "booked", "converted", "rejected"] as const;
 export const TEASER_STATUSES = ["requested", "in_production", "delivered", "rejected"] as const;

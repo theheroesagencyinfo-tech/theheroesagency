@@ -25,3 +25,9 @@ describe("tier expiry", () => {
     expect(tierFrom(["2024-01-01", "2024-02-01", "2024-03-01", "2026-09-01"], now).level.level).toBe(2));
   it("applies an admin override", () => expect(tierFrom([], now, 5).level.level).toBe(5));
 });
+
+import { referralLink, codeFromShort } from "@/lib/loyalty";
+describe("short referral links", () => {
+  it("uses the brand domain and drops the HERO- prefix", () => { expect(referralLink("https://x.lovable.app", "HERO-AB12CD")).toBe("https://theheroesagency.org/r/AB12CD"); });
+  it("restores the full code", () => { expect(codeFromShort("ab12cd")).toBe("HERO-AB12CD"); expect(isReferralCode(codeFromShort("ab12cd"))).toBe(true); });
+});

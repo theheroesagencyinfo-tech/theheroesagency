@@ -1,3 +1,4 @@
+import { LogoOnDark } from "@/components/site";
 import { useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { LogOut, Menu, type LucideIcon } from "lucide-react";
@@ -29,6 +30,7 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
 
   const panel = <div className="flex h-full flex-col gap-8 p-5">
     <div>
+      <Link to="/" aria-label="TheHeroes Agency home"><LogoOnDark className="mb-6 h-8 w-auto" /></Link>
       <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-pitch-muted">{eyebrow}</p>
       <p className="mt-1 font-serif text-2xl">{title} <span className="text-pitch-accent">·</span> studio room</p>
     </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Check, ImagePlus, Send, Loader2, Compass, PenLine, Palette } from "lucide-react";
+import { Check, ImagePlus, Send, Loader2, Compass, PenLine, Palette, Paperclip, X } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -98,35 +98,69 @@ export function ProjectWorkspace({ orderId }: { orderId: string }) {
   </section>;
 }
 
+const FILE_TYPES = "image/jpeg,image/png,image/webp,image/gif,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,application/zip";
+
 export function ProjectMessages({ orderId, studio = false }: { orderId: string; studio?: boolean }) {
   const [msgs, setMsgs] = useState<Msg[] | null>(null);
+  const [urls, setUrls] = useState<Record<string, string>>({});
   const [body, setBody] = useState(""); const [busy, setBusy] = useState(false);
-  const box = useRef<HTMLOListElement>(null);
-  const load = () => supabase.from("project_messages").select("*").eq("order_id", orderId).order("created_at").then(({ data, error }) => { if (error) toast.error(error.message); setMsgs(data ?? []); });
+  const [file, setFile] = useState<File | null>(null);
+  const box = useRef<HTMLOListElement>(null); const pick = useRef<HTMLInputElement>(null);
+  async function load() {
+    const { data, error } = await supabase.from("project_messages").select("*").eq("order_id", orderId).order("created_at");
+    if (error) { toast.error(error.message); return; }
+    const rows = data ?? []; setMsgs(rows);
+    const paths = rows.flatMap(m => m.attachment_path ? [m.attachment_path] : []);
+    if (paths.length) { const { data: s } = await supabase.storage.from("project-files").createSignedUrls(paths, 3600); setUrls(Object.fromEntries((s ?? []).flatMap(x => x.path && x.signedUrl ? [[x.path, x.signedUrl]] : []))); }
+  }
   useEffect(() => { load(); const t = setInterval(load, 20000); return () => clearInterval(t); }, [orderId]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { const b = box.current; if (b) b.scrollTop = b.scrollHeight; }, [msgs?.length]);
-  async function send(e: FormEvent) {
-    e.preventDefault(); const t = body.trim(); if (!t) return;
-    setBusy(true); const { error } = await supabase.from("project_messages").insert({ order_id: orderId, body: t.slice(0, 4000) }); setBusy(false);
-    if (error) { toast.error(error.message); return; }
-    setBody(""); load();
+  function choose(f: File | undefined) {
+    if (!f) return;
+    if (f.size > 10 * 1024 * 1024) { toast.error("Files must be under 10 MB."); return; }
+    setFile(f);
   }
-  return <section aria-labelledby="pm" className={`${card} flex flex-col p-5 sm:p-7`}>
+  async function send(e: FormEvent) {
+    e.preventDefault(); const t = body.trim(); if (!t && !file) return;
+    setBusy(true);
+    let att: { attachment_path: string; attachment_name: string; attachment_type: string } | null = null;
+    if (file) {
+      const path = `${orderId}/messages/${crypto.randomUUID()}-${file.name.replace(/[^\w.-]/g, "_").slice(-80)}`;
+      const up = await supabase.storage.from("project-files").upload(path, file, { contentType: file.type || "application/octet-stream" });
+      if (up.error) { setBusy(false); toast.error(up.error.message); return; }
+      att = { attachment_path: path, attachment_name: file.name.slice(0, 200), attachment_type: file.type || "file" };
+    }
+    const { error } = await supabase.from("project_messages").insert({ order_id: orderId, body: t.slice(0, 4000), ...att });
+    setBusy(false);
+    if (error) { toast.error(error.message); return; }
+    setBody(""); setFile(null); load();
+  }
+  return <section aria-labelledby={`pm-${orderId}`} className={`${card} flex flex-col p-5 sm:p-7`}>
     <p className="text-xs font-medium uppercase tracking-[0.18em] text-brass">Direct line</p>
-    <h2 id="pm" className="mt-1 font-serif text-[2rem]">{studio ? "Messages with the client" : "Talk to Mou about this project"}</h2>
-    <p className="text-sm text-muted-foreground">{studio ? "Replies appear on the client's project page." : "Ask for changes or share thoughts. Mou usually replies within one business day."}</p>
-    <ol ref={box} className="mt-5 grid max-h-[420px] gap-3 overflow-y-auto pr-1" aria-live="polite">
+    <h2 id={`pm-${orderId}`} className="mt-1 font-serif text-[2rem]">{studio ? "Messages with the client" : "Talk to Mou about this project"}</h2>
+    <p className="text-sm text-muted-foreground">{studio ? "Replies appear on the client's project page and Messages tab." : "Ask for changes, share files or images. Mou usually replies within one business day."}</p>
+    <div className="mt-3 flex flex-wrap gap-4 text-xs text-muted-foreground" aria-hidden><span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[var(--portal-navy)]" />Mou · studio</span><span className="flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-primary" />Client</span></div>
+    <ol ref={box} className="mt-4 grid max-h-[460px] gap-3 overflow-y-auto pr-1" aria-live="polite">
       {msgs === null ? <li className="text-muted-foreground">Loading messages…</li> : msgs.length === 0 ? <li className="rounded-sm border border-dashed p-5 text-sm text-muted-foreground">No messages yet. Start the conversation below.</li>
-      : msgs.map(m => { const mine = m.from_studio === studio;
-        return <li key={m.id} className={`max-w-[85%] rounded-sm px-4 py-3 ${mine ? "justify-self-end bg-primary text-primary-foreground" : "justify-self-start bg-secondary"}`}>
-          <p className="text-xs opacity-80">{m.from_studio ? "Mou · TheHeroes Agency" : studio ? "Client" : "You"} · {new Date(m.created_at).toLocaleString()}</p>
-          <p className="mt-1 whitespace-pre-wrap break-words">{m.body}</p></li>; })}
-          </ol>
-    <form onSubmit={send} className="mt-4 flex items-end gap-2">
-      <label className="min-w-0 flex-1"><span className="sr-only">Your message</span>
-        <textarea value={body} onChange={e => setBody(e.target.value)} maxLength={4000} rows={2} placeholder={studio ? "Reply to the client…" : "Describe the change you'd like…"} onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) send(e); }}
-          className="w-full rounded-sm border bg-background p-3 text-base focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30" /></label>
-      <Button type="submit" variant="studio" className="h-12 rounded-sm" disabled={busy || !body.trim()}><Send aria-hidden className="mr-2 h-4 w-4" />Send</Button>
+      : msgs.map(m => { const mine = m.from_studio === studio; const u = m.attachment_path ? urls[m.attachment_path] : undefined; const img = m.attachment_type?.startsWith("image/");
+        return <li key={m.id} className={`min-w-0 max-w-[85%] rounded-lg px-4 py-3 shadow-sm ${mine ? "justify-self-end rounded-br-none" : "justify-self-start rounded-bl-none"} ${m.from_studio ? "bg-[var(--portal-navy)] text-pitch-foreground" : "bg-primary text-primary-foreground"}`}>
+          <p className={`text-xs font-medium ${m.from_studio ? "text-medal-gold" : "opacity-85"}`}>{m.from_studio ? "Mou · TheHeroes Agency" : studio ? "Client" : "You"} <span className="font-normal opacity-80">· {new Date(m.created_at).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}</span></p>
+          {m.body && <p className="mt-1 whitespace-pre-wrap break-words">{m.body}</p>}
+          {m.attachment_path && (img && u ? <a href={u} target="_blank" rel="noopener noreferrer" className="mt-2 block"><img src={u} alt={m.attachment_name ?? "Shared image"} loading="lazy" className="max-h-64 max-w-full rounded-sm object-contain" /></a>
+            : <a href={u} target="_blank" rel="noopener noreferrer" className="mt-2 flex min-w-0 items-center gap-2 rounded-sm bg-background/15 px-3 py-2 text-sm underline-offset-4 hover:underline"><Paperclip aria-hidden className="h-4 w-4 shrink-0" /><span className="truncate">{m.attachment_name ?? "Attachment"}</span></a>)}
+        </li>; })}
+    </ol>
+    <form onSubmit={send} className="mt-4 grid gap-2">
+      {file && <p className="flex min-w-0 items-center gap-2 rounded-sm bg-secondary px-3 py-2 text-sm"><Paperclip aria-hidden className="h-4 w-4 shrink-0" /><span className="min-w-0 flex-1 truncate">{file.name}</span><button type="button" onClick={() => setFile(null)} aria-label="Remove attachment" className="shrink-0"><X className="h-4 w-4" /></button></p>}
+      <div className="flex items-end gap-2">
+        <input ref={pick} type="file" accept={FILE_TYPES} className="sr-only" aria-label="Attach a file or image" onChange={e => { choose(e.target.files?.[0]); e.target.value = ""; }} />
+        <Button type="button" variant="studioOutline" size="icon" className="h-12 w-12 shrink-0 rounded-sm" onClick={() => pick.current?.click()} aria-label="Attach a file or image" title="Attach a file or image (up to 10 MB)"><Paperclip className="h-4 w-4" /></Button>
+        <label className="min-w-0 flex-1"><span className="sr-only">Your message</span>
+          <textarea value={body} onChange={e => setBody(e.target.value)} maxLength={4000} rows={2} placeholder={studio ? "Reply to the client…" : "Describe the change you'd like…"} onKeyDown={e => { if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) send(e); }}
+            className="w-full rounded-sm border bg-background p-3 text-base focus-visible:border-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30" /></label>
+        <Button type="submit" variant="studio" className="h-12 shrink-0 rounded-sm px-3 sm:px-4" disabled={busy || (!body.trim() && !file)} aria-label="Send"><Send aria-hidden className="h-4 w-4 sm:mr-2" /><span className="hidden sm:inline">{busy ? "Sending…" : "Send"}</span></Button>
+      </div>
+      <p className="text-xs text-muted-foreground">Images, PDF, Word, text or ZIP files up to 10 MB.</p>
     </form>
   </section>;
 }

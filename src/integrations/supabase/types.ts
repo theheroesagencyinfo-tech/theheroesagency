@@ -198,6 +198,9 @@ export type Database = {
       }
       project_messages: {
         Row: {
+          attachment_name: string | null
+          attachment_path: string | null
+          attachment_type: string | null
           body: string
           created_at: string
           from_studio: boolean
@@ -206,6 +209,9 @@ export type Database = {
           sender_id: string
         }
         Insert: {
+          attachment_name?: string | null
+          attachment_path?: string | null
+          attachment_type?: string | null
           body: string
           created_at?: string
           from_studio?: boolean
@@ -214,6 +220,9 @@ export type Database = {
           sender_id?: string
         }
         Update: {
+          attachment_name?: string | null
+          attachment_path?: string | null
+          attachment_type?: string | null
           body?: string
           created_at?: string
           from_studio?: boolean

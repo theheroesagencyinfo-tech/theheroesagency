@@ -16,11 +16,12 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AnnouncementBar, Header, Footer } from "@/components/site";
 import { supabase } from "@/integrations/supabase/client";
 import { Toaster } from "@/components/ui/sonner";
-import { REF_STORAGE_KEY, isReferralCode } from "@/lib/loyalty";
+import { REF_STORAGE_KEY, codeFromShort, isReferralCode } from "@/lib/loyalty";
 
 function ReferralCapture() {
   useEffect(() => {
-    const code = new URLSearchParams(window.location.search).get("ref")?.trim().toUpperCase() ?? "";
+    const short = window.location.pathname.match(/^\/r\/([A-Za-z0-9-]{6,11})\/?$/)?.[1];
+    const code = short ? codeFromShort(short) : new URLSearchParams(window.location.search).get("ref")?.trim().toUpperCase() ?? "";
     if (!isReferralCode(code)) return;
     localStorage.setItem(REF_STORAGE_KEY, code);
     const k = `ref_visit_${code}`;
