@@ -88,45 +88,67 @@ function Account() {
     { key: "refer" as const, label: "Rewards", icon: Gift, badge: undefined },
     { key: "settings" as const, label: "Settings", icon: Settings, badge: undefined },
   ];
-  return <div className="portal mx-auto max-w-[1500px] px-4 pb-20 pt-8 sm:px-8 sm:pt-12">
-    <header className="border-b pb-8">
-      <div className="flex flex-wrap items-center justify-between gap-6">
-        <div className="flex min-w-0 items-center gap-4 sm:gap-5">
-          <Avatar url={avatar} name={name || email} className="h-14 w-14 text-lg ring-1 ring-border ring-offset-4 ring-offset-background sm:h-16 sm:w-16" />
+  const featured = orders ? [...orders].sort((a,b) => Number(a.status === "launched") - Number(b.status === "launched")) : [];
+  const sideItem = (key: typeof tab, label: string, I: typeof Gift, badge?: number) => {
+    const on = tab === key;
+    return <Button key={key} variant="ghost" type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
+      className={`h-auto w-full justify-start gap-3 rounded-full px-4 py-3 text-sm font-medium hover:bg-pitch-foreground/10 hover:text-pitch-foreground ${on ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-pitch-muted"}`}>
+      <I aria-hidden className="h-4 w-4" /><span className="flex-1 text-left">{label}</span>
+      {badge ? <span className="rounded-full bg-medal-brass px-1.5 text-[11px] text-pitch">{badge}</span> : null}
+    </Button>;
+  };
+  return <div className="portal mx-auto max-w-[1500px] px-3 pb-16 pt-6 sm:px-5">
+   <div className="grid overflow-hidden rounded-lg border bg-background lg:grid-cols-[240px_1fr]">
+    <aside className="hidden flex-col bg-pitch p-6 text-pitch-foreground lg:flex">
+      <p className="font-serif text-3xl leading-none">TheHeroes<br />Agency</p>
+      <nav aria-label="Account sections (sidebar)" className="mt-12 grid gap-1">
+        {sideItem("projects", "Projects", FolderKanban, orders?.length || undefined)}
+        {sideItem("refer", "Refer & rewards", Gift)}
+        {sideItem("settings", "Settings", Settings)}
+      </nav>
+      <div className="mt-8 grid gap-1 border-t border-pitch-foreground/15 pt-6 text-sm">
+        {isAdmin && <Link to="/admin" className="flex items-center gap-3 px-4 py-2 text-pitch-muted hover:text-pitch-foreground"><Shield aria-hidden className="h-4 w-4" />Open admin</Link>}
+        <Button variant="ghost" type="button" onClick={signOut} className="h-auto justify-start gap-3 px-4 py-2 text-pitch-muted hover:bg-transparent hover:text-pitch-foreground"><LogOut aria-hidden className="h-4 w-4" />Sign out</Button>
+      </div>
+      <div className="mt-auto pt-16"><span aria-hidden className="block h-px w-24 bg-medal-brass" /><p className="mt-5 font-serif text-xl italic text-medal-brass">Great books.<br />Greater impact.</p></div>
+    </aside>
+    <div className="min-w-0 px-4 py-8 sm:px-8 lg:px-10">
+    <header>
+      <div className="flex flex-wrap items-start justify-between gap-6">
+        <div className="flex min-w-0 items-center gap-5 sm:gap-7">
+          <Avatar url={avatar} name={name || email} className="h-20 w-20 text-2xl ring-1 ring-border sm:h-28 sm:w-28" />
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary">Private client dossier</p>
-            <p className="mt-1 truncate font-serif text-2xl sm:text-3xl">{name.trim() || firstName || "Author"}</p>
-            <p className="truncate text-sm text-muted-foreground">{email}</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brass">Private client dossier</p>
+            <h1 className="mt-1 text-4xl sm:text-5xl">{heading}</h1>
+            <p className="mt-2 font-serif text-lg text-muted-foreground sm:text-xl">{intro}</p>
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           {level !== undefined && <Button variant="ghost" size="studio" className="h-auto p-0" type="button" onClick={() => setTab("refer")} aria-label="Open your loyalty rank"><RankChip level={level} /></Button>}
-          {isAdmin && <Button asChild variant="studioOutline" size="sm"><Link to="/admin"><Shield aria-hidden className="mr-2 h-4 w-4" />Open admin</Link></Button>}
-          <Button type="button" variant="ghost" size="sm" onClick={signOut}><LogOut aria-hidden className="mr-2 h-4 w-4" />Sign out</Button>
+          {isAdmin && <Button asChild variant="studio" size="sm"><Link to="/admin"><Shield aria-hidden className="mr-2 h-4 w-4" />Open admin</Link></Button>}
+          <Button type="button" variant="studioOutline" size="sm" onClick={signOut}><LogOut aria-hidden className="mr-2 h-4 w-4" />Sign out</Button>
         </div>
       </div>
-      <div className="mt-10 max-w-[60ch]">
-        <h1 className="text-4xl sm:text-5xl">{heading}</h1>
-        <p className="mt-3 text-muted-foreground">{intro}</p>
-      </div>
-      <nav aria-label="Account sections" className="mt-8 inline-flex w-full gap-1 rounded-full border bg-secondary p-1 sm:w-auto">
+      <div className="mt-8 flex items-center gap-4">
+      <nav aria-label="Account sections" className="inline-flex w-full gap-1 rounded-full border bg-secondary p-1 sm:w-auto">
         {TABS.map(({ key, label, icon: I, badge }) => {
           const on = tab === key;
           return <Button variant="ghost" key={key} type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
-            className={`flex h-auto flex-1 items-center justify-center gap-1.5 rounded-full px-2 py-2 text-sm font-medium transition-colors sm:flex-none sm:px-5 ${on ? "bg-background text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
-            <I aria-hidden className={`h-4 w-4 ${on ? "text-primary" : ""}`} />{label}
-            {badge ? <span className="rounded-full bg-primary px-1.5 text-[11px] text-primary-foreground">{badge}</span> : null}
+            className={`flex h-auto flex-1 items-center justify-center gap-1.5 rounded-full px-2 py-2 text-sm font-medium sm:flex-none sm:px-5 ${on ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`}>
+            <I aria-hidden className="h-4 w-4" />{label}
+            {badge ? <span className={`rounded-full px-1.5 text-[11px] ${on ? "bg-medal-brass text-pitch" : "bg-primary text-primary-foreground"}`}>{badge}</span> : null}
           </Button>; })}
-      </nav>
+      </nav><span aria-hidden className="hidden h-px flex-1 bg-border sm:block" />
+      </div>
     </header>
-    <div className="pt-10">
+    <div className="pt-8">
     {tab === "settings" ? <AccountSettings email={email} /> : tab === "refer" ? <ReferralPanel stats={stats} mine={mine} /> :
-    <div className="grid gap-8 xl:grid-cols-[1fr_320px]">
-      <div>
-        {orders && orders.length > 0 && <div className="mb-8 grid grid-cols-3 divide-x [&>*]:rounded-none [&>*]:border-0 [&>*]:bg-transparent [&>*]:p-4 sm:[&>*]:p-6">
-          <StatCard label="Projects" value={orders.length} icon={FolderKanban} />
+    <div className="grid gap-6 xl:grid-cols-[1fr_330px]">
+      <div className="min-w-0">
+        {orders && orders.length > 0 && <div className="mb-6 grid grid-cols-3 divide-x [&>*]:rounded-none [&>*]:border-0 [&>*]:bg-transparent [&>*]:p-3 sm:[&>*]:p-5">
+          <StatCard label="Projects" value={orders.length} hint="With the studio" icon={FolderKanban} />
           <StatCard label="Overall progress" value={`${overall}%`} hint={tasks.length ? `${doneTasks} of ${tasks.length} tasks done` : "Tasks appear once scheduled"} icon={TrendingUp} />
-          <StatCard label="Loyalty level" value={level ?? "–"} hint={mine.data?.tier.level.title} icon={Gift} />
+          <StatCard label="Loyalty level" value={level !== undefined ? `Level ${level}` : "–"} hint={mine.data?.tier.level.title} icon={Gift} />
         </div>}
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
         : orders.length === 0 ? <div className="rounded-lg border bg-card p-8 sm:p-10">
@@ -138,41 +160,56 @@ function Account() {
               <Link to="/contact" className="rounded-lg border p-5 transition-colors hover:border-primary"><span className="font-medium">Request a free review</span><span className="mt-1 block text-sm text-muted-foreground">Feedback on your current site.</span></Link>
             </div>
           </div>
-        : <ul className="grid gap-8">{[...orders].sort((a,b) => Number(a.status === "launched") - Number(b.status === "launched")).map((o, index) => {
+        : <ul className="grid gap-6">{featured.map((o) => {
           const mine = tasks.filter(t => t.order_id === o.id);
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
-          return <li key={o.id} className="relative overflow-hidden rounded-lg border bg-card p-6 shadow-sm sm:p-10"><span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-primary" />
-            <div className="flex flex-wrap items-center gap-3 text-sm">
-              <span className="rounded-full bg-secondary px-3 py-1 font-medium text-primary">{statusLabel(o.status)}</span>
-              <span className="text-muted-foreground">Requested {new Date(o.created_at).toLocaleDateString()}</span>
+          return <li key={o.id} className="grid gap-6 rounded-lg border bg-card p-4 shadow-sm sm:grid-cols-[160px_1fr] sm:p-5 2xl:grid-cols-[200px_1fr]">
+            <div aria-hidden className="flex aspect-[2/3] w-full max-w-[200px] self-start flex-col items-center justify-center rounded-sm bg-pitch p-4 text-center text-pitch-foreground">
+              <span className="font-serif text-2xl uppercase leading-tight tracking-wide">{o.book}</span>
+              <span className="mt-3 h-px w-10 bg-medal-brass" />
             </div>
-            {index === 0 && <p className="mt-5 text-xs font-medium text-brass">Featured project</p>}<h2 className="mt-2 font-serif text-3xl sm:text-4xl">{o.book}</h2>
-            <p className="mt-1 text-muted-foreground">{packages.find(p => p.slug === o.package)?.name}</p>
-            {(o.addons.length > 0 || o.rush) && <p className="mt-2 text-sm text-muted-foreground">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
-            <div className="mt-8"><Roadmap pct={pct} /></div>
-            <div className="mt-6"><ProgressBar value={pct} /></div>
-            <p className="mt-2 text-sm text-muted-foreground">{mine.length ? `${mine.filter(t => t.done).length} of ${mine.length} tasks done` : "Your task list will appear once work is scheduled."}</p>
-            {next && <div className="mt-6 rounded-lg border-l-2 border-primary bg-secondary px-4 py-3"><p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Up next</p><p className="mt-1">{next.title}</p></div>}
-            <div className="mt-8 flex flex-wrap gap-3 border-t pt-6">
-              <Button asChild variant="studio" size="studio"><Link to="/my-projects/$id" params={{ id: o.id }}><LayoutDashboard aria-hidden className="mr-2 h-4 w-4" />Open project dashboard</Link></Button>
-              {invoiceReady(o) ? <Button asChild variant="studioOutline" size="studio"><Link to="/invoice/$id" params={{ id: o.id }}><FileText aria-hidden className="mr-2 h-4 w-4" />View and download invoice</Link></Button>
-                : <p className="self-center text-sm text-muted-foreground">Your invoice will be ready once your package is confirmed.</p>}
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2 text-sm">
+                <span className="rounded-full bg-primary px-3 py-0.5 font-medium text-primary-foreground">{statusLabel(o.status)}</span>
+                <span className="text-muted-foreground">Requested {new Date(o.created_at).toLocaleDateString()}</span>
+              </div>
+              <h2 className="mt-3 break-words font-serif text-3xl sm:text-4xl">{o.book}</h2>
+              <p className="mt-1 inline-block border-b border-brass font-serif text-lg">{packages.find(p => p.slug === o.package)?.name}</p>
+              {(o.addons.length > 0 || o.rush) && <p className="mt-2 text-sm text-muted-foreground">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
+              <div className="mt-5 flex items-baseline justify-between gap-3"><span className="font-serif text-lg">{pct}% complete</span><span className="text-sm text-muted-foreground">{mine.length ? `${mine.filter(t => t.done).length} of ${mine.length} tasks` : "Tasks not yet scheduled"}</span></div>
+              <div className="mt-2"><ProgressBar value={pct} /></div>
+              {next && <p className="mt-4 rounded-md bg-secondary px-4 py-2.5 text-sm">Next: {next.title}</p>}
+              <div className="mt-6"><Roadmap pct={pct} /></div>
+            </div>
+            <div className="flex flex-wrap items-center gap-3 border-t pt-5 sm:col-span-2">
+              <Button asChild variant="studio" size="studio"><Link to="/my-projects/$id" params={{ id: o.id }}><LayoutDashboard aria-hidden className="mr-2 h-4 w-4" />Open project</Link></Button>
+              {invoiceReady(o) ? <Button asChild variant="studioOutline" size="studio"><Link to="/invoice/$id" params={{ id: o.id }}><FileText aria-hidden className="mr-2 h-4 w-4" />View invoice</Link></Button>
+                : <p className="max-w-[24ch] text-sm text-muted-foreground">Your invoice will be ready once your package is confirmed.</p>}
             </div>
           </li>; })}</ul>}
       </div>
 
-      <aside className="h-fit rounded-lg border bg-card p-7 shadow-sm xl:sticky xl:top-24">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your studio contact</p>
-        <div className="mt-4 flex items-center gap-4"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-16 w-16 rounded-full object-cover object-top" />
-        <div><p className="font-serif text-2xl">Mou Barrac</p><p className="text-xs uppercase tracking-[0.16em] text-brass">Founder · TheHeroes Agency</p></div></div>
+      <aside className="grid h-fit gap-6 xl:sticky xl:top-24">
+       <div className="rounded-lg border border-t-4 border-t-brass bg-card p-6 shadow-sm">
+        <h2 className="font-serif text-2xl">Your studio contact</h2>
+        <div className="mt-5 flex items-center gap-4"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-20 w-20 rounded-full object-cover object-top" />
+        <div><p className="font-serif text-2xl">Mou Barrac</p><p className="text-sm text-muted-foreground">Founder · TheHeroes Agency</p></div></div>
         <p className="mt-5 border-t pt-5 text-sm text-muted-foreground">Questions, feedback, or files? Your studio contact is always within reach.</p>
-        <div className="mt-6 grid gap-3 text-sm">
-          <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-2 break-all underline underline-offset-4"><Mail aria-hidden className="h-4 w-4 shrink-0 text-primary" />{SUPPORT_EMAIL}</a>
-          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 underline underline-offset-4"><CalendarDays aria-hidden className="h-4 w-4 shrink-0 text-primary" />Book a 15-minute call</a>
+        <div className="mt-5 grid gap-3 text-sm">
+          <a href={`mailto:${SUPPORT_EMAIL}`} className="flex items-center gap-3 break-all rounded-md border px-4 py-3 hover:border-primary"><Mail aria-hidden className="h-4 w-4 shrink-0 text-primary" />{SUPPORT_EMAIL}</a>
+          <a href={BOOKING_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 rounded-md border px-4 py-3 hover:border-primary"><CalendarDays aria-hidden className="h-4 w-4 shrink-0 text-primary" />Book a 15-minute call</a>
         </div>
+       </div>
+       <div className="rounded-lg bg-pitch p-7 text-pitch-foreground">
+        <p className="font-serif text-3xl leading-tight">Your next book deserves a platform too.</p>
+        <p className="mt-3 text-sm text-pitch-muted">Every great author platform begins with a clear direction.</p>
+        <Link to="/pricing" hash="packages" className="mt-6 inline-flex items-center rounded-sm bg-medal-brass px-4 py-2 text-sm font-medium text-pitch">Explore packages →</Link>
+       </div>
       </aside>
     </div>}
     </div>
+    </div>
+   </div>
   </div>;
 }
