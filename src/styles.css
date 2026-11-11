@@ -160,6 +160,7 @@ input, textarea { cursor: text; }
 
 /* Authenticated editorial surfaces; public site tokens remain unchanged. */
 .portal {
+  --portal-navy: oklch(0.22 0.05 278);
   --background: oklch(0.978 0.008 85);
   --card: oklch(1 0 0);
   --secondary: oklch(0.95 0.012 85);
