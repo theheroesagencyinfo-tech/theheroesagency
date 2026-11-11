@@ -107,7 +107,7 @@ function Admin() {
     footer={<Link to="/account" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-pitch-muted hover:bg-pitch-foreground/5 hover:text-pitch-foreground"><User aria-hidden className="h-4 w-4" />My account</Link>}>
     <SectionHeader eyebrow={titles[tab][0]} title={titles[tab][1]} text={titles[tab][2]} />
     {tab === "overview" ? <div className="grid gap-8">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <StatCard label="New orders" value={fresh} hint={`${orders.length} total`} icon={ShoppingBag} />
         <StatCard label="Want a call" value={calls} hint="Asked to talk first" icon={Phone} />
         <StatCard label="Reviews to approve" value={pending} hint={`${reviews.length} total`} icon={Star} />

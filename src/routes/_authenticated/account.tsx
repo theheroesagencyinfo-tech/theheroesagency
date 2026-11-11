@@ -126,16 +126,16 @@ function Account() {
     </aside>
     <div className="min-w-0 px-4 py-8 sm:px-8 lg:px-10">
     <header>
-      <div className="flex flex-wrap items-start justify-between gap-6 xl:flex-nowrap">
+      <div className="flex flex-wrap items-start justify-between gap-6 2xl:flex-nowrap">
         <div className="flex min-w-0 items-center gap-5 sm:gap-10">
-          <Avatar url={avatar} name={name || email} className="h-20 w-20 text-2xl ring-1 ring-border sm:h-[120px] sm:w-[120px]" />
+          <Avatar url={avatar} name={name || email} className="h-16 w-16 shrink-0 text-xl ring-1 ring-border sm:h-[120px] sm:w-[120px] sm:text-2xl" />
           <div className="min-w-0">
             <p className="text-xs font-medium uppercase tracking-[0.18em] text-brass">Private client dossier</p>
-            <h1 className="mt-1 text-4xl sm:text-[3rem] sm:leading-tight 2xl:whitespace-nowrap">{heading}</h1>
-            <p className="mt-1 font-serif text-lg sm:text-xl">{intro}</p>
+            <h1 className="mt-1 text-[2rem] leading-tight sm:text-[3rem] sm:leading-tight 2xl:whitespace-nowrap">{heading}</h1>
+            <p className="mt-1 font-serif text-base text-muted-foreground sm:text-xl sm:text-foreground">{intro}</p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-4 xl:shrink-0 xl:flex-nowrap">
+        <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto sm:gap-4 2xl:shrink-0 2xl:flex-nowrap">
           {level !== undefined && <Button variant="ghost" type="button" onClick={() => setTab("refer")} aria-label="Open your loyalty rank"
             className="h-auto gap-3 rounded-full bg-medal-brass/35 py-2 pl-2 pr-4 text-sm font-medium hover:bg-medal-brass/50">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-pitch text-medal-brass"><Trophy aria-hidden className="h-4 w-4" /></span>
@@ -146,12 +146,12 @@ function Account() {
         </div>
       </div>
       <div className="mt-8 flex items-center">
-      <nav aria-label="Account sections" className="inline-flex w-full gap-1 rounded-full border border-foreground/20 p-0 sm:w-auto">
+      <nav aria-label="Account sections" className="inline-flex w-full gap-0 rounded-full border border-foreground/20 p-0 sm:w-auto">
         {TABS.map(({ key, label, icon: I, badge }) => {
           const on = tab === key;
           return <Button variant="ghost" key={key} type="button" aria-current={on ? "page" : undefined} onClick={() => setTab(key)}
-            className={`flex h-auto flex-1 items-center justify-center gap-2 rounded-full px-3 py-3 text-[15px] sm:flex-none sm:px-7 ${on ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-foreground hover:bg-transparent"}`}>
-            <I aria-hidden className="h-5 w-5" />{label}
+            className={`flex h-auto flex-1 items-center justify-center gap-2 rounded-full px-2 py-2.5 text-[13px] sm:flex-none sm:px-7 sm:py-3 sm:text-[15px] ${on ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground" : "text-foreground hover:bg-transparent"}`}>
+            <I aria-hidden className="hidden h-5 w-5 sm:block" /><span className="sm:hidden">{label.replace("Refer & ", "")}</span><span className="hidden sm:inline">{label}</span>
             {badge ? <span className="rounded-full bg-medal-brass/80 px-1.5 text-[11px] text-pitch">{badge}</span> : null}
           </Button>; })}
       </nav><span aria-hidden className="hidden h-px flex-1 bg-border sm:block" />
@@ -159,16 +159,16 @@ function Account() {
     </header>
     <div className="pt-8">
     {tab === "settings" ? <AccountSettings email={email} /> : tab === "refer" ? <ReferralPanel stats={stats} mine={mine} /> :
-    <div className="grid gap-6 xl:grid-cols-[1fr_330px]">
+    <div className="grid gap-6 2xl:grid-cols-[1fr_330px]">
       <div className="min-w-0">
         {orders && orders.length > 0 && <div className="mb-6 grid grid-cols-3">
           {[[String(orders.filter(o => o.status !== "launched").length || orders.length), orders.filter(o => o.status !== "launched").length === 1 || orders.length === 1 ? "Active Project" : "Active Projects", "Your current project"],
             [`${overall}%`, "Overall Progress", tasks.length ? `${doneTasks} of ${tasks.length} tasks done` : "Tasks appear once scheduled"],
             [level !== undefined ? `Level ${level}` : "–", mine.data?.tier.level.title ?? "Loyalty level", "Your loyalty level"]].map(([v, l, h], i) =>
-            <div key={l} className={`px-2 sm:px-0 ${i ? "border-l pl-4 sm:pl-12" : ""}`}>
-              <p className="font-serif text-4xl leading-none sm:text-5xl">{v}</p>
-              <p className="mt-2 font-serif text-lg sm:text-[1.4rem]">{l}</p>
-              <p className="text-sm text-muted-foreground">{h}</p>
+            <div key={l} className={`min-w-0 ${i ? "border-l pl-3 sm:pl-12" : "pr-2"}`}>
+              <p className="font-serif text-3xl leading-none sm:text-5xl">{v}</p>
+              <p className="mt-2 font-serif text-sm leading-tight sm:text-[1.4rem]">{l}</p>
+              <p className="mt-0.5 text-xs text-muted-foreground sm:text-sm">{h}</p>
             </div>)}
         </div>}
         {orders === null ? <p className="text-muted-foreground">Loading your projects…</p>
@@ -185,33 +185,33 @@ function Account() {
           const mine = tasks.filter(t => t.order_id === o.id);
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
-          return <li key={o.id} className="grid gap-6 rounded-md border bg-card p-2.5 shadow-sm sm:grid-cols-[200px_1fr] md:grid-cols-[200px_1fr_auto]">
+          return <li key={o.id} className="grid grid-cols-[96px_1fr] gap-4 rounded-md border bg-card p-2.5 shadow-sm sm:grid-cols-[200px_1fr] sm:gap-6 2xl:grid-cols-[200px_1fr_auto]">
             <div aria-hidden className="flex aspect-[2/3] w-full max-w-[200px] flex-col items-center justify-center bg-pitch p-4 text-center text-pitch-foreground">
-              <span className="font-serif text-3xl uppercase leading-tight tracking-wide">{o.book}</span>
+              <span className="break-words font-serif text-sm uppercase leading-tight tracking-wide sm:text-3xl">{o.book}</span>
               <span className="mt-3 h-px w-10 bg-medal-brass" />
             </div>
-            <div className="min-w-0 py-4 pr-2">
+            <div className="contents sm:block sm:min-w-0 sm:py-4 sm:pr-2"><div className="min-w-0 self-center py-2 sm:py-0">
               <div className="flex flex-wrap items-center gap-2 text-sm">
                 <span className="rounded-full bg-primary px-3 py-0.5 font-medium text-primary-foreground">{statusLabel(o.status)}</span>
                 <span>· Updated {ago(o.id === top?.id && lastUpdate ? lastUpdate : o.created_at).toLowerCase()}</span>
               </div>
-              <h2 className="mt-2 break-words font-serif text-4xl sm:text-[2.6rem]">{o.book}</h2>
-              <p className="mt-1 inline-block border-b border-brass font-serif text-xl">{packages.find(p => p.slug === o.package)?.name} Package</p>
-              {(o.addons.length > 0 || o.rush) && <p className="mt-2 text-sm text-muted-foreground">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
+              <h2 className="mt-2 break-words font-serif text-2xl sm:text-[2.6rem]">{o.book}</h2>
+              <p className="mt-1 inline-block border-b border-brass font-serif text-base sm:text-xl">{packages.find(p => p.slug === o.package)?.name} Package</p>
+              </div><div className="col-span-2 min-w-0 px-2 sm:px-0">{(o.addons.length > 0 || o.rush) && <p className="mt-2 text-sm text-muted-foreground">Add-ons: {[...o.addons.map(id => addons.find(a => a.id === id)?.name ?? id), ...(o.rush ? ["Rush delivery"] : [])].join(", ")}</p>}
               <div className="mt-4 flex items-baseline justify-between gap-3"><span className="font-serif text-lg">{pct}% Complete</span><span className="text-sm">{mine.length ? `${mine.filter(t => t.done).length} of ${mine.length} tasks` : "Tasks not yet scheduled"}</span></div>
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-secondary" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Project progress"><div className="h-full rounded-full bg-primary" style={{ width: `${pct}%` }} /></div>
               {next && <p className="mt-4 flex items-center gap-3 rounded-sm bg-secondary px-3 py-2 text-sm"><span className="flex h-5 w-5 items-center justify-center rounded-full bg-medal-brass/40"><ArrowRight aria-hidden className="h-3 w-3" /></span>Next: {next.title}</p>}
               <div className="mt-4"><Roadmap pct={pct} /></div>
-            </div>
-            <div className="flex flex-row flex-wrap gap-3 px-2 pb-4 sm:col-span-2 md:col-span-1 md:flex-col md:justify-center md:px-6 md:pb-0">
-              <Button asChild variant="studio" className="h-11 min-w-[150px] justify-between rounded-sm"><Link to="/my-projects/$id" params={{ id: o.id }}>Open project<ArrowRight aria-hidden className="ml-2 h-4 w-4" /></Link></Button>
-              {invoiceReady(o) ? <Button asChild variant="outline" className="h-11 min-w-[150px] rounded-sm border-foreground/40 bg-transparent"><Link to="/invoice/$id" params={{ id: o.id }}><Download aria-hidden className="mr-2 h-4 w-4" />View invoice</Link></Button>
+            </div></div>
+            <div className="col-span-2 grid grid-cols-2 gap-3 px-2 pb-3 sm:flex sm:flex-row sm:flex-wrap 2xl:col-span-1 2xl:flex-col 2xl:justify-center 2xl:px-6 2xl:pb-0">
+              <Button asChild variant="studio" className="h-11 justify-between rounded-sm sm:min-w-[150px]"><Link to="/my-projects/$id" params={{ id: o.id }}>Open project<ArrowRight aria-hidden className="ml-2 h-4 w-4" /></Link></Button>
+              {invoiceReady(o) ? <Button asChild variant="outline" className="h-11 rounded-sm border-foreground/40 sm:min-w-[150px] bg-transparent"><Link to="/invoice/$id" params={{ id: o.id }}><Download aria-hidden className="mr-2 h-4 w-4" />View invoice</Link></Button>
                 : <p className="max-w-[20ch] text-sm text-muted-foreground">Your invoice will be ready once your package is confirmed.</p>}
             </div>
           </li>; })}</ul>}
       </div>
 
-      <aside className="h-fit">
+      <aside className="h-fit md:max-w-none">
        <div className="mt-0 rounded-sm border border-t-4 border-t-brass bg-card p-5 shadow-sm">
         <h2 className="font-serif text-[1.7rem]">Your Studio Contact</h2>
         <div className="mt-6 flex items-center gap-5"><img src={mouPhoto.url} alt="Mou Barrac" loading="lazy" className="h-28 w-28 rounded-full object-cover object-top" />
@@ -226,14 +226,14 @@ function Account() {
       {top && <section aria-labelledby="activity" className="min-w-0 rounded-sm border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between gap-4"><h2 id="activity" className="font-serif text-[1.7rem]">Your Activity</h2>
           <Link to="/my-projects/$id" params={{ id: top.id }} className="inline-flex items-center gap-2 border-b border-brass pb-0.5 text-sm">View all activity<ArrowRight aria-hidden className="h-4 w-4" /></Link></div>
-        <ol className="mt-5">{activity.map((a, i) => <li key={i} className="relative grid grid-cols-[28px_120px_1fr] gap-2 pb-6 last:pb-0 sm:grid-cols-[36px_150px_1fr]">
+        <ol className="mt-5">{activity.map((a, i) => <li key={i} className="relative grid grid-cols-[28px_1fr] gap-x-2 gap-y-1 pb-6 last:pb-0 sm:grid-cols-[36px_150px_1fr]">
           {i < activity.length - 1 && <span aria-hidden className="absolute left-[9px] top-5 h-full w-px bg-border" />}
           <span aria-hidden className={`relative mt-1 flex h-[18px] w-[18px] items-center justify-center rounded-full ${a.done ? "bg-primary text-primary-foreground" : i === 0 ? "bg-primary" : "border bg-card"}`}>{a.done && <Check className="h-3 w-3" />}</span>
-          <span className="text-sm text-muted-foreground">{ago(a.at)}</span>
-          <span><span className="block font-serif text-lg">{a.title}</span><span className="text-sm text-muted-foreground">{a.body}</span></span>
+          <span className="text-sm text-muted-foreground">{ago(a.at)}</span><span className="col-start-2 sm:col-start-auto">
+          <span><span className="block font-serif text-lg">{a.title}</span><span className="text-sm text-muted-foreground">{a.body}</span></span></span>
         </li>)}</ol>
       </section>}
-      <div className={`relative overflow-hidden rounded-sm ${top ? "" : "xl:col-start-2"} bg-pitch p-8 text-pitch-foreground`}>
+      <div className={`relative overflow-hidden rounded-sm ${top ? "" : "2xl:col-start-2"} bg-pitch p-8 text-pitch-foreground`}>
         <img src={booksImg.url} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-40" />
         <div className="relative">
           <p className="max-w-[14ch] font-serif text-4xl leading-tight">Your author platform starts here.</p>

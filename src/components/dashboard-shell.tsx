@@ -43,21 +43,21 @@ export function DashboardShell<K extends string>({ eyebrow, title, identity, ite
   </div>;
 
   return <div className="portal mx-auto max-w-[1500px] px-3 py-6 sm:px-5">
-    <div className="grid min-h-[720px] rounded-lg border bg-background lg:grid-cols-[248px_1fr]">
-      <aside className="hidden bg-pitch text-pitch-foreground lg:block">
+    <div className="grid min-h-[720px] overflow-hidden rounded-lg border shadow-sm bg-background lg:grid-cols-[248px_1fr]">
+      <aside className="hidden bg-[var(--portal-navy)] text-pitch-foreground lg:block">
         <div className="sticky top-24">{panel}</div>
       </aside>
       <div className="min-w-0">
-        <div className="flex items-center justify-between gap-3 border-b bg-pitch px-4 py-3 text-pitch-foreground lg:hidden">
+        <div className="flex items-center justify-between gap-3 sticky top-0 z-10 border-b bg-[var(--portal-navy)] px-4 py-3 text-pitch-foreground lg:hidden">
           <Button variant="ghost" size="icon" type="button" onClick={() => setOpen(true)} aria-label="Open admin menu" className="hover:bg-pitch-foreground/10 hover:text-pitch-foreground"><Menu className="h-5 w-5" /></Button>
-          <p className="text-sm font-medium">{current?.label}</p>
+          <p className="font-serif text-lg">{current?.label}</p>
           <span className="w-9" />
         </div>
-        <main className="p-5 sm:p-8 lg:p-10">{children}</main>
+        <main className="p-4 sm:p-8 lg:p-10">{children}</main>
       </div>
     </div>
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="portal inset-y-0 left-0 top-0 h-dvh w-[min(300px,90vw)] translate-x-0 translate-y-0 overflow-y-auto rounded-none bg-pitch p-0 text-pitch-foreground sm:rounded-none">
+      <DialogContent className="portal inset-y-0 left-0 top-0 h-dvh w-[min(300px,90vw)] translate-x-0 translate-y-0 overflow-y-auto rounded-none bg-[var(--portal-navy)] p-0 text-pitch-foreground sm:rounded-none">
         <DialogTitle className="sr-only">Admin navigation</DialogTitle>
         <DialogDescription className="sr-only">Choose a studio section.</DialogDescription>
         {panel}
@@ -78,10 +78,10 @@ export function SectionHeader({ eyebrow, title, text, action }: { eyebrow: strin
 }
 
 export function StatCard({ label, value, hint, icon: I }: { label: string; value: ReactNode; hint?: string | undefined; icon: LucideIcon }) {
-  return <div className="border-t border-foreground/15 pt-5">
-    <div className="flex items-center justify-between gap-2"><p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{label}</p>
+  return <div className="min-w-0 rounded-sm border border-t-2 border-t-brass bg-card p-4 shadow-sm sm:p-5">
+    <div className="flex items-center justify-between gap-2"><p className="min-w-0 text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground sm:text-[11px]">{label}</p>
       <I aria-hidden className="h-4 w-4 shrink-0 text-brass" /></div>
-    <p className="mt-3 font-serif text-4xl leading-none sm:text-5xl">{value}</p>
-    {hint && <p className="mt-1 text-sm text-muted-foreground">{hint}</p>}
+    <p className="mt-3 font-serif text-3xl leading-none sm:text-5xl">{value}</p>
+    {hint && <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{hint}</p>}
   </div>;
 }
