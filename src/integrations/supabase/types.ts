@@ -84,6 +84,7 @@ export type Database = {
         Row: {
           addons: string[]
           book: string
+          cover_path: string | null
           created_at: string
           email: string
           id: string
@@ -98,6 +99,7 @@ export type Database = {
         Insert: {
           addons?: string[]
           book: string
+          cover_path?: string | null
           created_at?: string
           email: string
           id?: string
@@ -112,6 +114,7 @@ export type Database = {
         Update: {
           addons?: string[]
           book?: string
+          cover_path?: string | null
           created_at?: string
           email?: string
           id?: string
@@ -186,6 +189,79 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "project_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "package_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_messages: {
+        Row: {
+          body: string
+          created_at: string
+          from_studio: boolean
+          id: string
+          order_id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          from_studio?: boolean
+          id?: string
+          order_id: string
+          sender_id?: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          from_studio?: boolean
+          id?: string
+          order_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_messages_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "package_orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      project_notes: {
+        Row: {
+          body: string
+          id: string
+          order_id: string
+          section: string
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          body?: string
+          id?: string
+          order_id: string
+          section: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          body?: string
+          id?: string
+          order_id?: string
+          section?: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_notes_order_id_fkey"
             columns: ["order_id"]
             isOneToOne: false
             referencedRelation: "package_orders"
@@ -446,6 +522,10 @@ export type Database = {
           user_id: string
           visits: number
         }[]
+      }
+      set_order_cover: {
+        Args: { _order_id: string; _path: string }
+        Returns: undefined
       }
     }
     Enums: {

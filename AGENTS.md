@@ -25,3 +25,6 @@
 - Keep editorial guides in a browser-safe article module and render each from its own static leaf route through a shared article layout so metadata, links, and content remain aligned.
 - Compute referral tiers in the browser-safe loyalty module from converted referral dates plus optional admin override, while database triggers enforce conversion, self-referral and teaser eligibility rules so UI and data cannot disagree.
 - Scope authenticated editorial styling under `.portal` and retain existing data access and calculation modules, so dashboard refinements do not restyle public pages or change business rules.
+
+- Client project pages share `src/components/project-workspace.tsx` (cover, notes, messages) with the admin order page; message sender role is stamped by a database trigger, never trusted from the client.
+- Portal routes (/account, /admin, /my-projects) hide the public header, announcement bar and footer in __root.

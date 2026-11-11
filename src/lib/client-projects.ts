@@ -24,3 +24,13 @@ export async function loadProject(id: string) {
   }
   return { order: o.data, tasks: t.data ?? [], items: items.map(x => ({ ...x, src: x.url ? signed[x.url] ?? x.url : null })) };
 }
+
+/** Signed URLs for project covers, keyed by order id. */
+export async function coverUrls(orders: Pick<Order, "id" | "cover_path">[]) {
+  const paths = orders.flatMap(o => o.cover_path ? [o.cover_path] : []);
+  const out: Record<string, string> = {};
+  if (!paths.length) return out;
+  const { data } = await supabase.storage.from("project-files").createSignedUrls(paths, 3600);
+  for (const o of orders) { const s = data?.find(d => d.path === o.cover_path); if (s?.signedUrl) out[o.id] = s.signedUrl; }
+  return out;
+}

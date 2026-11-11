@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { packages, progressOf } from "@/lib/packages";
 import { loadProject } from "@/lib/client-projects";
 import { ProgressBar } from "@/components/progress-bar";
+import { CoverUpload, ProjectMessages, ProjectWorkspace } from "@/components/project-workspace";
 import { Pencil, Trash2, ExternalLink } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 
@@ -101,6 +102,11 @@ function Manage() {
         {i.kind === "page" && <><Button asChild variant="ghost" size="icon"><a href={i.url ?? undefined} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${i.title}`} title="Visit page"><ExternalLink /></a></Button><Button variant="ghost" size="icon" aria-label={`Edit ${i.title}`} title="Edit page" onClick={() => setEditing({kind:"page",id:i.id,title:i.title,url:i.url ?? ""})}><Pencil /></Button></>}
         <Button variant="ghost" size="icon" title="Remove item" aria-label={`Remove ${i.title}`} onClick={async () => { if (i.kind === "wireframe" && i.url) await supabase.storage.from("project-files").remove([i.url]); await supabase.from("project_items").delete().eq("id", i.id); reload(); }}><Trash2 /></Button></li>)}</ul>
     </div>
+    {p?.order && <div className="mt-12 grid gap-6 border-t pt-8 xl:grid-cols-[220px_1.4fr_1fr]">
+      <CoverUpload order={p.order} onChange={reload} />
+      <ProjectWorkspace orderId={p.order.id} />
+      <ProjectMessages orderId={p.order.id} studio />
+    </div>}
     <Dialog open={editing !== null} onOpenChange={open => { if (!open) setEditing(null); }}><DialogContent className="portal"><DialogTitle>Edit {editing?.kind === "task" ? "task" : "page"}</DialogTitle><DialogDescription>Update the details shared with this client.</DialogDescription>{editing && <form onSubmit={saveEdit} className="grid gap-4"><label className="grid gap-2 text-sm">Title<input required maxLength={200} className={inputClass} value={editing.title} onChange={e => setEditing({...editing,title:e.target.value})} /></label>{editing.kind === "page" && <label className="grid gap-2 text-sm">URL<input required type="url" className={inputClass} value={editing.url} onChange={e => setEditing({...editing,url:e.target.value})} /></label>}<Button variant="studio" type="submit">Save changes</Button></form>}</DialogContent></Dialog>
   </section>;
 }

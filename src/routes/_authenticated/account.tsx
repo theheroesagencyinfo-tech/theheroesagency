@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { BOOKING_URL, SUPPORT_EMAIL } from "@/components/site";
 import { packages, addons, progressOf } from "@/lib/packages";
-import { invoiceReady, type Order, type Task } from "@/lib/client-projects";
+import { coverUrls, invoiceReady, type Order, type Task } from "@/lib/client-projects";
 
 export const Route = createFileRoute("/_authenticated/account")({
   staticData: { sitemap: false },
@@ -48,6 +48,7 @@ function Account() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [covers, setCovers] = useState<Record<string, string>>({});
   const [tab, setTab] = useState<"projects" | "refer" | "settings">("projects");
   const stats = useReferralStats();
   const mine = useMyTier();
@@ -68,6 +69,7 @@ function Account() {
     const ids = (data ?? []).map(o => o.id);
     if (ids.length) { const t = await supabase.from("project_tasks").select("*").in("order_id", ids); setTasks(t.data ?? []); }
     setOrders(data ?? []);
+    setCovers(await coverUrls(data ?? []));
   })(); }, []);
   async function signOut() { await supabase.auth.signOut(); navigate({ to: "/auth", replace: true }); }
 
@@ -121,6 +123,7 @@ function Account() {
       <div className="mx-4 mt-8 grid gap-1 border-t border-pitch-foreground/15 pt-6 text-sm">
         <Button variant="ghost" type="button" onClick={() => setTab("settings")} className="h-auto justify-start gap-3 px-0 py-2 text-pitch-muted hover:bg-transparent hover:text-pitch-foreground"><User aria-hidden className="h-4 w-4" />My Account</Button>
         <Button variant="ghost" type="button" onClick={signOut} className="h-auto justify-start gap-3 px-0 py-2 text-pitch-muted hover:bg-transparent hover:text-pitch-foreground"><LogOut aria-hidden className="h-4 w-4" />Sign Out</Button>
+        <Link to="/" className="py-2 text-xs text-pitch-muted underline-offset-4 hover:text-pitch-foreground hover:underline">Back to website</Link>
       </div>
       <div className="mt-auto px-3 pt-16"><span aria-hidden className="block h-px w-28 bg-medal-brass" /><p className="mt-8 font-serif text-xl italic leading-snug text-pitch-muted">Great books.<br />Greater impact.</p></div>
     </aside>
@@ -186,10 +189,11 @@ function Account() {
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
           return <li key={o.id} className="grid grid-cols-[96px_1fr] gap-4 rounded-md border bg-card p-2.5 shadow-sm sm:grid-cols-[200px_1fr] sm:gap-6 2xl:grid-cols-[200px_1fr_auto]">
+            {covers[o.id] ? <img src={covers[o.id]} alt={`Cover of ${o.book}`} loading="lazy" className="aspect-[2/3] w-full max-w-[200px] object-cover shadow-md" /> :
             <div aria-hidden className="flex aspect-[2/3] w-full max-w-[200px] flex-col items-center justify-center bg-pitch p-4 text-center text-pitch-foreground">
               <span className="break-words font-serif text-sm uppercase leading-tight tracking-wide sm:text-3xl">{o.book}</span>
               <span className="mt-3 h-px w-10 bg-medal-brass" />
-            </div>
+            </div>}
             <div className="contents sm:block sm:min-w-0 sm:py-4 sm:pr-2"><div className="min-w-0 self-center py-2 sm:py-0">
               <div className="flex flex-wrap items-center gap-2 text-sm">
                 <span className="rounded-full bg-primary px-3 py-0.5 font-medium text-primary-foreground">{statusLabel(o.status)}</span>

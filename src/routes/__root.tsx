@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -139,6 +140,8 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const path = useRouterState({ select: s => s.location.pathname });
+  const portal = /^\/(account|admin|my-projects)(\/|$)/.test(path);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -146,14 +149,14 @@ function RootComponent() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">
         Skip to content
       </a>
-      <div className="print:hidden"><AnnouncementBar /></div>
-      <div className="contents print:hidden"><Header /></div>
+      {!portal && <div className="print:hidden"><AnnouncementBar /></div>}
+      {!portal && <div className="contents print:hidden"><Header /></div>}
 
       <main id="main">
         <Outlet />
         <Toaster />
       </main>
-      <div className="print:hidden"><Footer /></div>
+      {!portal && <div className="print:hidden"><Footer /></div>}
     </QueryClientProvider>
   );
 }
