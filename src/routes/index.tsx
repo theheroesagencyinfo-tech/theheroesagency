@@ -7,6 +7,7 @@ import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
 import bookVideo from "@/assets/book_opening.mp4.asset.json";
+import bookVideoMobile from "@/assets/book_opening_mobile.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -83,6 +84,8 @@ function Home() {
     const opening = q<HTMLDivElement>("[data-opening]");
     const spacer = q<HTMLDivElement>("[data-opening-spacer]");
     const video = q<HTMLVideoElement>("[data-book-video]");
+    // Phones get the portrait 9:16 cut so the book fills the screen.
+    if (video && window.matchMedia("(max-width: 767px), (orientation: portrait)").matches) { video.src = bookVideoMobile.url; video.load(); }
     const scenes = Array.from(el.querySelectorAll<HTMLElement>("[data-scene]"));
     const dots = Array.from(el.querySelectorAll<HTMLAnchorElement>("[data-dot]"));
     const path = q<SVGPathElement>("#journeyRoutePath");
@@ -158,7 +161,7 @@ function Home() {
       {/* Cinematic opening: covers the page until the visitor scrolls through it */}
       <div data-opening aria-hidden="true" className="fixed inset-0 z-[60] grid place-items-center overflow-hidden bg-background">
         <video data-book-video src={bookVideo.url} muted playsInline preload="auto" disablePictureInPicture tabIndex={-1}
-          className="book-video pointer-events-none block h-full w-full select-none object-contain" />
+          className="book-video pointer-events-none block h-full w-full select-none object-contain max-md:object-cover" />
       </div>
       <div data-opening-spacer className="h-[260vh] md:h-[320vh]" aria-hidden="true" />
 
