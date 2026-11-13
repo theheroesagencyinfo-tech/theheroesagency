@@ -7,7 +7,7 @@ describe("Author request rules", () => {
   it("requires a valid email", () => { expect(reviewSchema.safeParse({ ...valid, email: "invalid" }).success).toBe(false); });
   it("requires a book title or topic", () => { expect(reviewSchema.safeParse({ ...valid, book: "" }).success).toBe(false); });
   it("allows no author website", () => { expect(reviewSchema.parse(valid).website).toBe(""); });
-  it.each(["author website", "email funnel", "launch kit", "not sure yet"])("accepts the requested service %s", service => {
+  it.each(["author website", "email funnel", "launch kit", "custom package", "not sure yet"])("accepts the requested service %s", service => {
     expect(reviewSchema.parse({ ...valid, service }).service).toBe(service);
   });
   it("rejects an unsupported service", () => { expect(reviewSchema.safeParse({ ...valid, service: "other" }).success).toBe(false); });

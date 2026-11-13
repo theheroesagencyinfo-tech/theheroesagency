@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const serviceOptions = ["author website", "email funnel", "launch kit", "not sure yet"] as const;
+export const serviceOptions = ["author website", "email funnel", "launch kit", "custom package", "not sure yet"] as const;
 
 export const reviewSchema = z.object({
   name: z.string().trim().min(1, "Please add your name").max(100),

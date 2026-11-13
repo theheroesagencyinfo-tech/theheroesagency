@@ -95,6 +95,10 @@ function Pricing() {
           <div className="mt-auto pt-8"><Button asChild variant={p.popular ? "studio" : "studioOutline"} size="studio" className="w-full"><Link to="/get-started" search={{ package: p.slug }}>{p.cta}</Link></Button></div>
         </article>)}
       </div>
+      <div className="mt-10 flex flex-col gap-5 rounded-md border bg-background p-7 sm:flex-row sm:items-center sm:justify-between">
+        <div><h3 className="text-2xl">Custom package</h3><p className="mt-2 max-w-[60ch] text-sm text-muted-foreground">Need something different? Tell me what you want and I'll send you a custom price.</p></div>
+        <Button asChild variant="studioOutline" size="studio" className="shrink-0"><Link to="/custom-package">Request a custom price</Link></Button>
+      </div>
       <p className="mt-10 border-l-2 border-primary pl-4 text-sm">Need it faster? Rush delivery is available for an additional $150, subject to availability.</p>
     </div></section>
 

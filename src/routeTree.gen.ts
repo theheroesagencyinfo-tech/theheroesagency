@@ -17,6 +17,7 @@ import { Route as AuthorWebsiteDesignNonfictionAuthorsRouteImport } from './rout
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ContrastCheckRouteImport } from './routes/contrast-check'
+import { Route as CustomPackageRouteImport } from './routes/custom-package'
 import { Route as EmailMarketingForAuthorsRouteImport } from './routes/email-marketing-for-authors'
 import { Route as GetStartedRouteImport } from './routes/get-started'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -76,6 +77,11 @@ const ContactRoute = ContactRouteImport.update({
 const ContrastCheckRoute = ContrastCheckRouteImport.update({
   id: '/contrast-check',
   path: '/contrast-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomPackageRoute = CustomPackageRouteImport.update({
+  id: '/custom-package',
+  path: '/custom-package',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmailMarketingForAuthorsRoute =
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/custom-package': typeof CustomPackageRoute
   '/email-marketing-for-authors': typeof EmailMarketingForAuthorsRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/custom-package': typeof CustomPackageRoute
   '/email-marketing-for-authors': typeof EmailMarketingForAuthorsRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/contrast-check': typeof ContrastCheckRoute
+  '/custom-package': typeof CustomPackageRoute
   '/email-marketing-for-authors': typeof EmailMarketingForAuthorsRoute
   '/get-started': typeof GetStartedRoute
   '/pricing': typeof PricingRoute
@@ -282,6 +291,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/contrast-check'
+    | '/custom-package'
     | '/email-marketing-for-authors'
     | '/get-started'
     | '/pricing'
@@ -311,6 +321,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/contrast-check'
+    | '/custom-package'
     | '/email-marketing-for-authors'
     | '/get-started'
     | '/pricing'
@@ -341,6 +352,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/contact'
     | '/contrast-check'
+    | '/custom-package'
     | '/email-marketing-for-authors'
     | '/get-started'
     | '/pricing'
@@ -372,6 +384,7 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
   ContrastCheckRoute: typeof ContrastCheckRoute
+  CustomPackageRoute: typeof CustomPackageRoute
   EmailMarketingForAuthorsRoute: typeof EmailMarketingForAuthorsRoute
   GetStartedRoute: typeof GetStartedRoute
   PricingRoute: typeof PricingRoute
@@ -445,6 +458,13 @@ declare module '@tanstack/react-router' {
       path: '/contrast-check'
       fullPath: '/contrast-check'
       preLoaderRoute: typeof ContrastCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/custom-package': {
+      id: '/custom-package'
+      path: '/custom-package'
+      fullPath: '/custom-package'
+      preLoaderRoute: typeof CustomPackageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/email-marketing-for-authors': {
@@ -619,6 +639,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
   ContrastCheckRoute: ContrastCheckRoute,
+  CustomPackageRoute: CustomPackageRoute,
   EmailMarketingForAuthorsRoute: EmailMarketingForAuthorsRoute,
   GetStartedRoute: GetStartedRoute,
   PricingRoute: PricingRoute,

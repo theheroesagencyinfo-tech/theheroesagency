@@ -108,7 +108,9 @@ function GetStarted() {
             <div className="mt-4 grid gap-3">{packages.map(p => <label key={p.slug} className={`flex cursor-pointer items-start gap-4 rounded-md border p-4 ${p.slug === slug ? "border-primary ring-1 ring-primary" : ""}`}>
               <input type="radio" name="pkg" checked={p.slug === slug} onChange={() => setSlug(p.slug)} className="mt-1.5 accent-primary" />
               <span className="flex-1"><span className="flex flex-wrap justify-between gap-2"><span className="font-semibold">{p.name}{p.popular && <span className="ml-2 text-xs text-primary">Most popular</span>}</span><span>From {p.price} · {p.time}</span></span><span className="mt-1 block text-sm text-muted-foreground">{p.outcome}</span></span>
-            </label>)}</div>
+            </label>)}
+              <Link to="/custom-package" className="flex items-start gap-4 rounded-md border border-dashed p-4 hover:border-primary"><span className="flex-1"><span className="font-semibold">Custom package</span><span className="mt-1 block text-sm text-muted-foreground">Tell me what you need and request a custom price.</span></span><span className="text-sm underline underline-offset-4">Request price</span></Link>
+            </div>
           </fieldset>
           <details className="mt-6 border-y py-4"><summary className="cursor-pointer text-sm font-semibold">What's included in {pkg.name.toLowerCase()}</summary>
             <ul className="mt-4 space-y-2 text-sm">{pkg.items.map(i => <li key={i} className="flex gap-3"><Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-primary" />{i}</li>)}</ul></details>
