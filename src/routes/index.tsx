@@ -6,7 +6,7 @@ import { ProjectRating } from "@/components/project-rating";
 import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
-import bookPhoto from "@/assets/home-book.webp";
+import bookVideo from "@/assets/book_opening.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -82,10 +82,7 @@ function Home() {
 
     const opening = q<HTMLDivElement>("[data-opening]");
     const spacer = q<HTMLDivElement>("[data-opening-spacer]");
-    const book = q<HTMLDivElement>("[data-book]");
-    const editorial = q<HTMLDivElement>("[data-editorial]");
-    const side = q<HTMLDivElement>("[data-side]");
-    const hint = q<HTMLDivElement>("[data-hint]");
+    const video = q<HTMLVideoElement>("[data-book-video]");
     const scenes = Array.from(el.querySelectorAll<HTMLElement>("[data-scene]"));
     const dots = Array.from(el.querySelectorAll<HTMLAnchorElement>("[data-dot]"));
     const path = q<SVGPathElement>("#journeyRoutePath");
@@ -97,20 +94,31 @@ function Home() {
       spacer?.style.setProperty("display", "none");
     }
 
+    // Scroll-scrubbed opening video: eases currentTime toward the scroll target each frame.
+    let target = 0, shown = 0, scrubbing = false;
+    const scrub = () => {
+      const d = video?.duration;
+      if (!video || !d || !Number.isFinite(d)) { scrubbing = false; return; }
+      shown += (target - shown) * 0.18;
+      if (Math.abs(target - shown) < 0.0005) shown = target;
+      const t = Math.min(d - 0.04, shown * d);
+      if (Math.abs(video.currentTime - t) > 0.008 && !video.seeking) video.currentTime = t;
+      if (shown !== target || video.seeking || Math.abs(video.currentTime - t) > 0.008) requestAnimationFrame(scrub); else scrubbing = false;
+    };
+    const onMeta = () => { video?.pause(); onScroll(); };
+    video?.addEventListener("loadedmetadata", onMeta);
+    video?.addEventListener("seeked", () => { if (!scrubbing && shown !== target) { scrubbing = true; requestAnimationFrame(scrub); } });
+
     let ticking = false;
     const update = () => {
       ticking = false;
       const vh = window.innerHeight;
-      if (!reduced && opening && spacer && book) {
+      if (!reduced && opening && spacer) {
         const range = Math.max(1, spacer.offsetHeight - vh * 0.2);
         const p = clamp(window.scrollY / range);
-        const turn = clamp((p - 0.36) / 0.42);
-        book.style.transform = `translate3d(0,${-Math.sin(p * Math.PI) * 34}px,${turn * -90}px) scale(${1 + clamp(p / 0.68) * 1.42}) rotateX(${p * 4}deg) rotateY(${turn * -7}deg)`;
-        if (editorial) editorial.style.opacity = String(1 - clamp((p - 0.72) / 0.22) * 0.9);
-        const s = clamp((p - 0.12) / 0.24);
-        if (side) { side.style.opacity = String(s); side.style.transform = `translateY(${(1 - s) * 12}px)`; }
-        if (hint) hint.style.opacity = String(1 - clamp(p * 3.1));
-        const out = clamp((p - 0.7) / 0.18);
+        target = clamp(p / 0.9);
+        if (!scrubbing) { scrubbing = true; requestAnimationFrame(scrub); }
+        const out = clamp((p - 0.9) / 0.1);
         opening.style.opacity = String(1 - out);
         opening.style.visibility = out >= 1 ? "hidden" : "visible";
         opening.style.pointerEvents = out > 0.5 ? "none" : "auto";
@@ -142,27 +150,17 @@ function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
-    return () => { io.disconnect(); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+    return () => { video?.removeEventListener("loadedmetadata", onMeta); io.disconnect(); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
   }, []);
 
   return (
     <div ref={root} className="home6 overflow-x-clip">
       {/* Cinematic opening: covers the page until the visitor scrolls through it */}
-      <div data-opening aria-hidden="true" className="book-stage fixed inset-0 z-[60] grid place-items-center overflow-hidden">
-        <div data-editorial className="pointer-events-none absolute inset-0 flex items-center justify-center px-5 text-center">
-          <p className="absolute left-5 top-[12%] text-[9px] font-semibold uppercase tracking-[0.24em] text-primary sm:left-[7vw] sm:top-[10%]">TheHeroes Agency · Author Studio</p>
-          <p className="display max-w-[1100px] font-serif text-[clamp(52px,9.2vw,132px)] text-foreground/20">A book is only<br />the <em className="text-primary/30">beginning.</em></p>
-          <div data-side className="absolute bottom-[16%] right-6 w-[150px] text-left text-[11px] leading-relaxed text-foreground opacity-0 sm:right-[7vw] sm:w-[190px]">
-            <strong className="mb-2 block font-serif text-lg font-medium leading-tight">We build what comes next.</strong>
-            Author websites, email funnels and book launch creative that take your expertise further.
-          </div>
-        </div>
-        <div data-book className="book-inner relative z-[2] w-[min(52vw,420px)]">
-          <img src={bookPhoto} alt="" width={717} height={1014} fetchPriority="high" className="block max-h-[62svh] w-full select-none object-contain" draggable={false} />
-        </div>
-        <div data-hint className="book-hint absolute inset-x-0 bottom-8 z-[4] text-center text-[9px] uppercase tracking-[0.22em] text-muted-foreground">Scroll to open the story</div>
+      <div data-opening aria-hidden="true" className="fixed inset-0 z-[60] grid place-items-center overflow-hidden bg-background">
+        <video data-book-video src={bookVideo.url} muted playsInline preload="auto" disablePictureInPicture tabIndex={-1}
+          className="book-video pointer-events-none block h-full w-full select-none object-contain" />
       </div>
-      <div data-opening-spacer className="h-[150vh] md:h-[190vh]" aria-hidden="true" />
+      <div data-opening-spacer className="h-[260vh] md:h-[320vh]" aria-hidden="true" />
 
       {/* Section progress rail */}
       <nav aria-label="Page sections" className="fixed right-5 top-1/2 z-30 hidden -translate-y-1/2 flex-col gap-2.5 md:flex">

@@ -6,3 +6,4 @@
 - [x] Logo in portal sidebars/invoice where needed
 - [x] Shorter referral link, no "lovable" in it
 - [x] Chat: distinct client vs studio colours; send files and images
+- [x] Blend opening video background into page cream (#F3F4FB); video has no transparency
