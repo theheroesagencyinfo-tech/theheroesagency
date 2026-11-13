@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useState, type FormEvent } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { Check } from "lucide-react";
 import { z } from "zod";
 import { BOOKING_URL } from "@/components/site";
@@ -37,6 +38,8 @@ function GetStarted() {
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "failed">("idle");
   const [contact, setContact] = useState<Pick<OrderInput, "name" | "email" | "book" | "message"> | null>(null);
+  const [signedIn, setSignedIn] = useState(false);
+  useEffect(() => { supabase.auth.getSession().then(({ data }) => setSignedIn(!!data.session)); }, []);
   const pkg = packages.find(p => p.slug === slug)!;
   const toggle = (id: string) => setChosen(c => c.includes(id) ? c.filter(x => x !== id) : [...c, id]);
 
@@ -88,11 +91,15 @@ function GetStarted() {
       <p className="mt-6 text-lg text-muted-foreground">I've noted that you'd like to talk first. Pick a time below and we'll go through your package and add-ons together.</p>
       <Button asChild variant="studio" size="studio" className="mt-8"><a href={BOOKING_URL} target="_blank" rel="noopener noreferrer">Book my 15-minute call</a></Button>
     </> : <p className="mt-6 text-lg text-muted-foreground">I'll contact you shortly, and I'll email your invoice so we can get started.</p>}
-    <div className="mt-12 border-t pt-8">
+    {signedIn ? <div className="mt-12 border-t pt-8">
+      <h2 className="text-2xl">It's in your account</h2>
+      <p className="mt-3 max-w-[60ch] text-muted-foreground">Your new request appears with your other projects, so you can follow it at every stage.</p>
+      <Button asChild variant="studioOutline" size="studio" className="mt-6"><Link to="/account">Go to my projects</Link></Button>
+    </div> : <div className="mt-12 border-t pt-8">
       <h2 className="text-2xl">Follow your project as it moves forward</h2>
-      <p className="mt-3 max-w-[60ch] text-muted-foreground">Create a free account with the same email you just used, and you'll see your project's status at every stage.</p>
-      <Button asChild variant="studioOutline" size="studio" className="mt-6"><Link to="/auth">Create my account</Link></Button>
-    </div>
+      <p className="mt-3 max-w-[60ch] text-muted-foreground">Create a free account, or sign in if you already have one, with the same email you just used, and you'll see your project's status at every stage.</p>
+      <Button asChild variant="studioOutline" size="studio" className="mt-6"><Link to="/auth">Create my account or sign in</Link></Button>
+    </div>}
   </section>;
 
   return <>
