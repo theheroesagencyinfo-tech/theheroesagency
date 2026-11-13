@@ -29,3 +29,4 @@
 - Client project pages share `src/components/project-workspace.tsx` (cover, notes, messages with attachments under `<order_id>/messages/`) with the admin order page and the account Messages tab; sender role is stamped by a database trigger, never trusted from the client.
 - Referral share links use the brand domain constant in loyalty.ts and the short /r/<code> route, never the hosting origin.
 - Portal routes (/account, /admin, /my-projects) hide the public header, announcement bar and footer in __root.
+- Homepage scroll effects live in one effect inside src/routes/index.tsx and skip under reduced motion; the opening book overlay is fixed above the global header so __root stays untouched.
