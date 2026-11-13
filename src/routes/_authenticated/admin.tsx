@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LayoutDashboard, ShoppingBag, Star, Inbox, Gift, User, Phone } from "lucide-react";
 import { DashboardShell, SectionHeader, StatCard } from "@/components/dashboard-shell";
 import { AdminReferrals } from "@/components/admin-referrals";
+import { NewOrderButton } from "@/components/admin-new-order";
 import { packages, addons, orderStatuses } from "@/lib/packages";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -99,6 +100,7 @@ function Admin() {
     <input value={q} onChange={e => setQ(e.target.value)} aria-label="Search" placeholder="Search name, email or book" className="h-10 min-w-0 flex-1 rounded-md border bg-card px-3 text-sm sm:max-w-sm" />
     <select value={filter} onChange={e => setFilter(e.target.value)} aria-label="Filter" className="h-10 rounded-md border bg-card px-3 text-sm">{options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}</select>
     <Button variant="studioOutline" type="button" onClick={() => setNewest(!newest)} className="h-10 rounded-md border bg-card px-3 text-sm">{newest ? "Newest first" : "Oldest first"}</Button>
+    {tab === "orders" && <NewOrderButton onCreated={load} />}
   </div>;
   return <DashboardShell eyebrow="TheHeroes Agency" title="Admin" active={tab} onSelect={select} onSignOut={signOut}
     items={[{ key: "overview", label: "Overview", icon: LayoutDashboard }, { key: "orders", label: "Orders", icon: ShoppingBag, badge: fresh },

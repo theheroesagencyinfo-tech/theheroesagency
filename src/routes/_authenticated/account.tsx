@@ -192,7 +192,7 @@ function Account() {
               <Link to="/contact" className="rounded-lg border p-5 transition-colors hover:border-primary"><span className="font-medium">Request a free review</span><span className="mt-1 block text-sm text-muted-foreground">Feedback on your current site.</span></Link>
             </div>
           </div>
-        : <ul className="grid gap-6">{featured.map((o) => {
+        : <><div className="mb-4 flex flex-wrap items-center justify-between gap-3"><h2 className="font-serif text-2xl">Your projects</h2><Button asChild variant="studioOutline" size="sm"><Link to="/get-started" search={{ package: "reader-to-client" }}>Request another project</Link></Button></div><ul className="grid gap-6">{featured.map((o) => {
           const mine = tasks.filter(t => t.order_id === o.id);
           const pct = progressOf(mine);
           const next = mine.find(t => !t.done);
@@ -220,7 +220,7 @@ function Account() {
               {invoiceReady(o) ? <Button asChild variant="outline" className="h-11 rounded-sm border-foreground/40 sm:min-w-[150px] bg-transparent"><Link to="/invoice/$id" params={{ id: o.id }}><Download aria-hidden className="mr-2 h-4 w-4" />View invoice</Link></Button>
                 : <p className="max-w-[20ch] text-sm text-muted-foreground">Your invoice will be ready once your package is confirmed.</p>}
             </div>
-          </li>; })}</ul>}
+          </li>; })}</ul></>}
       </div>
 
       <aside className="h-fit md:max-w-none">

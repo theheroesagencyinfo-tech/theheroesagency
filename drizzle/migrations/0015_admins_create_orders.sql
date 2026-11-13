@@ -1,0 +1,2 @@
+GRANT INSERT ON public.package_orders TO authenticated;
+CREATE POLICY "Admins create orders" ON public.package_orders FOR INSERT TO authenticated WITH CHECK (public.has_role(auth.uid(), 'admin'::app_role));
