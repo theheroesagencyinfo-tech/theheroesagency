@@ -6,8 +6,6 @@ import { ProjectRating } from "@/components/project-rating";
 import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
-import bookVideo from "@/assets/book_opening.mp4.asset.json";
-import bookVideoMobile from "@/assets/book_opening_mobile.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -91,59 +89,16 @@ function Home() {
       io.observe(t);
     });
 
-    const opening = q<HTMLDivElement>("[data-opening]");
-    const spacer = q<HTMLDivElement>("[data-opening-spacer]");
-    const video = q<HTMLVideoElement>("[data-book-video]");
-    // Phones get the portrait 9:16 cut so the book fills the screen.
-    if (video && window.matchMedia("(max-width: 767px), (orientation: portrait)").matches) { video.src = bookVideoMobile.url; video.load(); }
     const scenes = Array.from(el.querySelectorAll<HTMLElement>("[data-scene]"));
     const dots = Array.from(el.querySelectorAll<HTMLAnchorElement>("[data-dot]"));
     const path = q<SVGPathElement>("#journeyRoutePath");
     const plane = q<SVGGElement>("#journeyPlane");
     const comp = q<HTMLDivElement>("[data-journey]");
 
-    if (reduced) {
-      opening?.style.setProperty("display", "none");
-      spacer?.style.setProperty("display", "none");
-    }
-
-    // Scroll-scrubbed opening video: eases currentTime toward the scroll target each frame.
-    let target = 0, shown = 0, scrubbing = false;
-    const scrub = () => {
-      const d = video?.duration;
-      if (!video || !d || !Number.isFinite(d)) { scrubbing = false; return; }
-      shown += (target - shown) * 0.18;
-      if (Math.abs(target - shown) < 0.0005) shown = target;
-      const t = Math.min(d - 0.04, shown * d);
-      if (Math.abs(video.currentTime - t) > 0.008 && !video.seeking) video.currentTime = t;
-      if (shown !== target || video.seeking || Math.abs(video.currentTime - t) > 0.008) requestAnimationFrame(scrub); else scrubbing = false;
-    };
-    const onMeta = () => { video?.pause(); onScroll(); };
-    video?.addEventListener("loadedmetadata", onMeta);
-    // Phones only decode frames after a touch: briefly play then pause to unlock seeking.
-    let unlocked = false;
-    const unlock = () => {
-      if (unlocked || !video) return; unlocked = true;
-      const pr = video.play(); if (pr) pr.then(() => { video.pause(); onScroll(); }).catch(() => { unlocked = false; });
-    };
-    window.addEventListener("touchstart", unlock, { passive: true });
-    window.addEventListener("pointerdown", unlock, { passive: true });
-    video?.addEventListener("seeked", () => { if (!scrubbing && shown !== target) { scrubbing = true; requestAnimationFrame(scrub); } });
-
     let ticking = false;
     const update = () => {
       ticking = false;
       const vh = window.innerHeight;
-      if (!reduced && opening && spacer) {
-        const range = Math.max(1, spacer.offsetHeight - vh * 0.2);
-        const p = clamp(window.scrollY / range);
-        target = clamp(p / 0.9);
-        if (!scrubbing) { scrubbing = true; requestAnimationFrame(scrub); }
-        const out = clamp((p - 0.9) / 0.1);
-        opening.style.opacity = String(1 - out);
-        opening.style.visibility = out >= 1 ? "hidden" : "visible";
-        opening.style.pointerEvents = out > 0.5 ? "none" : "auto";
-      }
       let active = 0;
       scenes.forEach((s, i) => {
         const r = s.getBoundingClientRect();
@@ -171,18 +126,11 @@ function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
-    return () => { video?.removeEventListener("loadedmetadata", onMeta); io.disconnect(); window.removeEventListener("touchstart", unlock); window.removeEventListener("pointerdown", unlock); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+    return () => { io.disconnect(); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
   }, []);
 
   return (
     <div ref={root} className="home6 overflow-x-clip">
-      {/* Cinematic opening: covers the page until the visitor scrolls through it */}
-      <div data-opening aria-hidden="true" className="fixed inset-0 z-[60] grid place-items-center overflow-hidden bg-background">
-        <video data-book-video src={bookVideo.url} muted playsInline preload="auto" disablePictureInPicture tabIndex={-1}
-          className="book-video pointer-events-none block h-full w-full select-none object-contain max-md:object-cover" />
-      </div>
-      <div data-opening-spacer className="h-[260vh] md:h-[320vh]" aria-hidden="true" />
-
       {/* Section progress rail */}
       <nav aria-label="Page sections" className="fixed right-5 top-1/2 z-30 hidden -translate-y-1/2 flex-col gap-2.5 md:flex">
         {sections.map(([id, label]) => (
