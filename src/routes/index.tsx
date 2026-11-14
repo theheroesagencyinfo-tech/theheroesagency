@@ -78,8 +78,18 @@ function Home() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const q = <T extends Element>(s: string) => el.querySelector<T>(s);
     const reveals = el.querySelectorAll(".reveal");
-    const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("visible")), { threshold: 0.12 });
-    reveals.forEach((r) => io.observe(r));
+    // Clipped reveals (mask/wipe) have no visible area, so watch their parent and reveal the child.
+    const proxy = new Map<Element, Element[]>();
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      (proxy.get(e.target) ?? [e.target]).forEach((t) => t.classList.add("visible"));
+    }), { threshold: 0.12 });
+    reveals.forEach((r) => {
+      const fx = (r as HTMLElement).dataset["fx"];
+      const t = (fx === "mask" || fx === "wipe") && r.parentElement ? r.parentElement : r;
+      if (t !== r) proxy.set(t, [...(proxy.get(t) ?? [t]), r]);
+      io.observe(t);
+    });
 
     const opening = q<HTMLDivElement>("[data-opening]");
     const spacer = q<HTMLDivElement>("[data-opening-spacer]");
