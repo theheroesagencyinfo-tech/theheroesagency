@@ -6,6 +6,8 @@ import { ProjectRating } from "@/components/project-rating";
 import danielHome from "@/assets/daniel-carter/home.png.asset.json";
 import eleanorHome from "@/assets/eleanor-whitmore/home.png.asset.json";
 import jonathanHome from "@/assets/jonathan-reed/home.png.asset.json";
+import bookVideo from "@/assets/book_opening.mp4.asset.json";
+import bookVideoMobile from "@/assets/book_opening_mobile.mp4.asset.json";
 
 export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
@@ -24,7 +26,7 @@ export const Route = createFileRoute("/")({
 
 const sections = [
   ["top", "Top"], ["studio", "Studio"], ["services", "What we build"], ["work", "Selected work"],
-  ["difference", "Why TheHeroes"], ["journey", "Reader journey"], ["process", "How it works"], ["review", "Free site review"],
+  ["difference", "Why TheHeroes"], ["journey", "Reader journey"], ["process", "How it works"], ["voices", "Author reviews"], ["review", "Free site review"],
 ] as const;
 
 const services = [
@@ -79,18 +81,59 @@ function Home() {
     const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("visible")), { threshold: 0.12 });
     reveals.forEach((r) => io.observe(r));
 
+    const opening = q<HTMLDivElement>("[data-opening]");
+    const spacer = q<HTMLDivElement>("[data-opening-spacer]");
+    const video = q<HTMLVideoElement>("[data-book-video]");
+    // Phones get the portrait 9:16 cut so the book fills the screen.
+    if (video && window.matchMedia("(max-width: 767px), (orientation: portrait)").matches) { video.src = bookVideoMobile.url; video.load(); }
     const scenes = Array.from(el.querySelectorAll<HTMLElement>("[data-scene]"));
     const dots = Array.from(el.querySelectorAll<HTMLAnchorElement>("[data-dot]"));
     const path = q<SVGPathElement>("#journeyRoutePath");
     const plane = q<SVGGElement>("#journeyPlane");
     const comp = q<HTMLDivElement>("[data-journey]");
 
+    if (reduced) {
+      opening?.style.setProperty("display", "none");
+      spacer?.style.setProperty("display", "none");
+    }
 
+    // Scroll-scrubbed opening video: eases currentTime toward the scroll target each frame.
+    let target = 0, shown = 0, scrubbing = false;
+    const scrub = () => {
+      const d = video?.duration;
+      if (!video || !d || !Number.isFinite(d)) { scrubbing = false; return; }
+      shown += (target - shown) * 0.18;
+      if (Math.abs(target - shown) < 0.0005) shown = target;
+      const t = Math.min(d - 0.04, shown * d);
+      if (Math.abs(video.currentTime - t) > 0.008 && !video.seeking) video.currentTime = t;
+      if (shown !== target || video.seeking || Math.abs(video.currentTime - t) > 0.008) requestAnimationFrame(scrub); else scrubbing = false;
+    };
+    const onMeta = () => { video?.pause(); onScroll(); };
+    video?.addEventListener("loadedmetadata", onMeta);
+    // Phones only decode frames after a touch: briefly play then pause to unlock seeking.
+    let unlocked = false;
+    const unlock = () => {
+      if (unlocked || !video) return; unlocked = true;
+      const pr = video.play(); if (pr) pr.then(() => { video.pause(); onScroll(); }).catch(() => { unlocked = false; });
+    };
+    window.addEventListener("touchstart", unlock, { passive: true });
+    window.addEventListener("pointerdown", unlock, { passive: true });
+    video?.addEventListener("seeked", () => { if (!scrubbing && shown !== target) { scrubbing = true; requestAnimationFrame(scrub); } });
 
     let ticking = false;
     const update = () => {
       ticking = false;
       const vh = window.innerHeight;
+      if (!reduced && opening && spacer) {
+        const range = Math.max(1, spacer.offsetHeight - vh * 0.2);
+        const p = clamp(window.scrollY / range);
+        target = clamp(p / 0.9);
+        if (!scrubbing) { scrubbing = true; requestAnimationFrame(scrub); }
+        const out = clamp((p - 0.9) / 0.1);
+        opening.style.opacity = String(1 - out);
+        opening.style.visibility = out >= 1 ? "hidden" : "visible";
+        opening.style.pointerEvents = out > 0.5 ? "none" : "auto";
+      }
       let active = 0;
       scenes.forEach((s, i) => {
         const r = s.getBoundingClientRect();
@@ -118,11 +161,17 @@ function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
-    return () => { io.disconnect(); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+    return () => { video?.removeEventListener("loadedmetadata", onMeta); io.disconnect(); window.removeEventListener("touchstart", unlock); window.removeEventListener("pointerdown", unlock); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
   }, []);
 
   return (
     <div ref={root} className="home6 overflow-x-clip">
+      {/* Cinematic opening: covers the page until the visitor scrolls through it */}
+      <div data-opening aria-hidden="true" className="fixed inset-0 z-[60] grid place-items-center overflow-hidden bg-background">
+        <video data-book-video src={bookVideo.url} muted playsInline preload="auto" disablePictureInPicture tabIndex={-1}
+          className="book-video pointer-events-none block h-full w-full select-none object-contain max-md:object-cover" />
+      </div>
+      <div data-opening-spacer className="h-[260vh] md:h-[320vh]" aria-hidden="true" />
 
       {/* Section progress rail */}
       <nav aria-label="Page sections" className="fixed right-5 top-1/2 z-30 hidden -translate-y-1/2 flex-col gap-2.5 md:flex">
@@ -137,7 +186,7 @@ function Home() {
         <div className="mx-auto grid max-w-[1320px] items-center gap-12 md:grid-cols-[1.02fr_.98fr] md:gap-[7vw]">
           <div>
             <Eyebrow>Digital platforms for nonfiction authors</Eyebrow>
-            <h1 className="display reveal mt-5 font-serif text-[clamp(46px,7vw,100px)]">Your book opens the door. <em className="text-primary">We build what comes next.</em></h1>
+            <h1 data-fx="mask" className="display reveal mt-5 font-serif text-[clamp(46px,7vw,100px)]">Your book opens the door. <em className="text-primary">We build what comes next.</em></h1>
             <p className="reveal mt-6 max-w-[500px] leading-relaxed text-muted-foreground sm:text-lg">We design author websites, email funnels and book launch creative that turn your expertise into readers, subscribers, client enquiries and speaking opportunities.</p>
             <div className="reveal mt-9 flex flex-wrap items-center gap-6">
               <a href="#review" className="inline-flex items-center gap-4 bg-primary px-5 py-3.5 text-sm text-primary-foreground transition hover:-translate-y-0.5">Get my free site review <span aria-hidden>↗</span></a>
@@ -159,7 +208,7 @@ function Home() {
         <div className="mx-auto grid w-full max-w-[1320px] gap-8 md:grid-cols-[.7fr_1.3fr] md:gap-[8vw]">
           <Eyebrow dark>A platform, not just a website</Eyebrow>
           <div>
-            <h2 className="display reveal font-serif text-[clamp(40px,6vw,82px)]">A book builds authority. <em className="text-pitch-accent">A connected platform puts it to work.</em></h2>
+            <h2 data-fx="wipe" className="display reveal font-serif text-[clamp(40px,6vw,82px)]">A book builds authority. <em className="text-pitch-accent">A connected platform puts it to work.</em></h2>
             <p className="reveal mt-6 max-w-[420px] text-sm leading-loose text-pitch-muted">Your website, reader magnet, email journey and launch materials should work together. We bring those pieces into one clear experience, designed around what you want your expertise to do next.</p>
           </div>
         </div>
@@ -174,7 +223,7 @@ function Home() {
           </div>
           <div className="border-t border-foreground/20">
             {services.map((s, i) => (
-              <Link key={s.h} to={s.to} className="reveal grid grid-cols-[36px_1fr_24px] items-center gap-3 border-b border-foreground/20 py-6 transition-all hover:px-2 md:grid-cols-[90px_1fr_1fr_42px] md:gap-6 md:py-8 md:hover:px-4">
+              <Link key={s.h} to={s.to} data-fx="slide" style={{ ["--i" as string]: i }} className="reveal grid grid-cols-[36px_1fr_24px] items-center gap-3 border-b border-foreground/20 py-6 transition-all hover:px-2 md:grid-cols-[90px_1fr_1fr_42px] md:gap-6 md:py-8 md:hover:px-4">
                 <span className="font-serif text-lg text-primary">0{i + 1}</span>
                 <h3 className="font-serif text-[26px] tracking-tight md:text-[clamp(25px,3vw,40px)]">{s.h}</h3>
                 <p className="col-start-2 row-start-2 max-w-[430px] text-sm leading-relaxed text-muted-foreground md:col-start-3 md:row-start-1">{s.p}</p>
@@ -192,11 +241,11 @@ function Home() {
             <div><Eyebrow>Selected work · Real author projects</Eyebrow><h2 className="display reveal mt-4 font-serif text-[clamp(42px,6vw,82px)]">Different voices.<br /><em className="text-primary">Thoughtful digital homes.</em></h2></div>
             <p className="reveal max-w-[290px] text-sm leading-relaxed text-muted-foreground">Each author has a different story, audience and visual language. The work should reflect that.</p>
           </div>
-          <div className="grid items-start gap-14 md:grid-cols-[1.13fr_.87fr] md:gap-x-[5vw]">
+          <div className="work-track -mx-5 flex gap-6 overflow-x-auto px-5 pb-4 md:mx-0 md:grid md:items-start md:gap-14 md:overflow-visible md:px-0 md:pb-0 md:grid-cols-[1.13fr_.87fr] md:gap-x-[5vw]">
             {projects.map((p, i) => (
-              <article key={p.slug} className={`reveal ${i === 1 ? "md:mt-28" : ""} ${i === 2 ? "md:col-start-1 md:-mt-5" : ""}`}>
-                <Link to={p.to} className="group block aspect-[4/3] overflow-hidden border bg-muted shadow-lg" aria-label={`View the ${p.name} author website`}>
-                  <img src={assetSrc(p.img)} alt={`${p.name} author website homepage`} loading="lazy" decoding="async" className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.035]" />
+              <article key={p.slug} data-fx="curtain" style={{ ["--i" as string]: i }} className={`reveal w-[82vw] shrink-0 md:w-auto ${i === 1 ? "md:mt-28" : ""} ${i === 2 ? "md:col-start-1 md:-mt-5" : ""}`}>
+                <Link to={p.to} className="curtain group block aspect-[4/3] overflow-hidden border bg-muted shadow-lg" aria-label={`View the ${p.name} author website`}>
+                  <img src={assetSrc(p.img)} alt={`${p.name} author website homepage`} loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
                 </Link>
                 <div className="mt-4 flex justify-between gap-5 text-[10px] uppercase tracking-[0.12em] text-muted-foreground"><span>{p.meta}</span><span>0{i + 1} / 03</span></div>
                 <h3 className="mt-2 font-serif text-[27px] md:text-3xl">{p.name}</h3>
@@ -205,7 +254,7 @@ function Home() {
                 <Link to={p.to} className="mt-4 inline-block border-b border-primary pb-1 text-[11px] uppercase tracking-[0.1em] text-primary">View project ↗</Link>
               </article>
             ))}
-            <div className="reveal self-end md:col-start-2"><Link to="/work" className="inline-block border-b border-foreground pb-1 text-sm">See all work ↗</Link></div>
+            <div className="reveal hidden self-end md:col-start-2 md:block"><Link to="/work" className="inline-block border-b border-foreground pb-1 text-sm">See all work ↗</Link></div>
           </div>
         </div>
       </section>
@@ -219,7 +268,7 @@ function Home() {
             <p className="reveal mt-6 max-w-[490px] text-sm leading-loose text-muted-foreground">A lot of author websites stop at introducing the book. We look at the full journey: what a visitor understands, what makes them stay, how they join your audience and where that relationship can lead. Design matters. So does what the design helps people do.</p>
             <a href="#review" className="reveal mt-6 inline-block border-b border-foreground pb-1 text-sm">See what your site could improve ↗</a>
           </div>
-          <div data-depth="0.18" className="reveal"><PhotoFrame label="Creative direction · Digital experience" className="h-[390px] md:h-[600px]" /></div>
+          <div data-depth="0.18" data-fx="zoom" className="reveal"><PhotoFrame label="Creative direction · Digital experience" className="h-[390px] md:h-[600px]" /></div>
         </div>
       </section>
 
@@ -266,7 +315,7 @@ function Home() {
           </div>
           <ol className="border-t border-foreground/20">
             {checks.map((c, i) => (
-              <li key={c.h} className="reveal grid grid-cols-[44px_1fr] gap-5 border-b border-foreground/20 py-6 md:grid-cols-[55px_1fr]">
+              <li key={c.h} style={{ ["--i" as string]: i }} className="reveal grid grid-cols-[44px_1fr] gap-5 border-b border-foreground/20 py-6 md:grid-cols-[55px_1fr]">
                 <span className="font-serif text-lg text-primary">0{i + 1}</span>
                 <div><h3 className="font-serif text-2xl">{c.h}</h3><p className="mt-1.5 max-w-[500px] text-sm leading-relaxed text-muted-foreground">{c.p}</p></div>
               </li>
@@ -275,12 +324,28 @@ function Home() {
         </div>
       </section>
 
+      {/* Credibility: spaces reserved for verified author reviews only */}
+      <section id="voices" data-scene className="scene scroll-mt-20 bg-secondary px-5 py-24 sm:px-[7vw] md:py-32">
+        <div className="mx-auto max-w-[1320px]">
+          <Eyebrow>In authors' words</Eyebrow>
+          <h2 data-fx="mask" className="display reveal mt-4 max-w-[820px] font-serif text-[clamp(40px,5.5vw,76px)]">Reviews from the authors we work with <em className="text-primary">will live here.</em></h2>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[0, 1, 2].map((i) => (
+              <figure key={i} data-fx="soft" style={{ ["--i" as string]: i }} className={`reveal flex min-h-[260px] flex-col justify-between border border-dashed border-foreground/25 bg-background p-7 ${i === 1 ? "md:mt-16" : ""}`}>
+                <span aria-hidden className="font-serif text-6xl leading-none text-primary/40">“</span>
+                <figcaption className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Space reserved for a verified author review</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Review CTA with the working form */}
       <section id="review" data-scene className="scene scroll-mt-20 bg-pitch px-5 py-24 text-pitch-foreground sm:px-[7vw] md:py-32">
         <div className="mx-auto grid max-w-[1320px] items-start gap-12 md:grid-cols-[1.1fr_.9fr] md:gap-[6vw]">
           <div>
             <Eyebrow dark>Your next chapter starts here</Eyebrow>
-            <h2 className="display reveal mt-4 font-serif text-[clamp(44px,7vw,100px)]">Make more of the attention your book earns.</h2>
+            <h2 data-fx="mask" className="display reveal mt-4 font-serif text-[clamp(44px,7vw,100px)]">Make more of the attention your book earns.</h2>
             <p className="reveal mt-6 max-w-[440px] text-sm leading-loose text-pitch-muted">Tell us about your book and your website. We'll review the experience and send practical notes on how to turn more readers into leads and opportunities.</p>
           </div>
           <div className="reveal bg-background p-6 text-foreground sm:p-8">
