@@ -221,5 +221,3 @@ button.google-btn svg { width: 18px; height: 18px; }
 }
 
 /* Opening video has its background baked in; feather its edges into the page colour (no alpha in source). */
-.book-video { -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 55%, transparent 100%); mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, #000 55%, transparent 100%); }
-@media (max-width: 767px), (orientation: portrait) { .book-video { -webkit-mask-image: none; mask-image: none; } }
