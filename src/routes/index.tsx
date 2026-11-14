@@ -110,6 +110,14 @@ function Home() {
     };
     const onMeta = () => { video?.pause(); onScroll(); };
     video?.addEventListener("loadedmetadata", onMeta);
+    // Phones only decode frames after a touch: briefly play then pause to unlock seeking.
+    let unlocked = false;
+    const unlock = () => {
+      if (unlocked || !video) return; unlocked = true;
+      const pr = video.play(); if (pr) pr.then(() => { video.pause(); onScroll(); }).catch(() => { unlocked = false; });
+    };
+    window.addEventListener("touchstart", unlock, { passive: true });
+    window.addEventListener("pointerdown", unlock, { passive: true });
     video?.addEventListener("seeked", () => { if (!scrubbing && shown !== target) { scrubbing = true; requestAnimationFrame(scrub); } });
 
     let ticking = false;
@@ -153,7 +161,7 @@ function Home() {
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
-    return () => { video?.removeEventListener("loadedmetadata", onMeta); io.disconnect(); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+    return () => { video?.removeEventListener("loadedmetadata", onMeta); io.disconnect(); window.removeEventListener("touchstart", unlock); window.removeEventListener("pointerdown", unlock); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
   }, []);
 
   return (
